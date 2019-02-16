@@ -1,0 +1,60 @@
+# Oliver-RISC: The Ultimate RISC Processor
+
+The CPU has 8MB of SDRAM.
+The first 4MB is for code.
+The second 4MB is for data.
+On bootup, the FPGA reads out a binary from the SD card and places it at 32'd0 in the code RAM.
+The FPGA then reads the first instruction from 32'd0 and executes it. Then, it executes the next instruction, etc.
+
+Registers (8 bits each, addressed using a 8-bit code):
+IP - 3'b000 - Instruction pointer. SDRAM address of the instruction to execute.
+A - 3'b001  - Generic register.
+B - 3'b010  - Generic register.
+C - 3'b011  - Generic register.
+D - 3'b100  - Generic register.
+E - 3'b101  - Generic register.
+F - 3'b110  - Generic register.
+G - 3'b111  - Generic register.
+
+Instructions:
+* NOP                                             - No operation. Takes 1 clock cycle.
+* LOAD <memory_address>,<register>                - Load the 32 bits at <memory_address> in SDRAM into the register identified by <register>
+* STORE <register>,<memory_address>               - Save the 32 bits in <register> to <memory_address> in SDRAM.
+* ADD <register1>,<register2>                     - Add <register1> to <register2> and store the result in register A.
+* SUB <register1>,<register2>                     - Subtract <register1> from <register2> and store the result in register A.
+* OUT <register>,                                  - Write the contents of <register> to serial.
+* IN <register>,                                   - Read 32 bits from serial and place them in <register>.
+* MOV <register1>,<register2>                     - Copy register1 to register2.
+* CMP <register1>,<register2>                     - If register1 < register2, set reg A to 0. If =, set reg A to 1. If >, set reg A to 2.
+* JMPL <memory_address>,                           - If reg A == 0, jump the instruction pointer register to <memory_address>.
+* JMPE <memory_address>,                           - If reg A == 1, jump the instruction pointer register to <memory_address>.
+* JMPG <memory_address>,                           - If reg A == 2, jump the instruction pointer register to <memory_address>.
+* RST                                             - Clear all registers to 0 (including the instruction pointer).
+* HALT                                            - Stop the CPU.
+* CODE                                            - Switch from the .data section of the program to the .code section.
+
+Example program to print out numbers 1-5:
+.data:
+	start = 1
+	step  = 1
+	end   = 5
+.code:
+	LOAD start,B
+	LOAD step,C
+	LOAD end,D
+	begin:
+		OUT B,
+		ADD B,C
+		MOV A,B
+		CMP B,D
+		JMPL, begin
+		JMPE, begin
+		JMPG, finish
+	finish:
+		HALT
+
+Future planned features:
+Use a stack to push/pop registers to and from RAM to allow for function calls.
+GPIO control instructions.
+A proper ALU.
+Interrupt handling for timing, GPIO events, and keyboard input.

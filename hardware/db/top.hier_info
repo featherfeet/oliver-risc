@@ -1,0 +1,72 @@
+|top
+KEY[0] => ~NO_FANOUT~
+KEY[1] => ~NO_FANOUT~
+KEY[2] => ~NO_FANOUT~
+KEY[3] => ~NO_FANOUT~
+CLOCK_24[0] => CLOCK_24[0].IN1
+CLOCK_24[1] => ~NO_FANOUT~
+SW[0] => number_to_display[0].IN1
+SW[1] => number_to_display[1].IN1
+SW[2] => number_to_display[2].IN1
+SW[3] => number_to_display[3].IN1
+SW[4] => ~NO_FANOUT~
+SW[5] => ~NO_FANOUT~
+SW[6] => ~NO_FANOUT~
+SW[7] => ~NO_FANOUT~
+SW[8] => ~NO_FANOUT~
+SW[9] => ~NO_FANOUT~
+HEX0[0] <= seven_segment_display:display.display
+HEX0[1] <= seven_segment_display:display.display
+HEX0[2] <= seven_segment_display:display.display
+HEX0[3] <= seven_segment_display:display.display
+HEX0[4] <= seven_segment_display:display.display
+HEX0[5] <= seven_segment_display:display.display
+HEX0[6] <= seven_segment_display:display.display
+HEX1[0] <= <VCC>
+HEX1[1] <= <VCC>
+HEX1[2] <= <VCC>
+HEX1[3] <= <VCC>
+HEX1[4] <= <VCC>
+HEX1[5] <= <VCC>
+HEX1[6] <= <VCC>
+HEX2[0] <= <VCC>
+HEX2[1] <= <VCC>
+HEX2[2] <= <VCC>
+HEX2[3] <= <VCC>
+HEX2[4] <= <VCC>
+HEX2[5] <= <VCC>
+HEX2[6] <= <VCC>
+HEX3[0] <= <VCC>
+HEX3[1] <= <VCC>
+HEX3[2] <= <VCC>
+HEX3[3] <= <VCC>
+HEX3[4] <= <VCC>
+HEX3[5] <= <VCC>
+HEX3[6] <= <VCC>
+LEDR[0] <= number_to_display[0].DB_MAX_OUTPUT_PORT_TYPE
+LEDR[1] <= number_to_display[1].DB_MAX_OUTPUT_PORT_TYPE
+LEDR[2] <= number_to_display[2].DB_MAX_OUTPUT_PORT_TYPE
+LEDR[3] <= number_to_display[3].DB_MAX_OUTPUT_PORT_TYPE
+LEDR[4] <= <GND>
+LEDR[5] <= <GND>
+LEDR[6] <= <GND>
+LEDR[7] <= <GND>
+LEDR[8] <= <GND>
+LEDR[9] <= <GND>
+
+
+|top|seven_segment_display:display
+clk => ~NO_FANOUT~
+number[0] => Decoder0.IN3
+number[1] => Decoder0.IN2
+number[2] => Decoder0.IN1
+number[3] => Decoder0.IN0
+display[0] <= WideOr6.DB_MAX_OUTPUT_PORT_TYPE
+display[1] <= WideOr5.DB_MAX_OUTPUT_PORT_TYPE
+display[2] <= WideOr4.DB_MAX_OUTPUT_PORT_TYPE
+display[3] <= WideOr3.DB_MAX_OUTPUT_PORT_TYPE
+display[4] <= WideOr2.DB_MAX_OUTPUT_PORT_TYPE
+display[5] <= WideOr1.DB_MAX_OUTPUT_PORT_TYPE
+display[6] <= WideOr0.DB_MAX_OUTPUT_PORT_TYPE
+
+

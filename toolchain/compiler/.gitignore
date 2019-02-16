@@ -1,0 +1,14 @@
+.dub
+docs.json
+__dummy.html
+docs/
+compiler.so
+compiler.dylib
+compiler.dll
+compiler.a
+compiler.lib
+compiler-test-*
+*.exe
+*.o
+*.obj
+*.lst
