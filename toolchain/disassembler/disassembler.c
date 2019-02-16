@@ -50,7 +50,7 @@ int main(int argc, char *argv[]) {
 	// Loop through and disassemble the .code section of the binary.
 	int instruction_index = 0;
 	printf(".code:\n");
-	for (i = i + 1; i < raw_binary_length; i += 3) {
+	for (i++; i < raw_binary_length; i += 3) {
 		printf("\t[%#08x]\t", instruction_index * 3);
 		instruction_index++;
 		switch (raw_binary[i]) {
