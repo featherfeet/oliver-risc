@@ -52,7 +52,7 @@ def makeAST(tokens):
 
 def printAST(ast, recursion_level):
 	if ast.__class__.__name__ == "SExpression":
-		print("\t" * recursion_level + "s {")
+		print("\t" * recursion_level + "s-expression {")
 		for child in ast.children:
 			printAST(child, recursion_level + 1)
 		print("\t" * recursion_level + "}")
