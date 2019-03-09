@@ -18,10 +18,10 @@ G - 3'b111  - Generic register.
 
 Instructions:
 * NOP                                             - No operation. Takes 1 clock cycle.
-* LOAD <memory_address>,<register>                - Load the 32 bits at <memory_address> in SDRAM into the register identified by <register>
+* LOAD <memory_address>,<register>                - Load the 8 bits at <memory_address> in SDRAM into the register identified by <register>
 * STORE <register>,<memory_address>               - Save the 32 bits in <register> to <memory_address> in SDRAM.
 * ADD <register1>,<register2>                     - Add <register1> to <register2> and store the result in register A.
-* SUB <register1>,<register2>                     - Subtract <register1> from <register2> and store the result in register A.
+* SUB <register1>,<register2>                     - Subtract <register2> from <register1> and store the result in register A.
 * OUT <register>,                                  - Write the contents of <register> to serial.
 * IN <register>,                                   - Read 32 bits from serial and place them in <register>.
 * MOV <register1>,<register2>                     - Copy register1 to register2.

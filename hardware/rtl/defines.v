@@ -1,0 +1,29 @@
+`define STATE_LOAD_TO_RAM         0
+`define STATE_FETCH_OPERATION     1
+`define STATE_FETCH_OPERAND1      2
+`define STATE_FETCH OPERAND2      3
+`define STATE_EXECUTE_INSTRUCTION 4
+
+`define OPERATION_NOP             0
+`define OPERATION_LOAD            1
+`define OPERATION_STORE           2
+`define OPERATION_ADD             3
+`define OPERATION_SUB             4
+`define OPERATION_OUT             5
+`define OPERATION_IN              6
+`define OPERATION_MOV             7
+`define OPERATION_CMP             8
+`define OPERATION_JMPL            9
+`define OPERATION_JMPE            10
+`define OPERATION_JMPG            11
+`define OPERATION_RST             12
+`define OPERATION_HALT            13
+
+`define REGISTER_IP               registers[0]
+`define REGISTER_A                registers[1]
+`define REGISTER_B                registers[2]
+`define REGISTER_C                registers[3]
+`define REGISTER_D                registers[4]
+`define REGISTER_E                registers[5]
+`define REGISTER_F                registers[6]
+`define REGISTER_G                registers[7]
