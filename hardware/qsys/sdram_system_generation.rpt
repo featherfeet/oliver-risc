@@ -1,0 +1,591 @@
+Info: Starting: Create simulation model
+Info: ip-generate --project-directory=/home/oliver/Projects/FPGA_Projects/CPU/hardware/qsys/ --output-directory=/home/oliver/Projects/FPGA_Projects/CPU/hardware/qsys/sdram_system/simulation/ --file-set=SIM_VERILOG --report-file=sopcinfo:/home/oliver/Projects/FPGA_Projects/CPU/hardware/qsys/sdram_system.sopcinfo --report-file=html:/home/oliver/Projects/FPGA_Projects/CPU/hardware/qsys/sdram_system.html --report-file=sip:/home/oliver/Projects/FPGA_Projects/CPU/hardware/qsys/sdram_system/simulation/sdram_system.sip --report-file=csv:/home/oliver/Projects/FPGA_Projects/CPU/hardware/qsys/sdram_system.csv --report-file=spd:/home/oliver/Projects/FPGA_Projects/CPU/hardware/qsys/sdram_system.spd --report-file=cmp:/home/oliver/Projects/FPGA_Projects/CPU/hardware/qsys/sdram_system.cmp --system-info=DEVICE_FAMILY="Cyclone II" --system-info=DEVICE=EP2C20F484C7 --system-info=DEVICE_SPEEDGRADE=7 --component-file=/home/oliver/Projects/FPGA_Projects/CPU/hardware/qsys/sdram_system.qsys
+Progress: Loading qsys/sdram_system.qsys
+Progress: Reading input file
+Progress: Adding clk_0 [clock_source 13.0]
+Progress: Parameterizing module clk_0
+Progress: Adding up_clocks_0 [altera_up_clocks 13.0]
+Progress: Parameterizing module up_clocks_0
+Progress: Adding new_sdram_controller_0 [altera_avalon_new_sdram_controller 13.0.1.99.2]
+Progress: Parameterizing module new_sdram_controller_0
+Progress: Adding bridge_0 [altera_up_external_bus_to_avalon_bridge 13.0]
+Progress: Parameterizing module bridge_0
+Progress: Building connections
+Progress: Parameterizing connections
+Progress: Validating
+Progress: Done reading input file
+Info: sdram_system: Generating sdram_system "sdram_system" for SIM_VERILOG
+Info: pipeline_bridge_swap_transform: After transform: 4 modules, 7 connections
+Info: No custom instruction connections, skipping transform 
+Info: merlin_translator_transform: After transform: 6 modules, 13 connections
+Info: merlin_domain_transform: After transform: 11 modules, 34 connections
+Info: merlin_router_transform: After transform: 13 modules, 40 connections
+Info: reset_adaptation_transform: After transform: 15 modules, 44 connections
+Info: merlin_network_to_switch_transform: After transform: 18 modules, 50 connections
+Info: Inserting clock-crossing logic between cmd_xbar_demux.src0 and cmd_xbar_mux.sink0
+Info: Inserting clock-crossing logic between rsp_xbar_demux.src0 and rsp_xbar_mux.sink0
+Info: com_altera_sopcmodel_transforms_avalon_ClockCrossingTransform: After transform: 20 modules, 60 connections
+Info: merlin_mm_transform: After transform: 20 modules, 60 connections
+Info: up_clocks_0: Starting Generation of Required Clocks for DE-Series Boards
+Info: up_clocks_0: "sdram_system" instantiated altera_up_clocks "up_clocks_0"
+Info: new_sdram_controller_0: Starting RTL generation for module 'sdram_system_new_sdram_controller_0'
+Info: new_sdram_controller_0:   Generation command is [exec /home/oliver/altera/13.0sp1/quartus/linux/perl/bin/perl -I /home/oliver/altera/13.0sp1/quartus/common/ip/altera/common/perl/5.8.3 -I /home/oliver/altera/13.0sp1/quartus/sopc_builder/bin/europa -I /home/oliver/altera/13.0sp1/quartus/sopc_builder/bin/perl_lib -I /home/oliver/altera/13.0sp1/quartus/sopc_builder/bin -I /home/oliver/altera/13.0sp1/quartus/../ip/altera/sopc_builder_ip/common -I /home/oliver/altera/13.0sp1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_new_sdram_controller -- /home/oliver/altera/13.0sp1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_new_sdram_controller/generate_rtl.pl --name=sdram_system_new_sdram_controller_0 --dir=/tmp/alt7990_1957228334664860325.dir/0002_new_sdram_controller_0_gen/ --quartus_dir=/home/oliver/altera/13.0sp1/quartus --verilog --config=/tmp/alt7990_1957228334664860325.dir/0002_new_sdram_controller_0_gen//sdram_system_new_sdram_controller_0_component_configuration.pl  --do_build_sim=1    --sim_dir=/tmp/alt7990_1957228334664860325.dir/0002_new_sdram_controller_0_gen/  ]
+Info: new_sdram_controller_0: Done RTL generation for module 'sdram_system_new_sdram_controller_0'
+Info: new_sdram_controller_0: "sdram_system" instantiated altera_avalon_new_sdram_controller "new_sdram_controller_0"
+Info: bridge_0: Starting Generation of External Bus to Avalon Bridge
+Info: bridge_0: "sdram_system" instantiated altera_up_external_bus_to_avalon_bridge "bridge_0"
+Info: bridge_0_avalon_master_translator: "sdram_system" instantiated altera_merlin_master_translator "bridge_0_avalon_master_translator"
+Info: new_sdram_controller_0_s1_translator: "sdram_system" instantiated altera_merlin_slave_translator "new_sdram_controller_0_s1_translator"
+Info: bridge_0_avalon_master_translator_avalon_universal_master_0_agent: "sdram_system" instantiated altera_merlin_master_agent "bridge_0_avalon_master_translator_avalon_universal_master_0_agent"
+Info: new_sdram_controller_0_s1_translator_avalon_universal_slave_0_agent: "sdram_system" instantiated altera_merlin_slave_agent "new_sdram_controller_0_s1_translator_avalon_universal_slave_0_agent"
+Info: new_sdram_controller_0_s1_translator_avalon_universal_slave_0_agent_rsp_fifo: "sdram_system" instantiated altera_avalon_sc_fifo "new_sdram_controller_0_s1_translator_avalon_universal_slave_0_agent_rsp_fifo"
+Info: addr_router: "sdram_system" instantiated altera_merlin_router "addr_router"
+Info: id_router: "sdram_system" instantiated altera_merlin_router "id_router"
+Info: rst_controller: "sdram_system" instantiated altera_reset_controller "rst_controller"
+Info: cmd_xbar_demux: "sdram_system" instantiated altera_merlin_demultiplexer "cmd_xbar_demux"
+Info: crosser: "sdram_system" instantiated altera_avalon_st_handshake_clock_crosser "crosser"
+Info: sdram_system: Done sdram_system" with 14 modules, 28 files, 357018 bytes
+Info: ip-generate succeeded.
+Info: Finished: Create simulation model
+Info: Starting: Create Modelsim Project.
+Info: sim-script-gen --spd=/home/oliver/Projects/FPGA_Projects/CPU/hardware/qsys/sdram_system.spd --output-directory=/home/oliver/Projects/FPGA_Projects/CPU/hardware/qsys/sdram_system/simulation/
+Info: Doing: ip-make-simscript --spd=/home/oliver/Projects/FPGA_Projects/CPU/hardware/qsys/sdram_system.spd --output-directory=/home/oliver/Projects/FPGA_Projects/CPU/hardware/qsys/sdram_system/simulation/
+Info: Generating the following file(s) for MODELSIM simulator in /home/oliver/Projects/FPGA_Projects/CPU/hardware/qsys/sdram_system/simulation/ directory:
+Info: 	mentor/msim_setup.tcl
+Info: Generating the following file(s) for VCS simulator in /home/oliver/Projects/FPGA_Projects/CPU/hardware/qsys/sdram_system/simulation/ directory:
+Info: 	synopsys/vcs/vcs_setup.sh
+Info: Generating the following file(s) for VCSMX simulator in /home/oliver/Projects/FPGA_Projects/CPU/hardware/qsys/sdram_system/simulation/ directory:
+Info: 	synopsys/vcsmx/synopsys_sim.setup
+Info: 	synopsys/vcsmx/vcsmx_setup.sh
+Info: Generating the following file(s) for NCSIM simulator in /home/oliver/Projects/FPGA_Projects/CPU/hardware/qsys/sdram_system/simulation/ directory:
+Info: 	cadence/cds.lib
+Info: 	cadence/hdl.var
+Info: 	cadence/ncsim_setup.sh
+Info: 	13 .cds.lib files in cadence/cds_libs/ directory
+Info: Generating the following file(s) for RIVIERAPRO simulator in /home/oliver/Projects/FPGA_Projects/CPU/hardware/qsys/sdram_system/simulation/ directory:
+Info: 	aldec/rivierapro_setup.tcl
+Info: Finished: Create Modelsim Project.
+Info: 
+Info: Starting: Create testbench Qsys system
+Info: /home/oliver/Projects/FPGA_Projects/CPU/hardware/qsys/sdram_system/testbench/sdram_system.ipx
+Info: ip-generate --project-directory=/home/oliver/Projects/FPGA_Projects/CPU/hardware/qsys/ --output-directory=/home/oliver/Projects/FPGA_Projects/CPU/hardware/qsys/ --report-file=sopcinfo:/home/oliver/Projects/FPGA_Projects/CPU/hardware/qsys/sdram_system.sopcinfo --report-file=html:/home/oliver/Projects/FPGA_Projects/CPU/hardware/qsys/sdram_system.html --system-info=DEVICE_FAMILY="Cyclone II" --system-info=DEVICE=EP2C20F484C7 --system-info=DEVICE_SPEEDGRADE=7 --component-file=/home/oliver/Projects/FPGA_Projects/CPU/hardware/qsys/sdram_system.qsys
+Progress: Loading qsys/sdram_system.qsys
+Progress: Reading input file
+Progress: Adding clk_0 [clock_source 13.0]
+Progress: Parameterizing module clk_0
+Progress: Adding up_clocks_0 [altera_up_clocks 13.0]
+Progress: Parameterizing module up_clocks_0
+Progress: Adding new_sdram_controller_0 [altera_avalon_new_sdram_controller 13.0.1.99.2]
+Progress: Parameterizing module new_sdram_controller_0
+Progress: Adding bridge_0 [altera_up_external_bus_to_avalon_bridge 13.0]
+Progress: Parameterizing module bridge_0
+Progress: Building connections
+Progress: Parameterizing connections
+Progress: Validating
+Progress: Done reading input file
+Info: ip-generate succeeded.
+Info: Loading component library for testbench.
+Progress: 
+Progress: 
+Progress: 
+Progress: (1) searching /home/oliver/altera/13.0sp1/quartus/sopc_builder/bin/root_components.ipx (ipx file)
+Info: Reading index /home/oliver/altera/13.0sp1/quartus/sopc_builder/bin/root_components.ipx
+Info: /home/oliver/altera/13.0sp1/quartus/sopc_builder/bin/root_components.ipx: Loading now from components.ipx
+Info: Reading index /home/oliver/altera/13.0sp1/quartus/sopc_builder/bin/ip_component_categories.ipx
+Info: /home/oliver/altera/13.0sp1/quartus/sopc_builder/bin/ip_component_categories.ipx described 0 plugins, 0 paths, in 0.02 seconds
+Info: /home/oliver/altera/13.0sp1/quartus/sopc_builder/bin/ip_component_categories.ipx matched 1 files in 0.02 seconds
+Progress: Loading altera_up_avalon_video_alpha_blender/altera_up_avalon_video_alpha_blender_hw.tcl
+Info: /home/oliver/altera/13.0sp1/ip/University_Program/Audio_Video/Video/altera_up_avalon_video_alpha_blender/altera_up_avalon_video_alpha_blender_hw.tcl: no _hw.tcl package requested, assuming package require -exact sopc 9.0
+Progress: Loading altera_up_avalon_video_bayer_resampler/altera_up_avalon_video_bayer_resampler_hw.tcl
+Info: /home/oliver/altera/13.0sp1/ip/University_Program/Audio_Video/Video/altera_up_avalon_video_bayer_resampler/altera_up_avalon_video_bayer_resampler_hw.tcl: no _hw.tcl package requested, assuming package require -exact sopc 9.0
+Progress: Loading altera_up_avalon_video_character_buffer_with_dma/altera_up_avalon_video_character_buffer_with_dma_hw.tcl
+Info: /home/oliver/altera/13.0sp1/ip/University_Program/Audio_Video/Video/altera_up_avalon_video_character_buffer_with_dma/altera_up_avalon_video_character_buffer_with_dma_hw.tcl: no _hw.tcl package requested, assuming package require -exact sopc 9.0
+Progress: Loading altera_up_avalon_video_character_buffer_with_dma/altera_up_avalon_video_character_buffer_with_dma_sw.tcl
+Progress: Loading altera_up_avalon_video_chroma_resampler/altera_up_avalon_video_chroma_resampler_hw.tcl
+Info: /home/oliver/altera/13.0sp1/ip/University_Program/Audio_Video/Video/altera_up_avalon_video_chroma_resampler/altera_up_avalon_video_chroma_resampler_hw.tcl: no _hw.tcl package requested, assuming package require -exact sopc 9.0
+Progress: Loading altera_up_avalon_video_clipper/altera_up_avalon_video_clipper_hw.tcl
+Info: /home/oliver/altera/13.0sp1/ip/University_Program/Audio_Video/Video/altera_up_avalon_video_clipper/altera_up_avalon_video_clipper_hw.tcl: no _hw.tcl package requested, assuming package require -exact sopc 9.0
+Progress: Loading altera_up_avalon_video_csc/altera_up_avalon_video_csc_hw.tcl
+Info: /home/oliver/altera/13.0sp1/ip/University_Program/Audio_Video/Video/altera_up_avalon_video_csc/altera_up_avalon_video_csc_hw.tcl: no _hw.tcl package requested, assuming package require -exact sopc 9.0
+Progress: Loading altera_up_avalon_video_decoder/altera_up_avalon_video_decoder_hw.tcl
+Info: /home/oliver/altera/13.0sp1/ip/University_Program/Audio_Video/Video/altera_up_avalon_video_decoder/altera_up_avalon_video_decoder_hw.tcl: no _hw.tcl package requested, assuming package require -exact sopc 9.0
+Progress: Loading altera_up_avalon_video_dma_controller/altera_up_avalon_video_dma_controller_hw.tcl
+Info: /home/oliver/altera/13.0sp1/ip/University_Program/Audio_Video/Video/altera_up_avalon_video_dma_controller/altera_up_avalon_video_dma_controller_hw.tcl: no _hw.tcl package requested, assuming package require -exact sopc 9.0
+Progress: Loading altera_up_avalon_video_dual_clock_buffer/altera_up_avalon_video_dual_clock_buffer_hw.tcl
+Info: /home/oliver/altera/13.0sp1/ip/University_Program/Audio_Video/Video/altera_up_avalon_video_dual_clock_buffer/altera_up_avalon_video_dual_clock_buffer_hw.tcl: no _hw.tcl package requested, assuming package require -exact sopc 9.0
+Progress: Loading altera_up_avalon_video_edge_detection/altera_up_avalon_video_edge_detection_hw.tcl
+Info: /home/oliver/altera/13.0sp1/ip/University_Program/Audio_Video/Video/altera_up_avalon_video_edge_detection/altera_up_avalon_video_edge_detection_hw.tcl: no _hw.tcl package requested, assuming package require -exact sopc 9.0
+Progress: Loading altera_up_avalon_video_pixel_buffer_dma/altera_up_avalon_video_pixel_buffer_dma_hw.tcl
+Info: /home/oliver/altera/13.0sp1/ip/University_Program/Audio_Video/Video/altera_up_avalon_video_pixel_buffer_dma/altera_up_avalon_video_pixel_buffer_dma_hw.tcl: no _hw.tcl package requested, assuming package require -exact sopc 9.0
+Progress: Loading altera_up_avalon_video_pixel_buffer_dma/altera_up_avalon_video_pixel_buffer_dma_sw.tcl
+Progress: Loading altera_up_avalon_video_rgb_resampler/altera_up_avalon_video_rgb_resampler_hw.tcl
+Info: /home/oliver/altera/13.0sp1/ip/University_Program/Audio_Video/Video/altera_up_avalon_video_rgb_resampler/altera_up_avalon_video_rgb_resampler_hw.tcl: no _hw.tcl package requested, assuming package require -exact sopc 9.0
+Progress: Loading altera_up_avalon_video_scaler/altera_up_avalon_video_scaler_hw.tcl
+Info: /home/oliver/altera/13.0sp1/ip/University_Program/Audio_Video/Video/altera_up_avalon_video_scaler/altera_up_avalon_video_scaler_hw.tcl: no _hw.tcl package requested, assuming package require -exact sopc 9.0
+Progress: Loading altera_up_avalon_video_stream_router/altera_up_avalon_video_stream_router_hw.tcl
+Info: /home/oliver/altera/13.0sp1/ip/University_Program/Audio_Video/Video/altera_up_avalon_video_stream_router/altera_up_avalon_video_stream_router_hw.tcl: no _hw.tcl package requested, assuming package require -exact sopc 9.0
+Progress: Loading altera_up_avalon_video_test_pattern/altera_up_avalon_video_test_pattern_hw.tcl
+Info: /home/oliver/altera/13.0sp1/ip/University_Program/Audio_Video/Video/altera_up_avalon_video_test_pattern/altera_up_avalon_video_test_pattern_hw.tcl: no _hw.tcl package requested, assuming package require -exact sopc 9.0
+Progress: Loading altera_up_avalon_video_vga_controller/altera_up_avalon_video_vga_controller_hw.tcl
+Info: /home/oliver/altera/13.0sp1/ip/University_Program/Audio_Video/Video/altera_up_avalon_video_vga_controller/altera_up_avalon_video_vga_controller_hw.tcl: no _hw.tcl package requested, assuming package require -exact sopc 9.0
+Progress: Loading altera_up_avalon_video_vip_bridges/altera_up_avalon_video_raw_to_vip_bridge_hw.tcl
+Info: /home/oliver/altera/13.0sp1/ip/University_Program/Audio_Video/Video/altera_up_avalon_video_vip_bridges/altera_up_avalon_video_raw_to_vip_bridge_hw.tcl: no _hw.tcl package requested, assuming package require -exact sopc 9.0
+Progress: Loading altera_up_avalon_video_vip_bridges/altera_up_avalon_video_vip_to_raw_bridge_hw.tcl
+Info: /home/oliver/altera/13.0sp1/ip/University_Program/Audio_Video/Video/altera_up_avalon_video_vip_bridges/altera_up_avalon_video_vip_to_raw_bridge_hw.tcl: no _hw.tcl package requested, assuming package require -exact sopc 9.0
+Progress: Loading altera_up_avalon_audio/altera_up_avalon_audio_hw.tcl
+Info: /home/oliver/altera/13.0sp1/ip/University_Program/Audio_Video/altera_up_avalon_audio/altera_up_avalon_audio_hw.tcl: no _hw.tcl package requested, assuming package require -exact sopc 9.0
+Progress: Loading altera_up_avalon_audio/altera_up_avalon_audio_sw.tcl
+Progress: Loading altera_up_avalon_audio_and_video_config/altera_up_avalon_audio_and_video_config_hw.tcl
+Info: /home/oliver/altera/13.0sp1/ip/University_Program/Audio_Video/altera_up_avalon_audio_and_video_config/altera_up_avalon_audio_and_video_config_hw.tcl: no _hw.tcl package requested, assuming package require -exact sopc 9.0
+Progress: Loading altera_up_avalon_audio_and_video_config/altera_up_avalon_audio_and_video_config_sw.tcl
+Progress: Loading altera_up_avalon_character_lcd/altera_up_avalon_character_lcd_hw.tcl
+Info: /home/oliver/altera/13.0sp1/ip/University_Program/Audio_Video/altera_up_avalon_character_lcd/altera_up_avalon_character_lcd_hw.tcl: no _hw.tcl package requested, assuming package require -exact sopc 9.0
+Progress: Loading altera_up_avalon_character_lcd/altera_up_avalon_character_lcd_sw.tcl
+Progress: Loading altera_up_avalon_to_external_bus_bridge/altera_up_avalon_to_external_bus_bridge_hw.tcl
+Info: /home/oliver/altera/13.0sp1/ip/University_Program/Bridges/altera_up_avalon_to_external_bus_bridge/altera_up_avalon_to_external_bus_bridge_hw.tcl: no _hw.tcl package requested, assuming package require -exact sopc 9.0
+Progress: Loading altera_up_external_bus_to_avalon_bridge/altera_up_external_bus_to_avalon_bridge_hw.tcl
+Info: /home/oliver/altera/13.0sp1/ip/University_Program/Bridges/altera_up_external_bus_to_avalon_bridge/altera_up_external_bus_to_avalon_bridge_hw.tcl: no _hw.tcl package requested, assuming package require -exact sopc 9.0
+Progress: Loading altera_up_avalon_ethernet/altera_up_avalon_ethernet_hw.tcl
+Info: /home/oliver/altera/13.0sp1/ip/University_Program/Communications/altera_up_avalon_ethernet/altera_up_avalon_ethernet_hw.tcl: no _hw.tcl package requested, assuming package require -exact sopc 9.0
+Progress: Loading altera_up_avalon_ethernet/altera_up_avalon_ethernet_sw.tcl
+Progress: Loading altera_up_avalon_irda/altera_up_avalon_irda_hw.tcl
+Info: /home/oliver/altera/13.0sp1/ip/University_Program/Communications/altera_up_avalon_irda/altera_up_avalon_irda_hw.tcl: no _hw.tcl package requested, assuming package require -exact sopc 9.0
+Progress: Loading altera_up_avalon_irda/altera_up_avalon_irda_sw.tcl
+Progress: Loading altera_up_avalon_rs232/altera_up_avalon_rs232_hw.tcl
+Info: /home/oliver/altera/13.0sp1/ip/University_Program/Communications/altera_up_avalon_rs232/altera_up_avalon_rs232_hw.tcl: no _hw.tcl package requested, assuming package require -exact sopc 9.0
+Progress: Loading altera_up_avalon_rs232/altera_up_avalon_rs232_sw.tcl
+Progress: Loading altera_up_avalon_accelerometer_spi/altera_up_avalon_accelerometer_spi_hw.tcl
+Info: /home/oliver/altera/13.0sp1/ip/University_Program/Input_Output/altera_up_avalon_accelerometer_spi/altera_up_avalon_accelerometer_spi_hw.tcl: no _hw.tcl package requested, assuming package require -exact sopc 9.0
+Progress: Loading altera_up_avalon_accelerometer_spi/altera_up_avalon_accelerometer_spi_sw.tcl
+Progress: Loading altera_up_avalon_de0_nano_adc/altera_up_avalon_de0_nano_adc_hw.tcl
+Info: /home/oliver/altera/13.0sp1/ip/University_Program/Input_Output/altera_up_avalon_de0_nano_adc/altera_up_avalon_de0_nano_adc_hw.tcl: no _hw.tcl package requested, assuming package require -exact sopc 9.0
+Progress: Loading altera_up_avalon_de0_nano_adc/altera_up_avalon_de0_nano_adc_mega_hw.tcl
+Info: /home/oliver/altera/13.0sp1/ip/University_Program/Input_Output/altera_up_avalon_de0_nano_adc/altera_up_avalon_de0_nano_adc_mega_hw.tcl: no _hw.tcl package requested, assuming package require -exact sopc 9.0
+Progress: Loading altera_up_avalon_de0_nano_adc/altera_up_avalon_de0_nano_adc_sw.tcl
+Progress: Loading altera_up_avalon_parallel_port/altera_up_avalon_parallel_port_hw.tcl
+Info: /home/oliver/altera/13.0sp1/ip/University_Program/Input_Output/altera_up_avalon_parallel_port/altera_up_avalon_parallel_port_hw.tcl: no _hw.tcl package requested, assuming package require -exact sopc 9.0
+Progress: Loading altera_up_avalon_parallel_port/altera_up_avalon_parallel_port_sw.tcl
+Progress: Loading altera_up_avalon_ps2/altera_up_avalon_ps2_hw.tcl
+Info: /home/oliver/altera/13.0sp1/ip/University_Program/Input_Output/altera_up_avalon_ps2/altera_up_avalon_ps2_hw.tcl: no _hw.tcl package requested, assuming package require -exact sopc 9.0
+Progress: Loading altera_up_avalon_ps2/altera_up_avalon_ps2_sw.tcl
+Progress: Loading altera_up_avalon_usb/altera_up_avalon_usb_hw.tcl
+Info: /home/oliver/altera/13.0sp1/ip/University_Program/Input_Output/altera_up_avalon_usb/altera_up_avalon_usb_hw.tcl: no _hw.tcl package requested, assuming package require -exact sopc 9.0
+Progress: Loading altera_up_avalon_usb/altera_up_avalon_usb_sw.tcl
+Progress: Loading altera_up_avalon_sram/altera_up_avalon_sram_hw.tcl
+Info: /home/oliver/altera/13.0sp1/ip/University_Program/Memory/altera_up_avalon_sram/altera_up_avalon_sram_hw.tcl: no _hw.tcl package requested, assuming package require -exact sopc 9.0
+Progress: Loading altera_up_flash_memory/Altera_UP_Flash_Memory_IP_Core_Avalon_Interface_hw.tcl
+Info: /home/oliver/altera/13.0sp1/ip/University_Program/Memory/altera_up_flash_memory/Altera_UP_Flash_Memory_IP_Core_Avalon_Interface_hw.tcl: no _hw.tcl package requested, assuming package require -exact sopc 9.0
+Progress: Loading altera_up_sd_card_avalon_interface/Altera_UP_SD_Card_Avalon_Interface_hw.tcl
+Info: /home/oliver/altera/13.0sp1/ip/University_Program/Memory/altera_up_sd_card_avalon_interface/Altera_UP_SD_Card_Avalon_Interface_hw.tcl: no _hw.tcl package requested, assuming package require -exact sopc 9.0
+Progress: Loading altera_up_sd_card_avalon_interface/Altera_UP_SD_Card_Avalon_Interface_sw.tcl
+Progress: Loading altera_up_avalon_clocks/altera_up_avalon_clocks_hw.tcl
+Info: /home/oliver/altera/13.0sp1/ip/University_Program/altera_up_avalon_clocks/altera_up_avalon_clocks_hw.tcl: no _hw.tcl package requested, assuming package require -exact sopc 9.0
+Progress: Loading altera_up_clocks/altera_up_clocks_hw.tcl
+Info: /home/oliver/altera/13.0sp1/ip/University_Program/altera_up_clocks/altera_up_clocks_hw.tcl: no _hw.tcl package requested, assuming package require -exact sopc 9.0
+Info: Reading index /home/oliver/altera/13.0sp1/ip/altera/altera_components.ipx
+Info: /home/oliver/altera/13.0sp1/ip/altera/altera_components.ipx described 848 plugins, 0 paths, in 0.14 seconds
+Info: /home/oliver/altera/13.0sp1/ip/**/* matched 354 files in 1.18 seconds
+Info: /home/oliver/.altera.quartus/ip/13.0sp1/**/* matched 0 files in 0.00 seconds
+Info: /home/oliver/Projects/FPGA_Projects/CPU/hardware/qsys/sdram_system/testbench/ip/**/* matched 0 files in 0.00 seconds
+Info: Reading index /home/oliver/Projects/FPGA_Projects/CPU/hardware/qsys/sdram_system/testbench/sdram_system.ipx
+Progress: Loading qsys/sdram_system.qsys
+Info: /home/oliver/Projects/FPGA_Projects/CPU/hardware/qsys/* matched 10 files in 0.00 seconds
+Info: /home/oliver/Projects/FPGA_Projects/CPU/hardware/qsys/ip/**/* matched 0 files in 0.00 seconds
+Info: /home/oliver/Projects/FPGA_Projects/CPU/hardware/qsys/*/* matched 4 files in 0.00 seconds
+Info: /home/oliver/Projects/FPGA_Projects/CPU/hardware/qsys/sdram_system/testbench/sdram_system.ipx described 0 plugins, 3 paths, in 0.00 seconds
+Info: /home/oliver/Projects/FPGA_Projects/CPU/hardware/qsys/sdram_system/testbench/* matched 1 files in 0.00 seconds
+Info: /home/oliver/Projects/FPGA_Projects/CPU/hardware/qsys/sdram_system/testbench/*/* matched 0 files in 0.00 seconds
+Info: Reading index /home/oliver/altera/13.0sp1/quartus/sopc_builder/builtin.ipx
+Info: /home/oliver/altera/13.0sp1/quartus/sopc_builder/builtin.ipx described 103 plugins, 0 paths, in 0.02 seconds
+Info: /home/oliver/altera/13.0sp1/quartus/sopc_builder/**/* matched 10 files in 0.02 seconds
+Info: Reading index /home/oliver/altera/13.0sp1/quartus/common/librarian/factories/index.ipx
+Info: /home/oliver/altera/13.0sp1/quartus/common/librarian/factories/index.ipx described 151 plugins, 0 paths, in 0.02 seconds
+Info: /home/oliver/altera/13.0sp1/quartus/common/librarian/factories/**/* matched 4 files in 0.02 seconds
+Info: /home/oliver/altera/13.0sp1/quartus/sopc_builder/bin/$IP_IPX_PATH matched 1 files in 0.00 seconds
+Info: /home/oliver/altera/13.0sp1/quartus/sopc_builder/bin/root_components.ipx described 0 plugins, 9 paths, in 1.24 seconds
+Info: /home/oliver/altera/13.0sp1/quartus/sopc_builder/bin/root_components.ipx matched 1 files in 1.24 seconds
+Progress: 
+Progress: 
+Progress: 
+Info: Loading presets
+Progress: Loading presets
+Info: Running script /home/oliver/altera/13.0sp1/quartus/sopc_builder/bin/tbgen.tcl
+Info: acds::register_package_version 12.1
+Info: send_message Info TB_Gen: QSYS Testbench Generator Rev: $Revision: #2 $
+Info: TB_Gen: QSYS Testbench Generator Rev: $Revision: #2 $
+Info: get_module_property NAME
+Info: send_message Info TB_Gen: System design is: sdram_system
+Info: TB_Gen: System design is: sdram_system
+Info: get_interfaces 
+Info: get_connections 
+Info: get_interface_property clk EXPORT_OF
+Info: get_instance_property clk_0 CLASS_NAME
+Info: get_instance_assignment clk_0 testbench.partner.map.clk_in
+Info: get_interface_property reset EXPORT_OF
+Info: get_instance_property clk_0 CLASS_NAME
+Info: get_instance_assignment clk_0 testbench.partner.map.clk_in_reset
+Info: get_interface_property vga_clk EXPORT_OF
+Info: get_instance_property up_clocks_0 CLASS_NAME
+Info: get_instance_assignment up_clocks_0 testbench.partner.map.vga_clk
+Info: get_interface_property sdram_controller EXPORT_OF
+Info: get_instance_property new_sdram_controller_0 CLASS_NAME
+Info: get_instance_assignment new_sdram_controller_0 testbench.partner.map.wire
+Info: get_instance_assignment new_sdram_controller_0 testbench.partner.map.wire
+Info: get_instance_assignment new_sdram_controller_0 testbench.partner.map.wire
+Info: get_instance_assignment new_sdram_controller_0 testbench.partner.my_partner.class
+Info: get_instance_assignment new_sdram_controller_0 testbench.partner.my_partner.version
+Info: get_instance_assignments new_sdram_controller_0
+Info: get_instance_assignment new_sdram_controller_0 testbench.partner.my_partner.parameter.CAS_LATENCY
+Info: get_instance_assignment new_sdram_controller_0 testbench.partner.my_partner.parameter.CONTR_NAME
+Info: get_instance_assignment new_sdram_controller_0 testbench.partner.my_partner.parameter.SDRAM_BANK_WIDTH
+Info: get_instance_assignment new_sdram_controller_0 testbench.partner.my_partner.parameter.SDRAM_COL_WIDTH
+Info: get_instance_assignment new_sdram_controller_0 testbench.partner.my_partner.parameter.SDRAM_DATA_WIDTH
+Info: get_instance_assignment new_sdram_controller_0 testbench.partner.my_partner.parameter.SDRAM_NUM_CHIPSELECTS
+Info: get_instance_assignment new_sdram_controller_0 testbench.partner.my_partner.parameter.SDRAM_ROW_WIDTH
+Info: send_message Info TB_Gen: Interface 'sdram_controller' partner_name: 'new_sdram_controller_0_my_partner'
+Info: TB_Gen: Interface 'sdram_controller' partner_name: 'new_sdram_controller_0_my_partner'
+Info: send_message Info TB_Gen: Interface 'new_sdram_controller_0_my_partner' sdram_controller.partner_intf: 'conduit'
+Info: TB_Gen: Interface 'new_sdram_controller_0_my_partner' sdram_controller.partner_intf: 'conduit'
+Info: send_message Info TB_Gen: Interface 'new_sdram_controller_0_my_partner' partner_class: 'altera_sdram_partner_module'
+Info: TB_Gen: Interface 'new_sdram_controller_0_my_partner' partner_class: 'altera_sdram_partner_module'
+Info: send_message Info TB_Gen: Interface 'new_sdram_controller_0_my_partner' partner_version: ''
+Info: TB_Gen: Interface 'new_sdram_controller_0_my_partner' partner_version: ''
+Info: send_message Info TB_Gen: Interface 'new_sdram_controller_0_my_partner' partner_param.CAS_LATENCY: '3'
+Info: TB_Gen: Interface 'new_sdram_controller_0_my_partner' partner_param.CAS_LATENCY: '3'
+Info: send_message Info TB_Gen: Interface 'new_sdram_controller_0_my_partner' partner_param.CONTR_NAME: 'sdram_system_new_sdram_controller_0'
+Info: TB_Gen: Interface 'new_sdram_controller_0_my_partner' partner_param.CONTR_NAME: 'sdram_system_new_sdram_controller_0'
+Info: send_message Info TB_Gen: Interface 'new_sdram_controller_0_my_partner' partner_param.SDRAM_BANK_WIDTH: '2'
+Info: TB_Gen: Interface 'new_sdram_controller_0_my_partner' partner_param.SDRAM_BANK_WIDTH: '2'
+Info: send_message Info TB_Gen: Interface 'new_sdram_controller_0_my_partner' partner_param.SDRAM_COL_WIDTH: '8'
+Info: TB_Gen: Interface 'new_sdram_controller_0_my_partner' partner_param.SDRAM_COL_WIDTH: '8'
+Info: send_message Info TB_Gen: Interface 'new_sdram_controller_0_my_partner' partner_param.SDRAM_DATA_WIDTH: '16'
+Info: TB_Gen: Interface 'new_sdram_controller_0_my_partner' partner_param.SDRAM_DATA_WIDTH: '16'
+Info: send_message Info TB_Gen: Interface 'new_sdram_controller_0_my_partner' partner_param.SDRAM_NUM_CHIPSELECTS: '1'
+Info: TB_Gen: Interface 'new_sdram_controller_0_my_partner' partner_param.SDRAM_NUM_CHIPSELECTS: '1'
+Info: send_message Info TB_Gen: Interface 'new_sdram_controller_0_my_partner' partner_param.SDRAM_ROW_WIDTH: '12'
+Info: TB_Gen: Interface 'new_sdram_controller_0_my_partner' partner_param.SDRAM_ROW_WIDTH: '12'
+Info: send_message Info TB_Gen: Interface 'new_sdram_controller_0_my_partner' partner_params: 'CAS_LATENCY CONTR_NAME SDRAM_BANK_WIDTH SDRAM_COL_WIDTH SDRAM_DATA_WIDTH SDRAM_NUM_CHIPSELECTS SDRAM_ROW_WIDTH'
+Info: TB_Gen: Interface 'new_sdram_controller_0_my_partner' partner_params: 'CAS_LATENCY CONTR_NAME SDRAM_BANK_WIDTH SDRAM_COL_WIDTH SDRAM_DATA_WIDTH SDRAM_NUM_CHIPSELECTS SDRAM_ROW_WIDTH'
+Info: get_instance_assignments new_sdram_controller_0
+Info: get_instance_interfaces new_sdram_controller_0
+Info: get_instance_interfaces new_sdram_controller_0
+Info: get_interface_property clk EXPORT_OF
+Info: get_interface_property reset EXPORT_OF
+Info: get_interface_property vga_clk EXPORT_OF
+Info: get_interface_property sdram_controller EXPORT_OF
+Info: get_interface_property avalon_bridge EXPORT_OF
+Info: get_instance_assignment new_sdram_controller_0 testbench.partner.map.clk
+Info: get_instance_assignment new_sdram_controller_0 testbench.partner.map.clk
+Info: get_instance_assignment new_sdram_controller_0 testbench.partner.map.clk
+Info: get_instance_interface_property new_sdram_controller_0 clk CLASS_NAME
+Info: get_instance_interface_parameter_value new_sdram_controller_0 clk clockRate
+Info: get_instance_interface_property new_sdram_controller_0 clk CLASS_NAME
+Info: get_interface_property clk EXPORT_OF
+Info: get_interface_property reset EXPORT_OF
+Info: get_interface_property vga_clk EXPORT_OF
+Info: get_interface_property sdram_controller EXPORT_OF
+Info: get_interface_property avalon_bridge EXPORT_OF
+Info: get_instance_property up_clocks_0 CLASS_NAME
+Info: get_interface_property clk EXPORT_OF
+Info: get_interface_property reset EXPORT_OF
+Info: get_interface_property vga_clk EXPORT_OF
+Info: get_interface_property sdram_controller EXPORT_OF
+Info: get_interface_property avalon_bridge EXPORT_OF
+Info: get_instance_property new_sdram_controller_0 CLASS_NAME
+Info: get_instance_interface_parameter_value up_clocks_0 sdram_clk clockRate
+Info: send_message Info TB_Gen: Implicit assignment 'new_sdram_controller_0_my_partner' partner_implicit_name: 'new_sdram_controller_0_my_partner'
+Info: TB_Gen: Implicit assignment 'new_sdram_controller_0_my_partner' partner_implicit_name: 'new_sdram_controller_0_my_partner'
+Info: send_message Info TB_Gen: Implicit assignment 'new_sdram_controller_0_my_partner' partner_implicit_clks: 'clk'
+Info: TB_Gen: Implicit assignment 'new_sdram_controller_0_my_partner' partner_implicit_clks: 'clk'
+Info: send_message Info TB_Gen: Implicit assignment 'new_sdram_controller_0_my_partner' clk.partner_implicit_clk_rate: '50000000.0'
+Info: TB_Gen: Implicit assignment 'new_sdram_controller_0_my_partner' clk.partner_implicit_clk_rate: '50000000.0'
+Info: send_message Info TB_Gen: Implicit assignment 'new_sdram_controller_0_my_partner' clk.partner_implicit_clk_export: ''
+Info: TB_Gen: Implicit assignment 'new_sdram_controller_0_my_partner' clk.partner_implicit_clk_export: ''
+Info: get_instance_property new_sdram_controller_0 CLASS_NAME
+Info: get_interface_property avalon_bridge EXPORT_OF
+Info: get_instance_property bridge_0 CLASS_NAME
+Info: get_instance_assignment bridge_0 testbench.partner.map.external_interface
+Info: send_message Info TB_Gen: Creating testbench system : sdram_system_tb with all standard BFMs
+Info: TB_Gen: Creating testbench system : sdram_system_tb with all standard BFMs
+Info: create_system sdram_system_tb
+Info: add_instance sdram_system_inst sdram_system 
+Info: set_use_testbench_naming_pattern true
+Info: get_instance_interfaces sdram_system_inst
+Info: get_instance_interface_property sdram_system_inst clk CLASS_NAME
+Info: get_instance_interface_property sdram_system_inst reset CLASS_NAME
+Info: get_instance_interface_property sdram_system_inst vga_clk CLASS_NAME
+Info: get_instance_interface_property sdram_system_inst sdram_controller CLASS_NAME
+Info: get_instance_interface_property sdram_system_inst avalon_bridge CLASS_NAME
+Info: get_instance_interface_property sdram_system_inst clk CLASS_NAME
+Info: send_message Info TB_Gen: clock_sink found: clk
+Info: TB_Gen: clock_sink found: clk
+Info: get_instance_interface_property sdram_system_inst clk CLASS_NAME
+Info: add_instance sdram_system_inst_clk_bfm altera_avalon_clock_source 
+Info: get_instance_property sdram_system_inst_clk_bfm CLASS_NAME
+Info: get_instance_interface_parameter_value sdram_system_inst clk clockRate
+Info: set_instance_parameter_value sdram_system_inst_clk_bfm CLOCK_RATE 50000000.0
+Info: set_instance_parameter_value sdram_system_inst_clk_bfm CLOCK_UNIT 1
+Info: get_instance_property sdram_system_inst_clk_bfm CLASS_NAME
+Info: get_instance_interface_property sdram_system_inst clk CLASS_NAME
+Info: get_instance_interfaces sdram_system_inst_clk_bfm
+Info: get_instance_interface_property sdram_system_inst_clk_bfm clk CLASS_NAME
+Info: add_connection sdram_system_inst_clk_bfm.clk sdram_system_inst.clk
+Info: get_instance_interface_property sdram_system_inst reset CLASS_NAME
+Info: send_message Info TB_Gen: reset_sink found: reset
+Info: TB_Gen: reset_sink found: reset
+Info: get_instance_interface_property sdram_system_inst reset CLASS_NAME
+Info: add_instance sdram_system_inst_reset_bfm altera_avalon_reset_source 
+Info: get_instance_property sdram_system_inst_reset_bfm CLASS_NAME
+Info: get_instance_interface_ports sdram_system_inst reset
+Info: get_instance_interface_port_property sdram_system_inst reset reset_reset_n ROLE
+Info: set_instance_parameter_value sdram_system_inst_reset_bfm ASSERT_HIGH_RESET 0
+Info: set_instance_parameter_value sdram_system_inst_reset_bfm INITIAL_RESET_CYCLES 50
+Info: get_instance_property sdram_system_inst_reset_bfm CLASS_NAME
+Info: get_instance_interfaces sdram_system_inst_reset_bfm
+Info: get_instance_interface_property sdram_system_inst_reset_bfm reset CLASS_NAME
+Info: get_instance_interface_property sdram_system_inst_reset_bfm clk CLASS_NAME
+Info: get_instance_property sdram_system_inst_reset_bfm CLASS_NAME
+Info: get_instance_interface_parameter_value sdram_system_inst reset associatedClock
+Info: get_instance_interfaces sdram_system_inst_clk_bfm
+Info: get_instance_interface_property sdram_system_inst_clk_bfm clk CLASS_NAME
+Info: send_message Warning TB_Gen: sdram_system_inst_reset_bfm is not associated to any clock; connecting sdram_system_inst_reset_bfm to 'sdram_system_inst_clk_bfm.clk'
+Warning: TB_Gen: sdram_system_inst_reset_bfm is not associated to any clock; connecting sdram_system_inst_reset_bfm to 'sdram_system_inst_clk_bfm.clk'
+Info: add_connection sdram_system_inst_clk_bfm.clk sdram_system_inst_reset_bfm.clk
+Info: get_instance_interface_property sdram_system_inst reset CLASS_NAME
+Info: get_instance_interfaces sdram_system_inst_reset_bfm
+Info: get_instance_interface_property sdram_system_inst_reset_bfm reset CLASS_NAME
+Info: get_instance_interface_property sdram_system_inst_reset_bfm clk CLASS_NAME
+Info: add_connection sdram_system_inst_reset_bfm.reset sdram_system_inst.reset
+Info: get_instance_interface_property sdram_system_inst avalon_bridge CLASS_NAME
+Info: send_message Info TB_Gen: conduit_end found: avalon_bridge
+Info: TB_Gen: conduit_end found: avalon_bridge
+Info: get_instance_interface_property sdram_system_inst avalon_bridge CLASS_NAME
+Info: add_instance sdram_system_inst_avalon_bridge_bfm altera_conduit_bfm 
+Info: get_instance_property sdram_system_inst_avalon_bridge_bfm CLASS_NAME
+Info: get_instance_interface_parameter_value sdram_system_inst avalon_bridge associatedClock
+Info: get_instance_interface_parameter_value sdram_system_inst avalon_bridge associatedReset
+Info: get_instance_interface_ports sdram_system_inst avalon_bridge
+Info: get_instance_interface_port_property sdram_system_inst avalon_bridge avalon_bridge_address ROLE
+Info: get_instance_interface_port_property sdram_system_inst avalon_bridge avalon_bridge_address WIDTH
+Info: get_instance_interface_port_property sdram_system_inst avalon_bridge avalon_bridge_address DIRECTION
+Info: get_instance_interface_port_property sdram_system_inst avalon_bridge avalon_bridge_byte_enable ROLE
+Info: get_instance_interface_port_property sdram_system_inst avalon_bridge avalon_bridge_byte_enable WIDTH
+Info: get_instance_interface_port_property sdram_system_inst avalon_bridge avalon_bridge_byte_enable DIRECTION
+Info: get_instance_interface_port_property sdram_system_inst avalon_bridge avalon_bridge_read ROLE
+Info: get_instance_interface_port_property sdram_system_inst avalon_bridge avalon_bridge_read WIDTH
+Info: get_instance_interface_port_property sdram_system_inst avalon_bridge avalon_bridge_read DIRECTION
+Info: get_instance_interface_port_property sdram_system_inst avalon_bridge avalon_bridge_write ROLE
+Info: get_instance_interface_port_property sdram_system_inst avalon_bridge avalon_bridge_write WIDTH
+Info: get_instance_interface_port_property sdram_system_inst avalon_bridge avalon_bridge_write DIRECTION
+Info: get_instance_interface_port_property sdram_system_inst avalon_bridge avalon_bridge_write_data ROLE
+Info: get_instance_interface_port_property sdram_system_inst avalon_bridge avalon_bridge_write_data WIDTH
+Info: get_instance_interface_port_property sdram_system_inst avalon_bridge avalon_bridge_write_data DIRECTION
+Info: get_instance_interface_port_property sdram_system_inst avalon_bridge avalon_bridge_acknowledge ROLE
+Info: get_instance_interface_port_property sdram_system_inst avalon_bridge avalon_bridge_acknowledge WIDTH
+Info: get_instance_interface_port_property sdram_system_inst avalon_bridge avalon_bridge_acknowledge DIRECTION
+Info: get_instance_interface_port_property sdram_system_inst avalon_bridge avalon_bridge_read_data ROLE
+Info: get_instance_interface_port_property sdram_system_inst avalon_bridge avalon_bridge_read_data WIDTH
+Info: get_instance_interface_port_property sdram_system_inst avalon_bridge avalon_bridge_read_data DIRECTION
+Info: set_instance_parameter_value sdram_system_inst_avalon_bridge_bfm CLOCKED_SIGNAL 0
+Info: set_instance_parameter_value sdram_system_inst_avalon_bridge_bfm ENABLE_RESET 0
+Info: set_instance_parameter_value sdram_system_inst_avalon_bridge_bfm SIGNAL_ROLES address byte_enable read write write_data acknowledge read_data
+Info: set_instance_parameter_value sdram_system_inst_avalon_bridge_bfm SIGNAL_WIDTHS 23 2 1 1 16 1 16
+Info: set_instance_parameter_value sdram_system_inst_avalon_bridge_bfm SIGNAL_DIRECTIONS output output output output output input input
+Info: get_instance_property sdram_system_inst_avalon_bridge_bfm CLASS_NAME
+Info: get_instance_interface_property sdram_system_inst avalon_bridge CLASS_NAME
+Info: get_instance_interfaces sdram_system_inst_avalon_bridge_bfm
+Info: get_instance_interface_property sdram_system_inst_avalon_bridge_bfm conduit CLASS_NAME
+Info: add_connection sdram_system_inst_avalon_bridge_bfm.conduit sdram_system_inst.avalon_bridge
+Info: get_instance_interface_property sdram_system_inst sdram_controller CLASS_NAME
+Info: send_message Info TB_Gen: conduit_end (for partner module) found: sdram_controller
+Info: TB_Gen: conduit_end (for partner module) found: sdram_controller
+Info: add_instance new_sdram_controller_0_my_partner altera_sdram_partner_module 
+Info: set_instance_parameter_value new_sdram_controller_0_my_partner CAS_LATENCY 3
+Info: set_instance_parameter_value new_sdram_controller_0_my_partner CONTR_NAME sdram_system_new_sdram_controller_0
+Info: set_instance_parameter_value new_sdram_controller_0_my_partner SDRAM_BANK_WIDTH 2
+Info: set_instance_parameter_value new_sdram_controller_0_my_partner SDRAM_COL_WIDTH 8
+Info: set_instance_parameter_value new_sdram_controller_0_my_partner SDRAM_DATA_WIDTH 16
+Info: set_instance_parameter_value new_sdram_controller_0_my_partner SDRAM_NUM_CHIPSELECTS 1
+Info: set_instance_parameter_value new_sdram_controller_0_my_partner SDRAM_ROW_WIDTH 12
+Info: get_instance_interface_property sdram_system_inst sdram_controller CLASS_NAME
+Info: get_instance_interface_property new_sdram_controller_0_my_partner conduit CLASS_NAME
+Info: get_instance_interface_property sdram_system_inst sdram_controller CLASS_NAME
+Info: get_instance_interface_property new_sdram_controller_0_my_partner conduit CLASS_NAME
+Info: add_connection new_sdram_controller_0_my_partner.conduit sdram_system_inst.sdram_controller
+Info: get_instance_interface_property new_sdram_controller_0_my_partner clk CLASS_NAME
+Info: get_instance_interface_property new_sdram_controller_0_my_partner clk CLASS_NAME
+Info: add_instance new_sdram_controller_0_my_partner_clk_bfm altera_avalon_clock_source 
+Info: set_instance_parameter_value new_sdram_controller_0_my_partner_clk_bfm CLOCK_RATE 50000000.0
+Info: set_instance_parameter_value new_sdram_controller_0_my_partner_clk_bfm CLOCK_UNIT 1
+Info: get_instance_interface_property new_sdram_controller_0_my_partner clk CLASS_NAME
+Info: get_instance_interfaces new_sdram_controller_0_my_partner_clk_bfm
+Info: get_instance_interface_property new_sdram_controller_0_my_partner_clk_bfm clk CLASS_NAME
+Info: add_connection new_sdram_controller_0_my_partner_clk_bfm.clk new_sdram_controller_0_my_partner.clk
+Info: send_message Info TB_Gen: Saving testbench system: sdram_system_tb.qsys
+Info: TB_Gen: Saving testbench system: sdram_system_tb.qsys
+Info: save_system sdram_system_tb.qsys
+Info: send_message Info TB_Gen: TBGEN SUCCESSFUL
+Info: TB_Gen: TBGEN SUCCESSFUL
+Info: Testbench system: /home/oliver/Projects/FPGA_Projects/CPU/hardware/qsys/sdram_system/testbench/sdram_system_tb.qsys
+Info: Done
+Info: ip-generate --project-directory=/home/oliver/Projects/FPGA_Projects/CPU/hardware/qsys/sdram_system/testbench/ --output-directory=/home/oliver/Projects/FPGA_Projects/CPU/hardware/qsys/sdram_system/testbench/sdram_system_tb/simulation/ --file-set=SIM_VERILOG --report-file=html:/home/oliver/Projects/FPGA_Projects/CPU/hardware/qsys/sdram_system/testbench/sdram_system_tb.html --system-info=DEVICE_FAMILY="Cyclone II" --system-info=DEVICE=EP2C20F484C7 --system-info=DEVICE_SPEEDGRADE=7 --component-file=/home/oliver/Projects/FPGA_Projects/CPU/hardware/qsys/sdram_system/testbench/sdram_system_tb.qsys --report-file=csv:/home/oliver/Projects/FPGA_Projects/CPU/hardware/qsys/sdram_system_tb.csv --report-file=spd:/home/oliver/Projects/FPGA_Projects/CPU/hardware/qsys/sdram_system_tb.spd
+Progress: Loading testbench/sdram_system_tb.qsys
+Progress: Reading input file
+Progress: Adding sdram_system_inst [sdram_system 1.0]
+Progress: Parameterizing module sdram_system_inst
+Progress: Adding sdram_system_inst_clk_bfm [altera_avalon_clock_source 13.0]
+Progress: Parameterizing module sdram_system_inst_clk_bfm
+Progress: Adding sdram_system_inst_reset_bfm [altera_avalon_reset_source 13.0]
+Progress: Parameterizing module sdram_system_inst_reset_bfm
+Progress: Adding sdram_system_inst_avalon_bridge_bfm [altera_conduit_bfm 13.0]
+Progress: Parameterizing module sdram_system_inst_avalon_bridge_bfm
+Progress: Adding new_sdram_controller_0_my_partner [altera_sdram_partner_module 11.0]
+Progress: Parameterizing module new_sdram_controller_0_my_partner
+Progress: Adding new_sdram_controller_0_my_partner_clk_bfm [altera_avalon_clock_source 13.0]
+Progress: Parameterizing module new_sdram_controller_0_my_partner_clk_bfm
+Progress: Building connections
+Progress: Parameterizing connections
+Progress: Validating
+Progress: Done reading input file
+Info: sdram_system_tb.sdram_system_inst_clk_bfm: Elaborate: altera_clock_source
+Info: sdram_system_tb.sdram_system_inst_clk_bfm:            $Revision: #1 $
+Info: sdram_system_tb.sdram_system_inst_clk_bfm:            $Date: 2013/03/07 $
+Info: sdram_system_tb.sdram_system_inst_reset_bfm: Elaborate: altera_reset_source
+Info: sdram_system_tb.sdram_system_inst_reset_bfm:            $Revision: #1 $
+Info: sdram_system_tb.sdram_system_inst_reset_bfm:            $Date: 2013/03/07 $
+Info: sdram_system_tb.sdram_system_inst_reset_bfm: Reset is negatively asserted.
+Info: sdram_system_tb.new_sdram_controller_0_my_partner_clk_bfm: Elaborate: altera_clock_source
+Info: sdram_system_tb.new_sdram_controller_0_my_partner_clk_bfm:            $Revision: #1 $
+Info: sdram_system_tb.new_sdram_controller_0_my_partner_clk_bfm:            $Date: 2013/03/07 $
+Info: sdram_system_tb: Generating sdram_system_tb "sdram_system_tb" for SIM_VERILOG
+Info: pipeline_bridge_swap_transform: After transform: 6 modules, 6 connections
+Info: No custom instruction connections, skipping transform 
+Info: No Avalon connections, skipping transform 
+Info: merlin_translator_transform: After transform: 6 modules, 6 connections
+Info: pipeline_bridge_swap_transform: After transform: 4 modules, 7 connections
+Info: No custom instruction connections, skipping transform 
+Info: merlin_translator_transform: After transform: 6 modules, 13 connections
+Info: merlin_domain_transform: After transform: 11 modules, 34 connections
+Info: merlin_router_transform: After transform: 13 modules, 40 connections
+Info: reset_adaptation_transform: After transform: 15 modules, 44 connections
+Info: merlin_network_to_switch_transform: After transform: 18 modules, 50 connections
+Info: Inserting clock-crossing logic between cmd_xbar_demux.src0 and cmd_xbar_mux.sink0
+Info: Inserting clock-crossing logic between rsp_xbar_demux.src0 and rsp_xbar_mux.sink0
+Info: com_altera_sopcmodel_transforms_avalon_ClockCrossingTransform: After transform: 20 modules, 60 connections
+Info: merlin_mm_transform: After transform: 20 modules, 60 connections
+Info: sdram_system_inst: "sdram_system_tb" instantiated sdram_system "sdram_system_inst"
+Info: sdram_system_inst_clk_bfm: "sdram_system_tb" instantiated altera_avalon_clock_source "sdram_system_inst_clk_bfm"
+Info: sdram_system_inst_reset_bfm: "sdram_system_tb" instantiated altera_avalon_reset_source "sdram_system_inst_reset_bfm"
+Info: Reusing file /home/oliver/Projects/FPGA_Projects/CPU/hardware/qsys/sdram_system/testbench/sdram_system_tb/simulation/submodules/verbosity_pkg.sv
+Info: sdram_system_inst_avalon_bridge_bfm: "sdram_system_tb" instantiated altera_conduit_bfm "sdram_system_inst_avalon_bridge_bfm"
+Info: Reusing file /home/oliver/Projects/FPGA_Projects/CPU/hardware/qsys/sdram_system/testbench/sdram_system_tb/simulation/submodules/verbosity_pkg.sv
+Info: new_sdram_controller_0_my_partner: Starting RTL generation for partner module 'altera_sdram_partner_module'
+Info: new_sdram_controller_0_my_partner:   Generation command is [exec /home/oliver/altera/13.0sp1/quartus/linux/perl/bin/perl -I /home/oliver/altera/13.0sp1/quartus/common/ip/altera/common/perl/5.8.3 -I /home/oliver/altera/13.0sp1/quartus/sopc_builder/bin/europa -I /home/oliver/altera/13.0sp1/quartus/sopc_builder/bin/perl_lib -I /home/oliver/altera/13.0sp1/quartus/sopc_builder/bin -I /home/oliver/altera/13.0sp1/ip/altera/alt_mem_if/alt_mem_if_mem_models/altera_sdram_partner_module/ -I /home/oliver/altera/13.0sp1/quartus/../ip/altera/sopc_builder_ip/altera_sdram_partner_module -- /home/oliver/altera/13.0sp1/ip/altera/alt_mem_if/alt_mem_if_mem_models/altera_sdram_partner_module//em_altera_sodimm.pl --output_dir=/tmp/alt7990_1957228334664860325.dir/0016_sopcgen/ --quartus_dir=/home/oliver/altera/13.0sp1/quartus --language=verilog --sdram_data_width=16 --sdram_bank_width=2 --sdram_col_width=8 --sdram_row_width=12 --sdram_num_chipselects=1 --module_name=altera_sdram_partner_module --cas_latency=3]
+Info: new_sdram_controller_0_my_partner: # 2019.04.04 00:59:06 (*) Starting SDRAM Simulation Partner Module generation
+Info: new_sdram_controller_0_my_partner: Done RTL generation for module 'altera_sdram_partner_module'
+Info: new_sdram_controller_0_my_partner: "sdram_system_tb" instantiated altera_sdram_partner_module "new_sdram_controller_0_my_partner"
+Info: up_clocks_0: Starting Generation of Required Clocks for DE-Series Boards
+Info: up_clocks_0: "sdram_system_inst" instantiated altera_up_clocks "up_clocks_0"
+Info: new_sdram_controller_0: Starting RTL generation for module 'sdram_system_new_sdram_controller_0'
+Info: new_sdram_controller_0:   Generation command is [exec /home/oliver/altera/13.0sp1/quartus/linux/perl/bin/perl -I /home/oliver/altera/13.0sp1/quartus/common/ip/altera/common/perl/5.8.3 -I /home/oliver/altera/13.0sp1/quartus/sopc_builder/bin/europa -I /home/oliver/altera/13.0sp1/quartus/sopc_builder/bin/perl_lib -I /home/oliver/altera/13.0sp1/quartus/sopc_builder/bin -I /home/oliver/altera/13.0sp1/quartus/../ip/altera/sopc_builder_ip/common -I /home/oliver/altera/13.0sp1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_new_sdram_controller -- /home/oliver/altera/13.0sp1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_new_sdram_controller/generate_rtl.pl --name=sdram_system_new_sdram_controller_0 --dir=/tmp/alt7990_1957228334664860325.dir/0018_new_sdram_controller_0_gen/ --quartus_dir=/home/oliver/altera/13.0sp1/quartus --verilog --config=/tmp/alt7990_1957228334664860325.dir/0018_new_sdram_controller_0_gen//sdram_system_new_sdram_controller_0_component_configuration.pl  --do_build_sim=1    --sim_dir=/tmp/alt7990_1957228334664860325.dir/0018_new_sdram_controller_0_gen/  ]
+Info: new_sdram_controller_0: Done RTL generation for module 'sdram_system_new_sdram_controller_0'
+Info: new_sdram_controller_0: "sdram_system_inst" instantiated altera_avalon_new_sdram_controller "new_sdram_controller_0"
+Info: bridge_0: Starting Generation of External Bus to Avalon Bridge
+Info: bridge_0: "sdram_system_inst" instantiated altera_up_external_bus_to_avalon_bridge "bridge_0"
+Info: bridge_0_avalon_master_translator: "sdram_system_inst" instantiated altera_merlin_master_translator "bridge_0_avalon_master_translator"
+Info: new_sdram_controller_0_s1_translator: "sdram_system_inst" instantiated altera_merlin_slave_translator "new_sdram_controller_0_s1_translator"
+Info: bridge_0_avalon_master_translator_avalon_universal_master_0_agent: "sdram_system_inst" instantiated altera_merlin_master_agent "bridge_0_avalon_master_translator_avalon_universal_master_0_agent"
+Info: new_sdram_controller_0_s1_translator_avalon_universal_slave_0_agent: "sdram_system_inst" instantiated altera_merlin_slave_agent "new_sdram_controller_0_s1_translator_avalon_universal_slave_0_agent"
+Info: new_sdram_controller_0_s1_translator_avalon_universal_slave_0_agent_rsp_fifo: "sdram_system_inst" instantiated altera_avalon_sc_fifo "new_sdram_controller_0_s1_translator_avalon_universal_slave_0_agent_rsp_fifo"
+Info: addr_router: "sdram_system_inst" instantiated altera_merlin_router "addr_router"
+Info: id_router: "sdram_system_inst" instantiated altera_merlin_router "id_router"
+Info: rst_controller: "sdram_system_inst" instantiated altera_reset_controller "rst_controller"
+Info: cmd_xbar_demux: "sdram_system_inst" instantiated altera_merlin_demultiplexer "cmd_xbar_demux"
+Info: crosser: "sdram_system_inst" instantiated altera_avalon_st_handshake_clock_crosser "crosser"
+Info: sdram_system_tb: Done sdram_system_tb" with 19 modules, 36 files, 403241 bytes
+Info: ip-generate succeeded.
+Info: sim-script-gen --spd=/home/oliver/Projects/FPGA_Projects/CPU/hardware/qsys/sdram_system_tb.spd --output-directory=/home/oliver/Projects/FPGA_Projects/CPU/hardware/qsys/sdram_system/testbench/
+Info: Doing: ip-make-simscript --spd=/home/oliver/Projects/FPGA_Projects/CPU/hardware/qsys/sdram_system_tb.spd --output-directory=/home/oliver/Projects/FPGA_Projects/CPU/hardware/qsys/sdram_system/testbench/
+Info: Generating the following file(s) for MODELSIM simulator in /home/oliver/Projects/FPGA_Projects/CPU/hardware/qsys/sdram_system/testbench/ directory:
+Info: 	mentor/msim_setup.tcl
+Info: Generating the following file(s) for VCS simulator in /home/oliver/Projects/FPGA_Projects/CPU/hardware/qsys/sdram_system/testbench/ directory:
+Info: 	synopsys/vcs/vcs_setup.sh
+Info: Generating the following file(s) for VCSMX simulator in /home/oliver/Projects/FPGA_Projects/CPU/hardware/qsys/sdram_system/testbench/ directory:
+Info: 	synopsys/vcsmx/synopsys_sim.setup
+Info: 	synopsys/vcsmx/vcsmx_setup.sh
+Info: Generating the following file(s) for NCSIM simulator in /home/oliver/Projects/FPGA_Projects/CPU/hardware/qsys/sdram_system/testbench/ directory:
+Info: 	cadence/cds.lib
+Info: 	cadence/hdl.var
+Info: 	cadence/ncsim_setup.sh
+Info: 	18 .cds.lib files in cadence/cds_libs/ directory
+Info: Generating the following file(s) for RIVIERAPRO simulator in /home/oliver/Projects/FPGA_Projects/CPU/hardware/qsys/sdram_system/testbench/ directory:
+Info: 	aldec/rivierapro_setup.tcl
+Info: Finished: Create testbench Qsys system
+Info: Starting: Create block symbol file (.bsf)
+Info: ip-generate --project-directory=/home/oliver/Projects/FPGA_Projects/CPU/hardware/qsys/ --output-directory=/home/oliver/Projects/FPGA_Projects/CPU/hardware/qsys/sdram_system/ --report-file=bsf:/home/oliver/Projects/FPGA_Projects/CPU/hardware/qsys/sdram_system.bsf --system-info=DEVICE_FAMILY="Cyclone II" --system-info=DEVICE=EP2C20F484C7 --system-info=DEVICE_SPEEDGRADE=7 --component-file=/home/oliver/Projects/FPGA_Projects/CPU/hardware/qsys/sdram_system.qsys
+Progress: Loading qsys/sdram_system.qsys
+Progress: Reading input file
+Progress: Adding clk_0 [clock_source 13.0]
+Progress: Parameterizing module clk_0
+Progress: Adding up_clocks_0 [altera_up_clocks 13.0]
+Progress: Parameterizing module up_clocks_0
+Progress: Adding new_sdram_controller_0 [altera_avalon_new_sdram_controller 13.0.1.99.2]
+Progress: Parameterizing module new_sdram_controller_0
+Progress: Adding bridge_0 [altera_up_external_bus_to_avalon_bridge 13.0]
+Progress: Parameterizing module bridge_0
+Progress: Building connections
+Progress: Parameterizing connections
+Progress: Validating
+Progress: Done reading input file
+Info: ip-generate succeeded.
+Info: Finished: Create block symbol file (.bsf)
+Info: 
+Info: Starting: Create HDL design files for synthesis
+Info: ip-generate --project-directory=/home/oliver/Projects/FPGA_Projects/CPU/hardware/qsys/ --output-directory=/home/oliver/Projects/FPGA_Projects/CPU/hardware/qsys/sdram_system/synthesis/ --file-set=QUARTUS_SYNTH --report-file=sopcinfo:/home/oliver/Projects/FPGA_Projects/CPU/hardware/qsys/sdram_system.sopcinfo --report-file=html:/home/oliver/Projects/FPGA_Projects/CPU/hardware/qsys/sdram_system.html --report-file=qip:/home/oliver/Projects/FPGA_Projects/CPU/hardware/qsys/sdram_system/synthesis/sdram_system.qip --report-file=cmp:/home/oliver/Projects/FPGA_Projects/CPU/hardware/qsys/sdram_system.cmp --report-file=svd --system-info=DEVICE_FAMILY="Cyclone II" --system-info=DEVICE=EP2C20F484C7 --system-info=DEVICE_SPEEDGRADE=7 --component-file=/home/oliver/Projects/FPGA_Projects/CPU/hardware/qsys/sdram_system.qsys --language=VERILOG
+Progress: Loading qsys/sdram_system.qsys
+Progress: Reading input file
+Progress: Adding clk_0 [clock_source 13.0]
+Progress: Parameterizing module clk_0
+Progress: Adding up_clocks_0 [altera_up_clocks 13.0]
+Progress: Parameterizing module up_clocks_0
+Progress: Adding new_sdram_controller_0 [altera_avalon_new_sdram_controller 13.0.1.99.2]
+Progress: Parameterizing module new_sdram_controller_0
+Progress: Adding bridge_0 [altera_up_external_bus_to_avalon_bridge 13.0]
+Progress: Parameterizing module bridge_0
+Progress: Building connections
+Progress: Parameterizing connections
+Progress: Validating
+Progress: Done reading input file
+Info: sdram_system: Generating sdram_system "sdram_system" for QUARTUS_SYNTH
+Info: pipeline_bridge_swap_transform: After transform: 4 modules, 7 connections
+Info: No custom instruction connections, skipping transform 
+Info: merlin_translator_transform: After transform: 6 modules, 13 connections
+Info: merlin_domain_transform: After transform: 11 modules, 34 connections
+Info: merlin_router_transform: After transform: 13 modules, 40 connections
+Info: reset_adaptation_transform: After transform: 15 modules, 44 connections
+Info: merlin_network_to_switch_transform: After transform: 18 modules, 50 connections
+Info: Inserting clock-crossing logic between cmd_xbar_demux.src0 and cmd_xbar_mux.sink0
+Info: Inserting clock-crossing logic between rsp_xbar_demux.src0 and rsp_xbar_mux.sink0
+Info: com_altera_sopcmodel_transforms_avalon_ClockCrossingTransform: After transform: 20 modules, 60 connections
+Info: merlin_mm_transform: After transform: 20 modules, 60 connections
+Info: up_clocks_0: Starting Generation of Required Clocks for DE-Series Boards
+Info: up_clocks_0: "sdram_system" instantiated altera_up_clocks "up_clocks_0"
+Info: new_sdram_controller_0: Starting RTL generation for module 'sdram_system_new_sdram_controller_0'
+Info: new_sdram_controller_0:   Generation command is [exec /home/oliver/altera/13.0sp1/quartus/linux/perl/bin/perl -I /home/oliver/altera/13.0sp1/quartus/common/ip/altera/common/perl/5.8.3 -I /home/oliver/altera/13.0sp1/quartus/sopc_builder/bin/europa -I /home/oliver/altera/13.0sp1/quartus/sopc_builder/bin/perl_lib -I /home/oliver/altera/13.0sp1/quartus/sopc_builder/bin -I /home/oliver/altera/13.0sp1/quartus/../ip/altera/sopc_builder_ip/common -I /home/oliver/altera/13.0sp1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_new_sdram_controller -- /home/oliver/altera/13.0sp1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_new_sdram_controller/generate_rtl.pl --name=sdram_system_new_sdram_controller_0 --dir=/tmp/alt7990_1957228334664860325.dir/0030_new_sdram_controller_0_gen/ --quartus_dir=/home/oliver/altera/13.0sp1/quartus --verilog --config=/tmp/alt7990_1957228334664860325.dir/0030_new_sdram_controller_0_gen//sdram_system_new_sdram_controller_0_component_configuration.pl  --do_build_sim=0  ]
+Info: new_sdram_controller_0: Done RTL generation for module 'sdram_system_new_sdram_controller_0'
+Info: new_sdram_controller_0: "sdram_system" instantiated altera_avalon_new_sdram_controller "new_sdram_controller_0"
+Info: bridge_0: Starting Generation of External Bus to Avalon Bridge
+Info: bridge_0: "sdram_system" instantiated altera_up_external_bus_to_avalon_bridge "bridge_0"
+Info: bridge_0_avalon_master_translator: "sdram_system" instantiated altera_merlin_master_translator "bridge_0_avalon_master_translator"
+Info: new_sdram_controller_0_s1_translator: "sdram_system" instantiated altera_merlin_slave_translator "new_sdram_controller_0_s1_translator"
+Info: bridge_0_avalon_master_translator_avalon_universal_master_0_agent: "sdram_system" instantiated altera_merlin_master_agent "bridge_0_avalon_master_translator_avalon_universal_master_0_agent"
+Info: new_sdram_controller_0_s1_translator_avalon_universal_slave_0_agent: "sdram_system" instantiated altera_merlin_slave_agent "new_sdram_controller_0_s1_translator_avalon_universal_slave_0_agent"
+Info: new_sdram_controller_0_s1_translator_avalon_universal_slave_0_agent_rsp_fifo: "sdram_system" instantiated altera_avalon_sc_fifo "new_sdram_controller_0_s1_translator_avalon_universal_slave_0_agent_rsp_fifo"
+Info: addr_router: "sdram_system" instantiated altera_merlin_router "addr_router"
+Info: id_router: "sdram_system" instantiated altera_merlin_router "id_router"
+Info: rst_controller: "sdram_system" instantiated altera_reset_controller "rst_controller"
+Info: cmd_xbar_demux: "sdram_system" instantiated altera_merlin_demultiplexer "cmd_xbar_demux"
+Info: crosser: "sdram_system" instantiated altera_avalon_st_handshake_clock_crosser "crosser"
+Info: sdram_system: Done sdram_system" with 14 modules, 28 files, 357018 bytes
+Info: ip-generate succeeded.
+Info: Finished: Create HDL design files for synthesis

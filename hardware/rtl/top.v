@@ -47,6 +47,9 @@ begin
     if (KEY[0] == 0)
     begin
         state <= 'b0;
+        operation <= 'b0;
+        operand1 <= 'b0;
+        operand1 <= 'b0;
         `REGISTER_IP <= code_section_start_address;
         `REGISTER_A <= 'b0;
         `REGISTER_B <= 'b0;

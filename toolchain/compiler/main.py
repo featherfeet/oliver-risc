@@ -3,6 +3,7 @@
 import sys
 import tokenizer
 import syntaxparser
+import compiler
 
 # Read in source file.
 source = open(sys.argv[1]).read()
