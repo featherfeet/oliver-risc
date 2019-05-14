@@ -2,6 +2,7 @@
 #define ASSEMBLER_H
 
 #include <stdint.h>
+#include "../processor.h"
 
 /*
 Assembly code format (curly braces are replacements) (each line in the .code section is an instruction):
@@ -54,16 +55,16 @@ enum CodeSection {
 // Represent a symbol like "varname3 = 9" or whatever.
 struct Symbol {
 	char *name;
-	uint8_t value;
+	uint8_t value[OPERAND_SIZE];
 };
 
 // Represent an instruction like "MOV A,B" or whatever. Depending on the operation, only ever uses up to two of the register/address variables.
 struct Instruction {
-	enum Operation operation;             // Store the operation (MOV, JMPL, etc.) of the instruction.
-	enum Register operand1_register;      // If operand 1 of the instruction is a register, store it here.
-	enum Register operand2_register;      // If operand 2 of the instruction is a register, store it here.
-	char* operand1_address;               // If operand 1 of the instruction is an address, store it here. Also used to store the label name for JMP* instructions to jump to.
-	char* operand2_address;               // If operand 2 of the instruction is an address, store it here.
+	enum Operation operation;                     // Store the operation (MOV, JMPL, etc.) of the instruction.
+	enum Register operand1_register;              // If operand 1 of the instruction is a register, store it here.
+	enum Register operand2_register;              // If operand 2 of the instruction is a register, store it here.
+	char *operand1_address;       // If operand 1 of the instruction is an address, store it here. Also used to store the label name for JMP* instructions to jump to.
+	char *operand2_address;       // If operand 2 of the instruction is an address, store it here.
 };
 
 // Represent a label (a place the code can jump to) like "label_name:" or whatever.

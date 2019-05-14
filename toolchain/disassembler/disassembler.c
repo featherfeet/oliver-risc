@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "assembler.h" // Symlinked from the assembler's source code.
+#include "../processor.h"
 
 const char *registerToString(enum Register reg) {
 	switch (reg) {
@@ -42,18 +44,22 @@ int main(int argc, char *argv[]) {
 	int i;
 	printf(".data:\n");
 	for (i = 0; i < raw_binary_length; i++) {
-		if (raw_binary[i] == OPERATION_CODE) {
+		if (raw_binary[i * OPERAND_SIZE] == OPERATION_CODE) {
 			break;
 		}
-		printf("\t[%#08x]\t%d\n", i, raw_binary[i]);
+        uint32_t value = 0;
+        memcpy(&value, raw_binary + i * OPERAND_SIZE, OPERAND_SIZE);
+		printf("\t[%#08x]\t%d\n", i, value);
 	}
 	// Loop through and disassemble the .code section of the binary.
 	int instruction_index = 0;
 	printf(".code:\n");
-	for (i++; i < raw_binary_length; i += 3) {
-		printf("\t[%#08x]\t", instruction_index * 3);
+	for (i++; i < raw_binary_length; i += INSTRUCTION_SIZE) {
+		printf("\t[%#08x]\t", instruction_index * INSTRUCTION_SIZE);
 		instruction_index++;
-		switch (raw_binary[i]) {
+        uint32_t operation = 0;
+        memcpy(&operation, raw_binary + i, OPERATION_SIZE);
+		switch (operation) {
 			case OPERATION_NOP:
 				printf("NOP");
 				break;
