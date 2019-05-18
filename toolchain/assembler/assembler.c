@@ -305,14 +305,14 @@ int main(int argc, char *argv[]) {
             memcpy(instruction_table_binary + INSTRUCTION_SIZE * i + OPERATION_SIZE, &binary_instruction_index, OPERAND_SIZE);
         }
         else if (operand1_is_address) {
-            uint8_t symbol_location = findSymbol(symbol_table, symbol_table_length, instruction.operand1_address);
+            uint32_t symbol_location = findSymbol(symbol_table, symbol_table_length, instruction.operand1_address) * OPERAND_SIZE;
             memcpy(instruction_table_binary + INSTRUCTION_SIZE * i + OPERATION_SIZE, &symbol_location, OPERAND_SIZE);
         }
         if (operand2_is_register) {
             memcpy(instruction_table_binary + INSTRUCTION_SIZE * i + OPERATION_SIZE + OPERAND_SIZE, &instruction.operand2_register, OPERAND_SIZE);
         }
         else if (operand2_is_address) {
-            uint8_t symbol_location = findSymbol(symbol_table, symbol_table_length, instruction.operand2_address);
+            uint32_t symbol_location = findSymbol(symbol_table, symbol_table_length, instruction.operand2_address) * OPERAND_SIZE;
             memcpy(instruction_table_binary + INSTRUCTION_SIZE * i + OPERATION_SIZE + OPERAND_SIZE, &symbol_location, OPERAND_SIZE);
         }
     }

@@ -27,6 +27,41 @@ const char *registerToString(enum Register reg) {
 	}
 }
 
+const char *operationToString(enum Operation operation) {
+    switch (operation) {
+        case OPERATION_NOP:
+            return "NOP";
+        case OPERATION_LOAD:
+            return "LOAD";
+        case OPERATION_STORE:
+            return "STORE";
+        case OPERATION_ADD:
+            return "ADD";
+        case OPERATION_SUB:
+            return "SUB";
+        case OPERATION_OUT:
+            return "OUT";
+        case OPERATION_IN:
+            return "IN";
+        case OPERATION_MOV:
+            return "MOV";
+        case OPERATION_CMP:
+            return "CMP";
+        case OPERATION_JMPL:
+            return "JMPL";
+        case OPERATION_JMPE:
+            return "JMPE";
+        case OPERATION_JMPG:
+            return "JMPG";
+        case OPERATION_RST:
+            return "RST";
+        case OPERATION_HALT:
+            return "HALT";
+        case OPERATION_CODE:
+            return "CODE";
+    }
+}
+
 int main(int argc, char *argv[]) {
 	// Parse arguments.
 	if (argc != 2) {
@@ -40,73 +75,75 @@ int main(int argc, char *argv[]) {
 	uint8_t *raw_binary = malloc(raw_binary_length);
 	rewind(file);
 	fread(raw_binary, raw_binary_length, 1, file);
+    int start_of_code_section_offset = 0; // The address in the raw binary where the .code section starts.
 	// Loop through and disassemble the .data section of the binary.
 	int i;
 	printf(".data:\n");
-	for (i = 0; i < raw_binary_length; i++) {
-		if (raw_binary[i * OPERAND_SIZE] == OPERATION_CODE) {
+	for (i = 0; i < raw_binary_length; i += OPERAND_SIZE) {
+		if (raw_binary[i] == OPERATION_CODE) {
+            start_of_code_section_offset = i + 1;
 			break;
 		}
         uint32_t value = 0;
-        memcpy(&value, raw_binary + i * OPERAND_SIZE, OPERAND_SIZE);
+        memcpy(&value, raw_binary + i, OPERAND_SIZE);
 		printf("\t[%#08x]\t%d\n", i, value);
 	}
 	// Loop through and disassemble the .code section of the binary.
-	int instruction_index = 0;
-	printf(".code:\n");
-	for (i++; i < raw_binary_length; i += INSTRUCTION_SIZE) {
-		printf("\t[%#08x]\t", instruction_index * INSTRUCTION_SIZE);
-		instruction_index++;
-        uint32_t operation = 0;
-        memcpy(&operation, raw_binary + i, OPERATION_SIZE);
-		switch (operation) {
-			case OPERATION_NOP:
-				printf("NOP");
-				break;
-			case OPERATION_LOAD:
-				printf("LOAD %#08x, %s", raw_binary[i + 1], registerToString(raw_binary[i + 2]));
-				break;
-			case OPERATION_STORE:
-				printf("STORE %s, %#08x", registerToString(raw_binary[i + 1]), raw_binary[i + 2]);
-				break;
-			case OPERATION_ADD:
-				printf("ADD %s, %s", registerToString(raw_binary[i + 1]), registerToString(raw_binary[i + 2]));
-				break;
-			case OPERATION_SUB:
-				printf("SUB %s, %s", registerToString(raw_binary[i + 1]), registerToString(raw_binary[i + 2]));
-				break;
-			case OPERATION_OUT:
-				printf("OUT %s", registerToString(raw_binary[i + 1]));
-				break;
-			case OPERATION_IN:
-				printf("IN %s", registerToString(raw_binary[i + 1]));
-				break;
-			case OPERATION_MOV:
-				printf("MOV %s, %s", registerToString(raw_binary[i + 1]), registerToString(raw_binary[i + 2]));
-				break;
-			case OPERATION_CMP:
-				printf("CMP %s, %s", registerToString(raw_binary[i + 1]), registerToString(raw_binary[i + 2]));
-				break;
-			case OPERATION_JMPL:
-				printf("JMPL %#08x", raw_binary[i + 1]);
-				break;
-			case OPERATION_JMPE:
-				printf("JMPE %#08x", raw_binary[i + 1]);
-				break;
-			case OPERATION_JMPG:
-				printf("JMPG %#08x", raw_binary[i + 1]);
-				break;
-			case OPERATION_RST:
-				printf("RST");
-				break;
-			case OPERATION_HALT:
-				printf("HALT");
-				break;
-			default:
-				printf("???? ");
-				break;
-		}
-		printf("\n");
-	}
+    printf(".code:\n");
+    for (i = start_of_code_section_offset; i < raw_binary_length; i += INSTRUCTION_SIZE) {
+        enum Operation operation = raw_binary[i];
+        uint32_t operand1 = 0;
+        uint32_t operand2 = 0;
+        memcpy(&operand1, raw_binary + i + OPERATION_SIZE, OPERAND_SIZE);
+        memcpy(&operand2, raw_binary + i + OPERATION_SIZE + OPERAND_SIZE, OPERAND_SIZE);
+        printf("\t[%#08x]\t%s", i - start_of_code_section_offset, operationToString(raw_binary[i]));
+        switch (operation) {
+            case OPERATION_NOP:
+                printf("\n");
+                break;
+            case OPERATION_LOAD:
+                printf(" [%#08x], %s\n", operand1, registerToString(operand2));
+                break;
+            case OPERATION_STORE:
+                printf(" %s, [%#08x]\n", registerToString(operand1), operand2);
+                break;
+            case OPERATION_ADD:
+                printf(" %s, %s\n", registerToString(operand1), registerToString(operand2));
+                break;
+            case OPERATION_SUB:
+                printf(" %s, %s\n", registerToString(operand1), registerToString(operand2));
+                break;
+            case OPERATION_OUT:
+                printf(" %s\n", registerToString(operand1));
+                break;
+            case OPERATION_IN:
+                printf(" %s\n", registerToString(operand1));
+                break;
+            case OPERATION_MOV:
+                printf(" %s, %s\n", registerToString(operand1), registerToString(operand2));
+                break;
+            case OPERATION_CMP:
+                printf(" %s, %s\n", registerToString(operand1), registerToString(operand2));
+                break;
+            case OPERATION_JMPL:
+                printf(" [%#08x],\n", operand1);
+                break;
+            case OPERATION_JMPE:
+                printf(" [%#08x],\n", operand1);
+                break;
+            case OPERATION_JMPG:
+                printf(" [%#08x],\n", operand1);
+                break;
+            case OPERATION_RST:
+                printf("\n");
+                break;
+            case OPERATION_HALT:
+                printf("\n");
+                break;
+            case OPERATION_CODE:
+                printf("\n");
+                break;
+        }
+    }
 	return EXIT_SUCCESS;
 }
