@@ -5,7 +5,7 @@
 int main(int argc, char *argv[]) {
 	// Parse arguments.
 	if (argc != 2) {
-		fprintf(stderr, "Usage: ./disassembler binary.bin\n");
+		fprintf(stderr, "Usage: ./emulator binary.bin\n");
 		return EXIT_FAILURE;
 	}
 	// Read in binary file.
@@ -16,10 +16,10 @@ int main(int argc, char *argv[]) {
 	rewind(file);
 	fread(raw_binary, raw_binary_length, 1, file);
 	// Allocate RAM for the emulated processor.
-	uint8_t *data_ram = malloc(1000);
-	uint8_t *code_ram = malloc(1000);
+	uint8_t *data_ram = malloc(4000000);
+	uint8_t *code_ram = malloc(4000000);
 	// Define registers for the emulated processor.
-	uint8_t registers[8]; // Contains registers IP, A, B, C, D, E, F, and G.
+	uint32_t registers[8]; // Contains registers IP, A, B, C, D, E, F, and G.
 	registers[IP] = 0; // Set the instruction pointer register to the first instruction in code RAM (address 0x0).
 	/****************************************************
 	           Emulated execution starts here.
@@ -41,40 +41,40 @@ int main(int argc, char *argv[]) {
 	// Execute the .code section of the executable.
 	while (1) {
 		enum Operation operation = code_ram[registers[IP]];
-		uint8_t operand1 = code_ram[registers[IP] + 1];
-		uint8_t operand2 = code_ram[registers[IP] + 2];
+		uint32_t operand1 = code_ram[registers[IP] + OPERATION_SIZE];
+		uint32_t operand2 = code_ram[registers[IP] + OPERATION_SIZE + OPERAND_SIZE];
 		switch (operation) {
 			case OPERATION_NOP:
-				registers[IP] += 3;
+				registers[IP] += INSTRUCTION_SIZE;
 				break;
 			case OPERATION_LOAD:
 				registers[operand2] = data_ram[operand1];
-				registers[IP] += 3;
+				registers[IP] += INSTRUCTION_SIZE;
 				break;
 			case OPERATION_STORE:
 				data_ram[operand2] = registers[operand1];
-				registers[IP] += 3;
+				registers[IP] += INSTRUCTION_SIZE;
 				break;
 			case OPERATION_ADD:
 				registers[A] = registers[operand1] + registers[operand2];
-				registers[IP] += 3;
+				registers[IP] += INSTRUCTION_SIZE;
 				break;
 			case OPERATION_SUB:
 				registers[A] = registers[operand1] - registers[operand2];
-				registers[IP] += 3;
+				registers[IP] += INSTRUCTION_SIZE;
 				break;
 			case OPERATION_OUT:
 				printf("%d\n", registers[operand1]);
-				registers[IP] += 3;
+				registers[IP] += INSTRUCTION_SIZE;
 				break;
 			case OPERATION_IN:
 				printf("IN: ");
 				scanf("%d\n", &registers[operand1]);
-				registers[IP] += 3;
+				registers[IP] += INSTRUCTION_SIZE;
 				break;
 			case OPERATION_MOV:
 				registers[operand2] = registers[operand1];
-				registers[IP] += 3;
+				registers[IP] += INSTRUCTION_SIZE;
 				break;
 			case OPERATION_CMP:
 				if (registers[operand1] < registers[operand2]) {
@@ -86,14 +86,14 @@ int main(int argc, char *argv[]) {
 				else {
 					registers[A] = 2;
 				}
-				registers[IP] += 3;
+				registers[IP] += INSTRUCTION_SIZE;
 				break;
 			case OPERATION_JMPL:
 				if (registers[A] == 0) {
 					registers[IP] = operand1;
 				}
 				else {
-					registers[IP] += 3;
+					registers[IP] += INSTRUCTION_SIZE;
 				}
 				break;
 			case OPERATION_JMPE:
@@ -101,7 +101,7 @@ int main(int argc, char *argv[]) {
 					registers[IP] = operand1;
 				}
 				else {
-					registers[IP] += 3;
+					registers[IP] += INSTRUCTION_SIZE;
 				}
 				break;
 			case OPERATION_JMPG:
@@ -109,7 +109,7 @@ int main(int argc, char *argv[]) {
 					registers[IP] = operand1;
 				}
 				else {
-					registers[IP] += 3;
+					registers[IP] += INSTRUCTION_SIZE;
 				}
 				break;
 			case OPERATION_RST:

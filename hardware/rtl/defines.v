@@ -27,3 +27,10 @@
 `define REGISTER_E                registers[5]
 `define REGISTER_F                registers[6]
 `define REGISTER_G                registers[7]
+
+`define OPERATION_SIZE_BITS            8                                                              // 1 byte
+`define OPERAND_SIZE_BITS              32                                                             // 4 bytes
+`define INSTRUCTION_SIZE_BITS          (OPERATION_SIZE_BITS + OPERAND_SIZE_BITS + OPERAND_SIZE_BITS)  // 9 bytes
+`define OPERATION_SIZE_BYTES           1
+`define OPERAND_SIZE_BYTES             4
+`define INSTRUCTION_SIZE_BYTES         (`OPERATION_SIZE_BYTES + `OPERAND_SIZE_BYTES + `OPERAND_SIZE_BYTES)

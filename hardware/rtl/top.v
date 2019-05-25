@@ -28,14 +28,19 @@ begin
             i = 8000000;
         end
     end
+
+    for (i = 0; i < 500; i = i + 1)
+    begin
+        $display("sdram[%d] = %d\n", i, sdram[i]);
+    end
 end
 
 // CPU registers.
-reg [7:0] operation;
-reg [7:0] operand1;
-reg [7:0] operand2;
-reg [7:0] registers [7:0]; // IP, A, B, C, D, E, F, and G: eight 8-bit registers.
-reg [31:0] code_section_start_address; // Where (in RAM) the instructions are located. code_section_start_address + IP is the address of the current instruction. Address is in bytes.
+reg [`OPERATION_SIZE_BITS - 1:0] operation;
+reg [`OPERAND_SIZE_BITS - 1:0] operand1;
+reg [`OPERAND_SIZE_BITS - 1:0] operand2;
+reg [`OPERAND_SIZE_BITS - 1:0] registers [`OPERAND_SIZE_BITS - 1:0]; // IP, A, B, C, D, E, F, and G: eight 8-bit registers.
+reg [`OPERAND_SIZE_BITS - 1:0] code_section_start_address; // Where (in RAM) the instructions are located. code_section_start_address + IP is the address of the current instruction. Address is in bytes.
 
 // SDRAM.
 reg [7:0] sdram [8000000 - 1:0]; // 8 MB as 8 million bytes.
@@ -49,7 +54,7 @@ begin
         state <= 'b0;
         operation <= 'b0;
         operand1 <= 'b0;
-        operand1 <= 'b0;
+        operand2 <= 'b0;
         `REGISTER_IP <= code_section_start_address;
         `REGISTER_A <= 'b0;
         `REGISTER_B <= 'b0;
@@ -70,19 +75,16 @@ begin
             `STATE_FETCH_OPERATION:
             begin
                 operation <= sdram[`REGISTER_IP];
-                //$display("Fetched operation %d.", operation);
                 state <= `STATE_FETCH_OPERAND1;
             end
             `STATE_FETCH_OPERAND1:
             begin
-                operand1 <= sdram[`REGISTER_IP + 1];
-                //$display("Fetched operand1 %d.", operand1);
+                operand1 <= {sdram[`REGISTER_IP + `OPERATION_SIZE_BYTES + 3], sdram[`REGISTER_IP + `OPERATION_SIZE_BYTES + 2], sdram[`REGISTER_IP + `OPERATION_SIZE_BYTES + 1], sdram[`REGISTER_IP + `OPERATION_SIZE_BYTES]};
                 state <= `STATE_FETCH_OPERAND2;
             end
             `STATE_FETCH_OPERAND2:
             begin
-                operand2 <= sdram[`REGISTER_IP + 2];
-                //$display("Fetched operand2 %d.", operand2);
+                operand2 <= {sdram[`REGISTER_IP + `OPERATION_SIZE_BYTES + `OPERAND_SIZE_BYTES + 3], sdram[`REGISTER_IP + `OPERATION_SIZE_BYTES + `OPERAND_SIZE_BYTES + 2], sdram[`REGISTER_IP + `OPERATION_SIZE_BYTES + `OPERAND_SIZE_BYTES + 1], sdram[`REGISTER_IP + `OPERATION_SIZE_BYTES + `OPERAND_SIZE_BYTES]};
                 state <= `STATE_EXECUTE_INSTRUCTION;
             end
             `STATE_EXECUTE_INSTRUCTION:
@@ -92,53 +94,55 @@ begin
                     `OPERATION_NOP:
                     begin
                         //$display("NOP");
-                        `REGISTER_IP <= `REGISTER_IP + 'd3;
+                        `REGISTER_IP <= `REGISTER_IP + `INSTRUCTION_SIZE_BYTES;
                     end
                     // Load value from RAM to register.
                     `OPERATION_LOAD:
                     begin
                         //$display("LOAD");
-                        registers[operand2] <= sdram[operand1];
-                        `REGISTER_IP <= `REGISTER_IP + 'd3;
+                        registers[operand2] <= {sdram[operand1 + 3], sdram[operand1 + 2], sdram[operand1 + 1], sdram[operand1]};
+                        `REGISTER_IP <= `REGISTER_IP + `INSTRUCTION_SIZE_BYTES;
                     end
                     // Store value into RAM from register.
                     `OPERATION_STORE:
                     begin
                         //$display("STORE");
-                        sdram[operand2] <= registers[operand1];
-                        `REGISTER_IP <= `REGISTER_IP + 'd3;
+                        sdram[operand2] <= registers[operand1][7:0];
+                        sdram[operand2 + 1] <= registers[operand1][15:8];
+                        sdram[operand2 + 2] <= registers[operand1][23:16];
+                        sdram[operand2 + 3] <= registers[operand1][31:24];
+                        `REGISTER_IP <= `REGISTER_IP + `INSTRUCTION_SIZE_BYTES;
                     end
                     // Add two registers and store the result in register A.
                     `OPERATION_ADD:
                     begin
                         //$display("ADD");
                         `REGISTER_A <= registers[operand1] + registers[operand2];
-                        `REGISTER_IP <= `REGISTER_IP + 'd3;
+                        `REGISTER_IP <= `REGISTER_IP + `INSTRUCTION_SIZE_BYTES;
                     end
                     // Subtract two registers and store the result in register A.
                     `OPERATION_SUB:
                     begin
                         //$display("SUB");
                         `REGISTER_A <= registers[operand1] - registers[operand2];
-                        `REGISTER_IP <= `REGISTER_IP + 'd3;
+                        `REGISTER_IP <= `REGISTER_IP + `INSTRUCTION_SIZE_BYTES;
                     end
                     `OPERATION_OUT:
                     begin
-                        //$display("OUT");
                         $display("%d", registers[operand1]);
-                        `REGISTER_IP <= `REGISTER_IP + 'd3;
+                        `REGISTER_IP <= `REGISTER_IP + `INSTRUCTION_SIZE_BYTES;
                     end
                     `OPERATION_IN:
                     begin
                         //$display("IN");
-                        `REGISTER_IP <= `REGISTER_IP + 'd3;
+                        `REGISTER_IP <= `REGISTER_IP + `INSTRUCTION_SIZE_BYTES;
                     end
                     // Copy register 1 to register 2.
                     `OPERATION_MOV:
                     begin
                         //$display("MOV");
                         registers[operand2] <= registers[operand1];
-                        `REGISTER_IP <= `REGISTER_IP + 'd3;
+                        `REGISTER_IP <= `REGISTER_IP + `INSTRUCTION_SIZE_BYTES;
                     end
                     `OPERATION_CMP:
                     begin
@@ -149,28 +153,28 @@ begin
                             `REGISTER_A <= 'd1;
                         else
                             `REGISTER_A <= 'd2;
-                        `REGISTER_IP <= `REGISTER_IP + 'd3;
+                        `REGISTER_IP <= `REGISTER_IP + `INSTRUCTION_SIZE_BYTES;
                     end
                     `OPERATION_JMPL:
                     begin
                         if (`REGISTER_A == 0)
                             `REGISTER_IP <= code_section_start_address + operand1;
                         else
-                            `REGISTER_IP <= `REGISTER_IP + 'd3;
+                            `REGISTER_IP <= `REGISTER_IP + `INSTRUCTION_SIZE_BYTES;
                     end
                     `OPERATION_JMPE:
                     begin
                         if (`REGISTER_A == 1)
                             `REGISTER_IP <= code_section_start_address + operand1;
                         else
-                            `REGISTER_IP <= `REGISTER_IP + 'd3;
+                            `REGISTER_IP <= `REGISTER_IP + `INSTRUCTION_SIZE_BYTES;
                     end
                     `OPERATION_JMPG:
                     begin
                         if (`REGISTER_A == 2)
                             `REGISTER_IP <= code_section_start_address + operand1;
                         else
-                            `REGISTER_IP <= `REGISTER_IP + 'd3;
+                            `REGISTER_IP <= `REGISTER_IP + `INSTRUCTION_SIZE_BYTES;
                     end
                     `OPERATION_RST:
                     begin

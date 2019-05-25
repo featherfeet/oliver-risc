@@ -1,0 +1,27 @@
+[*]
+[*] GTKWave Analyzer v3.3.79 (w)1999-2017 BSI
+[*] Mon May 20 00:54:25 2019
+[*]
+[dumpfile] "/home/oliver/Projects/FPGA_Projects/CPU/hardware/dump.lxt"
+[dumpfile_mtime] "Mon May 20 00:48:57 2019"
+[dumpfile_size] 377948
+[savefile] "/home/oliver/Projects/FPGA_Projects/CPU/hardware/savefile.gtkw"
+[timestart] 0
+[size] 2560 1471
+[pos] -51 -51
+*-15.703017 90000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] test.
+[sst_width] 375
+[signals_width] 834
+[sst_expanded] 1
+[sst_vpaned_height] 414
+@24
+test.top_instantiation.state[7:0]
+test.top_instantiation.operation[7:0]
+@28
+test.top_instantiation.operand1[31:0]
+test.top_instantiation.operand2[31:0]
+@29
+test.top_instantiation.CLOCK_50[1:0]
+[pattern_trace] 1
+[pattern_trace] 0
