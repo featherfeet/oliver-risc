@@ -7,33 +7,20 @@ module top(
     output [6:0] HEX0,
     output [6:0] HEX1,
     output [6:0] HEX2,
-    output [6:0] HEX3
+    output [6:0] HEX3,
+    output DRAM_CLK,
+    output [11:0] DRAM_ADDR,
+    output DRAM_BA_0,
+    output DRAM_BA_1,
+    output DRAM_CAS_N,
+    output DRAM_CKE,
+    output DRAM_CS_N,
+    output DRAM_LDQM,
+    output DRAM_UDQM,
+    output DRAM_RAS_N,
+    output DRAM_WE_N,
+    inout [15:0] DRAM_DQ
 );
-
-// File to read compiled binary from.
-integer binary_file;
-integer bytes_read;
-integer i;
-initial
-begin
-    binary_file = $fopen("out.bin", "rb");
-    bytes_read = $fread(sdram, binary_file);
-    $fclose(binary_file);
-    for (i = 0; i < 8000000; i = i + 1)
-    begin
-        if (sdram[i] == 'd14)
-        begin
-            code_section_start_address = i + 1;
-            `REGISTER_IP = code_section_start_address;
-            i = 8000000;
-        end
-    end
-
-    for (i = 0; i < 500; i = i + 1)
-    begin
-        $display("sdram[%d] = %d\n", i, sdram[i]);
-    end
-end
 
 // CPU registers.
 reg [`OPERATION_SIZE_BITS - 1:0] operation;
@@ -42,11 +29,50 @@ reg [`OPERAND_SIZE_BITS - 1:0] operand2;
 reg [`OPERAND_SIZE_BITS - 1:0] registers [`OPERAND_SIZE_BITS - 1:0]; // IP, A, B, C, D, E, F, and G: eight 8-bit registers.
 reg [`OPERAND_SIZE_BITS - 1:0] code_section_start_address; // Where (in RAM) the instructions are located. code_section_start_address + IP is the address of the current instruction. Address is in bytes.
 
-// SDRAM.
-reg [7:0] sdram [8000000 - 1:0]; // 8 MB as 8 million bytes.
+// Clock generator for SDRAM.
+sdram_system_up_clocks_0 up_clocks_0 (
+    .CLOCK_50    (CLOCK_50),                       // clk_in_primary.clk
+    .reset       (~KEY[0]),                        // clk_in_primary_reset.reset
+    .sys_clk     (),                               // sys_clk.clk
+    .sys_reset_n (),                               // sys_clk_reset.reset_n
+    .SDRAM_CLK   (SDRAM_CLK)                       // sdram_clk.clk
+);
+
+// SDRAM controller.
+reg[21:0] address_i;
+reg[1:0] be_n_i;
+reg cs_i;
+reg[15:0] data_i;
+reg rd_n_i;
+reg wr_n_i;
+wire[15:0] data_o;
+wire valid_o;
+wire waitrequest_o;
+sdram_system_new_sdram_controller_0 sdram_controller(
+    .az_addr                        (address_i),
+    .az_be_n                        (be_n_i),
+    .az_cs                          (cs_i),
+    .az_data                        (data_i),
+    .az_rd_n                        (rd_n_i),
+    .az_wr_n                        (wr_n_i),
+    .clk                            (SDRAM_CLK),
+    .reset_n                        (KEY[0]),
+    .za_data                        (data_o),
+    .za_valid                       (valid_o),
+    .za_waitrequest                 (waitrequest_o),
+    .zs_addr                        (DRAM_ADDR),
+    .zs_ba                          ({DRAM_BA_1, DRAM_BA_0}),
+    .zs_cas_n                       (DRAM_CAS_N),
+    .zs_cke                         (DRAM_CKE),
+    .zs_cs_n                        (DRAM_CS_N),
+    .zs_dq                          (DRAM_DQ),
+    .zs_dqm                         ({DRAM_UDQM, DRAM_LDQM}),
+    .zs_ras_n                       (DRAM_RAS_N),
+    .zs_we_n                        (DRAM_WE_N)
+);
+
 // State machine.
 reg[7:0] state;
-
 always @(posedge CLOCK_50)
 begin
     if (KEY[0] == 0)
