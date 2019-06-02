@@ -1,8 +1,9 @@
-`define STATE_LOAD_TO_RAM         0
-`define STATE_FETCH_OPERATION     1
-`define STATE_FETCH_OPERAND1      2
-`define STATE_FETCH_OPERAND2      3
-`define STATE_EXECUTE_INSTRUCTION 4
+`define STATE_INITIALIZE          0
+`define STATE_LOAD_TO_RAM         1
+`define STATE_FETCH_OPERATION     2
+`define STATE_FETCH_OPERAND1      3
+`define STATE_FETCH_OPERAND2      4
+`define STATE_EXECUTE_INSTRUCTION 5
 
 `define OPERATION_NOP             0
 `define OPERATION_LOAD            1

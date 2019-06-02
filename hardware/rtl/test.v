@@ -1,6 +1,7 @@
-`timescale 1ns / 100ps
+`timescale 1ps/1ps
 
 module test();
+    integer i;
     reg[3:0] reset = 4'd0;
     reg[1:0] clk = 2'b11;
     always #5 clk = ~clk;
@@ -46,9 +47,12 @@ module test();
     );
     initial begin
         $dumpfile("dump.lxt");
-        $dumpvars(0, top_instantiation);
-        reset[0] = 1;
-        #17 reset[0] = 0;
-        #11 reset[0] = 1;
+        $dumpvars(0, test);
+        /*
+        for (i = 0; i < 1000; i = i + 1)
+            $dumpvars(0, sdram_module.mem_array[i]);
+        */
+        reset = 'b0;
+        #80000 reset = 'hF;
     end
 endmodule
