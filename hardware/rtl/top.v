@@ -41,11 +41,11 @@ rom program_rom (
 
 // Clock generator for SDRAM.
 sdram_system_up_clocks_0 up_clocks_0 (
-    .CLOCK_50    (CLOCK_50),                       // clk_in_primary.clk
+    .CLOCK_50    (CLOCK_50[0]),                       // clk_in_primary.clk
     .reset       (~KEY[0]),                        // clk_in_primary_reset.reset
     .sys_clk     (),                               // sys_clk.clk
     .sys_reset_n (),                               // sys_clk_reset.reset_n
-    .SDRAM_CLK   (SDRAM_CLK)                       // sdram_clk.clk
+    .SDRAM_CLK   (DRAM_CLK)                       // sdram_clk.clk
 );
 
 // SDRAM controller.
@@ -65,7 +65,7 @@ sdram_system_new_sdram_controller_0 sdram_controller(
     .az_data                        (sdram_controller_data_i),
     .az_rd_n                        (sdram_controller_rd_n_i),
     .az_wr_n                        (sdram_controller_wr_n_i),
-    .clk                            (SDRAM_CLK),
+    .clk                            (DRAM_CLK),
     .reset_n                        (KEY[0]),
     .za_data                        (sdram_controller_data_o),
     .za_valid                       (sdram_controller_valid_o),
@@ -89,6 +89,12 @@ parameter WRITE_TO_RAM = 8'd1;
 reg[7:0] ram_stabilization_counter;
 // State machine for the entire CPU's operation.
 reg[7:0] state;
+/////////////////////////////
+initial
+begin
+    $display("Starting at time %t.", $time);
+end
+/////////////////////////////
 always @(posedge CLOCK_50)
 begin
     if (KEY[0] == 0)
@@ -128,6 +134,7 @@ begin
                 else if (sdram_controller.init_done)
                 begin
                     ram_stabilization_counter <= ram_stabilization_counter + 1;
+                    $display("%t: Init_done is done. Counter is %d.", $time, ram_stabilization_counter);
                 end
                 else
                 begin

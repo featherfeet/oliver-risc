@@ -1,4 +1,5 @@
-`timescale 1ps/1ps
+`timescale 1ns / 100ps
+//`timescale 1ps/1ps
 
 module test();
     integer i;
@@ -48,10 +49,8 @@ module test();
     initial begin
         $dumpfile("dump.lxt");
         $dumpvars(0, test);
-        /*
         for (i = 0; i < 1000; i = i + 1)
             $dumpvars(0, sdram_module.mem_array[i]);
-        */
         reset = 'b0;
         #80000 reset = 'hF;
     end

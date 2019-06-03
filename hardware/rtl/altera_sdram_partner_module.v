@@ -98,7 +98,7 @@ initial
     begin
         mem_array[i] = 16'b0;
     end
-    $write("MEM INIT.");
+    $display("MEM INIT.");
   end
   always @(rdaddress)
     begin
