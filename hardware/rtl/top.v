@@ -81,20 +81,67 @@ sdram_system_new_sdram_controller_0 sdram_controller(
     .zs_we_n                        (DRAM_WE_N)
 );
 
-// State machine for the reading from ROM to RAM.
-reg[7:0] load_to_ram_state;
+// Task for writing to RAM.
+// State machine for RAM write task.
+reg[7:0] ram_write_state;
 parameter WAIT_FOR_RAM = 8'd0;
 parameter WRITE_TO_RAM = 8'd1;
+reg ram_write_complete;
+task write_to_ram;
+    // Inputs for the address to write to and the data to write.
+    input[21:0] ram_write_address;
+    input[15:0] ram_write_data;
+    begin
+        case (ram_write_state)
+            WAIT_FOR_RAM:
+            begin
+                if (~sdram_controller_waitrequest_o)
+                    ram_write_state <= WRITE_TO_RAM;
+                else
+                    ram_write_state <= WAIT_FOR_RAM;
+            end
+            WRITE_TO_RAM:
+            begin
+                ram_write_complete <= 'b0;
+                sdram_controller_address_i <= ram_write_address;
+                sdram_controller_be_n_i <= 'b00;
+                sdram_controller_cs_i <= 'b1;
+                sdram_controller_data_i <= ram_write_data;
+                sdram_controller_wr_n_i <= 'b0;
+                if (sdram_controller_waitrequest_o)
+                begin
+                    sdram_controller_wr_n_i <= 'b1;
+                    ram_write_state <= WAIT_FOR_RAM;
+                end
+                else
+                begin
+                    ram_write_complete <= 'b1;
+                    ram_write_state <= WAIT_FOR_RAM;
+                end
+            end
+        endcase
+    end
+endtask
+
+// Task for reading from RAM.
+// State machine for RAM read task.
+reg[7:0] ram_read_state;
+parameter READ_FROM_RAM = 8'd2;
+reg ram_read_complete;
+reg[15:0] ram_read_data;
+task read_from_ram;
+    // Address to read from.
+    input[21:0] ram_read_address;
+    begin
+        case (ram_read_state)
+            // TODO
+        endcase
+    end
+endtask
 // Counter used to wait for the RAM to finish stabilizing.
 reg[7:0] ram_stabilization_counter;
 // State machine for the entire CPU's operation.
 reg[7:0] state;
-/////////////////////////////
-initial
-begin
-    $display("Starting at time %t.", $time);
-end
-/////////////////////////////
 always @(posedge CLOCK_50)
 begin
     if (KEY[0] == 0)
@@ -107,11 +154,15 @@ begin
         sdram_controller_wr_n_i <= 'b1;
         program_rom_address <= 'b0;
         state <= 'b0;
-        load_to_ram_state <= WAIT_FOR_RAM;
         operation <= 'b0;
         operand1 <= 'b0;
         operand2 <= 'b0;
         ram_stabilization_counter <= 'b0;
+        ram_write_state <= WAIT_FOR_RAM;
+        ram_write_complete <= 'b0;
+        ram_read_state <= WAIT_FOR_RAM;
+        ram_read_complete <= 'b0;
+        ram_read_data <= 'b0;
         `REGISTER_IP <= code_section_start_address;
         `REGISTER_A <= 'b0;
         `REGISTER_B <= 'b0;
@@ -150,32 +201,16 @@ begin
                 end
                 else
                 begin
-                    case (load_to_ram_state)
-                        WAIT_FOR_RAM:
-                        begin
-                            if (~sdram_controller_waitrequest_o)
-                                load_to_ram_state <= WRITE_TO_RAM;
-                            else
-                                load_to_ram_state <= WAIT_FOR_RAM;
-                        end
-                        WRITE_TO_RAM:
-                        begin
-                            sdram_controller_address_i <= program_rom_address;
-                            sdram_controller_be_n_i <= 'b00;
-                            sdram_controller_cs_i <= 'b1;
-                            sdram_controller_data_i <= program_rom_byte;
-                            sdram_controller_wr_n_i <= 'b0;
-                            if (sdram_controller_waitrequest_o)
-                            begin
-                                sdram_controller_wr_n_i <= 'b1;
-                                load_to_ram_state <= WAIT_FOR_RAM;
-                            end
-                            else
-                            begin
-                                program_rom_address <= program_rom_address + 1;
-                            end
-                        end
-                    endcase
+                    write_to_ram(program_rom_address, program_rom_byte);
+                    if (ram_write_complete)
+                    begin
+                        $display("RAM write complete, incrementing address.");
+                        program_rom_address <= program_rom_address + 1;
+                    end
+                    else
+                    begin
+                        state <= `STATE_LOAD_TO_RAM;
+                    end
                 end
             end
             /*
