@@ -19,6 +19,7 @@
 `define OPERATION_JMPG            11
 `define OPERATION_RST             12
 `define OPERATION_HALT            13
+`define OPERATION_CODE            14
 
 `define REGISTER_IP               registers[0]
 `define REGISTER_A                registers[1]

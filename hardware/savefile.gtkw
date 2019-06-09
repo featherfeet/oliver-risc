@@ -1,21 +1,21 @@
 [*]
 [*] GTKWave Analyzer v3.3.79 (w)1999-2017 BSI
-[*] Mon Jun  3 00:01:45 2019
+[*] Sun Jun  9 04:42:08 2019
 [*]
 [dumpfile] "/home/oliver/Projects/FPGA_Projects/CPU/hardware/dump.lxt"
-[dumpfile_mtime] "Sun Jun  2 23:48:38 2019"
-[dumpfile_size] 5673330
+[dumpfile_mtime] "Sun Jun  9 04:38:58 2019"
+[dumpfile_size] 15736257
 [savefile] "/home/oliver/Projects/FPGA_Projects/CPU/hardware/savefile.gtkw"
 [timestart] 0
-[size] 2560 1471
+[size] 1697 1016
 [pos] -1 -1
-*-16.703018 130536000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-17.703018 0 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] test.
 [treeopen] test.top_instantiation.
 [sst_width] 375
-[signals_width] 834
+[signals_width] 294
 [sst_expanded] 1
-[sst_vpaned_height] 414
+[sst_vpaned_height] 415
 @24
 test.top_instantiation.state[7:0]
 test.top_instantiation.operation[7:0]
@@ -38,18 +38,7 @@ test.top_instantiation.sdram_controller_valid_o[0]
 test.top_instantiation.sdram_controller_waitrequest_o[0]
 test.top_instantiation.sdram_controller_wr_n_i[0]
 test.top_instantiation.sdram_controller.init_done[0]
-test.top_instantiation.sdram_controller.oe[0]
-@22
-test.top_instantiation.sdram_controller.m_data[15:0]
-test.top_instantiation.sdram_controller.zs_dq[15:0]
-@29
-test.sdram_module.read_valid[0]
-@28
-test.sdram_module.index[2:0]
-test.sdram_module.latency[2:0]
-@22
-test.sdram_module.CODE[23:0]
-@28
-test.sdram_module.cs_n[0]
+@25
+test.top_instantiation.ram_read_state[7:0]
 [pattern_trace] 1
 [pattern_trace] 0

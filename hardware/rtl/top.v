@@ -84,7 +84,7 @@ sdram_system_new_sdram_controller_0 sdram_controller(
 // Task for writing to RAM.
 // State machine for RAM write task.
 reg[7:0] ram_write_state;
-parameter WAIT_FOR_RAM = 8'd0;
+parameter WAIT_FOR_RAM_WRITE = 8'd0;
 parameter WRITE_TO_RAM = 8'd1;
 reg ram_write_complete;
 task write_to_ram;
@@ -93,12 +93,12 @@ task write_to_ram;
     input[15:0] ram_write_data;
     begin
         case (ram_write_state)
-            WAIT_FOR_RAM:
+            WAIT_FOR_RAM_WRITE:
             begin
                 if (~sdram_controller_waitrequest_o)
                     ram_write_state <= WRITE_TO_RAM;
                 else
-                    ram_write_state <= WAIT_FOR_RAM;
+                    ram_write_state <= WAIT_FOR_RAM_WRITE;
             end
             WRITE_TO_RAM:
             begin
@@ -111,12 +111,12 @@ task write_to_ram;
                 if (sdram_controller_waitrequest_o)
                 begin
                     sdram_controller_wr_n_i <= 'b1;
-                    ram_write_state <= WAIT_FOR_RAM;
+                    ram_write_state <= WAIT_FOR_RAM_WRITE;
                 end
                 else
                 begin
                     ram_write_complete <= 'b1;
-                    ram_write_state <= WAIT_FOR_RAM;
+                    ram_write_state <= WAIT_FOR_RAM_WRITE;
                 end
             end
         endcase
@@ -126,7 +126,8 @@ endtask
 // Task for reading from RAM.
 // State machine for RAM read task.
 reg[7:0] ram_read_state;
-parameter READ_FROM_RAM = 8'd2;
+parameter START_READ_FROM_RAM = 8'd0;
+parameter WAIT_FOR_RAM_READ = 8'd1;
 reg ram_read_complete;
 reg[15:0] ram_read_data;
 task read_from_ram;
@@ -134,12 +135,32 @@ task read_from_ram;
     input[21:0] ram_read_address;
     begin
         case (ram_read_state)
-            // TODO
+            START_READ_FROM_RAM:
+            begin
+                ram_read_complete <= 'b0;
+                sdram_controller_address_i <= ram_read_address;
+                sdram_controller_be_n_i <= 'b00;
+                sdram_controller_cs_i <= 'b1;
+                sdram_controller_rd_n_i <= 'b0;
+                ram_read_state <= WAIT_FOR_RAM_READ;
+            end
+            WAIT_FOR_RAM_READ:
+            begin
+                sdram_controller_rd_n_i <= 'b1;
+                if (sdram_controller_valid_o)
+                begin
+                    ram_read_state <= START_READ_FROM_RAM;
+                    ram_read_data <= sdram_controller_data_o;
+                    ram_read_complete <= 'b1;
+                end
+            end
         endcase
     end
 endtask
 // Counter used to wait for the RAM to finish stabilizing.
 reg[7:0] ram_stabilization_counter;
+// Counter used to read the 4-byte operands.
+reg[7:0] operand_byte_index;
 // State machine for the entire CPU's operation.
 reg[7:0] state;
 always @(posedge CLOCK_50)
@@ -158,12 +179,13 @@ begin
         operand1 <= 'b0;
         operand2 <= 'b0;
         ram_stabilization_counter <= 'b0;
-        ram_write_state <= WAIT_FOR_RAM;
+        ram_write_state <= WAIT_FOR_RAM_WRITE;
         ram_write_complete <= 'b0;
-        ram_read_state <= WAIT_FOR_RAM;
+        ram_read_state <= START_READ_FROM_RAM;
         ram_read_complete <= 'b0;
         ram_read_data <= 'b0;
-        `REGISTER_IP <= code_section_start_address;
+        operand_byte_index <= 'b0;
+        `REGISTER_IP <= 'b0;
         `REGISTER_A <= 'b0;
         `REGISTER_B <= 'b0;
         `REGISTER_C <= 'b0;
@@ -202,6 +224,10 @@ begin
                 else
                 begin
                     write_to_ram(program_rom_address, program_rom_byte);
+                    if (program_rom_byte == `OPERATION_CODE)
+                        code_section_start_address <= program_rom_address + 1;
+                    else
+                        state <= `STATE_LOAD_TO_RAM;
                     if (ram_write_complete)
                     begin
                         $display("RAM write complete, incrementing address.");
@@ -213,22 +239,64 @@ begin
                     end
                 end
             end
-            /*
             `STATE_FETCH_OPERATION:
             begin
-                operation <= sdram[`REGISTER_IP];
-                state <= `STATE_FETCH_OPERAND1;
+                read_from_ram(`REGISTER_IP);
+                if (ram_read_complete)
+                begin
+                    operation <= ram_read_data;
+                    state <= `STATE_FETCH_OPERAND1;
+                    $display("Fetched operation %d.", operation);
+                    $display("%t: Changing state to STATE_FETCH_OPERAND1", $time);
+                end
+                else
+                begin
+                    state <= `STATE_FETCH_OPERATION;
+                end
             end
             `STATE_FETCH_OPERAND1:
             begin
-                operand1 <= {sdram[`REGISTER_IP + `OPERATION_SIZE_BYTES + 3], sdram[`REGISTER_IP + `OPERATION_SIZE_BYTES + 2], sdram[`REGISTER_IP + `OPERATION_SIZE_BYTES + 1], sdram[`REGISTER_IP + `OPERATION_SIZE_BYTES]};
-                state <= `STATE_FETCH_OPERAND2;
+                read_from_ram(`REGISTER_IP + `OPERATION_SIZE_BYTES + operand_byte_index);
+                if (ram_read_complete)
+                begin
+                    //operand1[8 * operand_byte_index + 7 : 8 * operand_byte_index] <= ram_read_data[7:0];
+                    operand1[31:24] <= ram_read_data[7:0];
+                    operand1 <= operand1 >> 8;
+                    operand_byte_index <= operand_byte_index + 1;
+                end
+                else
+                    state <= `STATE_FETCH_OPERAND1;
+                if (operand_byte_index == 3)
+                begin
+                    operand_byte_index <= 'b0;
+                    state <= `STATE_FETCH_OPERAND2;
+                    $display("Fetched operand1 %d.", operand1);
+                end
+                else
+                    state <= `STATE_FETCH_OPERAND1;
             end
             `STATE_FETCH_OPERAND2:
             begin
-                operand2 <= {sdram[`REGISTER_IP + `OPERATION_SIZE_BYTES + `OPERAND_SIZE_BYTES + 3], sdram[`REGISTER_IP + `OPERATION_SIZE_BYTES + `OPERAND_SIZE_BYTES + 2], sdram[`REGISTER_IP + `OPERATION_SIZE_BYTES + `OPERAND_SIZE_BYTES + 1], sdram[`REGISTER_IP + `OPERATION_SIZE_BYTES + `OPERAND_SIZE_BYTES]};
-                state <= `STATE_EXECUTE_INSTRUCTION;
+                read_from_ram(`REGISTER_IP + `OPERATION_SIZE_BYTES + operand_byte_index);
+                if (ram_read_complete)
+                begin
+                    //operand2[8 * operand_byte_index + 7 : 8 * operand_byte_index] <= ram_read_data[7:0];
+                    operand2[31:24] <= ram_read_data[7:0];
+                    operand2 <= operand2 >> 8;
+                    operand_byte_index <= operand_byte_index + 1;
+                end
+                else
+                    state <= `STATE_FETCH_OPERAND2;
+                if (operand_byte_index == 3)
+                begin
+                    operand_byte_index <= 'b0;
+                    state <= `STATE_EXECUTE_INSTRUCTION;
+                    $display("Fetched operand2 %d.", operand2);
+                end
+                else
+                    state <= `STATE_FETCH_OPERAND2;
             end
+            /*
             `STATE_EXECUTE_INSTRUCTION:
             begin
                 case (operation)
@@ -336,7 +404,7 @@ begin
                 endcase
                 state <= `STATE_FETCH_OPERATION;
             end
-        */
+            */
         endcase
     end
 end
