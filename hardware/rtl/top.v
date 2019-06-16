@@ -86,6 +86,7 @@ sdram_system_new_sdram_controller_0 sdram_controller(
 reg[7:0] ram_write_state;
 parameter WAIT_FOR_RAM_WRITE = 8'd0;
 parameter WRITE_TO_RAM = 8'd1;
+parameter RAM_WRITE_DONE = 8'd2;
 reg ram_write_complete;
 task write_to_ram;
     // Inputs for the address to write to and the data to write.
@@ -95,29 +96,29 @@ task write_to_ram;
         case (ram_write_state)
             WAIT_FOR_RAM_WRITE:
             begin
+                ram_write_complete <= 'b0;
                 if (~sdram_controller_waitrequest_o)
+                begin
                     ram_write_state <= WRITE_TO_RAM;
+                end
                 else
+                begin
                     ram_write_state <= WAIT_FOR_RAM_WRITE;
+                end
             end
             WRITE_TO_RAM:
             begin
-                ram_write_complete <= 'b0;
                 sdram_controller_address_i <= ram_write_address;
                 sdram_controller_be_n_i <= 'b00;
                 sdram_controller_cs_i <= 'b1;
                 sdram_controller_data_i <= ram_write_data;
                 sdram_controller_wr_n_i <= 'b0;
-                if (sdram_controller_waitrequest_o)
-                begin
-                    sdram_controller_wr_n_i <= 'b1;
-                    ram_write_state <= WAIT_FOR_RAM_WRITE;
-                end
-                else
-                begin
-                    ram_write_complete <= 'b1;
-                    ram_write_state <= WAIT_FOR_RAM_WRITE;
-                end
+                ram_write_state <= RAM_WRITE_DONE;
+            end
+            RAM_WRITE_DONE:
+            begin
+                ram_write_complete <= 'b1;
+                ram_write_state <= WAIT_FOR_RAM_WRITE;
             end
         endcase
     end
@@ -231,17 +232,18 @@ begin
                 else
                 begin
                     write_to_ram(program_rom_address, program_rom_byte);
+                    if (ram_write_complete)
+                    begin
+                        program_rom_address <= program_rom_address + 1;
+                    end
+                    else
+                    begin
+                        state <= `STATE_LOAD_TO_RAM;
+                    end
                     if (program_rom_byte == `OPERATION_CODE)
                     begin
                         code_section_start_address <= program_rom_address + 1;
                         `REGISTER_IP <= program_rom_address + 1;
-                    end
-                    else
-                        state <= `STATE_LOAD_TO_RAM;
-                    if (ram_write_complete)
-                    begin
-                        $display("RAM write complete, incrementing address.");
-                        program_rom_address <= program_rom_address + 1;
                     end
                     else
                     begin
