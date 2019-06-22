@@ -1,9 +1,8 @@
 # Oliver-RISC: The Ultimate RISC Processor
 
 The CPU has 8MB of SDRAM.
-The first 4MB is for code.
-The second 4MB is for data.
-On bootup, the FPGA reads out a binary from the SD card and places it at 32'd0 in the code RAM.
+The SDRAM is split into the .data and the .code sections.
+On bootup, the FPGA reads out a binary from the SD card or RAM and places it at 32'd0 in the code RAM.
 The FPGA then reads the first instruction from 32'd0 and executes it. Then, it executes the next instruction, etc.
 
 Registers (32 bits each, addressed using a 32-bit code):
