@@ -1,26 +1,25 @@
 [*]
 [*] GTKWave Analyzer v3.3.79 (w)1999-2017 BSI
-[*] Sun Jun 16 05:00:34 2019
+[*] Sun Jun 23 04:32:04 2019
 [*]
 [dumpfile] "/home/oliver/Projects/FPGA_Projects/CPU/hardware/dump.lxt"
-[dumpfile_mtime] "Sun Jun 16 04:59:57 2019"
-[dumpfile_size] 14212448
+[dumpfile_mtime] "Sun Jun 23 04:25:38 2019"
+[dumpfile_size] 13083635
 [savefile] "/home/oliver/Projects/FPGA_Projects/CPU/hardware/savefile.gtkw"
-[timestart] 148843300
-[size] 1920 1016
+[timestart] 133625600
+[size] 2560 1471
 [pos] -1 -1
-*-16.703018 149047600 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-17.431669 134250000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] test.
 [treeopen] test.top_instantiation.
 [sst_width] 375
-[signals_width] 294
+[signals_width] 744
 [sst_expanded] 1
-[sst_vpaned_height] 415
+[sst_vpaned_height] 671
 @24
 test.top_instantiation.state[7:0]
 test.top_instantiation.operation[7:0]
 test.top_instantiation.operand1[31:0]
-@25
 test.top_instantiation.operand2[31:0]
 @28
 test.top_instantiation.CLOCK_50[1:0]
@@ -46,5 +45,13 @@ test.top_instantiation.operand_byte_index[7:0]
 test.top_instantiation.ram_read_complete[0]
 @22
 test.top_instantiation.program_rom_address[31:0]
+@24
+test.sdram_module.\mem_array[4][15:0]
+@22
+test.sdram_module.\mem_array[5][15:0]
+test.sdram_module.\mem_array[6][15:0]
+test.sdram_module.\mem_array[7][15:0]
+@25
+test.top_instantiation.write_to_ram.ram_write_data[15:0]
 [pattern_trace] 1
 [pattern_trace] 0

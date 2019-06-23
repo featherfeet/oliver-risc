@@ -52,6 +52,9 @@ module test();
         for (i = 0; i < 1000; i = i + 1)
             $dumpvars(0, sdram_module.mem_array[i]);
         $dumpvars(0, top_instantiation.registers[0]);
+        $dumpvars(0, top_instantiation.registers[1]);
+        $dumpvars(0, top_instantiation.registers[2]);
+        $dumpvars(0, top_instantiation.registers[3]);
         reset = 'b0;
         #80000 reset = 'hF;
     end

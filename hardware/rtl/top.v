@@ -341,7 +341,7 @@ begin
                         if (ram_write_complete)
                         begin
                             operand_byte_index <= operand_byte_index + 1;
-                            registers[operand1] <= {registers[operand1][`OPERAND_SIZE_BITS - 1:8], 8'b0};
+                            registers[operand1] <= {registers[operand1][7:0], registers[operand1][`OPERAND_SIZE_BITS - 1:8]};
                             ram_write_complete <= 'b0;
                         end
                         else
@@ -350,6 +350,7 @@ begin
                         end
                         if (operand_byte_index == `OPERAND_SIZE_BYTES)
                         begin
+                            sdram_controller_wr_n_i <= 'b1;
                             operand_byte_index <= 'b0;
                             `REGISTER_IP <= `REGISTER_IP + `INSTRUCTION_SIZE_BYTES;
                             state <= `STATE_FETCH_OPERATION;

@@ -1,5 +1,6 @@
 #include "../assembler/assembler.h"
 #include <stdio.h>
+#include <string.h>
 #include <stdlib.h>
 
 int main(int argc, char *argv[]) {
@@ -48,11 +49,15 @@ int main(int argc, char *argv[]) {
 				registers[IP] += INSTRUCTION_SIZE;
 				break;
 			case OPERATION_LOAD:
-				registers[operand2] = data_ram[operand1];
+                for (int i = OPERAND_SIZE - 1; i >= 0; i--) {
+                    registers[operand2] <<= 8;
+                    registers[operand2] |= data_ram[operand1 + i];
+                }
 				registers[IP] += INSTRUCTION_SIZE;
 				break;
 			case OPERATION_STORE:
-				data_ram[operand2] = registers[operand1];
+				//data_ram[operand2] = registers[operand1];
+                memcpy(data_ram + operand2, &(registers[operand1]), OPERAND_SIZE);
 				registers[IP] += INSTRUCTION_SIZE;
 				break;
 			case OPERATION_ADD:

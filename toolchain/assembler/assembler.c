@@ -261,7 +261,7 @@ int main(int argc, char *argv[]) {
                 break;
             case OPERATION_STORE:
                 operand1_is_register = true;
-                operand1_is_address = true;
+                operand2_is_address = true;
                 break;
             case OPERATION_ADD:
                 operand1_is_register = true;
