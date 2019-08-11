@@ -2,7 +2,7 @@
 
 module top(
     input [3:0] KEY,
-    input [1:0] CLOCK_50,
+    input CLOCK_50,
     input [9:0] SW,
     output [6:0] HEX0,
     output [6:0] HEX1,
@@ -35,16 +35,16 @@ wire [7:0] program_rom_byte;
 wire program_rom_done;
 rom program_rom (
     .address(program_rom_address),
-    .byte(program_rom_byte),
+    .output_byte(program_rom_byte),
     .done(program_rom_done)
 );
 
 // Clock generator for SDRAM.
 sdram_system_up_clocks_0 up_clocks_0 (
-    .CLOCK_50    (CLOCK_50[0]),                       // clk_in_primary.clk
-    .reset       (~KEY[0]),                        // clk_in_primary_reset.reset
-    .sys_clk     (),                               // sys_clk.clk
-    .sys_reset_n (),                               // sys_clk_reset.reset_n
+    .CLOCK_50    (CLOCK_50),                      // clk_in_primary.clk
+    .reset       (~KEY[0]),                       // clk_in_primary_reset.reset
+    .sys_clk     (),                              // sys_clk.clk
+    .sys_reset_n (),                              // sys_clk_reset.reset_n
     .SDRAM_CLK   (DRAM_CLK)                       // sdram_clk.clk
 );
 
@@ -58,6 +58,7 @@ reg sdram_controller_wr_n_i;
 wire[15:0] sdram_controller_data_o;
 wire sdram_controller_valid_o;
 wire sdram_controller_waitrequest_o;
+wire sdram_controller_init_done;
 sdram_system_new_sdram_controller_0 sdram_controller(
     .az_addr                        (sdram_controller_address_i),
     .az_be_n                        (sdram_controller_be_n_i),
@@ -78,7 +79,19 @@ sdram_system_new_sdram_controller_0 sdram_controller(
     .zs_dq                          (DRAM_DQ),
     .zs_dqm                         ({DRAM_UDQM, DRAM_LDQM}),
     .zs_ras_n                       (DRAM_RAS_N),
-    .zs_we_n                        (DRAM_WE_N)
+    .zs_we_n                        (DRAM_WE_N),
+    .init_done                      (sdram_controller_init_done)
+);
+
+reg[31:0] number_to_show;
+numericaldisplay display(
+    .CLOCK_50(CLOCK_50),
+    .RST_N(KEY[0]),
+    .number_to_show(number_to_show),
+    .HEX0(HEX0),
+    .HEX1(HEX1),
+    .HEX2(HEX2),
+    .HEX3(HEX3)
 );
 
 // Task for writing to RAM.
@@ -192,6 +205,7 @@ begin
         ram_read_complete <= 'b0;
         ram_read_data <= 'b0;
         operand_byte_index <= 'b0;
+        number_to_show <= 'b0;
         `REGISTER_IP <= 'b0;
         `REGISTER_A <= 'b0;
         `REGISTER_B <= 'b0;
@@ -206,14 +220,14 @@ begin
         case (state)
             `STATE_INITIALIZE:
             begin
-                if (sdram_controller.init_done && ram_stabilization_counter == 20)
+                if (sdram_controller_init_done && ram_stabilization_counter == 20)
                 begin
                     $display("%t: Changing state to STATE_LOAD_TO_RAM", $time);
                     state <= `STATE_LOAD_TO_RAM;
                 end
-                else if (sdram_controller.init_done)
+                else if (sdram_controller_init_done)
                 begin
-                    ram_stabilization_counter <= ram_stabilization_counter + 1;
+                    ram_stabilization_counter <= ram_stabilization_counter + 8'd1;
                     $display("%t: Init_done is done. Counter is %d.", $time, ram_stabilization_counter);
                 end
                 else
@@ -257,7 +271,7 @@ begin
                 if (ram_read_complete)
                 begin
                     ram_read_complete <= 'b0;
-                    operation <= ram_read_data;
+                    operation <= ram_read_data[7:0];
                     state <= `STATE_FETCH_OPERAND1;
                     $display("Fetched operation %d.", ram_read_data);
                     $display("%t: Changing state to STATE_FETCH_OPERAND1", $time);
@@ -272,7 +286,7 @@ begin
                 if (ram_read_complete)
                 begin
                     operand1 <= {ram_read_data[7:0], operand1[31:8]};
-                    operand_byte_index <= operand_byte_index + 1;
+                    operand_byte_index <= operand_byte_index + 8'd1;
                     ram_read_complete <= 'b0;
                 end
                 else
@@ -291,7 +305,7 @@ begin
                 if (ram_read_complete)
                 begin
                     operand2 <= {ram_read_data[7:0], operand2[31:8]};
-                    operand_byte_index <= operand_byte_index + 1;
+                    operand_byte_index <= operand_byte_index + 8'd1;
                     ram_read_complete <= 'b0;
                 end
                 else
@@ -321,7 +335,7 @@ begin
                         if (ram_read_complete)
                         begin
                             registers[operand2] <= {ram_read_data[7:0], registers[operand2][31:8]};
-                            operand_byte_index <= operand_byte_index + 1;
+                            operand_byte_index <= operand_byte_index + 8'd1;
                             ram_read_complete <= 'b0;
                         end
                         else
@@ -340,7 +354,7 @@ begin
                         //$display("STORE");
                         if (ram_write_complete)
                         begin
-                            operand_byte_index <= operand_byte_index + 1;
+                            operand_byte_index <= operand_byte_index + 8'd1;
                             registers[operand1] <= {registers[operand1][7:0], registers[operand1][`OPERAND_SIZE_BITS - 1:8]};
                             ram_write_complete <= 'b0;
                         end
@@ -375,6 +389,7 @@ begin
                     `OPERATION_OUT:
                     begin
                         $display("%d", registers[operand1]);
+                        number_to_show <= registers[operand1];
                         `REGISTER_IP <= `REGISTER_IP + `INSTRUCTION_SIZE_BYTES;
                         state <= `STATE_FETCH_OPERATION;
                     end

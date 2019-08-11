@@ -1,5 +1,5 @@
 EDA Netlist Writer report for top
-Sun Jan 20 23:10:39 2019
+Mon Jul  1 20:23:24 2019
 Quartus II 64-Bit Version 13.0.1 Build 232 06/12/2013 Service Pack 1 SJ Web Edition
 
 
@@ -36,7 +36,7 @@ applicable agreement for further details.
 +-------------------------------------------------------------------+
 ; EDA Netlist Writer Summary                                        ;
 +---------------------------+---------------------------------------+
-; EDA Netlist Writer Status ; Successful - Sun Jan 20 23:10:39 2019 ;
+; EDA Netlist Writer Status ; Successful - Mon Jul  1 20:23:24 2019 ;
 ; Revision Name             ; top                                   ;
 ; Top-level Entity Name     ; top                                   ;
 ; Family                    ; Cyclone II                            ;
@@ -66,16 +66,16 @@ applicable agreement for further details.
 +---------------------------------------------------------------------------------------------------+---------------------------+
 
 
-+----------------------------------------------------------------------------+
-; Simulation Generated Files                                                 ;
-+----------------------------------------------------------------------------+
-; Generated Files                                                            ;
-+----------------------------------------------------------------------------+
-; /home/oliver/Projects/FPGA Projects/CPU/simulation/modelsim/top.vo         ;
-; /home/oliver/Projects/FPGA Projects/CPU/simulation/modelsim/top_fast.vo    ;
-; /home/oliver/Projects/FPGA Projects/CPU/simulation/modelsim/top_v.sdo      ;
-; /home/oliver/Projects/FPGA Projects/CPU/simulation/modelsim/top_v_fast.sdo ;
-+----------------------------------------------------------------------------+
++-------------------------------------------------------------------------------------+
+; Simulation Generated Files                                                          ;
++-------------------------------------------------------------------------------------+
+; Generated Files                                                                     ;
++-------------------------------------------------------------------------------------+
+; /home/oliver/Projects/FPGA_Projects/CPU/hardware/simulation/modelsim/top.vo         ;
+; /home/oliver/Projects/FPGA_Projects/CPU/hardware/simulation/modelsim/top_fast.vo    ;
+; /home/oliver/Projects/FPGA_Projects/CPU/hardware/simulation/modelsim/top_v.sdo      ;
+; /home/oliver/Projects/FPGA_Projects/CPU/hardware/simulation/modelsim/top_v_fast.sdo ;
++-------------------------------------------------------------------------------------+
 
 
 +-----------------------------+
@@ -84,13 +84,13 @@ applicable agreement for further details.
 Info: *******************************************************************
 Info: Running Quartus II 64-Bit EDA Netlist Writer
     Info: Version 13.0.1 Build 232 06/12/2013 Service Pack 1 SJ Web Edition
-    Info: Processing started: Sun Jan 20 23:10:39 2019
-Info: Command: quartus_eda --read_settings_files=off --write_settings_files=off CPU -c top
-Info (204026): Generated files "top.vo", "top_fast.vo", "top_v.sdo" and "top_v_fast.sdo" in directory "/home/oliver/Projects/FPGA Projects/CPU/simulation/modelsim/" for EDA simulation tool
+    Info: Processing started: Mon Jul  1 20:23:22 2019
+Info: Command: quartus_eda --read_settings_files=off --write_settings_files=off top -c top
+Info (204026): Generated files "top.vo", "top_fast.vo", "top_v.sdo" and "top_v_fast.sdo" in directory "/home/oliver/Projects/FPGA_Projects/CPU/hardware/simulation/modelsim/" for EDA simulation tool
 Info: Quartus II 64-Bit EDA Netlist Writer was successful. 0 errors, 0 warnings
-    Info: Peak virtual memory: 800 megabytes
-    Info: Processing ended: Sun Jan 20 23:10:39 2019
-    Info: Elapsed time: 00:00:00
-    Info: Total CPU time (on all processors): 00:00:00
+    Info: Peak virtual memory: 845 megabytes
+    Info: Processing ended: Mon Jul  1 20:23:25 2019
+    Info: Elapsed time: 00:00:03
+    Info: Total CPU time (on all processors): 00:00:03
 
 

@@ -88,8 +88,6 @@ module sdram_system_new_sdram_controller_0_input_efifo_module (
           wr_address <= 0;
           rd_address <= 0;
           entries <= 0;
-          entry_0 <= 'b0;
-          entry_1 <= 'b0;
         end
       else 
         case (rdwr) // synthesis parallel_case full_case
@@ -180,9 +178,9 @@ module sdram_system_new_sdram_controller_0 (
                                               zs_dq,
                                               zs_dqm,
                                               zs_ras_n,
-                                              zs_we_n
-                                           )
-;
+                                              zs_we_n,
+                                              init_done
+                                           );
 
   output  [ 15: 0] za_data;
   output           za_valid;
@@ -239,7 +237,7 @@ module sdram_system_new_sdram_controller_0 (
   reg     [  2: 0] i_next;
   reg     [  2: 0] i_refs;
   reg     [  2: 0] i_state;
-  reg              init_done;
+  output reg       init_done;
   reg     [ 11: 0] m_addr /* synthesis ALTERA_ATTRIBUTE = "FAST_OUTPUT_REGISTER=ON"  */;
   reg     [  1: 0] m_bank /* synthesis ALTERA_ATTRIBUTE = "FAST_OUTPUT_REGISTER=ON"  */;
   reg     [  3: 0] m_cmd /* synthesis ALTERA_ATTRIBUTE = "FAST_OUTPUT_REGISTER=ON"  */;

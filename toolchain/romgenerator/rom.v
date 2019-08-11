@@ -1,118 +1,340 @@
-module rom(input[31:0] address, output reg [7:0] byte, output done);
-	assign done = (address == 32'd53) ? 1 : 0;
+module rom(input[31:0] address, output reg [7:0] output_byte, output done);
+	assign done = (address == 32'd164) ? 1'b1 : 1'b0;
 	always @(address)
 	begin
 		case (address)
 			32'd0:
-				byte = 8'd34;
+				output_byte = 8'd1;
 			32'd1:
-				byte = 8'd1;
+				output_byte = 8'd0;
 			32'd2:
-				byte = 8'd0;
+				output_byte = 8'd0;
 			32'd3:
-				byte = 8'd0;
+				output_byte = 8'd0;
 			32'd4:
-				byte = 8'd0;
+				output_byte = 8'd1;
 			32'd5:
-				byte = 8'd0;
+				output_byte = 8'd0;
 			32'd6:
-				byte = 8'd0;
+				output_byte = 8'd0;
 			32'd7:
-				byte = 8'd0;
+				output_byte = 8'd0;
 			32'd8:
-				byte = 8'd14;
+				output_byte = 8'd0;
 			32'd9:
-				byte = 8'd1;
+				output_byte = 8'd0;
 			32'd10:
-				byte = 8'd0;
+				output_byte = 8'd0;
 			32'd11:
-				byte = 8'd0;
+				output_byte = 8'd0;
 			32'd12:
-				byte = 8'd0;
+				output_byte = 8'd1;
 			32'd13:
-				byte = 8'd0;
+				output_byte = 8'd0;
 			32'd14:
-				byte = 8'd1;
+				output_byte = 8'd0;
 			32'd15:
-				byte = 8'd0;
+				output_byte = 8'd0;
 			32'd16:
-				byte = 8'd0;
+				output_byte = 8'd5;
 			32'd17:
-				byte = 8'd0;
+				output_byte = 8'd0;
 			32'd18:
-				byte = 8'd2;
+				output_byte = 8'd0;
 			32'd19:
-				byte = 8'd1;
+				output_byte = 8'd0;
 			32'd20:
-				byte = 8'd0;
+				output_byte = 8'd14;
 			32'd21:
-				byte = 8'd0;
+				output_byte = 8'd1;
 			32'd22:
-				byte = 8'd0;
+				output_byte = 8'd0;
 			32'd23:
-				byte = 8'd4;
+				output_byte = 8'd0;
 			32'd24:
-				byte = 8'd0;
+				output_byte = 8'd0;
 			32'd25:
-				byte = 8'd0;
+				output_byte = 8'd0;
 			32'd26:
-				byte = 8'd0;
+				output_byte = 8'd2;
 			32'd27:
-				byte = 8'd1;
+				output_byte = 8'd0;
 			32'd28:
-				byte = 8'd4;
+				output_byte = 8'd0;
 			32'd29:
-				byte = 8'd0;
+				output_byte = 8'd0;
 			32'd30:
-				byte = 8'd0;
+				output_byte = 8'd1;
 			32'd31:
-				byte = 8'd0;
+				output_byte = 8'd4;
 			32'd32:
-				byte = 8'd2;
+				output_byte = 8'd0;
 			32'd33:
-				byte = 8'd0;
+				output_byte = 8'd0;
 			32'd34:
-				byte = 8'd0;
+				output_byte = 8'd0;
 			32'd35:
-				byte = 8'd0;
+				output_byte = 8'd3;
 			32'd36:
-				byte = 8'd5;
+				output_byte = 8'd0;
 			32'd37:
-				byte = 8'd2;
+				output_byte = 8'd0;
 			32'd38:
-				byte = 8'd0;
+				output_byte = 8'd0;
 			32'd39:
-				byte = 8'd0;
+				output_byte = 8'd1;
 			32'd40:
-				byte = 8'd0;
+				output_byte = 8'd8;
 			32'd41:
-				byte = 8'd2;
+				output_byte = 8'd0;
 			32'd42:
-				byte = 8'd0;
+				output_byte = 8'd0;
 			32'd43:
-				byte = 8'd0;
+				output_byte = 8'd0;
 			32'd44:
-				byte = 8'd0;
+				output_byte = 8'd4;
 			32'd45:
-				byte = 8'd13;
+				output_byte = 8'd0;
 			32'd46:
-				byte = 8'd0;
+				output_byte = 8'd0;
 			32'd47:
-				byte = 8'd0;
+				output_byte = 8'd0;
 			32'd48:
-				byte = 8'd0;
+				output_byte = 8'd1;
 			32'd49:
-				byte = 8'd0;
+				output_byte = 8'd16;
 			32'd50:
-				byte = 8'd0;
+				output_byte = 8'd0;
 			32'd51:
-				byte = 8'd0;
+				output_byte = 8'd0;
 			32'd52:
-				byte = 8'd0;
+				output_byte = 8'd0;
 			32'd53:
-				byte = 8'd0;
+				output_byte = 8'd5;
+			32'd54:
+				output_byte = 8'd0;
+			32'd55:
+				output_byte = 8'd0;
+			32'd56:
+				output_byte = 8'd0;
+			32'd57:
+				output_byte = 8'd1;
+			32'd58:
+				output_byte = 8'd12;
+			32'd59:
+				output_byte = 8'd0;
+			32'd60:
+				output_byte = 8'd0;
+			32'd61:
+				output_byte = 8'd0;
+			32'd62:
+				output_byte = 8'd6;
+			32'd63:
+				output_byte = 8'd0;
+			32'd64:
+				output_byte = 8'd0;
+			32'd65:
+				output_byte = 8'd0;
+			32'd66:
+				output_byte = 8'd3;
+			32'd67:
+				output_byte = 8'd2;
+			32'd68:
+				output_byte = 8'd0;
+			32'd69:
+				output_byte = 8'd0;
+			32'd70:
+				output_byte = 8'd0;
+			32'd71:
+				output_byte = 8'd3;
+			32'd72:
+				output_byte = 8'd0;
+			32'd73:
+				output_byte = 8'd0;
+			32'd74:
+				output_byte = 8'd0;
+			32'd75:
+				output_byte = 8'd7;
+			32'd76:
+				output_byte = 8'd3;
+			32'd77:
+				output_byte = 8'd0;
+			32'd78:
+				output_byte = 8'd0;
+			32'd79:
+				output_byte = 8'd0;
+			32'd80:
+				output_byte = 8'd2;
+			32'd81:
+				output_byte = 8'd0;
+			32'd82:
+				output_byte = 8'd0;
+			32'd83:
+				output_byte = 8'd0;
+			32'd84:
+				output_byte = 8'd7;
+			32'd85:
+				output_byte = 8'd1;
+			32'd86:
+				output_byte = 8'd0;
+			32'd87:
+				output_byte = 8'd0;
+			32'd88:
+				output_byte = 8'd0;
+			32'd89:
+				output_byte = 8'd3;
+			32'd90:
+				output_byte = 8'd0;
+			32'd91:
+				output_byte = 8'd0;
+			32'd92:
+				output_byte = 8'd0;
+			32'd93:
+				output_byte = 8'd5;
+			32'd94:
+				output_byte = 8'd3;
+			32'd95:
+				output_byte = 8'd0;
+			32'd96:
+				output_byte = 8'd0;
+			32'd97:
+				output_byte = 8'd0;
+			32'd98:
+				output_byte = 8'd0;
+			32'd99:
+				output_byte = 8'd0;
+			32'd100:
+				output_byte = 8'd0;
+			32'd101:
+				output_byte = 8'd0;
+			32'd102:
+				output_byte = 8'd3;
+			32'd103:
+				output_byte = 8'd4;
+			32'd104:
+				output_byte = 8'd0;
+			32'd105:
+				output_byte = 8'd0;
+			32'd106:
+				output_byte = 8'd0;
+			32'd107:
+				output_byte = 8'd6;
+			32'd108:
+				output_byte = 8'd0;
+			32'd109:
+				output_byte = 8'd0;
+			32'd110:
+				output_byte = 8'd0;
+			32'd111:
+				output_byte = 8'd7;
+			32'd112:
+				output_byte = 8'd1;
+			32'd113:
+				output_byte = 8'd0;
+			32'd114:
+				output_byte = 8'd0;
+			32'd115:
+				output_byte = 8'd0;
+			32'd116:
+				output_byte = 8'd4;
+			32'd117:
+				output_byte = 8'd0;
+			32'd118:
+				output_byte = 8'd0;
+			32'd119:
+				output_byte = 8'd0;
+			32'd120:
+				output_byte = 8'd8;
+			32'd121:
+				output_byte = 8'd4;
+			32'd122:
+				output_byte = 8'd0;
+			32'd123:
+				output_byte = 8'd0;
+			32'd124:
+				output_byte = 8'd0;
+			32'd125:
+				output_byte = 8'd5;
+			32'd126:
+				output_byte = 8'd0;
+			32'd127:
+				output_byte = 8'd0;
+			32'd128:
+				output_byte = 8'd0;
+			32'd129:
+				output_byte = 8'd9;
+			32'd130:
+				output_byte = 8'd45;
+			32'd131:
+				output_byte = 8'd0;
+			32'd132:
+				output_byte = 8'd0;
+			32'd133:
+				output_byte = 8'd0;
+			32'd134:
+				output_byte = 8'd0;
+			32'd135:
+				output_byte = 8'd0;
+			32'd136:
+				output_byte = 8'd0;
+			32'd137:
+				output_byte = 8'd0;
+			32'd138:
+				output_byte = 8'd10;
+			32'd139:
+				output_byte = 8'd45;
+			32'd140:
+				output_byte = 8'd0;
+			32'd141:
+				output_byte = 8'd0;
+			32'd142:
+				output_byte = 8'd0;
+			32'd143:
+				output_byte = 8'd0;
+			32'd144:
+				output_byte = 8'd0;
+			32'd145:
+				output_byte = 8'd0;
+			32'd146:
+				output_byte = 8'd0;
+			32'd147:
+				output_byte = 8'd11;
+			32'd148:
+				output_byte = 8'd135;
+			32'd149:
+				output_byte = 8'd0;
+			32'd150:
+				output_byte = 8'd0;
+			32'd151:
+				output_byte = 8'd0;
+			32'd152:
+				output_byte = 8'd0;
+			32'd153:
+				output_byte = 8'd4;
+			32'd154:
+				output_byte = 8'd0;
+			32'd155:
+				output_byte = 8'd0;
+			32'd156:
+				output_byte = 8'd13;
+			32'd157:
+				output_byte = 8'd5;
+			32'd158:
+				output_byte = 8'd0;
+			32'd159:
+				output_byte = 8'd0;
+			32'd160:
+				output_byte = 8'd0;
+			32'd161:
+				output_byte = 8'd0;
+			32'd162:
+				output_byte = 8'd0;
+			32'd163:
+				output_byte = 8'd0;
+			32'd164:
+				output_byte = 8'd0;
 			default:
-				byte = 8'd0;
+				output_byte = 8'd0;
 		endcase
 	end
 endmodule

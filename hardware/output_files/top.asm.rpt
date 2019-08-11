@@ -1,5 +1,5 @@
 Assembler report for top
-Sun Jan 20 23:10:34 2019
+Fri Jul  5 17:50:19 2019
 Quartus II 64-Bit Version 13.0.1 Build 232 06/12/2013 Service Pack 1 SJ Web Edition
 
 
@@ -38,7 +38,7 @@ applicable agreement for further details.
 +---------------------------------------------------------------+
 ; Assembler Summary                                             ;
 +-----------------------+---------------------------------------+
-; Assembler Status      ; Successful - Sun Jan 20 23:10:34 2019 ;
+; Assembler Status      ; Successful - Fri Jul  5 17:50:19 2019 ;
 ; Revision Name         ; top                                   ;
 ; Top-level Entity Name ; top                                   ;
 ; Family                ; Cyclone II                            ;
@@ -94,8 +94,8 @@ applicable agreement for further details.
 ; Option         ; Setting          ;
 +----------------+------------------+
 ; Device         ; EP2C20F484C7     ;
-; JTAG usercode  ; 0x001B301C       ;
-; Checksum       ; 0x001B301C       ;
+; JTAG usercode  ; 0x0040CFC8       ;
+; Checksum       ; 0x0040CFC8       ;
 +----------------+------------------+
 
 
@@ -106,8 +106,8 @@ applicable agreement for further details.
 +--------------------+--------------+
 ; Device             ; EPCS16       ;
 ; JTAG usercode      ; 0x00000000   ;
-; Checksum           ; 0x1DD9512E   ;
-; Compression Ratio  ; 3            ;
+; Checksum           ; 0x1D9B17CD   ;
+; Compression Ratio  ; 2            ;
 +--------------------+--------------+
 
 
@@ -117,14 +117,27 @@ applicable agreement for further details.
 Info: *******************************************************************
 Info: Running Quartus II 64-Bit Assembler
     Info: Version 13.0.1 Build 232 06/12/2013 Service Pack 1 SJ Web Edition
-    Info: Processing started: Sun Jan 20 23:10:33 2019
-Info: Command: quartus_asm --read_settings_files=off --write_settings_files=off CPU -c top
+    Info: Copyright (C) 1991-2013 Altera Corporation. All rights reserved.
+    Info: Your use of Altera Corporation's design tools, logic functions 
+    Info: and other software and tools, and its AMPP partner logic 
+    Info: functions, and any output files from any of the foregoing 
+    Info: (including device programming or simulation files), and any 
+    Info: associated documentation or information are expressly subject 
+    Info: to the terms and conditions of the Altera Program License 
+    Info: Subscription Agreement, Altera MegaCore Function License 
+    Info: Agreement, or other applicable license agreement, including, 
+    Info: without limitation, that your use is for the sole purpose of 
+    Info: programming logic devices manufactured by Altera and sold by 
+    Info: Altera or its authorized distributors.  Please refer to the 
+    Info: applicable agreement for further details.
+    Info: Processing started: Fri Jul  5 17:50:16 2019
+Info: Command: quartus_asm top
 Info (115031): Writing out detailed assembly data for power analysis
 Info (115030): Assembler is generating device programming files
 Info: Quartus II 64-Bit Assembler was successful. 0 errors, 0 warnings
-    Info: Peak virtual memory: 544 megabytes
-    Info: Processing ended: Sun Jan 20 23:10:35 2019
-    Info: Elapsed time: 00:00:02
-    Info: Total CPU time (on all processors): 00:00:01
+    Info: Peak virtual memory: 565 megabytes
+    Info: Processing ended: Fri Jul  5 17:50:19 2019
+    Info: Elapsed time: 00:00:03
+    Info: Total CPU time (on all processors): 00:00:03
 
 

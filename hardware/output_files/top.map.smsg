@@ -1,1 +1,1 @@
-Warning (10268): Verilog HDL information at seven_segment_display.v(6): always construct contains both blocking and non-blocking assignments
+Info (10281): Verilog HDL Declaration information at top.v(90): object "WRITE_TO_RAM" differs only in case from object "write_to_ram" in the same scope

@@ -38,6 +38,8 @@ module seven_segment_display(
 				display <= 7'b0000110;
 			4'd15:
 				display <= 7'b0001110;
+			default:
+				display <= 7'b1111111;
 		endcase
 	end
 endmodule // seven_segment_display
