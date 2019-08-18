@@ -36,7 +36,7 @@ module rom(input[31:0] address, output reg [7:0] output_byte, output done);
 			32'd15:
 				output_byte = 8'd0;
 			32'd16:
-				output_byte = 8'd5;
+				output_byte = 8'd17;
 			32'd17:
 				output_byte = 8'd0;
 			32'd18:

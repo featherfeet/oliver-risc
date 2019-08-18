@@ -3,7 +3,7 @@
 	num_c = 1
 	iteration_num = 0
 	iteration_step = 1
-	max_iterations = 5
+	max_iterations = 17
 .code:
 	LOAD num_b,B
 	LOAD num_c,C

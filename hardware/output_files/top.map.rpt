@@ -1,5 +1,5 @@
 Analysis & Synthesis report for top
-Fri Jul  5 17:49:37 2019
+Fri Aug 16 22:12:34 2019
 Quartus II 64-Bit Version 13.0.1 Build 232 06/12/2013 Service Pack 1 SJ Web Edition
 
 
@@ -16,25 +16,28 @@ Quartus II 64-Bit Version 13.0.1 Build 232 06/12/2013 Service Pack 1 SJ Web Edit
   8. State Machine - |top|ram_read_state
   9. State Machine - |top|ram_write_state
  10. State Machine - |top|state
- 11. State Machine - |top|sdram_system_new_sdram_controller_0:sdram_controller|m_next
- 12. State Machine - |top|sdram_system_new_sdram_controller_0:sdram_controller|m_state
- 13. State Machine - |top|sdram_system_new_sdram_controller_0:sdram_controller|i_next
- 14. State Machine - |top|sdram_system_new_sdram_controller_0:sdram_controller|i_state
- 15. Registers Removed During Synthesis
- 16. Removed Registers Triggering Further Register Optimizations
- 17. General Register Statistics
- 18. Inverted Register Statistics
- 19. Multiplexer Restructuring Statistics (Restructuring Performed)
- 20. Source assignments for sdram_system_new_sdram_controller_0:sdram_controller
- 21. Parameter Settings for User Entity Instance: Top-level Entity: |top
- 22. Parameter Settings for User Entity Instance: sdram_system_up_clocks_0:up_clocks_0|altpll:DE_Clock_Generator_System
- 23. altpll Parameter Settings by Entity Instance
- 24. Port Connectivity Checks: "sdram_system_new_sdram_controller_0:sdram_controller|sdram_system_new_sdram_controller_0_input_efifo_module:the_sdram_system_new_sdram_controller_0_input_efifo_module"
- 25. Port Connectivity Checks: "sdram_system_new_sdram_controller_0:sdram_controller"
- 26. Port Connectivity Checks: "sdram_system_up_clocks_0:up_clocks_0"
- 27. Elapsed Time Per Partition
- 28. Analysis & Synthesis Messages
- 29. Analysis & Synthesis Suppressed Messages
+ 11. State Machine - |top|numericaldisplay:display|state
+ 12. State Machine - |top|sdram_system_new_sdram_controller_0:sdram_controller|m_next
+ 13. State Machine - |top|sdram_system_new_sdram_controller_0:sdram_controller|m_state
+ 14. State Machine - |top|sdram_system_new_sdram_controller_0:sdram_controller|i_next
+ 15. State Machine - |top|sdram_system_new_sdram_controller_0:sdram_controller|i_state
+ 16. Registers Removed During Synthesis
+ 17. Removed Registers Triggering Further Register Optimizations
+ 18. General Register Statistics
+ 19. Inverted Register Statistics
+ 20. Multiplexer Restructuring Statistics (Restructuring Performed)
+ 21. Source assignments for sdram_system_new_sdram_controller_0:sdram_controller
+ 22. Parameter Settings for User Entity Instance: Top-level Entity: |top
+ 23. Parameter Settings for User Entity Instance: sdram_system_up_clocks_0:up_clocks_0|altpll:DE_Clock_Generator_System
+ 24. Parameter Settings for User Entity Instance: numericaldisplay:display
+ 25. Parameter Settings for User Entity Instance: numericaldisplay:display|lpm_divide:divider
+ 26. altpll Parameter Settings by Entity Instance
+ 27. Port Connectivity Checks: "sdram_system_new_sdram_controller_0:sdram_controller|sdram_system_new_sdram_controller_0_input_efifo_module:the_sdram_system_new_sdram_controller_0_input_efifo_module"
+ 28. Port Connectivity Checks: "sdram_system_new_sdram_controller_0:sdram_controller"
+ 29. Port Connectivity Checks: "sdram_system_up_clocks_0:up_clocks_0"
+ 30. Elapsed Time Per Partition
+ 31. Analysis & Synthesis Messages
+ 32. Analysis & Synthesis Suppressed Messages
 
 
 
@@ -60,15 +63,15 @@ applicable agreement for further details.
 +--------------------------------------------------------------------------------------+
 ; Analysis & Synthesis Summary                                                         ;
 +------------------------------------+-------------------------------------------------+
-; Analysis & Synthesis Status        ; Successful - Fri Jul  5 17:49:37 2019           ;
+; Analysis & Synthesis Status        ; Successful - Fri Aug 16 22:12:34 2019           ;
 ; Quartus II 64-Bit Version          ; 13.0.1 Build 232 06/12/2013 SP 1 SJ Web Edition ;
 ; Revision Name                      ; top                                             ;
 ; Top-level Entity Name              ; top                                             ;
 ; Family                             ; Cyclone II                                      ;
-; Total logic elements               ; 3,638                                           ;
-;     Total combinational functions  ; 2,652                                           ;
-;     Dedicated logic registers      ; 1,420                                           ;
-; Total registers                    ; 1420                                            ;
+; Total logic elements               ; 3,939                                           ;
+;     Total combinational functions  ; 2,941                                           ;
+;     Dedicated logic registers      ; 1,520                                           ;
+; Total registers                    ; 1520                                            ;
 ; Total pins                         ; 81                                              ;
 ; Total virtual pins                 ; 0                                               ;
 ; Total memory bits                  ; 0                                               ;
@@ -173,22 +176,32 @@ Parallel compilation was disabled, but you have multiple processors available. E
 +----------------------------+--------+
 
 
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-; Analysis & Synthesis Source Files Read                                                                                                                                                      ;
-+-------------------------------------------+-----------------+------------------------+--------------------------------------------------------------------------------------------+---------+
-; File Name with User-Entered Path          ; Used in Netlist ; File Type              ; File Name with Absolute Path                                                               ; Library ;
-+-------------------------------------------+-----------------+------------------------+--------------------------------------------------------------------------------------------+---------+
-; rtl/top.v                                 ; yes             ; User Verilog HDL File  ; /home/oliver/Projects/FPGA_Projects/CPU/hardware/rtl/top.v                                 ;         ;
-; rtl/sdram_system_up_clocks_0.v            ; yes             ; User Verilog HDL File  ; /home/oliver/Projects/FPGA_Projects/CPU/hardware/rtl/sdram_system_up_clocks_0.v            ;         ;
-; rtl/sdram_system_new_sdram_controller_0.v ; yes             ; User Verilog HDL File  ; /home/oliver/Projects/FPGA_Projects/CPU/hardware/rtl/sdram_system_new_sdram_controller_0.v ;         ;
-; rtl/rom.v                                 ; yes             ; User Verilog HDL File  ; /home/oliver/Projects/FPGA_Projects/CPU/hardware/rtl/rom.v                                 ;         ;
-; rtl/defines.v                             ; yes             ; User Verilog HDL File  ; /home/oliver/Projects/FPGA_Projects/CPU/hardware/rtl/defines.v                             ;         ;
-; altpll.tdf                                ; yes             ; Megafunction           ; /home/oliver/altera/13.0sp1/quartus/libraries/megafunctions/altpll.tdf                     ;         ;
-; aglobal130.inc                            ; yes             ; Megafunction           ; /home/oliver/altera/13.0sp1/quartus/libraries/megafunctions/aglobal130.inc                 ;         ;
-; stratix_pll.inc                           ; yes             ; Megafunction           ; /home/oliver/altera/13.0sp1/quartus/libraries/megafunctions/stratix_pll.inc                ;         ;
-; stratixii_pll.inc                         ; yes             ; Megafunction           ; /home/oliver/altera/13.0sp1/quartus/libraries/megafunctions/stratixii_pll.inc              ;         ;
-; cycloneii_pll.inc                         ; yes             ; Megafunction           ; /home/oliver/altera/13.0sp1/quartus/libraries/megafunctions/cycloneii_pll.inc              ;         ;
-+-------------------------------------------+-----------------+------------------------+--------------------------------------------------------------------------------------------+---------+
++---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Source Files Read                                                                                                                                                            ;
++-------------------------------------------+-----------------+------------------------------+--------------------------------------------------------------------------------------------+---------+
+; File Name with User-Entered Path          ; Used in Netlist ; File Type                    ; File Name with Absolute Path                                                               ; Library ;
++-------------------------------------------+-----------------+------------------------------+--------------------------------------------------------------------------------------------+---------+
+; rtl/top.v                                 ; yes             ; User Verilog HDL File        ; /home/oliver/Projects/FPGA_Projects/CPU/hardware/rtl/top.v                                 ;         ;
+; rtl/seven_segment_display.v               ; yes             ; User Verilog HDL File        ; /home/oliver/Projects/FPGA_Projects/CPU/hardware/rtl/seven_segment_display.v               ;         ;
+; rtl/numericaldisplay.v                    ; yes             ; User Verilog HDL File        ; /home/oliver/Projects/FPGA_Projects/CPU/hardware/rtl/numericaldisplay.v                    ;         ;
+; rtl/sdram_system_up_clocks_0.v            ; yes             ; User Verilog HDL File        ; /home/oliver/Projects/FPGA_Projects/CPU/hardware/rtl/sdram_system_up_clocks_0.v            ;         ;
+; rtl/sdram_system_new_sdram_controller_0.v ; yes             ; User Verilog HDL File        ; /home/oliver/Projects/FPGA_Projects/CPU/hardware/rtl/sdram_system_new_sdram_controller_0.v ;         ;
+; rtl/rom.v                                 ; yes             ; User Verilog HDL File        ; /home/oliver/Projects/FPGA_Projects/CPU/hardware/rtl/rom.v                                 ;         ;
+; rtl/defines.v                             ; yes             ; User Verilog HDL File        ; /home/oliver/Projects/FPGA_Projects/CPU/hardware/rtl/defines.v                             ;         ;
+; altpll.tdf                                ; yes             ; Megafunction                 ; /home/oliver/altera/13.0sp1/quartus/libraries/megafunctions/altpll.tdf                     ;         ;
+; aglobal130.inc                            ; yes             ; Megafunction                 ; /home/oliver/altera/13.0sp1/quartus/libraries/megafunctions/aglobal130.inc                 ;         ;
+; stratix_pll.inc                           ; yes             ; Megafunction                 ; /home/oliver/altera/13.0sp1/quartus/libraries/megafunctions/stratix_pll.inc                ;         ;
+; stratixii_pll.inc                         ; yes             ; Megafunction                 ; /home/oliver/altera/13.0sp1/quartus/libraries/megafunctions/stratixii_pll.inc              ;         ;
+; cycloneii_pll.inc                         ; yes             ; Megafunction                 ; /home/oliver/altera/13.0sp1/quartus/libraries/megafunctions/cycloneii_pll.inc              ;         ;
+; lpm_divide.tdf                            ; yes             ; Megafunction                 ; /home/oliver/altera/13.0sp1/quartus/libraries/megafunctions/lpm_divide.tdf                 ;         ;
+; abs_divider.inc                           ; yes             ; Megafunction                 ; /home/oliver/altera/13.0sp1/quartus/libraries/megafunctions/abs_divider.inc                ;         ;
+; sign_div_unsign.inc                       ; yes             ; Megafunction                 ; /home/oliver/altera/13.0sp1/quartus/libraries/megafunctions/sign_div_unsign.inc            ;         ;
+; db/lpm_divide_b0j.tdf                     ; yes             ; Auto-Generated Megafunction  ; /home/oliver/Projects/FPGA_Projects/CPU/hardware/db/lpm_divide_b0j.tdf                     ;         ;
+; db/sign_div_unsign_hoi.tdf                ; yes             ; Auto-Generated Megafunction  ; /home/oliver/Projects/FPGA_Projects/CPU/hardware/db/sign_div_unsign_hoi.tdf                ;         ;
+; db/alt_u_div_i2f.tdf                      ; yes             ; Auto-Generated Megafunction  ; /home/oliver/Projects/FPGA_Projects/CPU/hardware/db/alt_u_div_i2f.tdf                      ;         ;
+; db/add_sub_lkc.tdf                        ; yes             ; Auto-Generated Megafunction  ; /home/oliver/Projects/FPGA_Projects/CPU/hardware/db/add_sub_lkc.tdf                        ;         ;
+; db/add_sub_mkc.tdf                        ; yes             ; Auto-Generated Megafunction  ; /home/oliver/Projects/FPGA_Projects/CPU/hardware/db/add_sub_mkc.tdf                        ;         ;
++-------------------------------------------+-----------------+------------------------------+--------------------------------------------------------------------------------------------+---------+
 
 
 +--------------------------------------------------------+
@@ -196,20 +209,20 @@ Parallel compilation was disabled, but you have multiple processors available. E
 +---------------------------------------------+----------+
 ; Resource                                    ; Usage    ;
 +---------------------------------------------+----------+
-; Estimated Total logic elements              ; 3,638    ;
+; Estimated Total logic elements              ; 3,939    ;
 ;                                             ;          ;
-; Total combinational functions               ; 2652     ;
+; Total combinational functions               ; 2941     ;
 ; Logic element usage by number of LUT inputs ;          ;
-;     -- 4 input functions                    ; 1930     ;
-;     -- 3 input functions                    ; 395      ;
-;     -- <=2 input functions                  ; 327      ;
+;     -- 4 input functions                    ; 2114     ;
+;     -- 3 input functions                    ; 449      ;
+;     -- <=2 input functions                  ; 378      ;
 ;                                             ;          ;
 ; Logic elements by mode                      ;          ;
-;     -- normal mode                          ; 2337     ;
+;     -- normal mode                          ; 2626     ;
 ;     -- arithmetic mode                      ; 315      ;
 ;                                             ;          ;
-; Total registers                             ; 1420     ;
-;     -- Dedicated logic registers            ; 1420     ;
+; Total registers                             ; 1520     ;
+;     -- Dedicated logic registers            ; 1520     ;
 ;     -- I/O registers                        ; 0        ;
 ;                                             ;          ;
 ; I/O pins                                    ; 81       ;
@@ -218,8 +231,8 @@ Parallel compilation was disabled, but you have multiple processors available. E
 ;     -- PLLs                                 ; 1        ;
 ;                                             ;          ;
 ; Maximum fan-out node                        ; CLOCK_50 ;
-; Maximum fan-out                             ; 1231     ;
-; Total fan-out                               ; 14107    ;
+; Maximum fan-out                             ; 1331     ;
+; Total fan-out                               ; 15461    ;
 ; Average fan-out                             ; 3.40     ;
 +---------------------------------------------+----------+
 
@@ -229,10 +242,19 @@ Parallel compilation was disabled, but you have multiple processors available. E
 +---------------------------------------------------------------------------------------------------------------------------+-------------------+--------------+-------------+--------------+---------+-----------+------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------+
 ; Compilation Hierarchy Node                                                                                                ; LC Combinationals ; LC Registers ; Memory Bits ; DSP Elements ; DSP 9x9 ; DSP 18x18 ; Pins ; Virtual Pins ; Full Hierarchy Name                                                                                                                                                         ; Library Name ;
 +---------------------------------------------------------------------------------------------------------------------------+-------------------+--------------+-------------+--------------+---------+-----------+------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------+
-; |top                                                                                                                      ; 2652 (2359)       ; 1420 (1230)  ; 0           ; 0            ; 0       ; 0         ; 81   ; 0            ; |top                                                                                                                                                                        ; work         ;
-;    |rom:program_rom|                                                                                                      ; 63 (63)           ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |top|rom:program_rom                                                                                                                                                        ; work         ;
-;    |sdram_system_new_sdram_controller_0:sdram_controller|                                                                 ; 230 (192)         ; 190 (124)    ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |top|sdram_system_new_sdram_controller_0:sdram_controller                                                                                                                   ; work         ;
-;       |sdram_system_new_sdram_controller_0_input_efifo_module:the_sdram_system_new_sdram_controller_0_input_efifo_module| ; 38 (38)           ; 66 (66)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |top|sdram_system_new_sdram_controller_0:sdram_controller|sdram_system_new_sdram_controller_0_input_efifo_module:the_sdram_system_new_sdram_controller_0_input_efifo_module ; work         ;
+; |top                                                                                                                      ; 2941 (2393)       ; 1520 (1262)  ; 0           ; 0            ; 0       ; 0         ; 81   ; 0            ; |top                                                                                                                                                                        ; work         ;
+;    |numericaldisplay:display|                                                                                             ; 204 (66)          ; 68 (68)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |top|numericaldisplay:display                                                                                                                                               ; work         ;
+;       |lpm_divide:divider|                                                                                                ; 110 (0)           ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |top|numericaldisplay:display|lpm_divide:divider                                                                                                                            ; work         ;
+;          |lpm_divide_b0j:auto_generated|                                                                                  ; 110 (0)           ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |top|numericaldisplay:display|lpm_divide:divider|lpm_divide_b0j:auto_generated                                                                                              ; work         ;
+;             |sign_div_unsign_hoi:divider|                                                                                 ; 110 (0)           ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |top|numericaldisplay:display|lpm_divide:divider|lpm_divide_b0j:auto_generated|sign_div_unsign_hoi:divider                                                                  ; work         ;
+;                |alt_u_div_i2f:divider|                                                                                    ; 110 (110)         ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |top|numericaldisplay:display|lpm_divide:divider|lpm_divide_b0j:auto_generated|sign_div_unsign_hoi:divider|alt_u_div_i2f:divider                                            ; work         ;
+;       |seven_segment_display:disp0|                                                                                       ; 7 (7)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |top|numericaldisplay:display|seven_segment_display:disp0                                                                                                                   ; work         ;
+;       |seven_segment_display:disp1|                                                                                       ; 7 (7)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |top|numericaldisplay:display|seven_segment_display:disp1                                                                                                                   ; work         ;
+;       |seven_segment_display:disp2|                                                                                       ; 7 (7)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |top|numericaldisplay:display|seven_segment_display:disp2                                                                                                                   ; work         ;
+;       |seven_segment_display:disp3|                                                                                       ; 7 (7)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |top|numericaldisplay:display|seven_segment_display:disp3                                                                                                                   ; work         ;
+;    |rom:program_rom|                                                                                                      ; 112 (112)         ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |top|rom:program_rom                                                                                                                                                        ; work         ;
+;    |sdram_system_new_sdram_controller_0:sdram_controller|                                                                 ; 232 (193)         ; 190 (124)    ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |top|sdram_system_new_sdram_controller_0:sdram_controller                                                                                                                   ; work         ;
+;       |sdram_system_new_sdram_controller_0_input_efifo_module:the_sdram_system_new_sdram_controller_0_input_efifo_module| ; 39 (39)           ; 66 (66)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |top|sdram_system_new_sdram_controller_0:sdram_controller|sdram_system_new_sdram_controller_0_input_efifo_module:the_sdram_system_new_sdram_controller_0_input_efifo_module ; work         ;
 ;    |sdram_system_up_clocks_0:up_clocks_0|                                                                                 ; 0 (0)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |top|sdram_system_up_clocks_0:up_clocks_0                                                                                                                                   ; work         ;
 ;       |altpll:DE_Clock_Generator_System|                                                                                  ; 0 (0)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |top|sdram_system_up_clocks_0:up_clocks_0|altpll:DE_Clock_Generator_System                                                                                                  ; work         ;
 +---------------------------------------------------------------------------------------------------------------------------+-------------------+--------------+-------------+--------------+---------+-----------+------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------+
@@ -276,6 +298,17 @@ Encoding Type:  One-Hot
 ; state.00000100 ; 0              ; 1              ; 0              ; 0              ; 0              ; 1              ;
 ; state.00000101 ; 1              ; 0              ; 0              ; 0              ; 0              ; 1              ;
 +----------------+----------------+----------------+----------------+----------------+----------------+----------------+
+
+
+Encoding Type:  One-Hot
++-----------------------------------------------------+
+; State Machine - |top|numericaldisplay:display|state ;
++--------------------+--------------------------------+
+; Name               ; state.STATE_DIVIDE             ;
++--------------------+--------------------------------+
+; state.STATE_WAIT   ; 0                              ;
+; state.STATE_DIVIDE ; 1                              ;
++--------------------+--------------------------------+
 
 
 Encoding Type:  One-Hot
@@ -372,6 +405,13 @@ Encoding Type:  One-Hot
 ; state~13                                                                                                                                                                                   ; Lost fanout                                                                                                                                                                                    ;
 ; state~14                                                                                                                                                                                   ; Lost fanout                                                                                                                                                                                    ;
 ; state~15                                                                                                                                                                                   ; Lost fanout                                                                                                                                                                                    ;
+; numericaldisplay:display|state~5                                                                                                                                                           ; Lost fanout                                                                                                                                                                                    ;
+; numericaldisplay:display|state~6                                                                                                                                                           ; Lost fanout                                                                                                                                                                                    ;
+; numericaldisplay:display|state~7                                                                                                                                                           ; Lost fanout                                                                                                                                                                                    ;
+; numericaldisplay:display|state~8                                                                                                                                                           ; Lost fanout                                                                                                                                                                                    ;
+; numericaldisplay:display|state~9                                                                                                                                                           ; Lost fanout                                                                                                                                                                                    ;
+; numericaldisplay:display|state~10                                                                                                                                                          ; Lost fanout                                                                                                                                                                                    ;
+; numericaldisplay:display|state~11                                                                                                                                                          ; Lost fanout                                                                                                                                                                                    ;
 ; sdram_system_new_sdram_controller_0:sdram_controller|m_next~9                                                                                                                              ; Lost fanout                                                                                                                                                                                    ;
 ; sdram_system_new_sdram_controller_0:sdram_controller|m_next~10                                                                                                                             ; Lost fanout                                                                                                                                                                                    ;
 ; sdram_system_new_sdram_controller_0:sdram_controller|m_next~13                                                                                                                             ; Lost fanout                                                                                                                                                                                    ;
@@ -388,13 +428,14 @@ Encoding Type:  One-Hot
 ; sdram_system_new_sdram_controller_0:sdram_controller|sdram_system_new_sdram_controller_0_input_efifo_module:the_sdram_system_new_sdram_controller_0_input_efifo_module|entry_1[10]         ; Stuck at GND due to stuck port data_in                                                                                                                                                         ;
 ; sdram_system_new_sdram_controller_0:sdram_controller|active_data[10]                                                                                                                       ; Stuck at GND due to stuck port data_in                                                                                                                                                         ;
 ; sdram_system_new_sdram_controller_0:sdram_controller|m_data[8..15]                                                                                                                         ; Stuck at GND due to stuck port data_in                                                                                                                                                         ;
+; numericaldisplay:display|display_number_index[3]                                                                                                                                           ; Stuck at GND due to stuck port data_in                                                                                                                                                         ;
 ; sdram_controller_be_n_i[0]                                                                                                                                                                 ; Stuck at GND due to stuck port data_in                                                                                                                                                         ;
 ; sdram_system_new_sdram_controller_0:sdram_controller|sdram_system_new_sdram_controller_0_input_efifo_module:the_sdram_system_new_sdram_controller_0_input_efifo_module|entry_0[16]         ; Stuck at GND due to stuck port data_in                                                                                                                                                         ;
 ; sdram_system_new_sdram_controller_0:sdram_controller|sdram_system_new_sdram_controller_0_input_efifo_module:the_sdram_system_new_sdram_controller_0_input_efifo_module|entry_1[16]         ; Stuck at GND due to stuck port data_in                                                                                                                                                         ;
 ; sdram_system_new_sdram_controller_0:sdram_controller|active_dqm[0]                                                                                                                         ; Stuck at GND due to stuck port data_in                                                                                                                                                         ;
 ; sdram_system_new_sdram_controller_0:sdram_controller|m_dqm[0,1]                                                                                                                            ; Stuck at GND due to stuck port data_in                                                                                                                                                         ;
 ; sdram_system_new_sdram_controller_0:sdram_controller|m_count[2]                                                                                                                            ; Stuck at GND due to stuck port data_in                                                                                                                                                         ;
-; Total Number of Removed Registers = 93                                                                                                                                                     ;                                                                                                                                                                                                ;
+; Total Number of Removed Registers = 101                                                                                                                                                    ;                                                                                                                                                                                                ;
 +--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 
@@ -427,12 +468,12 @@ Encoding Type:  One-Hot
 +----------------------------------------------+-------+
 ; Statistic                                    ; Value ;
 +----------------------------------------------+-------+
-; Total registers                              ; 1420  ;
-; Number of registers using Synchronous Clear  ; 123   ;
+; Total registers                              ; 1520  ;
+; Number of registers using Synchronous Clear  ; 153   ;
 ; Number of registers using Synchronous Load   ; 72    ;
 ; Number of registers using Asynchronous Clear ; 93    ;
 ; Number of registers using Asynchronous Load  ; 0     ;
-; Number of registers using Clock Enable       ; 1327  ;
+; Number of registers using Clock Enable       ; 1423  ;
 ; Number of registers using Preset             ; 0     ;
 +----------------------------------------------+-------+
 
@@ -460,70 +501,80 @@ Encoding Type:  One-Hot
 +--------------------------------------------------------------------------+---------+
 
 
-+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-; Multiplexer Restructuring Statistics (Restructuring Performed)                                                                                                                     ;
-+--------------------+-----------+---------------+----------------------+------------------------+------------+----------------------------------------------------------------------+
-; Multiplexer Inputs ; Bus Width ; Baseline Area ; Area if Restructured ; Saving if Restructured ; Registered ; Example Multiplexer Output                                           ;
-+--------------------+-----------+---------------+----------------------+------------------------+------------+----------------------------------------------------------------------+
-; 4:1                ; 8 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; Yes        ; |top|operation[0]                                                    ;
-; 4:1                ; 32 bits   ; 64 LEs        ; 32 LEs               ; 32 LEs                 ; Yes        ; |top|operand1[27]                                                    ;
-; 4:1                ; 32 bits   ; 64 LEs        ; 32 LEs               ; 32 LEs                 ; Yes        ; |top|operand2[8]                                                     ;
-; 4:1                ; 8 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; Yes        ; |top|ram_stabilization_counter[0]                                    ;
-; 4:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |top|sdram_system_new_sdram_controller_0:sdram_controller|m_dqm[0]   ;
-; 5:1                ; 32 bits   ; 96 LEs        ; 32 LEs               ; 64 LEs                 ; Yes        ; |top|program_rom_address[24]                                         ;
-; 4:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |top|sdram_system_new_sdram_controller_0:sdram_controller|m_bank[1]  ;
-; 5:1                ; 2 bits    ; 6 LEs         ; 4 LEs                ; 2 LEs                  ; Yes        ; |top|sdram_system_new_sdram_controller_0:sdram_controller|i_count[1] ;
-; 6:1                ; 4 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; Yes        ; |top|sdram_system_new_sdram_controller_0:sdram_controller|m_addr[8]  ;
-; 7:1                ; 2 bits    ; 8 LEs         ; 6 LEs                ; 2 LEs                  ; Yes        ; |top|sdram_system_new_sdram_controller_0:sdram_controller|m_addr[5]  ;
-; 7:1                ; 6 bits    ; 24 LEs        ; 18 LEs               ; 6 LEs                  ; Yes        ; |top|sdram_system_new_sdram_controller_0:sdram_controller|m_addr[6]  ;
-; 9:1                ; 7 bits    ; 42 LEs        ; 14 LEs               ; 28 LEs                 ; Yes        ; |top|sdram_controller_data_i[2]                                      ;
-; 7:1                ; 8 bits    ; 32 LEs        ; 8 LEs                ; 24 LEs                 ; Yes        ; |top|ram_read_data[0]                                                ;
-; 12:1               ; 33 bits   ; 264 LEs       ; 0 LEs                ; 264 LEs                ; Yes        ; |top|sdram_system_new_sdram_controller_0:sdram_controller|active_rnw ;
-; 261:1              ; 32 bits   ; 5568 LEs      ; 64 LEs               ; 5504 LEs               ; Yes        ; |top|registers[31][6]                                                ;
-; 261:1              ; 32 bits   ; 5568 LEs      ; 64 LEs               ; 5504 LEs               ; Yes        ; |top|registers[30][20]                                               ;
-; 261:1              ; 32 bits   ; 5568 LEs      ; 64 LEs               ; 5504 LEs               ; Yes        ; |top|registers[29][9]                                                ;
-; 261:1              ; 32 bits   ; 5568 LEs      ; 64 LEs               ; 5504 LEs               ; Yes        ; |top|registers[28][24]                                               ;
-; 261:1              ; 32 bits   ; 5568 LEs      ; 64 LEs               ; 5504 LEs               ; Yes        ; |top|registers[27][30]                                               ;
-; 261:1              ; 32 bits   ; 5568 LEs      ; 64 LEs               ; 5504 LEs               ; Yes        ; |top|registers[26][14]                                               ;
-; 261:1              ; 32 bits   ; 5568 LEs      ; 64 LEs               ; 5504 LEs               ; Yes        ; |top|registers[25][25]                                               ;
-; 261:1              ; 32 bits   ; 5568 LEs      ; 64 LEs               ; 5504 LEs               ; Yes        ; |top|registers[24][23]                                               ;
-; 261:1              ; 32 bits   ; 5568 LEs      ; 64 LEs               ; 5504 LEs               ; Yes        ; |top|registers[23][2]                                                ;
-; 261:1              ; 32 bits   ; 5568 LEs      ; 64 LEs               ; 5504 LEs               ; Yes        ; |top|registers[22][27]                                               ;
-; 261:1              ; 32 bits   ; 5568 LEs      ; 64 LEs               ; 5504 LEs               ; Yes        ; |top|registers[21][14]                                               ;
-; 261:1              ; 32 bits   ; 5568 LEs      ; 64 LEs               ; 5504 LEs               ; Yes        ; |top|registers[20][10]                                               ;
-; 261:1              ; 32 bits   ; 5568 LEs      ; 64 LEs               ; 5504 LEs               ; Yes        ; |top|registers[19][2]                                                ;
-; 261:1              ; 32 bits   ; 5568 LEs      ; 64 LEs               ; 5504 LEs               ; Yes        ; |top|registers[18][12]                                               ;
-; 261:1              ; 32 bits   ; 5568 LEs      ; 64 LEs               ; 5504 LEs               ; Yes        ; |top|registers[17][23]                                               ;
-; 261:1              ; 32 bits   ; 5568 LEs      ; 64 LEs               ; 5504 LEs               ; Yes        ; |top|registers[16][3]                                                ;
-; 261:1              ; 32 bits   ; 5568 LEs      ; 64 LEs               ; 5504 LEs               ; Yes        ; |top|registers[15][23]                                               ;
-; 261:1              ; 32 bits   ; 5568 LEs      ; 64 LEs               ; 5504 LEs               ; Yes        ; |top|registers[14][1]                                                ;
-; 261:1              ; 32 bits   ; 5568 LEs      ; 64 LEs               ; 5504 LEs               ; Yes        ; |top|registers[13][18]                                               ;
-; 261:1              ; 32 bits   ; 5568 LEs      ; 64 LEs               ; 5504 LEs               ; Yes        ; |top|registers[12][25]                                               ;
-; 261:1              ; 32 bits   ; 5568 LEs      ; 64 LEs               ; 5504 LEs               ; Yes        ; |top|registers[11][28]                                               ;
-; 261:1              ; 32 bits   ; 5568 LEs      ; 64 LEs               ; 5504 LEs               ; Yes        ; |top|registers[10][24]                                               ;
-; 261:1              ; 32 bits   ; 5568 LEs      ; 64 LEs               ; 5504 LEs               ; Yes        ; |top|registers[9][12]                                                ;
-; 261:1              ; 32 bits   ; 5568 LEs      ; 64 LEs               ; 5504 LEs               ; Yes        ; |top|registers[8][23]                                                ;
-; 263:1              ; 32 bits   ; 5600 LEs      ; 64 LEs               ; 5536 LEs               ; Yes        ; |top|registers[7][2]                                                 ;
-; 263:1              ; 32 bits   ; 5600 LEs      ; 64 LEs               ; 5536 LEs               ; Yes        ; |top|registers[6][6]                                                 ;
-; 263:1              ; 32 bits   ; 5600 LEs      ; 64 LEs               ; 5536 LEs               ; Yes        ; |top|registers[5][3]                                                 ;
-; 263:1              ; 32 bits   ; 5600 LEs      ; 64 LEs               ; 5536 LEs               ; Yes        ; |top|registers[4][1]                                                 ;
-; 263:1              ; 32 bits   ; 5600 LEs      ; 64 LEs               ; 5536 LEs               ; Yes        ; |top|registers[3][27]                                                ;
-; 263:1              ; 32 bits   ; 5600 LEs      ; 64 LEs               ; 5536 LEs               ; Yes        ; |top|registers[2][24]                                                ;
-; 263:1              ; 30 bits   ; 5250 LEs      ; 120 LEs              ; 5130 LEs               ; Yes        ; |top|registers[1][11]                                                ;
-; 264:1              ; 2 bits    ; 352 LEs       ; 10 LEs               ; 342 LEs                ; Yes        ; |top|registers[1][1]                                                 ;
-; 262:1              ; 8 bits    ; 1392 LEs      ; 8 LEs                ; 1384 LEs               ; Yes        ; |top|operand_byte_index[7]                                           ;
-; 270:1              ; 32 bits   ; 5760 LEs      ; 128 LEs              ; 5632 LEs               ; Yes        ; |top|registers[0][2]                                                 ;
-; 270:1              ; 22 bits   ; 3960 LEs      ; 88 LEs               ; 3872 LEs               ; Yes        ; |top|sdram_controller_address_i[5]                                   ;
-; 3:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; Yes        ; |top|sdram_system_new_sdram_controller_0:sdram_controller|m_data[11] ;
-; 4:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; Yes        ; |top|sdram_system_new_sdram_controller_0:sdram_controller|m_data[2]  ;
-; 32:1               ; 32 bits   ; 672 LEs       ; 672 LEs              ; 0 LEs                  ; No         ; |top|Mux25                                                           ;
-; 32:1               ; 32 bits   ; 672 LEs       ; 672 LEs              ; 0 LEs                  ; No         ; |top|Mux57                                                           ;
-; 7:1                ; 2 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; No         ; |top|ram_write_state                                                 ;
-; 6:1                ; 2 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; No         ; |top|ram_read_state                                                  ;
-; 11:1               ; 2 bits    ; 14 LEs        ; 4 LEs                ; 10 LEs                 ; No         ; |top|sdram_system_new_sdram_controller_0:sdram_controller|Selector34 ;
-; 16:1               ; 2 bits    ; 20 LEs        ; 8 LEs                ; 12 LEs                 ; No         ; |top|sdram_system_new_sdram_controller_0:sdram_controller|Selector27 ;
-; 265:1              ; 2 bits    ; 352 LEs       ; 10 LEs               ; 342 LEs                ; No         ; |top|state                                                           ;
-+--------------------+-----------+---------------+----------------------+------------------------+------------+----------------------------------------------------------------------+
++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Multiplexer Restructuring Statistics (Restructuring Performed)                                                                                                                          ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+---------------------------------------------------------------------------+
+; Multiplexer Inputs ; Bus Width ; Baseline Area ; Area if Restructured ; Saving if Restructured ; Registered ; Example Multiplexer Output                                                ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+---------------------------------------------------------------------------+
+; 4:1                ; 8 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; Yes        ; |top|operation[4]                                                         ;
+; 4:1                ; 32 bits   ; 64 LEs        ; 32 LEs               ; 32 LEs                 ; Yes        ; |top|operand1[12]                                                         ;
+; 4:1                ; 32 bits   ; 64 LEs        ; 32 LEs               ; 32 LEs                 ; Yes        ; |top|operand2[17]                                                         ;
+; 4:1                ; 32 bits   ; 64 LEs        ; 32 LEs               ; 32 LEs                 ; Yes        ; |top|number_to_show[7]                                                    ;
+; 4:1                ; 8 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; Yes        ; |top|ram_stabilization_counter[6]                                         ;
+; 4:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |top|sdram_system_new_sdram_controller_0:sdram_controller|m_dqm[1]        ;
+; 5:1                ; 32 bits   ; 96 LEs        ; 32 LEs               ; 64 LEs                 ; Yes        ; |top|program_rom_address[3]                                               ;
+; 5:1                ; 4 bits    ; 12 LEs        ; 4 LEs                ; 8 LEs                  ; Yes        ; |top|numericaldisplay:display|display_number_index[0]                     ;
+; 5:1                ; 3 bits    ; 9 LEs         ; 3 LEs                ; 6 LEs                  ; Yes        ; |top|numericaldisplay:display|number_to_show_reg[31]                      ;
+; 5:1                ; 16 bits   ; 48 LEs        ; 16 LEs               ; 32 LEs                 ; Yes        ; |top|numericaldisplay:display|display_numbers[1][3]                       ;
+; 5:1                ; 29 bits   ; 87 LEs        ; 58 LEs               ; 29 LEs                 ; Yes        ; |top|numericaldisplay:display|number_to_show_reg[8]                       ;
+; 5:1                ; 4 bits    ; 12 LEs        ; 4 LEs                ; 8 LEs                  ; Yes        ; |top|numericaldisplay:display|display_numbers_buffer[3][0]                ;
+; 5:1                ; 4 bits    ; 12 LEs        ; 4 LEs                ; 8 LEs                  ; Yes        ; |top|numericaldisplay:display|display_numbers_buffer[2][1]                ;
+; 5:1                ; 4 bits    ; 12 LEs        ; 4 LEs                ; 8 LEs                  ; Yes        ; |top|numericaldisplay:display|display_numbers_buffer[1][0]                ;
+; 5:1                ; 4 bits    ; 12 LEs        ; 4 LEs                ; 8 LEs                  ; Yes        ; |top|numericaldisplay:display|display_numbers_buffer[0][3]                ;
+; 4:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |top|sdram_system_new_sdram_controller_0:sdram_controller|m_bank[1]       ;
+; 5:1                ; 2 bits    ; 6 LEs         ; 4 LEs                ; 2 LEs                  ; Yes        ; |top|sdram_system_new_sdram_controller_0:sdram_controller|i_count[1]      ;
+; 6:1                ; 4 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; Yes        ; |top|sdram_system_new_sdram_controller_0:sdram_controller|m_addr[10]      ;
+; 7:1                ; 2 bits    ; 8 LEs         ; 6 LEs                ; 2 LEs                  ; Yes        ; |top|sdram_system_new_sdram_controller_0:sdram_controller|m_addr[5]       ;
+; 7:1                ; 6 bits    ; 24 LEs        ; 18 LEs               ; 6 LEs                  ; Yes        ; |top|sdram_system_new_sdram_controller_0:sdram_controller|m_addr[7]       ;
+; 9:1                ; 7 bits    ; 42 LEs        ; 14 LEs               ; 28 LEs                 ; Yes        ; |top|sdram_controller_data_i[2]                                           ;
+; 7:1                ; 8 bits    ; 32 LEs        ; 8 LEs                ; 24 LEs                 ; Yes        ; |top|ram_read_data[0]                                                     ;
+; 12:1               ; 33 bits   ; 264 LEs       ; 0 LEs                ; 264 LEs                ; Yes        ; |top|sdram_system_new_sdram_controller_0:sdram_controller|active_data[10] ;
+; 261:1              ; 32 bits   ; 5568 LEs      ; 64 LEs               ; 5504 LEs               ; Yes        ; |top|registers[31][19]                                                    ;
+; 261:1              ; 32 bits   ; 5568 LEs      ; 64 LEs               ; 5504 LEs               ; Yes        ; |top|registers[30][29]                                                    ;
+; 261:1              ; 32 bits   ; 5568 LEs      ; 64 LEs               ; 5504 LEs               ; Yes        ; |top|registers[29][3]                                                     ;
+; 261:1              ; 32 bits   ; 5568 LEs      ; 64 LEs               ; 5504 LEs               ; Yes        ; |top|registers[28][23]                                                    ;
+; 261:1              ; 32 bits   ; 5568 LEs      ; 64 LEs               ; 5504 LEs               ; Yes        ; |top|registers[27][21]                                                    ;
+; 261:1              ; 32 bits   ; 5568 LEs      ; 64 LEs               ; 5504 LEs               ; Yes        ; |top|registers[26][18]                                                    ;
+; 261:1              ; 32 bits   ; 5568 LEs      ; 64 LEs               ; 5504 LEs               ; Yes        ; |top|registers[25][27]                                                    ;
+; 261:1              ; 32 bits   ; 5568 LEs      ; 64 LEs               ; 5504 LEs               ; Yes        ; |top|registers[24][20]                                                    ;
+; 261:1              ; 32 bits   ; 5568 LEs      ; 64 LEs               ; 5504 LEs               ; Yes        ; |top|registers[23][26]                                                    ;
+; 261:1              ; 32 bits   ; 5568 LEs      ; 64 LEs               ; 5504 LEs               ; Yes        ; |top|registers[22][6]                                                     ;
+; 261:1              ; 32 bits   ; 5568 LEs      ; 64 LEs               ; 5504 LEs               ; Yes        ; |top|registers[21][17]                                                    ;
+; 261:1              ; 32 bits   ; 5568 LEs      ; 64 LEs               ; 5504 LEs               ; Yes        ; |top|registers[20][26]                                                    ;
+; 261:1              ; 32 bits   ; 5568 LEs      ; 64 LEs               ; 5504 LEs               ; Yes        ; |top|registers[19][26]                                                    ;
+; 261:1              ; 32 bits   ; 5568 LEs      ; 64 LEs               ; 5504 LEs               ; Yes        ; |top|registers[18][1]                                                     ;
+; 261:1              ; 32 bits   ; 5568 LEs      ; 64 LEs               ; 5504 LEs               ; Yes        ; |top|registers[17][22]                                                    ;
+; 261:1              ; 32 bits   ; 5568 LEs      ; 64 LEs               ; 5504 LEs               ; Yes        ; |top|registers[16][25]                                                    ;
+; 261:1              ; 32 bits   ; 5568 LEs      ; 64 LEs               ; 5504 LEs               ; Yes        ; |top|registers[15][15]                                                    ;
+; 261:1              ; 32 bits   ; 5568 LEs      ; 64 LEs               ; 5504 LEs               ; Yes        ; |top|registers[14][13]                                                    ;
+; 261:1              ; 32 bits   ; 5568 LEs      ; 64 LEs               ; 5504 LEs               ; Yes        ; |top|registers[13][24]                                                    ;
+; 261:1              ; 32 bits   ; 5568 LEs      ; 64 LEs               ; 5504 LEs               ; Yes        ; |top|registers[12][20]                                                    ;
+; 261:1              ; 32 bits   ; 5568 LEs      ; 64 LEs               ; 5504 LEs               ; Yes        ; |top|registers[11][18]                                                    ;
+; 261:1              ; 32 bits   ; 5568 LEs      ; 64 LEs               ; 5504 LEs               ; Yes        ; |top|registers[10][30]                                                    ;
+; 261:1              ; 32 bits   ; 5568 LEs      ; 64 LEs               ; 5504 LEs               ; Yes        ; |top|registers[9][25]                                                     ;
+; 261:1              ; 32 bits   ; 5568 LEs      ; 64 LEs               ; 5504 LEs               ; Yes        ; |top|registers[8][13]                                                     ;
+; 263:1              ; 32 bits   ; 5600 LEs      ; 64 LEs               ; 5536 LEs               ; Yes        ; |top|registers[7][12]                                                     ;
+; 263:1              ; 32 bits   ; 5600 LEs      ; 64 LEs               ; 5536 LEs               ; Yes        ; |top|registers[6][1]                                                      ;
+; 263:1              ; 32 bits   ; 5600 LEs      ; 64 LEs               ; 5536 LEs               ; Yes        ; |top|registers[5][9]                                                      ;
+; 263:1              ; 32 bits   ; 5600 LEs      ; 64 LEs               ; 5536 LEs               ; Yes        ; |top|registers[4][12]                                                     ;
+; 263:1              ; 32 bits   ; 5600 LEs      ; 64 LEs               ; 5536 LEs               ; Yes        ; |top|registers[3][27]                                                     ;
+; 263:1              ; 32 bits   ; 5600 LEs      ; 64 LEs               ; 5536 LEs               ; Yes        ; |top|registers[2][6]                                                      ;
+; 263:1              ; 30 bits   ; 5250 LEs      ; 120 LEs              ; 5130 LEs               ; Yes        ; |top|registers[1][14]                                                     ;
+; 264:1              ; 2 bits    ; 352 LEs       ; 10 LEs               ; 342 LEs                ; Yes        ; |top|registers[1][0]                                                      ;
+; 262:1              ; 8 bits    ; 1392 LEs      ; 8 LEs                ; 1384 LEs               ; Yes        ; |top|operand_byte_index[7]                                                ;
+; 270:1              ; 32 bits   ; 5760 LEs      ; 128 LEs              ; 5632 LEs               ; Yes        ; |top|registers[0][13]                                                     ;
+; 270:1              ; 22 bits   ; 3960 LEs      ; 88 LEs               ; 3872 LEs               ; Yes        ; |top|sdram_controller_address_i[19]                                       ;
+; 3:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; Yes        ; |top|sdram_system_new_sdram_controller_0:sdram_controller|m_data[8]       ;
+; 4:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; Yes        ; |top|sdram_system_new_sdram_controller_0:sdram_controller|m_data[3]       ;
+; 5:1                ; 2 bits    ; 6 LEs         ; 6 LEs                ; 0 LEs                  ; No         ; |top|numericaldisplay:display|state                                       ;
+; 32:1               ; 32 bits   ; 672 LEs       ; 672 LEs              ; 0 LEs                  ; No         ; |top|Mux10                                                                ;
+; 32:1               ; 32 bits   ; 672 LEs       ; 672 LEs              ; 0 LEs                  ; No         ; |top|Mux55                                                                ;
+; 7:1                ; 2 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; No         ; |top|ram_write_state                                                      ;
+; 6:1                ; 2 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; No         ; |top|ram_read_state                                                       ;
+; 11:1               ; 2 bits    ; 14 LEs        ; 4 LEs                ; 10 LEs                 ; No         ; |top|sdram_system_new_sdram_controller_0:sdram_controller|Selector34      ;
+; 16:1               ; 2 bits    ; 20 LEs        ; 8 LEs                ; 12 LEs                 ; No         ; |top|sdram_system_new_sdram_controller_0:sdram_controller|Selector28      ;
+; 265:1              ; 2 bits    ; 352 LEs       ; 10 LEs               ; 342 LEs                ; No         ; |top|state                                                                ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+---------------------------------------------------------------------------+
 
 
 +-----------------------------------------------------------------------------+
@@ -1008,6 +1059,40 @@ Note: In order to hide this table in the UI and the text report file, please set
 Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
 
 
++-----------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: numericaldisplay:display ;
++----------------+----------------------------------+-------------------+
+; Parameter Name ; Value                            ; Type              ;
++----------------+----------------------------------+-------------------+
+; STATE_DIVIDE   ; 00000000000000000000000000000000 ; Unsigned Binary   ;
+; STATE_WAIT     ; 00000000000000000000000000000001 ; Unsigned Binary   ;
++----------------+----------------------------------+-------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++------------------------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: numericaldisplay:display|lpm_divide:divider ;
++------------------------+----------------+------------------------------------------------+
+; Parameter Name         ; Value          ; Type                                           ;
++------------------------+----------------+------------------------------------------------+
+; LPM_WIDTHN             ; 32             ; Signed Integer                                 ;
+; LPM_WIDTHD             ; 4              ; Signed Integer                                 ;
+; LPM_NREPRESENTATION    ; UNSIGNED       ; Untyped                                        ;
+; LPM_DREPRESENTATION    ; UNSIGNED       ; Untyped                                        ;
+; LPM_PIPELINE           ; 0              ; Untyped                                        ;
+; LPM_REMAINDERPOSITIVE  ; TRUE           ; Untyped                                        ;
+; MAXIMIZE_SPEED         ; 5              ; Untyped                                        ;
+; CBXI_PARAMETER         ; lpm_divide_b0j ; Untyped                                        ;
+; CARRY_CHAIN            ; MANUAL         ; Untyped                                        ;
+; OPTIMIZE_FOR_SPEED     ; 5              ; Untyped                                        ;
+; AUTO_CARRY_CHAINS      ; ON             ; AUTO_CARRY                                     ;
+; IGNORE_CARRY_BUFFERS   ; OFF            ; IGNORE_CARRY                                   ;
+; AUTO_CASCADE_CHAINS    ; ON             ; AUTO_CASCADE                                   ;
+; IGNORE_CASCADE_BUFFERS ; OFF            ; IGNORE_CASCADE                                 ;
++------------------------+----------------+------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
 +-------------------------------------------------------------------------------------------------------+
 ; altpll Parameter Settings by Entity Instance                                                          ;
 +-------------------------------+-----------------------------------------------------------------------+
@@ -1059,7 +1144,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 +----------------+--------------+
 ; Partition Name ; Elapsed Time ;
 +----------------+--------------+
-; Top            ; 00:00:36     ;
+; Top            ; 00:00:22     ;
 +----------------+--------------+
 
 
@@ -1082,13 +1167,15 @@ Info: Running Quartus II 64-Bit Analysis & Synthesis
     Info: programming logic devices manufactured by Altera and sold by 
     Info: Altera or its authorized distributors.  Please refer to the 
     Info: applicable agreement for further details.
-    Info: Processing started: Fri Jul  5 17:48:57 2019
+    Info: Processing started: Fri Aug 16 22:12:09 2019
 Info: Command: quartus_map top
 Warning (20028): Parallel compilation is not licensed and has been disabled
 Info (12021): Found 1 design units, including 1 entities, in source file rtl/top.v
     Info (12023): Found entity 1: top
 Info (12021): Found 1 design units, including 1 entities, in source file rtl/seven_segment_display.v
     Info (12023): Found entity 1: seven_segment_display
+Info (12021): Found 1 design units, including 1 entities, in source file rtl/numericaldisplay.v
+    Info (12023): Found entity 1: numericaldisplay
 Info (12021): Found 1 design units, including 1 entities, in source file rtl/sdram_system_up_clocks_0.v
     Info (12023): Found entity 1: sdram_system_up_clocks_0
 Info (12021): Found 2 design units, including 2 entities, in source file rtl/sdram_system_new_sdram_controller_0.v
@@ -1102,11 +1189,7 @@ Warning (10037): Verilog HDL or VHDL warning at sdram_system_new_sdram_controlle
 Warning (10037): Verilog HDL or VHDL warning at sdram_system_new_sdram_controller_0.v(336): conditional expression evaluates to a constant
 Warning (10037): Verilog HDL or VHDL warning at sdram_system_new_sdram_controller_0.v(680): conditional expression evaluates to a constant
 Info (12127): Elaborating entity "top" for the top level hierarchy
-Warning (10175): Verilog HDL warning at top.v(447): ignoring unsupported system task
-Warning (10034): Output port "HEX0" at top.v(7) has no driver
-Warning (10034): Output port "HEX1" at top.v(8) has no driver
-Warning (10034): Output port "HEX2" at top.v(9) has no driver
-Warning (10034): Output port "HEX3" at top.v(10) has no driver
+Warning (10175): Verilog HDL warning at top.v(461): ignoring unsupported system task
 Info (12128): Elaborating entity "rom" for hierarchy "rom:program_rom"
 Warning (10762): Verilog HDL Case Statement warning at rom.v(5): can't check case statement for completeness because the case expression has too many possible states
 Info (12128): Elaborating entity "sdram_system_up_clocks_0" for hierarchy "sdram_system_up_clocks_0:up_clocks_0"
@@ -1180,42 +1263,44 @@ Info (12133): Instantiated megafunction "sdram_system_up_clocks_0:up_clocks_0|al
     Info (12134): Parameter "valid_lock_multiplier" = "1"
 Info (12128): Elaborating entity "sdram_system_new_sdram_controller_0" for hierarchy "sdram_system_new_sdram_controller_0:sdram_controller"
 Info (12128): Elaborating entity "sdram_system_new_sdram_controller_0_input_efifo_module" for hierarchy "sdram_system_new_sdram_controller_0:sdram_controller|sdram_system_new_sdram_controller_0_input_efifo_module:the_sdram_system_new_sdram_controller_0_input_efifo_module"
+Info (12128): Elaborating entity "numericaldisplay" for hierarchy "numericaldisplay:display"
+Warning (10230): Verilog HDL assignment warning at numericaldisplay.v(66): truncated value with size 32 to match size of target (4)
+Warning (10230): Verilog HDL assignment warning at numericaldisplay.v(67): truncated value with size 32 to match size of target (4)
+Info (12128): Elaborating entity "seven_segment_display" for hierarchy "numericaldisplay:display|seven_segment_display:disp0"
+Warning (10235): Verilog HDL Always Construct warning at seven_segment_display.v(8): variable "number" is read inside the Always Construct but isn't in the Always Construct's Event Control
+Info (12128): Elaborating entity "lpm_divide" for hierarchy "numericaldisplay:display|lpm_divide:divider"
+Info (12130): Elaborated megafunction instantiation "numericaldisplay:display|lpm_divide:divider"
+Info (12133): Instantiated megafunction "numericaldisplay:display|lpm_divide:divider" with the following parameter:
+    Info (12134): Parameter "lpm_widthn" = "32"
+    Info (12134): Parameter "lpm_widthd" = "4"
+Info (12021): Found 1 design units, including 1 entities, in source file db/lpm_divide_b0j.tdf
+    Info (12023): Found entity 1: lpm_divide_b0j
+Info (12128): Elaborating entity "lpm_divide_b0j" for hierarchy "numericaldisplay:display|lpm_divide:divider|lpm_divide_b0j:auto_generated"
+Info (12021): Found 1 design units, including 1 entities, in source file db/sign_div_unsign_hoi.tdf
+    Info (12023): Found entity 1: sign_div_unsign_hoi
+Info (12128): Elaborating entity "sign_div_unsign_hoi" for hierarchy "numericaldisplay:display|lpm_divide:divider|lpm_divide_b0j:auto_generated|sign_div_unsign_hoi:divider"
+Warning (287013): Variable or input pin "clken" is defined but never used.
+Warning (287013): Variable or input pin "clock" is defined but never used.
+Info (12021): Found 1 design units, including 1 entities, in source file db/alt_u_div_i2f.tdf
+    Info (12023): Found entity 1: alt_u_div_i2f
+Info (12128): Elaborating entity "alt_u_div_i2f" for hierarchy "numericaldisplay:display|lpm_divide:divider|lpm_divide_b0j:auto_generated|sign_div_unsign_hoi:divider|alt_u_div_i2f:divider"
+Info (12021): Found 1 design units, including 1 entities, in source file db/add_sub_lkc.tdf
+    Info (12023): Found entity 1: add_sub_lkc
+Info (12128): Elaborating entity "add_sub_lkc" for hierarchy "numericaldisplay:display|lpm_divide:divider|lpm_divide_b0j:auto_generated|sign_div_unsign_hoi:divider|alt_u_div_i2f:divider|add_sub_lkc:add_sub_0"
+Info (12021): Found 1 design units, including 1 entities, in source file db/add_sub_mkc.tdf
+    Info (12023): Found entity 1: add_sub_mkc
+Info (12128): Elaborating entity "add_sub_mkc" for hierarchy "numericaldisplay:display|lpm_divide:divider|lpm_divide_b0j:auto_generated|sign_div_unsign_hoi:divider|alt_u_div_i2f:divider|add_sub_mkc:add_sub_1"
+Warning (12020): Port "aclr" on the entity instantiation of "divider" is connected to a signal of width 32. The formal width of the signal in the module is 1.  The extra bits will be ignored.
+Warning (12020): Port "clken" on the entity instantiation of "divider" is connected to a signal of width 32. The formal width of the signal in the module is 1.  The extra bits will be ignored.
+Warning (12030): Port "remain" on the entity instantiation of "divider" is connected to a signal of width 32. The formal width of the signal in the module is 4.  The extra bits will be left dangling without any fan-out logic.
 Warning (12030): Port "clk" on the entity instantiation of "DE_Clock_Generator_System" is connected to a signal of width 3. The formal width of the signal in the module is 6.  The extra bits will be left dangling without any fan-out logic.
 Info (13000): Registers with preset signals will power-up high
 Info (13003): DEV_CLRn pin will set, and not reset, register with preset signal due to NOT Gate Push-Back
 Warning (13024): Output pins are stuck at VCC or GND
-    Warning (13410): Pin "HEX0[0]" is stuck at GND
-    Warning (13410): Pin "HEX0[1]" is stuck at GND
-    Warning (13410): Pin "HEX0[2]" is stuck at GND
-    Warning (13410): Pin "HEX0[3]" is stuck at GND
-    Warning (13410): Pin "HEX0[4]" is stuck at GND
-    Warning (13410): Pin "HEX0[5]" is stuck at GND
-    Warning (13410): Pin "HEX0[6]" is stuck at GND
-    Warning (13410): Pin "HEX1[0]" is stuck at GND
-    Warning (13410): Pin "HEX1[1]" is stuck at GND
-    Warning (13410): Pin "HEX1[2]" is stuck at GND
-    Warning (13410): Pin "HEX1[3]" is stuck at GND
-    Warning (13410): Pin "HEX1[4]" is stuck at GND
-    Warning (13410): Pin "HEX1[5]" is stuck at GND
-    Warning (13410): Pin "HEX1[6]" is stuck at GND
-    Warning (13410): Pin "HEX2[0]" is stuck at GND
-    Warning (13410): Pin "HEX2[1]" is stuck at GND
-    Warning (13410): Pin "HEX2[2]" is stuck at GND
-    Warning (13410): Pin "HEX2[3]" is stuck at GND
-    Warning (13410): Pin "HEX2[4]" is stuck at GND
-    Warning (13410): Pin "HEX2[5]" is stuck at GND
-    Warning (13410): Pin "HEX2[6]" is stuck at GND
-    Warning (13410): Pin "HEX3[0]" is stuck at GND
-    Warning (13410): Pin "HEX3[1]" is stuck at GND
-    Warning (13410): Pin "HEX3[2]" is stuck at GND
-    Warning (13410): Pin "HEX3[3]" is stuck at GND
-    Warning (13410): Pin "HEX3[4]" is stuck at GND
-    Warning (13410): Pin "HEX3[5]" is stuck at GND
-    Warning (13410): Pin "HEX3[6]" is stuck at GND
     Warning (13410): Pin "DRAM_CKE" is stuck at VCC
     Warning (13410): Pin "DRAM_LDQM" is stuck at GND
     Warning (13410): Pin "DRAM_UDQM" is stuck at GND
-Info (17049): 31 registers lost all their fanouts during netlist optimizations.
+Info (17049): 38 registers lost all their fanouts during netlist optimizations.
 Info (144001): Generated suppressed messages file /home/oliver/Projects/FPGA_Projects/CPU/hardware/output_files/top.map.smsg
 Info (16010): Generating hard_block partition "hard_block:auto_generated_inst"
     Info (16011): Adding 1 node(s), including 0 DDIO, 1 PLL, 0 transceiver and 0 LCELL
@@ -1233,17 +1318,17 @@ Warning (21074): Design contains 13 input pin(s) that do not drive logic
     Warning (15610): No output dependent on input pin "SW[7]"
     Warning (15610): No output dependent on input pin "SW[8]"
     Warning (15610): No output dependent on input pin "SW[9]"
-Info (21057): Implemented 3887 device resources after synthesis - the final resource count might be different
+Info (21057): Implemented 4192 device resources after synthesis - the final resource count might be different
     Info (21058): Implemented 15 input pins
     Info (21059): Implemented 50 output pins
     Info (21060): Implemented 16 bidirectional pins
-    Info (21061): Implemented 3805 logic cells
+    Info (21061): Implemented 4110 logic cells
     Info (21065): Implemented 1 PLLs
-Info: Quartus II 64-Bit Analysis & Synthesis was successful. 0 errors, 59 warnings
-    Info: Peak virtual memory: 738 megabytes
-    Info: Processing ended: Fri Jul  5 17:49:37 2019
-    Info: Elapsed time: 00:00:40
-    Info: Total CPU time (on all processors): 00:00:39
+Info: Quartus II 64-Bit Analysis & Synthesis was successful. 0 errors, 35 warnings
+    Info: Peak virtual memory: 737 megabytes
+    Info: Processing ended: Fri Aug 16 22:12:34 2019
+    Info: Elapsed time: 00:00:25
+    Info: Total CPU time (on all processors): 00:00:25
 
 
 +------------------------------------------+

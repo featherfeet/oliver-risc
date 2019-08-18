@@ -53,7 +53,8 @@ Example program to print out numbers 1-5:
 		HALT
 
 Future planned features:
-Use a stack to push/pop registers to and from RAM to allow for function calls.
+Interrupt handling for timing, GPIO events, and keyboard input. Use a set of shadow registers to save registers. Use interrupt vector table. Use interrupt-enable register.
+Use a stack to push/pop the call stack.
 GPIO control instructions.
 A proper ALU.
-Interrupt handling for timing, GPIO events, and keyboard input.
+Pipelining of RAM operations.

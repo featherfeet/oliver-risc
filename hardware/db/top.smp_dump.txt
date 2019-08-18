@@ -20,6 +20,11 @@ state.00000011 0 0 1 0 0 1
 state.00000100 0 1 0 0 0 1 
 state.00000101 1 0 0 0 0 1 
 
+State Machine - |top|numericaldisplay:display|state
+Name state.STATE_DIVIDE 
+state.STATE_WAIT 0 
+state.STATE_DIVIDE 1 
+
 State Machine - |top|sdram_system_new_sdram_controller_0:sdram_controller|m_next
 Name m_next.010000000 m_next.000010000 m_next.000001000 m_next.000000001 
 m_next.000000001 0 0 0 0 

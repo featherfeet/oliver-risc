@@ -273,8 +273,8 @@ begin
                     ram_read_complete <= 'b0;
                     operation <= ram_read_data[7:0];
                     state <= `STATE_FETCH_OPERAND1;
-                    $display("Fetched operation %d.", ram_read_data);
-                    $display("%t: Changing state to STATE_FETCH_OPERAND1", $time);
+                    //$display("Fetched operation %d.", ram_read_data);
+                    //$display("%t: Changing state to STATE_FETCH_OPERAND1", $time);
                 end
                 else
                 begin
@@ -295,7 +295,7 @@ begin
                 begin
                     operand_byte_index <= 'b0;
                     state <= `STATE_FETCH_OPERAND2;
-                    $display("Fetched operand1 %d.", operand1);
+                    //$display("Fetched operand1 %d.", operand1);
                 end
                 else
                     state <= `STATE_FETCH_OPERAND1;
@@ -314,7 +314,7 @@ begin
                 begin
                     operand_byte_index <= 'b0;
                     state <= `STATE_EXECUTE_INSTRUCTION;
-                    $display("Fetched operand2 %d.", operand2);
+                    //$display("Fetched operand2 %d.", operand2);
                 end
                 else
                     state <= `STATE_FETCH_OPERAND2;
@@ -342,7 +342,7 @@ begin
                             read_from_ram(operand1 + operand_byte_index);
                         if (operand_byte_index == `OPERAND_SIZE_BYTES)
                         begin
-                            $display("Loaded value %d from address %d in RAM to register %d.", registers[operand2], operand1, operand2);
+                            //$display("Loaded value %d from address %d in RAM to register %d.", registers[operand2], operand1, operand2);
                             operand_byte_index <= 'b0;
                             `REGISTER_IP <= `REGISTER_IP + `INSTRUCTION_SIZE_BYTES;
                             state <= `STATE_FETCH_OPERATION;
@@ -388,7 +388,7 @@ begin
                     end
                     `OPERATION_OUT:
                     begin
-                        $display("%d", registers[operand1]);
+                        $display("\033[1;32mOUTPUT: %d\033[0m", registers[operand1]);
                         number_to_show <= registers[operand1];
                         `REGISTER_IP <= `REGISTER_IP + `INSTRUCTION_SIZE_BYTES;
                         state <= `STATE_FETCH_OPERATION;
@@ -457,6 +457,7 @@ begin
                     end
                     `OPERATION_HALT:
                     begin
+                        state <= `STATE_EXECUTE_INSTRUCTION;
                         $finish;
                     end
                 endcase
