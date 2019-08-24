@@ -26,8 +26,12 @@ module top(
 reg [`OPERATION_SIZE_BITS - 1:0] operation;
 reg [`OPERAND_SIZE_BITS - 1:0] operand1;
 reg [`OPERAND_SIZE_BITS - 1:0] operand2;
-reg [`OPERAND_SIZE_BITS - 1:0] registers [`OPERAND_SIZE_BITS - 1:0]; // IP, A, B, C, D, E, F, and G: eight 8-bit registers.
+reg [`OPERAND_SIZE_BITS - 1:0] registers [`NUM_REGISTERS - 1:0]; // IP, A, B, C, D, E, F, and G: eight 32-bit registers.
+reg [`OPERAND_SIZE_BITS - 1:0] shadow_registers [`NUM_REGISTERS - 1:0]; // "registers" is copied to here while an interrupt is running.
 reg [`OPERAND_SIZE_BITS - 1:0] code_section_start_address; // Where (in RAM) the instructions are located. code_section_start_address + IP is the address of the current instruction. Address is in bytes.
+
+// Interrupt vector table -- sets the memory addresses of the interrupt service routines.
+reg [`OPERAND_SIZE_BITS - 1:0] interrupt_vector_table [`NUM_INTERRUPTS - 1:0]; // interrupt_vector_table[0] is the address of ISR number 0.
 
 // ROM to read the program from.
 reg [31:0] program_rom_address;
@@ -443,6 +447,10 @@ begin
                             `REGISTER_IP <= `REGISTER_IP + `INSTRUCTION_SIZE_BYTES;
                         state <= `STATE_FETCH_OPERATION;
                     end
+                    `OPERATION_ISR:
+                    begin
+                        interrupt_vector_table[registers[operand1]] <= operand2;
+                    end
                     `OPERATION_RST:
                     begin
                         `REGISTER_IP <= code_section_start_address;
@@ -464,6 +472,12 @@ begin
             end
         endcase
     end
+end
+
+// Interrupt-handling unit:
+always @(posedge CLOCK_50)
+begin
+
 end
 
 endmodule

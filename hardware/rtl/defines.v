@@ -20,7 +20,9 @@
 `define OPERATION_RST             12
 `define OPERATION_HALT            13
 `define OPERATION_CODE            14
+`define OPERATION_ISR             15
 
+`define NUM_REGISTERS             8
 `define REGISTER_IP               registers[0]
 `define REGISTER_A                registers[1]
 `define REGISTER_B                registers[2]
@@ -36,3 +38,5 @@
 `define OPERATION_SIZE_BYTES           1
 `define OPERAND_SIZE_BYTES             4
 `define INSTRUCTION_SIZE_BYTES         (`OPERATION_SIZE_BYTES + `OPERAND_SIZE_BYTES + `OPERAND_SIZE_BYTES)
+
+`define NUM_INTERRUPTS            8
