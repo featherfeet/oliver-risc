@@ -22,7 +22,7 @@
 `define OPERATION_CODE            14
 `define OPERATION_ISR             15
 
-`define NUM_REGISTERS             8
+`define NUM_REGISTERS             9
 `define REGISTER_IP               registers[0]
 `define REGISTER_A                registers[1]
 `define REGISTER_B                registers[2]
@@ -31,6 +31,7 @@
 `define REGISTER_E                registers[5]
 `define REGISTER_F                registers[6]
 `define REGISTER_G                registers[7]
+`define REGISTER_IE               registers[8]
 
 `define OPERATION_SIZE_BITS            8                                                              // 1 byte
 `define OPERAND_SIZE_BITS              32                                                             // 4 bytes

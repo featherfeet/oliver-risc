@@ -35,6 +35,7 @@ Instructions:
 * RST                                             - Clear all registers to 0 (including the instruction pointer).
 * HALT                                            - Stop the CPU.
 * ISR <register>,<code_address>                   - Sets up an interrupt service routine. <register> is the register containing the interrupt number (8 interrupts are available). <code_address> is the address of the first instruction in the ISR routine.
+* INT <register>,                                 - Triggers an interrupt from software. <register> is the register containing the interrupt number (8 interrupts exist).
 * CODE                                            - Switch from the .data section of the program to the .code section.
 
 Example program to print out numbers 1-5:

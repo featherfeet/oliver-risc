@@ -33,6 +33,18 @@ reg [`OPERAND_SIZE_BITS - 1:0] code_section_start_address; // Where (in RAM) the
 // Interrupt vector table -- sets the memory addresses of the interrupt service routines.
 reg [`OPERAND_SIZE_BITS - 1:0] interrupt_vector_table [`NUM_INTERRUPTS - 1:0]; // interrupt_vector_table[0] is the address of ISR number 0.
 
+// Interrupt FIFO -- interrupts are placed into this fifo for processing.
+reg [31:0] interrupt_fifo_data_in;
+reg interrupt_fifo_write;
+fifo interrupt_fifo(.CLOCK_50(CLOCK_50),
+                    .RST_N(KEY[0]),
+                    .data_in(),
+                    .write(),
+                    .data_out(),
+                    .read(),
+                    .full()
+);
+
 // ROM to read the program from.
 reg [31:0] program_rom_address;
 wire [7:0] program_rom_byte;
@@ -475,9 +487,32 @@ begin
 end
 
 // Interrupt-handling unit:
+reg key_1_previous_value;
+
 always @(posedge CLOCK_50)
 begin
-
+    if (KEY[0] == 0)
+    begin
+        key_1_previous_value <= 'b1;
+        interrupt_fifo_data_in <= 'b0;
+        interrupt_fifo_write <= 'b0;
+        for (i = 0; i < `NUM_INTERRUPTS; i = i + 1)
+            interrupt_vector_table[i] = 'b0;
+    end
+    else
+    begin
+        if (KEY[1] != key_1_previous_value)
+        begin
+            $display("Pushing interrupt type 0 to FIFO.");
+            interrupt_fifo_data_in <= 'b0;
+            interrupt_fifo_write <= 'b1;
+            key_1_previous_value <= KEY[1];
+        end
+        else
+        begin
+            interrupt_fifo_write <= 'b0;
+        end
+    end
 end
 
 endmodule
