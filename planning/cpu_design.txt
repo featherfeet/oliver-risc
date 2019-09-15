@@ -36,6 +36,7 @@ Instructions:
 * HALT                                            - Stop the CPU.
 * ISR <register>,<code_address>                   - Sets up an interrupt service routine. <register> is the register containing the interrupt number (8 interrupts are available). <code_address> is the address of the first instruction in the ISR routine.
 * INT <register>,                                 - Triggers an interrupt from software. <register> is the register containing the interrupt number (8 interrupts exist).
+* ENDINT                                          - Ends an interrupt routine. MUST be placed as the last instruction in an interrupt routine. Restores all registers (including the instruction pointer) to their states before the interrupt was executed.
 * CODE                                            - Switch from the .data section of the program to the .code section.
 
 Example program to print out numbers 1-5:

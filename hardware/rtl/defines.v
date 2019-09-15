@@ -4,6 +4,7 @@
 `define STATE_FETCH_OPERAND1      3
 `define STATE_FETCH_OPERAND2      4
 `define STATE_EXECUTE_INSTRUCTION 5
+`define STATE_RUN_INTERRUPT       6
 
 `define OPERATION_NOP             0
 `define OPERATION_LOAD            1
@@ -21,6 +22,7 @@
 `define OPERATION_HALT            13
 `define OPERATION_CODE            14
 `define OPERATION_ISR             15
+`define OPERATION_ENDINT          16
 
 `define NUM_REGISTERS             9
 `define REGISTER_IP               registers[0]

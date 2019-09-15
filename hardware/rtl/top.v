@@ -36,12 +36,16 @@ reg [`OPERAND_SIZE_BITS - 1:0] interrupt_vector_table [`NUM_INTERRUPTS - 1:0]; /
 // Interrupt FIFO -- interrupts are placed into this fifo for processing.
 reg [31:0] interrupt_fifo_data_in;
 reg interrupt_fifo_write;
+wire interrupt_fifo_empty;
+wire interrupt_fifo_data_out;
+reg interrupt_fifo_read;
 fifo interrupt_fifo(.CLOCK_50(CLOCK_50),
                     .RST_N(KEY[0]),
-                    .data_in(),
-                    .write(),
-                    .data_out(),
-                    .read(),
+                    .data_in(interrupt_fifo_data_in),
+                    .write(interrupt_fifo_write),
+                    .data_out(interrupt_fifo_data_out),
+                    .read(interrupt_fifo_read),
+                    .empty(interrupt_fifo_empty),
                     .full()
 );
 
@@ -230,6 +234,7 @@ begin
         `REGISTER_E <= 'b0;
         `REGISTER_F <= 'b0;
         `REGISTER_G <= 'b0;
+        `REGISTER_IE <= 'b1;
     end
     else
     begin
@@ -475,12 +480,30 @@ begin
                         `REGISTER_G <= 'b0;
                         state <= `STATE_FETCH_OPERATION;
                     end
+                    `OPERATION_ENDINT:
+                    begin
+                        for (i = 0; i < `NUM_REGISTERS; i = i + 1)
+                            registers[i] <= shadow_registers[i];
+                    end
                     `OPERATION_HALT:
                     begin
                         state <= `STATE_EXECUTE_INSTRUCTION;
                         $finish;
                     end
                 endcase
+            end
+            // Every cycle, check for interrupts and run the topmost one on the FIFO.
+            case `STATE_RUN_INTERRUPT:
+            begin
+                // If there is an interrupt to process...
+                if (~interrupt_fifo_empty)
+                begin
+                    // Save all registers' states.
+                    for (i = 0; i < `NUM_REGISTERS; i = i + 1)
+                        shadow_registers[i] <= registers[i];
+                    // Look up the location of the interrupt code, and jump the instruction pointer to that location.
+                    `REGISTER_IP <= interrupt_vector_table[interrupt_fifo_data_out];
+                end
             end
         endcase
     end
@@ -496,6 +519,7 @@ begin
         key_1_previous_value <= 'b1;
         interrupt_fifo_data_in <= 'b0;
         interrupt_fifo_write <= 'b0;
+        interrupt_fifo_read <= 'b0;
         for (i = 0; i < `NUM_INTERRUPTS; i = i + 1)
             interrupt_vector_table[i] = 'b0;
     end
