@@ -37,6 +37,7 @@ def parse(source_code):
         elif current_section == "code":
             # If there's a colon in the line, it's a jump label.
             if ':' in line:
+                line = line.strip()
                 label_name = line.replace(':', '')
                 label = Label(label_name)
                 commands.append(label)
