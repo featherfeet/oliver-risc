@@ -27,8 +27,8 @@ begin
         write_pointer <= 'b0;
         read_pointer <= 'b0;
         current_fifo_size <= 'b0;
-        for (i = 0; i < FIFO_SIZE; i++)
-            items[i] = 'b0;
+        for (i = 0; i < FIFO_SIZE; i = i + 1)
+            items[i] <= 'b0;
     end
     else
     begin

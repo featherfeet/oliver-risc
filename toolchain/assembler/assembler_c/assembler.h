@@ -2,7 +2,7 @@
 #define ASSEMBLER_H
 
 #include <stdint.h>
-#include "../processor.h"
+#include "../../processor.h"
 
 /*
 Assembly code format (curly braces are replacements) (each line in the .code section is an instruction):

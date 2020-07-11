@@ -505,5 +505,6 @@ set_global_assignment -name VERILOG_FILE rtl/sdram_system_up_clocks_0.v
 set_global_assignment -name VERILOG_FILE rtl/sdram_system_new_sdram_controller_0.v
 set_global_assignment -name VERILOG_FILE rtl/rom.v
 set_global_assignment -name VERILOG_FILE rtl/defines.v
+set_global_assignment -name VERILOG_FILE rtl/fifo.v
 set_global_assignment -name POWER_PRESET_COOLING_SOLUTION "23 MM HEAT SINK WITH 200 LFPM AIRFLOW"
 set_global_assignment -name POWER_BOARD_THERMAL_MODEL "NONE (CONSERVATIVE)"

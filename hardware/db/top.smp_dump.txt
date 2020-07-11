@@ -12,13 +12,14 @@ ram_write_state.WRITE_TO_RAM 1 0 1
 ram_write_state.RAM_WRITE_DONE 1 1 0 
 
 State Machine - |top|state
-Name state.00000101 state.00000100 state.00000011 state.00000010 state.00000001 state.00000000 
-state.00000000 0 0 0 0 0 0 
-state.00000001 0 0 0 0 1 1 
-state.00000010 0 0 0 1 0 1 
-state.00000011 0 0 1 0 0 1 
-state.00000100 0 1 0 0 0 1 
-state.00000101 1 0 0 0 0 1 
+Name state.00000110 state.00000101 state.00000100 state.00000011 state.00000010 state.00000001 state.00000000 
+state.00000000 0 0 0 0 0 0 0 
+state.00000001 0 0 0 0 0 1 1 
+state.00000010 0 0 0 0 1 0 1 
+state.00000011 0 0 0 1 0 0 1 
+state.00000100 0 0 1 0 0 0 1 
+state.00000101 0 1 0 0 0 0 1 
+state.00000110 1 0 0 0 0 0 1 
 
 State Machine - |top|numericaldisplay:display|state
 Name state.STATE_DIVIDE 
