@@ -9,6 +9,59 @@
     AssemblySection current_section = DATA_SECTION;
 
     FILE *output_file;
+
+    GSList *variables_table = NULL;
+    GSList *instructions_table = NULL;
+    GSList *labels_table = NULL;
+
+    // Convert a string like "IP" or "A" to a Register number.
+    Register stringToRegister(char *str) {
+        if (strcmp(str, "IP") == 0) {
+            return IP;
+        }
+        else if (strcmp(str, "A") == 0) {
+            return A;
+        }
+        else if (strcmp(str, "B") == 0) {
+            return B;
+        }
+        else if (strcmp(str, "C") == 0) {
+            return C;
+        }
+        else if (strcmp(str, "D") == 0) {
+            return D;
+        }
+        else if (strcmp(str, "E") == 0) {
+            return E;
+        }
+        else if (strcmp(str, "F") == 0) {
+            return F;
+        }
+        return G;
+    }
+
+    // Free all dynamically allocated memory in an Instruction structure, given a pointer to that structure. Assumes that the structure was created using g_new() but that the members of the structure were created using regular malloc(). Only frees address operands (because register operands are freed immediately after use in the parser).
+    void freeInstruction(Instruction *instruction) {
+        switch (instruction->operation) {
+            case OPERATION_LOAD:
+                free(instruction->operand1.operand_address);
+                break;
+            case OPERATION_STORE:
+                free(instruction->operand2.operand_address);
+                break;
+            case OPERATION_JMPL:
+                free(instruction->operand1.operand_address);
+                break;
+            case OPERATION_JMPE:
+                free(instruction->operand1.operand_address);
+                break;
+            case OPERATION_JMPG:
+                free(instruction->operand1.operand_address);
+                break;
+        }
+
+        g_free(instruction);
+    }
 %}
 
 %token TOKEN_NOP
@@ -32,7 +85,7 @@
 %token TOKEN_EQUALS
 %token TOKEN_CONSTANT
 %token TOKEN_EOL
-%token TOKEN_LABEL
+%token TOKEN_COLON
 
 %start line
 
@@ -46,14 +99,20 @@
 line:
     | line TOKEN_DOT_DATA TOKEN_EOL {
         printf("Start .data section.\n");
+
         current_section = DATA_SECTION;
     }
     | line TOKEN_DOT_CODE TOKEN_EOL {
         printf("Start .code section.\n");
+
         current_section = CODE_SECTION;
     }
-    | line TOKEN_LABEL TOKEN_EOL {
-        printf("Label: %s\n", $<strval>1);
+    | line TOKEN_IDENTIFIER TOKEN_COLON TOKEN_EOL {
+        char *label = $<strval>2;
+
+        printf("Label: %s\n", label);
+
+        labels_table = g_slist_append(labels_table, label);
     }
     | line variable_declaration TOKEN_EOL
     | line instruction TOKEN_EOL
@@ -61,22 +120,131 @@ line:
 
 variable_declaration: TOKEN_IDENTIFIER TOKEN_EQUALS TOKEN_CONSTANT {
     printf("Declaring variable \"%s\" as %d.\n", $<strval>1, $<intval>3);
+
+    Variable *variable = g_new(Variable, 1);
+    variable->name = $<strval>1;
+    memcpy(variable->value, &($<intval>3), OPERAND_SIZE);
+    variables_table = g_slist_append(variables_table, variable);
 }
 ;
 
-instruction: TOKEN_NOP
-    | TOKEN_LOAD TOKEN_IDENTIFIER TOKEN_REGISTER
-    | TOKEN_STORE TOKEN_REGISTER TOKEN_IDENTIFIER
-    | TOKEN_ADD TOKEN_REGISTER TOKEN_REGISTER
-    | TOKEN_SUB TOKEN_REGISTER TOKEN_REGISTER
-    | TOKEN_OUT TOKEN_REGISTER
-    | TOKEN_MOV TOKEN_REGISTER TOKEN_REGISTER
-    | TOKEN_CMP TOKEN_REGISTER TOKEN_REGISTER
-    | TOKEN_JMPL TOKEN_IDENTIFIER
-    | TOKEN_JMPE TOKEN_IDENTIFIER
-    | TOKEN_JMPG TOKEN_IDENTIFIER
-    | TOKEN_RST
-    | TOKEN_HALT
+instruction: TOKEN_NOP {
+        printf("Instruction: NOP\n");
+
+        Instruction *instruction = g_new(Instruction, 1);
+        instruction->operation = OPERATION_NOP;
+        instructions_table = g_slist_append(instructions_table, instruction);
+    }
+    | TOKEN_LOAD TOKEN_IDENTIFIER TOKEN_REGISTER {
+        printf("Instruction: LOAD %s,%s\n", $<strval>2, $<strval>3);
+
+        Instruction *instruction = g_new(Instruction, 1);
+        instruction->operation = OPERATION_LOAD;
+        instruction->operand1.operand_address = $<strval>2;
+        instruction->operand2.operand_register = stringToRegister($<strval>3);
+        instructions_table = g_slist_append(instructions_table, instruction);
+
+        free($<strval>3);
+    }
+    | TOKEN_STORE TOKEN_REGISTER TOKEN_IDENTIFIER {
+        printf("Instruction: STORE %s,%s\n", $<strval>2, $<strval>3);
+
+        Instruction *instruction = g_new(Instruction, 1);
+        instruction->operation = OPERATION_STORE;
+        instruction->operand1.operand_register = stringToRegister($<strval>2);
+        instruction->operand2.operand_address = $<strval>3;
+        instructions_table = g_slist_append(instructions_table, instruction);
+
+        free($<strval>2);
+    }
+    | TOKEN_ADD TOKEN_REGISTER TOKEN_REGISTER {
+        printf("Instruction: ADD %s,%s\n", $<strval>2, $<strval>3);
+
+        Instruction *instruction = g_new(Instruction, 1);
+        instruction->operation = OPERATION_ADD;
+        instruction->operand1.operand_register = stringToRegister($<strval>2);
+        instruction->operand2.operand_register = stringToRegister($<strval>3);
+        instructions_table = g_slist_append(instructions_table, instruction);
+
+        free($<strval>2);
+        free($<strval>3);
+    }
+    | TOKEN_SUB TOKEN_REGISTER TOKEN_REGISTER {
+        printf("Instruction: SUB %s,%s\n", $<strval>2, $<strval>3);
+
+        Instruction *instruction = g_new(Instruction, 1);
+        instruction->operation = OPERATION_SUB;
+        instruction->operand1.operand_register = stringToRegister($<strval>2);
+        instruction->operand2.operand_register = stringToRegister($<strval>3);
+        instructions_table = g_slist_append(instructions_table, instruction);
+
+        free($<strval>2);
+        free($<strval>3);
+    }
+    | TOKEN_OUT TOKEN_REGISTER {
+        printf("Instruction: OUT %s\n", $<strval>2);
+
+        Instruction *instruction = g_new(Instruction, 1);
+        instruction->operation = OPERATION_OUT;
+        instruction->operand1.operand_register = stringToRegister($<strval>2);
+        instructions_table = g_slist_append(instructions_table, instruction);
+
+        free($<strval>2);
+    }
+    | TOKEN_MOV TOKEN_REGISTER TOKEN_REGISTER {
+        printf("Instruction: MOV %s,%s\n", $<strval>2, $<strval>3);
+
+        Instruction *instruction = g_new(Instruction, 1);
+        instruction->operation = OPERATION_MOV;
+        instruction->operand1.operand_register = stringToRegister($<strval>2);
+        instruction->operand2.operand_register = stringToRegister($<strval>3);
+        instructions_table = g_slist_append(instructions_table, instruction);
+
+        free($<strval>2);
+        free($<strval>3);
+    }
+    | TOKEN_CMP TOKEN_REGISTER TOKEN_REGISTER {
+        printf("Instruction: CMP %s,%s\n", $<strval>2, $<strval>3);
+
+        Instruction *instruction = g_new(Instruction, 1);
+        instruction->operation = OPERATION_CMP;
+        instruction->operand1.operand_register = stringToRegister($<strval>2);
+        instruction->operand2.operand_register = stringToRegister($<strval>3);
+        instructions_table = g_slist_append(instructions_table, instruction);
+
+        free($<strval>2);
+        free($<strval>3);
+    }
+    | TOKEN_JMPL TOKEN_IDENTIFIER {
+        printf("Instruction: JMPL %s\n", $<strval>2);
+
+        Instruction *instruction = g_new(Instruction, 1);
+        instruction->operation = OPERATION_JMPL;
+        instruction->operand1.operand_address = $<strval>2;
+        instructions_table = g_slist_append(instructions_table, instruction);
+    }
+    | TOKEN_JMPE TOKEN_IDENTIFIER {
+        printf("Instruction: JMPE %s\n", $<strval>2);
+
+        Instruction *instruction = g_new(Instruction, 1);
+        instruction->operation = OPERATION_JMPE;
+        instruction->operand1.operand_address = $<strval>2;
+        instructions_table = g_slist_append(instructions_table, instruction);
+    }
+    | TOKEN_JMPG TOKEN_IDENTIFIER {
+        printf("Instruction: JMPG %s\n", $<strval>2);
+
+        Instruction *instruction = g_new(Instruction, 1);
+        instruction->operation = OPERATION_JMPG;
+        instruction->operand1.operand_address = $<strval>2;
+        instructions_table = g_slist_append(instructions_table, instruction);
+    }
+    | TOKEN_RST {
+        printf("Instruction: RST\n");
+    }
+    | TOKEN_HALT {
+        printf("Instruction: HALT\n");
+    }
 ;
 
 %%
@@ -123,6 +291,23 @@ int main(int argc, char *argv[]) {
     startParseString(input_buffer);
     yyparse();
     endParseString();
+
+    for (GSList *iterator = labels_table; iterator; iterator = iterator->next) {
+        free(iterator->data);
+    }
+    for (GSList *iterator = variables_table; iterator; iterator = iterator->next) {
+        Variable *variable = iterator->data;
+        free(variable->name);
+        g_free(variable);
+    }
+    for (GSList *iterator = instructions_table; iterator; iterator = iterator->next) {
+        Instruction *instruction = iterator->data;
+        freeInstruction(instruction);
+    }
+    g_slist_free(variables_table);
+    g_slist_free(instructions_table);
+    g_slist_free(labels_table);
+    free(input_buffer);
 }
 
 void yyerror(char *s) {

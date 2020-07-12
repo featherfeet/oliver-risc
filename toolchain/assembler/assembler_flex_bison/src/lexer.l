@@ -87,9 +87,8 @@
     return TOKEN_IDENTIFIER;
 }
 
-[a-zA-Z][a-zA-Z0-9_]*: {
-    yylval.strval = strdup(yytext);
-    return TOKEN_LABEL;
+":" {
+    return TOKEN_COLON;
 }
 
 "=" {

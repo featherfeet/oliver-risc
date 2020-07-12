@@ -70,7 +70,7 @@ extern int yydebug;
     TOKEN_EQUALS = 276,
     TOKEN_CONSTANT = 277,
     TOKEN_EOL = 278,
-    TOKEN_LABEL = 279
+    TOKEN_COLON = 279
   };
 #endif
 
@@ -79,7 +79,7 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 39 "../src/parser.y" /* yacc.c:1921  */
+#line 92 "../src/parser.y" /* yacc.c:1921  */
 
     int intval;
     char *strval;
