@@ -55,6 +55,7 @@ typedef enum {
 // Represent a variable like "varname3 = 9" or whatever.
 typedef struct {
 	char *name;
+    uint8_t address[OPERAND_SIZE];
 	uint8_t value[OPERAND_SIZE];
 } Variable;
 
