@@ -512,7 +512,7 @@ static const yytype_uint8 yyrline[] =
 {
        0,    99,    99,   100,   105,   110,   117,   118,   121,   131,
      138,   149,   160,   172,   184,   194,   206,   218,   226,   234,
-     242,   245
+     242,   249
 };
 #endif
 
@@ -1531,20 +1531,28 @@ yyreduce:
 #line 242 "../src/parser.y" /* yacc.c:1652  */
     {
         printf("Instruction: RST\n");
+
+        Instruction *instruction = g_new(Instruction, 1);
+        instruction->operation = OPERATION_RST;
+        instructions_table = g_slist_append(instructions_table, instruction);
     }
-#line 1536 "parser.tab.c" /* yacc.c:1652  */
+#line 1540 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 21:
-#line 245 "../src/parser.y" /* yacc.c:1652  */
+#line 249 "../src/parser.y" /* yacc.c:1652  */
     {
         printf("Instruction: HALT\n");
+
+        Instruction *instruction = g_new(Instruction, 1);
+        instruction->operation = OPERATION_HALT;
+        instructions_table = g_slist_append(instructions_table, instruction);
     }
-#line 1544 "parser.tab.c" /* yacc.c:1652  */
+#line 1552 "parser.tab.c" /* yacc.c:1652  */
     break;
 
 
-#line 1548 "parser.tab.c" /* yacc.c:1652  */
+#line 1556 "parser.tab.c" /* yacc.c:1652  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1775,7 +1783,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 250 "../src/parser.y" /* yacc.c:1918  */
+#line 258 "../src/parser.y" /* yacc.c:1918  */
 
 
 void startParseString(const char *);
@@ -1791,7 +1799,7 @@ int main(int argc, char *argv[]) {
 
     FILE *input_file = fopen(argv[1], "r");
     if (input_file == NULL) {
-        fprintf(stderr, "Error: Failed to open file \"%s\" for reading.", argv[1]);
+        fprintf(stderr, "Error: Failed to open file \"%s\" for reading.\n", argv[1]);
         return 1;
     }
     fseek(input_file, 0, SEEK_END);
@@ -1805,14 +1813,14 @@ int main(int argc, char *argv[]) {
     if (argc == 2) {
         output_file = fopen("output.bin", "w");
         if (output_file == NULL) {
-            fprintf(stderr, "Error: Failed to open file \"output.bin\" for writing.");
+            fprintf(stderr, "Error: Failed to open file \"output.bin\" for writing.\n");
             return 1;
         }
     }
     else if (argc == 3) {
         output_file = fopen(argv[2], "w");
         if (output_file == NULL) {
-            fprintf(stderr, "Error: Failed to open file \"%s\" for writing.", argv[2]);
+            fprintf(stderr, "Error: Failed to open file \"%s\" for writing.\n", argv[2]);
             return 1;
         }
     }
@@ -1837,6 +1845,7 @@ int main(int argc, char *argv[]) {
     g_slist_free(instructions_table);
     g_slist_free(labels_table);
     free(input_buffer);
+    fclose(output_file);
 }
 
 void yyerror(char *s) {

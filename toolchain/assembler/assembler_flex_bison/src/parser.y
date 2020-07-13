@@ -241,9 +241,17 @@ instruction: TOKEN_NOP {
     }
     | TOKEN_RST {
         printf("Instruction: RST\n");
+
+        Instruction *instruction = g_new(Instruction, 1);
+        instruction->operation = OPERATION_RST;
+        instructions_table = g_slist_append(instructions_table, instruction);
     }
     | TOKEN_HALT {
         printf("Instruction: HALT\n");
+
+        Instruction *instruction = g_new(Instruction, 1);
+        instruction->operation = OPERATION_HALT;
+        instructions_table = g_slist_append(instructions_table, instruction);
     }
 ;
 
@@ -262,7 +270,7 @@ int main(int argc, char *argv[]) {
 
     FILE *input_file = fopen(argv[1], "r");
     if (input_file == NULL) {
-        fprintf(stderr, "Error: Failed to open file \"%s\" for reading.", argv[1]);
+        fprintf(stderr, "Error: Failed to open file \"%s\" for reading.\n", argv[1]);
         return 1;
     }
     fseek(input_file, 0, SEEK_END);
@@ -276,14 +284,14 @@ int main(int argc, char *argv[]) {
     if (argc == 2) {
         output_file = fopen("output.bin", "w");
         if (output_file == NULL) {
-            fprintf(stderr, "Error: Failed to open file \"output.bin\" for writing.");
+            fprintf(stderr, "Error: Failed to open file \"output.bin\" for writing.\n");
             return 1;
         }
     }
     else if (argc == 3) {
         output_file = fopen(argv[2], "w");
         if (output_file == NULL) {
-            fprintf(stderr, "Error: Failed to open file \"%s\" for writing.", argv[2]);
+            fprintf(stderr, "Error: Failed to open file \"%s\" for writing.\n", argv[2]);
             return 1;
         }
     }
@@ -308,6 +316,7 @@ int main(int argc, char *argv[]) {
     g_slist_free(instructions_table);
     g_slist_free(labels_table);
     free(input_buffer);
+    fclose(output_file);
 }
 
 void yyerror(char *s) {
