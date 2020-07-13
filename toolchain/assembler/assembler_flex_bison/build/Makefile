@@ -1,13 +1,13 @@
-main: lexer ../src/assembler.h
-	gcc -o main `pkg-config --cflags glib-2.0` -I../src -I../../.. parser.tab.c lex.yy.c -lfl `pkg-config --libs glib-2.0`
+main: lex.yy.c parser.tab.h parser.tab.c ../src/assembler.h
+	gcc -o $@ `pkg-config --cflags glib-2.0` -I../src -I../../.. parser.tab.c lex.yy.c -lfl `pkg-config --libs glib-2.0`
 
-parser: ../src/parser.y
+parser.tab.h parser.tab.c: ../src/parser.y
 	bison -d ../src/parser.y
 
-lexer: ../src/lexer.l parser
+lex.yy.c: ../src/lexer.l parser.tab.h parser.tab.c
 	flex ../src/lexer.l
 
-debug: lexer ../src/assembler.h
+debug: lex.yy.c parser.tab.h parser.tab.c ../src/assembler.h
 	gcc -g -o main `pkg-config --cflags glib-2.0` -I../src -I../../.. parser.tab.c lex.yy.c -lfl `pkg-config --libs glib-2.0`
 
 clean:

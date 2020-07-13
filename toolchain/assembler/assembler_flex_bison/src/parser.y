@@ -123,7 +123,8 @@ variable_declaration: TOKEN_IDENTIFIER TOKEN_EQUALS TOKEN_CONSTANT {
 
     Variable *variable = g_new(Variable, 1);
     variable->name = $<strval>1;
-    memcpy(variable->value, &($<intval>3), OPERAND_SIZE);
+    OPERAND_C_TYPE variable_value = $<intval>3;
+    memcpy(variable->value, &variable_value, OPERAND_SIZE);
     variables_table = g_slist_append(variables_table, variable);
 }
 ;
@@ -300,6 +301,18 @@ int main(int argc, char *argv[]) {
     yyparse();
     endParseString();
 
+    void *variables_binary = malloc(g_slist_length(variables_table) * OPERAND_SIZE);
+    int i = 0;
+    for (GSList *iterator = variables_table; iterator; iterator = iterator->next) {
+        Variable *variable = iterator->data;
+        memcpy(variables_binary + i * OPERAND_SIZE, variable->value, OPERAND_SIZE);
+        i++;
+    }
+    if (fwrite(variables_binary, 1, g_slist_length(variables_table) * OPERAND_SIZE, output_file) != g_slist_length(variables_table) * OPERAND_SIZE) {
+        printf("\033[1;31mERROR:\033[0m Could not write %d bytes of data to the file.\n", g_slist_length(variables_table) * OPERAND_SIZE);
+    }
+
+    // Clean up resources.
     for (GSList *iterator = labels_table; iterator; iterator = iterator->next) {
         free(iterator->data);
     }
