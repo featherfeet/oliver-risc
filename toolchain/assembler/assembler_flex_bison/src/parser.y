@@ -123,15 +123,16 @@ line:
 ;
 
 variable_declaration: TOKEN_IDENTIFIER TOKEN_EQUALS TOKEN_CONSTANT {
-    printf("Declaring variable \"%s\" as %d.\n", $<strval>1, $<intval>3);
+    char *variable_name = $<strval>1;
+    OPERAND_C_TYPE variable_value = $<intval>3;
+
+    printf("Declaring variable \"%s\" as %d.\n", variable_name, variable_value);
 
     Variable *variable = g_new(Variable, 1);
-    variable->name = $<strval>1;
-    OPERAND_C_TYPE variable_value = $<intval>3;
     OPERAND_C_TYPE variable_address = g_hash_table_size(variables_table) * OPERAND_SIZE;
     memcpy(variable->value, &variable_value, OPERAND_SIZE);
     memcpy(variable->address, &variable_address, OPERAND_SIZE);
-    g_hash_table_insert(variables_table, variable->name, variable);
+    g_hash_table_insert(variables_table, variable_name, variable);
 }
 ;
 
@@ -422,7 +423,6 @@ int main(int argc, char *argv[]) {
     }
     g_hash_table_iter_init(&iter, variables_table);
     while (g_hash_table_iter_next(&iter, NULL, (gpointer) &variable)) {
-        free(variable->name);
         g_free(variable);
     }
     for (GSList *iterator = instructions_table; iterator; iterator = iterator->next) {

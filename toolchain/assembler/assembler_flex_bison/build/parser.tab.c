@@ -510,9 +510,9 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,    99,    99,   100,   105,   110,   121,   122,   125,   138,
-     145,   156,   167,   179,   191,   201,   213,   225,   233,   241,
-     249,   256
+       0,    99,    99,   100,   105,   110,   121,   122,   125,   139,
+     146,   157,   168,   180,   192,   202,   214,   226,   234,   242,
+     250,   257
 };
 #endif
 
@@ -1355,21 +1355,22 @@ yyreduce:
   case 8:
 #line 125 "../src/parser.y" /* yacc.c:1652  */
     {
-    printf("Declaring variable \"%s\" as %d.\n", (yyvsp[-2].strval), (yyvsp[0].intval));
+    char *variable_name = (yyvsp[-2].strval);
+    OPERAND_C_TYPE variable_value = (yyvsp[0].intval);
+
+    printf("Declaring variable \"%s\" as %d.\n", variable_name, variable_value);
 
     Variable *variable = g_new(Variable, 1);
-    variable->name = (yyvsp[-2].strval);
-    OPERAND_C_TYPE variable_value = (yyvsp[0].intval);
     OPERAND_C_TYPE variable_address = g_hash_table_size(variables_table) * OPERAND_SIZE;
     memcpy(variable->value, &variable_value, OPERAND_SIZE);
     memcpy(variable->address, &variable_address, OPERAND_SIZE);
-    g_hash_table_insert(variables_table, variable->name, variable);
+    g_hash_table_insert(variables_table, variable_name, variable);
 }
-#line 1369 "parser.tab.c" /* yacc.c:1652  */
+#line 1370 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 9:
-#line 138 "../src/parser.y" /* yacc.c:1652  */
+#line 139 "../src/parser.y" /* yacc.c:1652  */
     {
         printf("Instruction: NOP\n");
 
@@ -1377,11 +1378,11 @@ yyreduce:
         instruction->operation = OPERATION_NOP;
         instructions_table = g_slist_append(instructions_table, instruction);
     }
-#line 1381 "parser.tab.c" /* yacc.c:1652  */
+#line 1382 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 10:
-#line 145 "../src/parser.y" /* yacc.c:1652  */
+#line 146 "../src/parser.y" /* yacc.c:1652  */
     {
         printf("Instruction: LOAD %s,%s\n", (yyvsp[-1].strval), (yyvsp[0].strval));
 
@@ -1393,11 +1394,11 @@ yyreduce:
 
         free((yyvsp[0].strval));
     }
-#line 1397 "parser.tab.c" /* yacc.c:1652  */
+#line 1398 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 11:
-#line 156 "../src/parser.y" /* yacc.c:1652  */
+#line 157 "../src/parser.y" /* yacc.c:1652  */
     {
         printf("Instruction: STORE %s,%s\n", (yyvsp[-1].strval), (yyvsp[0].strval));
 
@@ -1409,11 +1410,11 @@ yyreduce:
 
         free((yyvsp[-1].strval));
     }
-#line 1413 "parser.tab.c" /* yacc.c:1652  */
+#line 1414 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 12:
-#line 167 "../src/parser.y" /* yacc.c:1652  */
+#line 168 "../src/parser.y" /* yacc.c:1652  */
     {
         printf("Instruction: ADD %s,%s\n", (yyvsp[-1].strval), (yyvsp[0].strval));
 
@@ -1426,11 +1427,11 @@ yyreduce:
         free((yyvsp[-1].strval));
         free((yyvsp[0].strval));
     }
-#line 1430 "parser.tab.c" /* yacc.c:1652  */
+#line 1431 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 13:
-#line 179 "../src/parser.y" /* yacc.c:1652  */
+#line 180 "../src/parser.y" /* yacc.c:1652  */
     {
         printf("Instruction: SUB %s,%s\n", (yyvsp[-1].strval), (yyvsp[0].strval));
 
@@ -1443,11 +1444,11 @@ yyreduce:
         free((yyvsp[-1].strval));
         free((yyvsp[0].strval));
     }
-#line 1447 "parser.tab.c" /* yacc.c:1652  */
+#line 1448 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 14:
-#line 191 "../src/parser.y" /* yacc.c:1652  */
+#line 192 "../src/parser.y" /* yacc.c:1652  */
     {
         printf("Instruction: OUT %s\n", (yyvsp[0].strval));
 
@@ -1458,11 +1459,11 @@ yyreduce:
 
         free((yyvsp[0].strval));
     }
-#line 1462 "parser.tab.c" /* yacc.c:1652  */
+#line 1463 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 15:
-#line 201 "../src/parser.y" /* yacc.c:1652  */
+#line 202 "../src/parser.y" /* yacc.c:1652  */
     {
         printf("Instruction: MOV %s,%s\n", (yyvsp[-1].strval), (yyvsp[0].strval));
 
@@ -1475,11 +1476,11 @@ yyreduce:
         free((yyvsp[-1].strval));
         free((yyvsp[0].strval));
     }
-#line 1479 "parser.tab.c" /* yacc.c:1652  */
+#line 1480 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 16:
-#line 213 "../src/parser.y" /* yacc.c:1652  */
+#line 214 "../src/parser.y" /* yacc.c:1652  */
     {
         printf("Instruction: CMP %s,%s\n", (yyvsp[-1].strval), (yyvsp[0].strval));
 
@@ -1492,11 +1493,11 @@ yyreduce:
         free((yyvsp[-1].strval));
         free((yyvsp[0].strval));
     }
-#line 1496 "parser.tab.c" /* yacc.c:1652  */
+#line 1497 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 17:
-#line 225 "../src/parser.y" /* yacc.c:1652  */
+#line 226 "../src/parser.y" /* yacc.c:1652  */
     {
         printf("Instruction: JMPL %s\n", (yyvsp[0].strval));
 
@@ -1505,11 +1506,11 @@ yyreduce:
         instruction->operand1.operand_address = (yyvsp[0].strval);
         instructions_table = g_slist_append(instructions_table, instruction);
     }
-#line 1509 "parser.tab.c" /* yacc.c:1652  */
+#line 1510 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 18:
-#line 233 "../src/parser.y" /* yacc.c:1652  */
+#line 234 "../src/parser.y" /* yacc.c:1652  */
     {
         printf("Instruction: JMPE %s\n", (yyvsp[0].strval));
 
@@ -1518,11 +1519,11 @@ yyreduce:
         instruction->operand1.operand_address = (yyvsp[0].strval);
         instructions_table = g_slist_append(instructions_table, instruction);
     }
-#line 1522 "parser.tab.c" /* yacc.c:1652  */
+#line 1523 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 19:
-#line 241 "../src/parser.y" /* yacc.c:1652  */
+#line 242 "../src/parser.y" /* yacc.c:1652  */
     {
         printf("Instruction: JMPG %s\n", (yyvsp[0].strval));
 
@@ -1531,11 +1532,11 @@ yyreduce:
         instruction->operand1.operand_address = (yyvsp[0].strval);
         instructions_table = g_slist_append(instructions_table, instruction);
     }
-#line 1535 "parser.tab.c" /* yacc.c:1652  */
+#line 1536 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 20:
-#line 249 "../src/parser.y" /* yacc.c:1652  */
+#line 250 "../src/parser.y" /* yacc.c:1652  */
     {
         printf("Instruction: RST\n");
 
@@ -1543,11 +1544,11 @@ yyreduce:
         instruction->operation = OPERATION_RST;
         instructions_table = g_slist_append(instructions_table, instruction);
     }
-#line 1547 "parser.tab.c" /* yacc.c:1652  */
+#line 1548 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 21:
-#line 256 "../src/parser.y" /* yacc.c:1652  */
+#line 257 "../src/parser.y" /* yacc.c:1652  */
     {
         printf("Instruction: HALT\n");
 
@@ -1555,11 +1556,11 @@ yyreduce:
         instruction->operation = OPERATION_HALT;
         instructions_table = g_slist_append(instructions_table, instruction);
     }
-#line 1559 "parser.tab.c" /* yacc.c:1652  */
+#line 1560 "parser.tab.c" /* yacc.c:1652  */
     break;
 
 
-#line 1563 "parser.tab.c" /* yacc.c:1652  */
+#line 1564 "parser.tab.c" /* yacc.c:1652  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1790,7 +1791,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 265 "../src/parser.y" /* yacc.c:1918  */
+#line 266 "../src/parser.y" /* yacc.c:1918  */
 
 
 void startParseString(const char *);
@@ -1951,7 +1952,6 @@ int main(int argc, char *argv[]) {
     }
     g_hash_table_iter_init(&iter, variables_table);
     while (g_hash_table_iter_next(&iter, NULL, (gpointer) &variable)) {
-        free(variable->name);
         g_free(variable);
     }
     for (GSList *iterator = instructions_table; iterator; iterator = iterator->next) {
