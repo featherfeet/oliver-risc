@@ -1798,8 +1798,8 @@ void startParseString(const char *);
 void endParseString(void);
 
 int main(int argc, char *argv[]) {
-    variables_table = g_hash_table_new(g_str_hash, g_str_equal);
-    labels_table = g_hash_table_new(g_str_hash, g_str_equal);
+    variables_table = g_hash_table_new_full(g_str_hash, g_str_equal, (GDestroyNotify) free, (GDestroyNotify) g_free);
+    labels_table = g_hash_table_new_full(g_str_hash, g_str_equal, (GDestroyNotify) free, (GDestroyNotify) free);
 
     char *input_buffer;
 
@@ -1850,14 +1850,14 @@ int main(int argc, char *argv[]) {
         memcpy(variables_binary + variable_address, variable->value, OPERAND_SIZE);
     }
 
-    void *instructions_table_binary = malloc(g_slist_length(instructions_table) * INSTRUCTION_SIZE);
+    void *instructions_binary = malloc(g_slist_length(instructions_table) * INSTRUCTION_SIZE);
     Instruction *instruction;
     int i = 0;
     for (GSList *iterator = instructions_table; iterator; iterator = iterator->next) {
         // Get the instruction.
         instruction = iterator->data;
         // Each instruction takes INSTRUCTION_SIZE bytes. Copy the operation to the binary.
-        memcpy(instructions_table_binary + INSTRUCTION_SIZE * i, &instruction->operation, OPERATION_SIZE);
+        memcpy(instructions_binary + INSTRUCTION_SIZE * i, &instruction->operation, OPERATION_SIZE);
         // Work out whether the arguments should be registers, memory addresses, or some combination thereof.
         gboolean operand1_is_register = FALSE;
         gboolean operand1_is_address = FALSE;
@@ -1905,28 +1905,28 @@ int main(int argc, char *argv[]) {
                 break;
         }
         if (operand1_is_register) {
-            memcpy(instructions_table_binary + INSTRUCTION_SIZE * i + OPERATION_SIZE, &instruction->operand1.operand_register, OPERAND_SIZE);
+            memcpy(instructions_binary + INSTRUCTION_SIZE * i + OPERATION_SIZE, &instruction->operand1.operand_register, OPERAND_SIZE);
         }
         else if (instruction->operation == OPERATION_JMPL || instruction->operation == OPERATION_JMPE || instruction->operation == OPERATION_JMPG) {
             /*
             // Look up the address of the label that we are jumping to.
             int instruction_index = findLabel(label_table, label_table_length, instruction->operand1.operand_address); // The index (in instruction_table) of the instruction to jump to.
             int binary_instruction_index = INSTRUCTION_SIZE * instruction_index;                              // The address (in the binary .code section) of the instruction to jump to.
-            memcpy(instructions_table_binary + INSTRUCTION_SIZE * i + OPERATION_SIZE, &binary_instruction_index, OPERAND_SIZE);
+            memcpy(instructions_binary + INSTRUCTION_SIZE * i + OPERATION_SIZE, &binary_instruction_index, OPERAND_SIZE);
             */
             uint8_t *binary_instruction_index = g_hash_table_lookup(labels_table, instruction->operand1.operand_address);
-            memcpy(instructions_table_binary + INSTRUCTION_SIZE * i + OPERATION_SIZE, binary_instruction_index, OPERAND_SIZE);
+            memcpy(instructions_binary + INSTRUCTION_SIZE * i + OPERATION_SIZE, binary_instruction_index, OPERAND_SIZE);
         }
         else if (operand1_is_address) {
             Variable *variable = g_hash_table_lookup(variables_table, instruction->operand1.operand_address);
-            memcpy(instructions_table_binary + INSTRUCTION_SIZE * i + OPERATION_SIZE, variable->address, OPERAND_SIZE);
+            memcpy(instructions_binary + INSTRUCTION_SIZE * i + OPERATION_SIZE, variable->address, OPERAND_SIZE);
         }
         if (operand2_is_register) {
-            memcpy(instructions_table_binary + INSTRUCTION_SIZE * i + OPERATION_SIZE + OPERAND_SIZE, &instruction->operand2.operand_register, OPERAND_SIZE);
+            memcpy(instructions_binary + INSTRUCTION_SIZE * i + OPERATION_SIZE + OPERAND_SIZE, &instruction->operand2.operand_register, OPERAND_SIZE);
         }
         else if (operand2_is_address) {
             Variable *variable = g_hash_table_lookup(variables_table, instruction->operand2.operand_address);
-            memcpy(instructions_table_binary + INSTRUCTION_SIZE * i + OPERATION_SIZE + OPERAND_SIZE, variable->address, OPERAND_SIZE);
+            memcpy(instructions_binary + INSTRUCTION_SIZE * i + OPERATION_SIZE + OPERAND_SIZE, variable->address, OPERAND_SIZE);
         }
         i++;
     }
@@ -1940,28 +1940,21 @@ int main(int argc, char *argv[]) {
     if (fwrite(&section_separator, sizeof(uint8_t), OPERATION_SIZE, output_file) != OPERATION_SIZE) {
         printf("\033[1;31mERROR:\033[0m Could not write %d bytes of data to the file.\n", OPERATION_SIZE);
     }
-    if (fwrite(instructions_table_binary, sizeof(uint8_t), g_slist_length(instructions_table) * INSTRUCTION_SIZE, output_file) != g_slist_length(instructions_table) * INSTRUCTION_SIZE) {
+    if (fwrite(instructions_binary, sizeof(uint8_t), g_slist_length(instructions_table) * INSTRUCTION_SIZE, output_file) != g_slist_length(instructions_table) * INSTRUCTION_SIZE) {
         printf("\033[1;31mERROR:\033[0m Could not write %d bytes of data to the file.\n", g_slist_length(instructions_table) * INSTRUCTION_SIZE);
     }
 
     // Clean up resources.
-    g_hash_table_iter_init(&iter, labels_table);
-    uint8_t *label_address;
-    while (g_hash_table_iter_next(&iter, NULL, (gpointer) &label_address)) {
-        free(label_address);
-    }
-    g_hash_table_iter_init(&iter, variables_table);
-    while (g_hash_table_iter_next(&iter, NULL, (gpointer) &variable)) {
-        g_free(variable);
-    }
-    for (GSList *iterator = instructions_table; iterator; iterator = iterator->next) {
+/*    for (GSList *iterator = instructions_table; iterator; iterator = iterator->next) {
         Instruction *instruction = iterator->data;
         freeInstruction(instruction);
-    }
+    }*/
     g_hash_table_destroy(variables_table);
-    g_slist_free(instructions_table);
+    g_slist_free_full(instructions_table, (GDestroyNotify) freeInstruction);
     g_hash_table_destroy(labels_table);
     free(input_buffer);
+    free(variables_binary);
+    free(instructions_binary);
     fclose(output_file);
 }
 
