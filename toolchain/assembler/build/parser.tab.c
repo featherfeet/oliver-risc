@@ -1821,7 +1821,7 @@ int main(int argc, char *argv[]) {
 
     // Show program usage message and exit.
     if (argc < 2) {
-        printf("Usage: ./main program.asm [output.bin]\n");
+        printf("Usage: ./main program.asm [out.bin]\n");
         return 1;
     }
 
@@ -1839,11 +1839,11 @@ int main(int argc, char *argv[]) {
     input_buffer[bytes_read] = '\0';
     fclose(input_file);
 
-    // If no output filename was provided, default to output.bin.
+    // If no output filename was provided, default to out.bin.
     if (argc == 2) {
-        output_file = fopen("output.bin", "wb");
+        output_file = fopen("out.bin", "wb");
         if (output_file == NULL) {
-            fprintf(stderr, "Error: Failed to open file \"output.bin\" for writing.\n");
+            fprintf(stderr, "Error: Failed to open file \"out.bin\" for writing.\n");
             return 1;
         }
     }

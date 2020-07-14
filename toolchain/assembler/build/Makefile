@@ -11,7 +11,7 @@ debug: lex.yy.c parser.tab.h parser.tab.c ../src/assembler.h ../../processor.h
 	gcc -g -o main `pkg-config --cflags glib-2.0` -I../src -I../.. parser.tab.c lex.yy.c -lfl `pkg-config --libs glib-2.0`
 
 clean:
-	rm main lex.yy.c parser.tab.c parser.tab.h
+	rm main lex.yy.c parser.tab.c parser.tab.h out.bin
 
 run: main
 	./main fibonacci_slow.asm
