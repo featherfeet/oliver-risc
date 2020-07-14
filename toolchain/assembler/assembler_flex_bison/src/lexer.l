@@ -1,6 +1,7 @@
 %{
     #include <string.h>
     #include <stdlib.h>
+    #include <glib.h>
     #include "parser.tab.h"
 %}
 
@@ -78,12 +79,12 @@
 }
 
 (IP|A|B|C|D|E|F|G) {
-    yylval.strval = strdup(yytext);
+    yylval.strval = g_strdup(yytext);
     return TOKEN_REGISTER;
 }
 
 [a-zA-Z][a-zA-Z0-9_]* {
-    yylval.strval = strdup(yytext);
+    yylval.strval = g_strdup(yytext);
     return TOKEN_IDENTIFIER;
 }
 

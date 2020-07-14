@@ -3,15 +3,23 @@
     #include <glib.h>
     #include "assembler.h"
 
+    // Forward declarations for functions provided by the Flex-generated lexer.
     int yylex(void);
     void yyerror(char *);
 
+    // Variable used to store whether the program is parsing the .data: or the .code: section of the program. Currently not used by the parser.
     AssemblySection current_section = DATA_SECTION;
 
+    // File handle for the binary output file of the assembler.
     FILE *output_file;
 
+    // GLib hash table associating variable names to pointers to Variable structures (see assembler.h).
     GHashTable *variables_table;
+
+    // GLib singly-linked list of pointers to Instruction structures (see assembler.h).
     GSList *instructions_table = NULL;
+
+    // GLib hash table associating label names to buffers of OPERAND_SIZE bytes containing the address of the instruction that each label points to.
     GHashTable *labels_table;
 
     // Convert a string like "IP" or "A" to a Register number.
@@ -40,23 +48,23 @@
         return G;
     }
 
-    // Free all dynamically allocated memory in an Instruction structure, given a pointer to that structure. Assumes that the structure was created using g_new() but that the members of the structure were created using regular malloc(). Only frees address operands (because register operands are freed immediately after use in the parser).
+    // Free all dynamically allocated memory in an Instruction structure, given a pointer to that structure. Only frees address operands (because register operands are freed immediately after use in the parser).
     void freeInstruction(Instruction *instruction) {
         switch (instruction->operation) {
             case OPERATION_LOAD:
-                free(instruction->operand1.operand_address);
+                g_free(instruction->operand1.operand_address);
                 break;
             case OPERATION_STORE:
-                free(instruction->operand2.operand_address);
+                g_free(instruction->operand2.operand_address);
                 break;
             case OPERATION_JMPL:
-                free(instruction->operand1.operand_address);
+                g_free(instruction->operand1.operand_address);
                 break;
             case OPERATION_JMPE:
-                free(instruction->operand1.operand_address);
+                g_free(instruction->operand1.operand_address);
                 break;
             case OPERATION_JMPG:
-                free(instruction->operand1.operand_address);
+                g_free(instruction->operand1.operand_address);
                 break;
         }
 
@@ -96,46 +104,59 @@
 
 %%
 
+// Each line of the assembly program is represented by a single "line" branch of the parsing tree.
 line:
+    // Lines that denote the start of the data section of the assembly file.
     | line TOKEN_DOT_DATA TOKEN_EOL {
         printf("Start .data section.\n");
 
         current_section = DATA_SECTION;
     }
+    // Lines that denote the start of the code section of the assembly file.
     | line TOKEN_DOT_CODE TOKEN_EOL {
         printf("Start .code section.\n");
 
         current_section = CODE_SECTION;
     }
+    // Lines with labels (identifiers used by jump instructions to set jump destinations).
     | line TOKEN_IDENTIFIER TOKEN_COLON TOKEN_EOL {
         char *label = $<strval>2;
 
         printf("Label: %s\n", label);
 
-        uint8_t *label_address_buffer = malloc(OPERAND_SIZE);
+        // Calculate the address of the instruction that this label should jump to, then save that address in a buffer of OPERAND_SIZE bytes.
+        uint8_t *label_address_buffer = g_malloc(OPERAND_SIZE);
         OPERAND_C_TYPE label_address = g_slist_length(instructions_table) * INSTRUCTION_SIZE;
         memcpy(label_address_buffer, &label_address, OPERAND_SIZE);
 
+        // Store the address buffer in the labels_table hash table with the label name as the key.
         g_hash_table_insert(labels_table, label, label_address_buffer);
     }
+    // Lines in the .data section that declare variables in RAM.
     | line variable_declaration TOKEN_EOL
+    // Lines in the .code section with instructions.
     | line instruction TOKEN_EOL
 ;
 
+// Lines that declare variables in the .data section.
 variable_declaration: TOKEN_IDENTIFIER TOKEN_EQUALS TOKEN_CONSTANT {
     char *variable_name = $<strval>1;
     OPERAND_C_TYPE variable_value = $<intval>3;
 
     printf("Declaring variable \"%s\" as %d.\n", variable_name, variable_value);
 
+    // Create a Variable structure representing the variable declaration.
     Variable *variable = g_new(Variable, 1);
     OPERAND_C_TYPE variable_address = g_hash_table_size(variables_table) * OPERAND_SIZE;
     memcpy(variable->value, &variable_value, OPERAND_SIZE);
     memcpy(variable->address, &variable_address, OPERAND_SIZE);
+
+    // Save the Variable structure in the variables_table hash table.
     g_hash_table_insert(variables_table, variable_name, variable);
 }
 ;
 
+// Parse lines with actual assembly instructions. Each branch here parses an instruction line into an Instruction structure and saves it in the instructions_table hash table.
 instruction: TOKEN_NOP {
         printf("Instruction: NOP\n");
 
@@ -152,7 +173,7 @@ instruction: TOKEN_NOP {
         instruction->operand2.operand_register = stringToRegister($<strval>3);
         instructions_table = g_slist_append(instructions_table, instruction);
 
-        free($<strval>3);
+        g_free($<strval>3);
     }
     | TOKEN_STORE TOKEN_REGISTER TOKEN_IDENTIFIER {
         printf("Instruction: STORE %s,%s\n", $<strval>2, $<strval>3);
@@ -163,7 +184,7 @@ instruction: TOKEN_NOP {
         instruction->operand2.operand_address = $<strval>3;
         instructions_table = g_slist_append(instructions_table, instruction);
 
-        free($<strval>2);
+        g_free($<strval>2);
     }
     | TOKEN_ADD TOKEN_REGISTER TOKEN_REGISTER {
         printf("Instruction: ADD %s,%s\n", $<strval>2, $<strval>3);
@@ -174,8 +195,8 @@ instruction: TOKEN_NOP {
         instruction->operand2.operand_register = stringToRegister($<strval>3);
         instructions_table = g_slist_append(instructions_table, instruction);
 
-        free($<strval>2);
-        free($<strval>3);
+        g_free($<strval>2);
+        g_free($<strval>3);
     }
     | TOKEN_SUB TOKEN_REGISTER TOKEN_REGISTER {
         printf("Instruction: SUB %s,%s\n", $<strval>2, $<strval>3);
@@ -186,8 +207,8 @@ instruction: TOKEN_NOP {
         instruction->operand2.operand_register = stringToRegister($<strval>3);
         instructions_table = g_slist_append(instructions_table, instruction);
 
-        free($<strval>2);
-        free($<strval>3);
+        g_free($<strval>2);
+        g_free($<strval>3);
     }
     | TOKEN_OUT TOKEN_REGISTER {
         printf("Instruction: OUT %s\n", $<strval>2);
@@ -197,7 +218,7 @@ instruction: TOKEN_NOP {
         instruction->operand1.operand_register = stringToRegister($<strval>2);
         instructions_table = g_slist_append(instructions_table, instruction);
 
-        free($<strval>2);
+        g_free($<strval>2);
     }
     | TOKEN_MOV TOKEN_REGISTER TOKEN_REGISTER {
         printf("Instruction: MOV %s,%s\n", $<strval>2, $<strval>3);
@@ -208,8 +229,8 @@ instruction: TOKEN_NOP {
         instruction->operand2.operand_register = stringToRegister($<strval>3);
         instructions_table = g_slist_append(instructions_table, instruction);
 
-        free($<strval>2);
-        free($<strval>3);
+        g_free($<strval>2);
+        g_free($<strval>3);
     }
     | TOKEN_CMP TOKEN_REGISTER TOKEN_REGISTER {
         printf("Instruction: CMP %s,%s\n", $<strval>2, $<strval>3);
@@ -220,8 +241,8 @@ instruction: TOKEN_NOP {
         instruction->operand2.operand_register = stringToRegister($<strval>3);
         instructions_table = g_slist_append(instructions_table, instruction);
 
-        free($<strval>2);
-        free($<strval>3);
+        g_free($<strval>2);
+        g_free($<strval>3);
     }
     | TOKEN_JMPL TOKEN_IDENTIFIER {
         printf("Instruction: JMPL %s\n", $<strval>2);
@@ -265,20 +286,25 @@ instruction: TOKEN_NOP {
 
 %%
 
+// Forward declarations of functions in lexer.l that allow Flex to parse an in-memory buffer instead of a file handle.
 void startParseString(const char *);
 void endParseString(void);
 
 int main(int argc, char *argv[]) {
-    variables_table = g_hash_table_new_full(g_str_hash, g_str_equal, (GDestroyNotify) free, (GDestroyNotify) g_free);
-    labels_table = g_hash_table_new_full(g_str_hash, g_str_equal, (GDestroyNotify) free, (GDestroyNotify) free);
+    // Initialize the hash tables with strings as keys. Use g_free to automatically free the memory used by keys and values.
+    variables_table = g_hash_table_new_full(g_str_hash, g_str_equal, (GDestroyNotify) g_free, (GDestroyNotify) g_free);
+    labels_table = g_hash_table_new_full(g_str_hash, g_str_equal, (GDestroyNotify) g_free, (GDestroyNotify) g_free);
 
+    // Buffer to store the input assembly code.
     char *input_buffer;
 
+    // Show program usage message and exit.
     if (argc < 2) {
         printf("Usage: ./main program.asm [output.bin]\n");
         return 1;
     }
 
+    // Read in .asm input file.
     FILE *input_file = fopen(argv[1], "r");
     if (input_file == NULL) {
         fprintf(stderr, "Error: Failed to open file \"%s\" for reading.\n", argv[1]);
@@ -287,11 +313,12 @@ int main(int argc, char *argv[]) {
     fseek(input_file, 0, SEEK_END);
     size_t input_file_size = (size_t) ftell(input_file);
     rewind(input_file);
-    input_buffer = malloc(input_file_size + 1);
+    input_buffer = g_malloc(input_file_size + 1);
     size_t bytes_read = fread(input_buffer, 1, input_file_size, input_file);
     input_buffer[bytes_read] = '\0';
     fclose(input_file);
 
+    // If no output filename was provided, default to output.bin.
     if (argc == 2) {
         output_file = fopen("output.bin", "wb");
         if (output_file == NULL) {
@@ -299,30 +326,46 @@ int main(int argc, char *argv[]) {
             return 1;
         }
     }
+
+    // If an output filename was provided, use it.
     else if (argc == 3) {
-        output_file = fopen(argv[2], "w");
+        output_file = fopen(argv[2], "wb");
         if (output_file == NULL) {
             fprintf(stderr, "Error: Failed to open file \"%s\" for writing.\n", argv[2]);
             return 1;
         }
     }
 
+    // Run the Flex/Bison lexer and parser.
     startParseString(input_buffer);
     yyparse();
     endParseString();
 
-    void *variables_binary = malloc(g_hash_table_size(variables_table) * OPERAND_SIZE);
+    ///////////////////////////////////////////////////////////////////////////////////////
+    // Take the variables_table hash table and convert it into the final binary format.
+    ///////////////////////////////////////////////////////////////////////////////////////
+    // Allocate memory to store the final binary format of the variables (.data) section of the output binary.
+    void *variables_binary = g_malloc(g_hash_table_size(variables_table) * OPERAND_SIZE);
+    // Iterate over the variables_table hash table.
     GHashTableIter iter;
     g_hash_table_iter_init(&iter, variables_table);
     Variable *variable;
     while (g_hash_table_iter_next(&iter, NULL, (gpointer) &variable)) {
+        // Convert the variable->address buffer in the Variable structure back into an integer.
         OPERAND_C_TYPE variable_address;
         memcpy(&variable_address, variable->address, OPERAND_SIZE);
+        // Copy the variable's value into the final binary format at the location specified by variable_address.
         memcpy(variables_binary + variable_address, variable->value, OPERAND_SIZE);
     }
 
-    void *instructions_binary = malloc(g_slist_length(instructions_table) * INSTRUCTION_SIZE);
+    ///////////////////////////////////////////////////////////////////////////////////////
+    // Take the instructions_table hash table and convert it into the final binary format.
+    ///////////////////////////////////////////////////////////////////////////////////////
+    // Allocate memory to store the final binary format of the instructions (.code) section of the output binary.
+    void *instructions_binary = g_malloc(g_slist_length(instructions_table) * INSTRUCTION_SIZE);
+    // Iterate over the instructions_table singly-linked list.
     Instruction *instruction;
+    // i counts how many instructions have already been processed by the loop. It is used to calculate where in instructions_binary to place the next instruction.
     int i = 0;
     for (GSList *iterator = instructions_table; iterator; iterator = iterator->next) {
         // Get the instruction.
@@ -375,16 +418,12 @@ int main(int argc, char *argv[]) {
                 operand1_is_address = TRUE;
                 break;
         }
+        // Based on what the operands to this specific operation are supposed to be (registers or addresses), copy operands over to the final binary output.
         if (operand1_is_register) {
             memcpy(instructions_binary + INSTRUCTION_SIZE * i + OPERATION_SIZE, &instruction->operand1.operand_register, OPERAND_SIZE);
         }
+        // If the operation is a jump instruction, then look up the label being jumped to using the labels_table hash table. Retrieve the buffer storing the instruction address that the label should jump to.
         else if (instruction->operation == OPERATION_JMPL || instruction->operation == OPERATION_JMPE || instruction->operation == OPERATION_JMPG) {
-            /*
-            // Look up the address of the label that we are jumping to.
-            int instruction_index = findLabel(label_table, label_table_length, instruction->operand1.operand_address); // The index (in instruction_table) of the instruction to jump to.
-            int binary_instruction_index = INSTRUCTION_SIZE * instruction_index;                              // The address (in the binary .code section) of the instruction to jump to.
-            memcpy(instructions_binary + INSTRUCTION_SIZE * i + OPERATION_SIZE, &binary_instruction_index, OPERAND_SIZE);
-            */
             uint8_t *binary_instruction_index = g_hash_table_lookup(labels_table, instruction->operand1.operand_address);
             memcpy(instructions_binary + INSTRUCTION_SIZE * i + OPERATION_SIZE, binary_instruction_index, OPERAND_SIZE);
         }
@@ -402,15 +441,18 @@ int main(int argc, char *argv[]) {
         i++;
     }
 
+    // Write the final binary format of the .data (variables) section to the output binary file.
     if (fwrite(variables_binary, 1, g_hash_table_size(variables_table) * OPERAND_SIZE, output_file) != g_hash_table_size(variables_table) * OPERAND_SIZE) {
         printf("\033[1;31mERROR:\033[0m Could not write %d bytes of data to the file.\n", g_hash_table_size(variables_table) * OPERAND_SIZE);
     }
+    // Write the magic section separator to the output file.
     uint8_t section_separator[OPERAND_SIZE];
     int operation_code = OPERATION_CODE;
     memcpy(section_separator, &operation_code, sizeof(Operation));
     if (fwrite(&section_separator, sizeof(uint8_t), OPERATION_SIZE, output_file) != OPERATION_SIZE) {
         printf("\033[1;31mERROR:\033[0m Could not write %d bytes of data to the file.\n", OPERATION_SIZE);
     }
+    // Write the final binary format of the .code (instructions) section to the output binary file.
     if (fwrite(instructions_binary, sizeof(uint8_t), g_slist_length(instructions_table) * INSTRUCTION_SIZE, output_file) != g_slist_length(instructions_table) * INSTRUCTION_SIZE) {
         printf("\033[1;31mERROR:\033[0m Could not write %d bytes of data to the file.\n", g_slist_length(instructions_table) * INSTRUCTION_SIZE);
     }
@@ -419,12 +461,13 @@ int main(int argc, char *argv[]) {
     g_hash_table_destroy(variables_table);
     g_slist_free_full(instructions_table, (GDestroyNotify) freeInstruction);
     g_hash_table_destroy(labels_table);
-    free(input_buffer);
-    free(variables_binary);
-    free(instructions_binary);
+    g_free(input_buffer);
+    g_free(variables_binary);
+    g_free(instructions_binary);
     fclose(output_file);
 }
 
+// Function to print out parser errors from Bison.
 void yyerror(char *s) {
     fprintf(stderr, "Error: %s\n", s);
 }

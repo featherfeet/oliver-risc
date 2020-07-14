@@ -485,9 +485,10 @@ char *yytext;
 #line 2 "../src/lexer.l"
     #include <string.h>
     #include <stdlib.h>
+    #include <glib.h>
     #include "parser.tab.h"
-#line 490 "lex.yy.c"
 #line 491 "lex.yy.c"
+#line 492 "lex.yy.c"
 
 #define INITIAL 0
 
@@ -704,9 +705,9 @@ YY_DECL
 		}
 
 	{
-#line 7 "../src/lexer.l"
+#line 8 "../src/lexer.l"
 
-#line 710 "lex.yy.c"
+#line 711 "lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -765,14 +766,14 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 8 "../src/lexer.l"
+#line 9 "../src/lexer.l"
 {
     return TOKEN_DOT_DATA;
 }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 12 "../src/lexer.l"
+#line 13 "../src/lexer.l"
 {
     return TOKEN_DOT_CODE;
 }
@@ -780,149 +781,149 @@ YY_RULE_SETUP
 case 3:
 /* rule 3 can match eol */
 YY_RULE_SETUP
-#line 16 "../src/lexer.l"
+#line 17 "../src/lexer.l"
 {
     return TOKEN_EOL;
 }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 20 "../src/lexer.l"
+#line 21 "../src/lexer.l"
 {
     // Ignore whitespace characters (spaces and tabs), as well as commas.
 }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 24 "../src/lexer.l"
+#line 25 "../src/lexer.l"
 {
     return TOKEN_NOP;
 }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 28 "../src/lexer.l"
+#line 29 "../src/lexer.l"
 {
     return TOKEN_LOAD;
 }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 32 "../src/lexer.l"
+#line 33 "../src/lexer.l"
 {
     return TOKEN_STORE;
 }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 36 "../src/lexer.l"
+#line 37 "../src/lexer.l"
 {
     return TOKEN_ADD;
 }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 40 "../src/lexer.l"
+#line 41 "../src/lexer.l"
 {
     return TOKEN_SUB;
 }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 44 "../src/lexer.l"
+#line 45 "../src/lexer.l"
 {
     return TOKEN_OUT;
 }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 48 "../src/lexer.l"
+#line 49 "../src/lexer.l"
 {
     return TOKEN_IN;
 }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 52 "../src/lexer.l"
+#line 53 "../src/lexer.l"
 {
     return TOKEN_MOV;
 }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 56 "../src/lexer.l"
+#line 57 "../src/lexer.l"
 {
     return TOKEN_CMP;
 }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 60 "../src/lexer.l"
+#line 61 "../src/lexer.l"
 {
     return TOKEN_JMPL;
 }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 64 "../src/lexer.l"
+#line 65 "../src/lexer.l"
 {
     return TOKEN_JMPE;
 }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 68 "../src/lexer.l"
+#line 69 "../src/lexer.l"
 {
     return TOKEN_JMPG;
 }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 72 "../src/lexer.l"
+#line 73 "../src/lexer.l"
 {
     return TOKEN_RST;
 }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 76 "../src/lexer.l"
+#line 77 "../src/lexer.l"
 {
     return TOKEN_HALT;
 }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 80 "../src/lexer.l"
+#line 81 "../src/lexer.l"
 {
-    yylval.strval = strdup(yytext);
+    yylval.strval = g_strdup(yytext);
     return TOKEN_REGISTER;
 }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 85 "../src/lexer.l"
+#line 86 "../src/lexer.l"
 {
-    yylval.strval = strdup(yytext);
+    yylval.strval = g_strdup(yytext);
     return TOKEN_IDENTIFIER;
 }
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 90 "../src/lexer.l"
+#line 91 "../src/lexer.l"
 {
     return TOKEN_COLON;
 }
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 94 "../src/lexer.l"
+#line 95 "../src/lexer.l"
 {
     return TOKEN_EQUALS;
 }
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 98 "../src/lexer.l"
+#line 99 "../src/lexer.l"
 {
     yylval.intval = atoi(yytext);
     return TOKEN_CONSTANT;
@@ -930,17 +931,17 @@ YY_RULE_SETUP
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 103 "../src/lexer.l"
+#line 104 "../src/lexer.l"
 {
     printf("Unknown character %c\n", *yytext);
 }
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 106 "../src/lexer.l"
+#line 107 "../src/lexer.l"
 ECHO;
 	YY_BREAK
-#line 944 "lex.yy.c"
+#line 945 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1945,7 +1946,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 106 "../src/lexer.l"
+#line 107 "../src/lexer.l"
 
 
 void startParseString(const char *str) {
