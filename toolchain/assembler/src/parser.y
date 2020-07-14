@@ -106,6 +106,8 @@
 
 // Each line of the assembly program is represented by a single "line" branch of the parsing tree.
 line:
+    // Empty lines are allowed.
+    | line TOKEN_EOL
     // Lines that denote the start of the data section of the assembly file.
     | line TOKEN_DOT_DATA TOKEN_EOL {
         printf("Start .data section.\n");
@@ -125,7 +127,7 @@ line:
         printf("Label: %s\n", label);
 
         // Calculate the address of the instruction that this label should jump to, then save that address in a buffer of OPERAND_SIZE bytes.
-        uint8_t *label_address_buffer = g_malloc(OPERAND_SIZE);
+        uint8_t *label_address_buffer = g_malloc0(OPERAND_SIZE);
         OPERAND_C_TYPE label_address = g_slist_length(instructions_table) * INSTRUCTION_SIZE;
         memcpy(label_address_buffer, &label_address, OPERAND_SIZE);
 
@@ -313,7 +315,7 @@ int main(int argc, char *argv[]) {
     fseek(input_file, 0, SEEK_END);
     size_t input_file_size = (size_t) ftell(input_file);
     rewind(input_file);
-    input_buffer = g_malloc(input_file_size + 1);
+    input_buffer = g_malloc0(input_file_size + 1);
     size_t bytes_read = fread(input_buffer, 1, input_file_size, input_file);
     input_buffer[bytes_read] = '\0';
     fclose(input_file);
@@ -345,7 +347,7 @@ int main(int argc, char *argv[]) {
     // Take the variables_table hash table and convert it into the final binary format.
     ///////////////////////////////////////////////////////////////////////////////////////
     // Allocate memory to store the final binary format of the variables (.data) section of the output binary.
-    void *variables_binary = g_malloc(g_hash_table_size(variables_table) * OPERAND_SIZE);
+    void *variables_binary = g_malloc0(g_hash_table_size(variables_table) * OPERAND_SIZE);
     // Iterate over the variables_table hash table.
     GHashTableIter iter;
     g_hash_table_iter_init(&iter, variables_table);
@@ -362,7 +364,7 @@ int main(int argc, char *argv[]) {
     // Take the instructions_table hash table and convert it into the final binary format.
     ///////////////////////////////////////////////////////////////////////////////////////
     // Allocate memory to store the final binary format of the instructions (.code) section of the output binary.
-    void *instructions_binary = g_malloc(g_slist_length(instructions_table) * INSTRUCTION_SIZE);
+    void *instructions_binary = g_malloc0(g_slist_length(instructions_table) * INSTRUCTION_SIZE);
     // Iterate over the instructions_table singly-linked list.
     Instruction *instruction;
     // i counts how many instructions have already been processed by the loop. It is used to calculate where in instructions_binary to place the next instruction.

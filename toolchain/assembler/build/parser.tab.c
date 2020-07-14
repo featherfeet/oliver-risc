@@ -461,16 +461,16 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  2
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   45
+#define YYLAST   46
 
 /* YYNTOKENS -- Number of terminals.  */
 #define YYNTOKENS  25
 /* YYNNTS -- Number of nonterminals.  */
 #define YYNNTS  4
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  21
+#define YYNRULES  22
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  45
+#define YYNSTATES  46
 
 #define YYUNDEFTOK  2
 #define YYMAXUTOK   279
@@ -518,9 +518,9 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,   108,   108,   110,   116,   122,   136,   138,   142,   160,
-     167,   178,   189,   201,   213,   223,   235,   247,   255,   263,
-     271,   278
+       0,   108,   108,   110,   112,   118,   124,   138,   140,   144,
+     162,   169,   180,   191,   203,   215,   225,   237,   249,   257,
+     265,   273,   280
 };
 #endif
 
@@ -563,11 +563,11 @@ static const yytype_uint16 yytoknum[] =
      STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-     -19,     0,   -19,   -19,   -18,   -11,     1,     2,     4,     5,
-       6,   -17,     8,     9,   -19,   -19,     7,    10,    -1,    11,
-      12,    16,    13,    17,    18,   -19,    19,    20,   -19,   -19,
-     -19,   -19,   -19,    21,    22,   -19,   -19,   -19,   -19,   -19,
-     -19,   -19,   -19,   -19,   -19
+     -19,     0,   -19,   -19,   -18,   -11,     4,     6,     7,     8,
+       9,   -17,     2,    11,   -19,   -19,    -3,    10,     1,   -19,
+      12,    13,    14,    18,    19,    20,   -19,    21,    22,   -19,
+     -19,   -19,   -19,   -19,    16,    23,   -19,   -19,   -19,   -19,
+     -19,   -19,   -19,   -19,   -19,   -19
 };
 
   /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -575,11 +575,11 @@ static const yytype_int8 yypact[] =
      means the default is an error.  */
 static const yytype_uint8 yydefact[] =
 {
-       2,     0,     1,     9,     0,     0,     0,     0,     0,     0,
-       0,     0,     0,     0,    20,    21,     0,     0,     0,     0,
-       0,     0,     0,     0,     0,    14,     0,     0,    17,    18,
-      19,     3,     4,     0,     0,     6,     7,    10,    11,    12,
-      13,    15,    16,     8,     5
+       2,     0,     1,    10,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,     0,    21,    22,     0,     0,     0,     3,
+       0,     0,     0,     0,     0,     0,    15,     0,     0,    18,
+      19,    20,     4,     5,     0,     0,     7,     8,    11,    12,
+      13,    14,    16,    17,     9,     6
 };
 
   /* YYPGOTO[NTERM-NUM].  */
@@ -591,7 +591,7 @@ static const yytype_int8 yypgoto[] =
   /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-      -1,     1,    19,    20
+      -1,     1,    20,    21
 };
 
   /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -599,20 +599,20 @@ static const yytype_int8 yydefgoto[] =
      number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_uint8 yytable[] =
 {
-       2,    21,    28,     3,     4,     5,     6,     7,     8,    22,
+       2,    22,    29,     3,     4,     5,     6,     7,     8,    23,
        9,    10,    11,    12,    13,    14,    15,    16,    17,    18,
-      33,    23,    24,    34,    25,    26,    27,    29,    30,     0,
-      31,     0,    38,    32,    35,    36,    37,    39,    40,    41,
-      42,     0,     0,    43,     0,    44
+      32,    30,    34,    19,    24,    35,    25,    26,    27,    28,
+      31,     0,     0,    33,    38,    36,    37,    39,    44,    40,
+      41,    42,    43,     0,     0,     0,    45
 };
 
 static const yytype_int8 yycheck[] =
 {
        0,    19,    19,     3,     4,     5,     6,     7,     8,    20,
       10,    11,    12,    13,    14,    15,    16,    17,    18,    19,
-      21,    20,    20,    24,    20,    20,    20,    19,    19,    -1,
-      23,    -1,    19,    23,    23,    23,    20,    20,    20,    20,
-      20,    -1,    -1,    22,    -1,    23
+      23,    19,    21,    23,    20,    24,    20,    20,    20,    20,
+      19,    -1,    -1,    23,    20,    23,    23,    19,    22,    20,
+      20,    20,    20,    -1,    -1,    -1,    23
 };
 
   /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
@@ -620,26 +620,26 @@ static const yytype_int8 yycheck[] =
 static const yytype_uint8 yystos[] =
 {
        0,    26,     0,     3,     4,     5,     6,     7,     8,    10,
-      11,    12,    13,    14,    15,    16,    17,    18,    19,    27,
-      28,    19,    20,    20,    20,    20,    20,    20,    19,    19,
-      19,    23,    23,    21,    24,    23,    23,    20,    19,    20,
-      20,    20,    20,    22,    23
+      11,    12,    13,    14,    15,    16,    17,    18,    19,    23,
+      27,    28,    19,    20,    20,    20,    20,    20,    20,    19,
+      19,    19,    23,    23,    21,    24,    23,    23,    20,    19,
+      20,    20,    20,    20,    22,    23
 };
 
   /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
 static const yytype_uint8 yyr1[] =
 {
-       0,    25,    26,    26,    26,    26,    26,    26,    27,    28,
+       0,    25,    26,    26,    26,    26,    26,    26,    26,    27,
       28,    28,    28,    28,    28,    28,    28,    28,    28,    28,
-      28,    28
+      28,    28,    28
 };
 
   /* YYR2[YYN] -- Number of symbols on the right hand side of rule YYN.  */
 static const yytype_uint8 yyr2[] =
 {
-       0,     2,     0,     3,     3,     4,     3,     3,     3,     1,
-       3,     3,     3,     3,     2,     3,     3,     2,     2,     2,
-       1,     1
+       0,     2,     0,     2,     3,     3,     4,     3,     3,     3,
+       1,     3,     3,     3,     3,     2,     3,     3,     2,     2,
+       2,     1,     1
 };
 
 
@@ -1324,8 +1324,8 @@ yyreduce:
   YY_REDUCE_PRINT (yyn);
   switch (yyn)
     {
-        case 3:
-#line 110 "../src/parser.y" /* yacc.c:1652  */
+        case 4:
+#line 112 "../src/parser.y" /* yacc.c:1652  */
     {
         printf("Start .data section.\n");
 
@@ -1334,8 +1334,8 @@ yyreduce:
 #line 1335 "parser.tab.c" /* yacc.c:1652  */
     break;
 
-  case 4:
-#line 116 "../src/parser.y" /* yacc.c:1652  */
+  case 5:
+#line 118 "../src/parser.y" /* yacc.c:1652  */
     {
         printf("Start .code section.\n");
 
@@ -1344,15 +1344,15 @@ yyreduce:
 #line 1345 "parser.tab.c" /* yacc.c:1652  */
     break;
 
-  case 5:
-#line 122 "../src/parser.y" /* yacc.c:1652  */
+  case 6:
+#line 124 "../src/parser.y" /* yacc.c:1652  */
     {
         char *label = (yyvsp[-2].strval);
 
         printf("Label: %s\n", label);
 
         // Calculate the address of the instruction that this label should jump to, then save that address in a buffer of OPERAND_SIZE bytes.
-        uint8_t *label_address_buffer = g_malloc(OPERAND_SIZE);
+        uint8_t *label_address_buffer = g_malloc0(OPERAND_SIZE);
         OPERAND_C_TYPE label_address = g_slist_length(instructions_table) * INSTRUCTION_SIZE;
         memcpy(label_address_buffer, &label_address, OPERAND_SIZE);
 
@@ -1362,8 +1362,8 @@ yyreduce:
 #line 1363 "parser.tab.c" /* yacc.c:1652  */
     break;
 
-  case 8:
-#line 142 "../src/parser.y" /* yacc.c:1652  */
+  case 9:
+#line 144 "../src/parser.y" /* yacc.c:1652  */
     {
     char *variable_name = (yyvsp[-2].strval);
     OPERAND_C_TYPE variable_value = (yyvsp[0].intval);
@@ -1382,8 +1382,8 @@ yyreduce:
 #line 1383 "parser.tab.c" /* yacc.c:1652  */
     break;
 
-  case 9:
-#line 160 "../src/parser.y" /* yacc.c:1652  */
+  case 10:
+#line 162 "../src/parser.y" /* yacc.c:1652  */
     {
         printf("Instruction: NOP\n");
 
@@ -1394,8 +1394,8 @@ yyreduce:
 #line 1395 "parser.tab.c" /* yacc.c:1652  */
     break;
 
-  case 10:
-#line 167 "../src/parser.y" /* yacc.c:1652  */
+  case 11:
+#line 169 "../src/parser.y" /* yacc.c:1652  */
     {
         printf("Instruction: LOAD %s,%s\n", (yyvsp[-1].strval), (yyvsp[0].strval));
 
@@ -1410,8 +1410,8 @@ yyreduce:
 #line 1411 "parser.tab.c" /* yacc.c:1652  */
     break;
 
-  case 11:
-#line 178 "../src/parser.y" /* yacc.c:1652  */
+  case 12:
+#line 180 "../src/parser.y" /* yacc.c:1652  */
     {
         printf("Instruction: STORE %s,%s\n", (yyvsp[-1].strval), (yyvsp[0].strval));
 
@@ -1426,8 +1426,8 @@ yyreduce:
 #line 1427 "parser.tab.c" /* yacc.c:1652  */
     break;
 
-  case 12:
-#line 189 "../src/parser.y" /* yacc.c:1652  */
+  case 13:
+#line 191 "../src/parser.y" /* yacc.c:1652  */
     {
         printf("Instruction: ADD %s,%s\n", (yyvsp[-1].strval), (yyvsp[0].strval));
 
@@ -1443,8 +1443,8 @@ yyreduce:
 #line 1444 "parser.tab.c" /* yacc.c:1652  */
     break;
 
-  case 13:
-#line 201 "../src/parser.y" /* yacc.c:1652  */
+  case 14:
+#line 203 "../src/parser.y" /* yacc.c:1652  */
     {
         printf("Instruction: SUB %s,%s\n", (yyvsp[-1].strval), (yyvsp[0].strval));
 
@@ -1460,8 +1460,8 @@ yyreduce:
 #line 1461 "parser.tab.c" /* yacc.c:1652  */
     break;
 
-  case 14:
-#line 213 "../src/parser.y" /* yacc.c:1652  */
+  case 15:
+#line 215 "../src/parser.y" /* yacc.c:1652  */
     {
         printf("Instruction: OUT %s\n", (yyvsp[0].strval));
 
@@ -1475,8 +1475,8 @@ yyreduce:
 #line 1476 "parser.tab.c" /* yacc.c:1652  */
     break;
 
-  case 15:
-#line 223 "../src/parser.y" /* yacc.c:1652  */
+  case 16:
+#line 225 "../src/parser.y" /* yacc.c:1652  */
     {
         printf("Instruction: MOV %s,%s\n", (yyvsp[-1].strval), (yyvsp[0].strval));
 
@@ -1492,8 +1492,8 @@ yyreduce:
 #line 1493 "parser.tab.c" /* yacc.c:1652  */
     break;
 
-  case 16:
-#line 235 "../src/parser.y" /* yacc.c:1652  */
+  case 17:
+#line 237 "../src/parser.y" /* yacc.c:1652  */
     {
         printf("Instruction: CMP %s,%s\n", (yyvsp[-1].strval), (yyvsp[0].strval));
 
@@ -1509,8 +1509,8 @@ yyreduce:
 #line 1510 "parser.tab.c" /* yacc.c:1652  */
     break;
 
-  case 17:
-#line 247 "../src/parser.y" /* yacc.c:1652  */
+  case 18:
+#line 249 "../src/parser.y" /* yacc.c:1652  */
     {
         printf("Instruction: JMPL %s\n", (yyvsp[0].strval));
 
@@ -1522,8 +1522,8 @@ yyreduce:
 #line 1523 "parser.tab.c" /* yacc.c:1652  */
     break;
 
-  case 18:
-#line 255 "../src/parser.y" /* yacc.c:1652  */
+  case 19:
+#line 257 "../src/parser.y" /* yacc.c:1652  */
     {
         printf("Instruction: JMPE %s\n", (yyvsp[0].strval));
 
@@ -1535,8 +1535,8 @@ yyreduce:
 #line 1536 "parser.tab.c" /* yacc.c:1652  */
     break;
 
-  case 19:
-#line 263 "../src/parser.y" /* yacc.c:1652  */
+  case 20:
+#line 265 "../src/parser.y" /* yacc.c:1652  */
     {
         printf("Instruction: JMPG %s\n", (yyvsp[0].strval));
 
@@ -1548,8 +1548,8 @@ yyreduce:
 #line 1549 "parser.tab.c" /* yacc.c:1652  */
     break;
 
-  case 20:
-#line 271 "../src/parser.y" /* yacc.c:1652  */
+  case 21:
+#line 273 "../src/parser.y" /* yacc.c:1652  */
     {
         printf("Instruction: RST\n");
 
@@ -1560,8 +1560,8 @@ yyreduce:
 #line 1561 "parser.tab.c" /* yacc.c:1652  */
     break;
 
-  case 21:
-#line 278 "../src/parser.y" /* yacc.c:1652  */
+  case 22:
+#line 280 "../src/parser.y" /* yacc.c:1652  */
     {
         printf("Instruction: HALT\n");
 
@@ -1804,7 +1804,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 287 "../src/parser.y" /* yacc.c:1918  */
+#line 289 "../src/parser.y" /* yacc.c:1918  */
 
 
 // Forward declarations of functions in lexer.l that allow Flex to parse an in-memory buffer instead of a file handle.
@@ -1834,7 +1834,7 @@ int main(int argc, char *argv[]) {
     fseek(input_file, 0, SEEK_END);
     size_t input_file_size = (size_t) ftell(input_file);
     rewind(input_file);
-    input_buffer = g_malloc(input_file_size + 1);
+    input_buffer = g_malloc0(input_file_size + 1);
     size_t bytes_read = fread(input_buffer, 1, input_file_size, input_file);
     input_buffer[bytes_read] = '\0';
     fclose(input_file);
@@ -1866,7 +1866,7 @@ int main(int argc, char *argv[]) {
     // Take the variables_table hash table and convert it into the final binary format.
     ///////////////////////////////////////////////////////////////////////////////////////
     // Allocate memory to store the final binary format of the variables (.data) section of the output binary.
-    void *variables_binary = g_malloc(g_hash_table_size(variables_table) * OPERAND_SIZE);
+    void *variables_binary = g_malloc0(g_hash_table_size(variables_table) * OPERAND_SIZE);
     // Iterate over the variables_table hash table.
     GHashTableIter iter;
     g_hash_table_iter_init(&iter, variables_table);
@@ -1883,7 +1883,7 @@ int main(int argc, char *argv[]) {
     // Take the instructions_table hash table and convert it into the final binary format.
     ///////////////////////////////////////////////////////////////////////////////////////
     // Allocate memory to store the final binary format of the instructions (.code) section of the output binary.
-    void *instructions_binary = g_malloc(g_slist_length(instructions_table) * INSTRUCTION_SIZE);
+    void *instructions_binary = g_malloc0(g_slist_length(instructions_table) * INSTRUCTION_SIZE);
     // Iterate over the instructions_table singly-linked list.
     Instruction *instruction;
     // i counts how many instructions have already been processed by the loop. It is used to calculate where in instructions_binary to place the next instruction.

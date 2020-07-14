@@ -5,7 +5,38 @@
     #include "parser.tab.h"
 %}
 
+%x SINGLE_LINE_COMMENT
+%x MULTILINE_COMMENT
+
 %%
+
+"//" {
+    BEGIN(SINGLE_LINE_COMMENT);
+}
+
+<SINGLE_LINE_COMMENT>. {
+}
+
+<SINGLE_LINE_COMMENT>\n {
+    BEGIN(INITIAL);
+    return TOKEN_EOL;
+}
+
+"/*" {
+    BEGIN(MULTILINE_COMMENT);
+}
+
+<MULTILINE_COMMENT>. {
+}
+
+<MULTILINE_COMMENT>\n {
+}
+
+<MULTILINE_COMMENT>"*/" {
+    BEGIN(INITIAL);
+    return TOKEN_EOL;
+}
+
 ".data:" {
     return TOKEN_DOT_DATA;
 }
@@ -83,7 +114,7 @@
     return TOKEN_REGISTER;
 }
 
-[a-zA-Z][a-zA-Z0-9_]* {
+[a-zA-Z]+[a-zA-Z0-9_]* {
     yylval.strval = g_strdup(yytext);
     return TOKEN_IDENTIFIER;
 }
