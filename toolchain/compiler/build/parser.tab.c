@@ -70,77 +70,51 @@
 
     #include <stdio.h>
     #include <glib.h>
-    #include "assembler.h"
 
     // Forward declarations for functions provided by the Flex-generated lexer (or defined later in this program).
     int yylex(void);
     void yyerror(char *);
 
-    // Variable used to store whether the program is parsing the .data: or the .code: section of the program. Currently not used by the parser.
-    AssemblySection current_section = DATA_SECTION;
-
-    // File handle for the binary output file of the assembler.
+    // File handle for the .asm output file of the compiler.
     FILE *output_file;
 
-    // GLib hash table associating variable names to pointers to Variable structures (see assembler.h).
-    GHashTable *variables_table;
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    // Data structures for storing the Abstract Syntax Tree (AST) that the parsing step generates.
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    
+    // Different types of nodes (variable declaration, variable assignment, etc.) that can be in the parse tree.
+    typedef enum {
+        VARIABLE_DECLARATION,
+        VARIABLE_ASSIGNMENT
+    } ASTNodeType;
 
-    // GLib singly-linked list of pointers to Instruction structures (see assembler.h).
-    GSList *instructions_table = NULL;
+    // Structure for storing variable declarations like "VAR x = 10;" Does not have a pointer to any sub-node because variable declarations do not have any nested syntax.
+    typedef struct {
+        char *name;
+        int value;
+    } VariableDeclarationNode;
 
-    // GLib hash table associating label names to buffers of OPERAND_SIZE bytes containing the address of the instruction that each label points to.
-    GHashTable *labels_table;
+    // Structure for storing variable assingments like "VAR x = 10;" TODO: Add pointer to an ASTNode for storing expressions so that the user can do things like "x := x + 5;" 
+    typedef struct {
+        char *name;
+        int value;
+    } VariableAssignmentNode;
 
-    // Convert a string like "IP" or "A" to a Register number.
-    Register stringToRegister(char *str) {
-        if (strcmp(str, "IP") == 0) {
-            return IP;
-        }
-        else if (strcmp(str, "A") == 0) {
-            return A;
-        }
-        else if (strcmp(str, "B") == 0) {
-            return B;
-        }
-        else if (strcmp(str, "C") == 0) {
-            return C;
-        }
-        else if (strcmp(str, "D") == 0) {
-            return D;
-        }
-        else if (strcmp(str, "E") == 0) {
-            return E;
-        }
-        else if (strcmp(str, "F") == 0) {
-            return F;
-        }
-        return G;
-    }
+    // Union that can hold any type of node.
+    typedef union {
+        VariableDeclarationNode variable_declaration;
+        VariableAssignmentNode variable_assignment;
+    } ASTNodeUnion;
 
-    // Free all dynamically allocated memory in an Instruction structure, given a pointer to that structure. Only frees address operands (because register operands are freed immediately after use in the parser).
-    void freeInstruction(Instruction *instruction) {
-        switch (instruction->operation) {
-            case OPERATION_LOAD:
-                g_free(instruction->operand1.operand_address);
-                break;
-            case OPERATION_STORE:
-                g_free(instruction->operand2.operand_address);
-                break;
-            case OPERATION_JMPL:
-                g_free(instruction->operand1.operand_address);
-                break;
-            case OPERATION_JMPE:
-                g_free(instruction->operand1.operand_address);
-                break;
-            case OPERATION_JMPG:
-                g_free(instruction->operand1.operand_address);
-                break;
-        }
+    // Structure that stores nodes in the parse tree. Stores the type of each node so that the program knows which member of the .node union to access.
+    typedef struct {
+        ASTNodeType node_type;
+        ASTNodeUnion node;
+    } ASTNode;
 
-        g_free(instruction);
-    }
+    GSList *ast = NULL;
 
-#line 144 "parser.tab.c" /* yacc.c:337  */
+#line 118 "parser.tab.c" /* yacc.c:337  */
 # ifndef YY_NULLPTR
 #  if defined __cplusplus
 #   if 201103L <= __cplusplus
@@ -178,28 +152,11 @@ extern int yydebug;
 # define YYTOKENTYPE
   enum yytokentype
   {
-    TOKEN_NOP = 258,
-    TOKEN_LOAD = 259,
-    TOKEN_STORE = 260,
-    TOKEN_ADD = 261,
-    TOKEN_SUB = 262,
-    TOKEN_OUT = 263,
-    TOKEN_IN = 264,
-    TOKEN_MOV = 265,
-    TOKEN_CMP = 266,
-    TOKEN_JMPL = 267,
-    TOKEN_JMPE = 268,
-    TOKEN_JMPG = 269,
-    TOKEN_RST = 270,
-    TOKEN_HALT = 271,
-    TOKEN_DOT_DATA = 272,
-    TOKEN_DOT_CODE = 273,
-    TOKEN_IDENTIFIER = 274,
-    TOKEN_REGISTER = 275,
-    TOKEN_EQUALS = 276,
-    TOKEN_CONSTANT = 277,
-    TOKEN_EOL = 278,
-    TOKEN_COLON = 279
+    TOKEN_VAR = 258,
+    TOKEN_EQUALS = 259,
+    TOKEN_IDENTIFIER = 260,
+    TOKEN_CONSTANT = 261,
+    TOKEN_SEMICOLON = 262
   };
 #endif
 
@@ -208,12 +165,12 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 100 "../src/parser.y" /* yacc.c:352  */
+#line 57 "../src/parser.y" /* yacc.c:352  */
 
     int intval;
     char *strval;
 
-#line 217 "parser.tab.c" /* yacc.c:352  */
+#line 174 "parser.tab.c" /* yacc.c:352  */
 };
 
 typedef union YYSTYPE YYSTYPE;
@@ -461,19 +418,19 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  2
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   46
+#define YYLAST   7
 
 /* YYNTOKENS -- Number of terminals.  */
-#define YYNTOKENS  25
+#define YYNTOKENS  8
 /* YYNNTS -- Number of nonterminals.  */
-#define YYNNTS  4
+#define YYNNTS  3
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  22
+#define YYNRULES  6
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  46
+#define YYNSTATES  10
 
 #define YYUNDEFTOK  2
-#define YYMAXUTOK   279
+#define YYMAXUTOK   262
 
 /* YYTRANSLATE(TOKEN-NUM) -- Symbol number corresponding to TOKEN-NUM
    as returned by yylex, with out-of-bounds checking.  */
@@ -510,17 +467,14 @@ static const yytype_uint8 yytranslate[] =
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     1,     2,     3,     4,
-       5,     6,     7,     8,     9,    10,    11,    12,    13,    14,
-      15,    16,    17,    18,    19,    20,    21,    22,    23,    24
+       5,     6,     7
 };
 
 #if YYDEBUG
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
-static const yytype_uint16 yyrline[] =
+static const yytype_uint8 yyrline[] =
 {
-       0,   108,   108,   110,   112,   118,   124,   138,   140,   144,
-     162,   169,   180,   191,   203,   215,   225,   237,   249,   257,
-     265,   273,   280
+       0,    64,    64,    65,    66,    69,    76
 };
 #endif
 
@@ -529,12 +483,9 @@ static const yytype_uint16 yyrline[] =
    First, the terminals, then, starting at YYNTOKENS, nonterminals.  */
 static const char *const yytname[] =
 {
-  "$end", "error", "$undefined", "TOKEN_NOP", "TOKEN_LOAD", "TOKEN_STORE",
-  "TOKEN_ADD", "TOKEN_SUB", "TOKEN_OUT", "TOKEN_IN", "TOKEN_MOV",
-  "TOKEN_CMP", "TOKEN_JMPL", "TOKEN_JMPE", "TOKEN_JMPG", "TOKEN_RST",
-  "TOKEN_HALT", "TOKEN_DOT_DATA", "TOKEN_DOT_CODE", "TOKEN_IDENTIFIER",
-  "TOKEN_REGISTER", "TOKEN_EQUALS", "TOKEN_CONSTANT", "TOKEN_EOL",
-  "TOKEN_COLON", "$accept", "line", "variable_declaration", "instruction", YY_NULLPTR
+  "$end", "error", "$undefined", "TOKEN_VAR", "TOKEN_EQUALS",
+  "TOKEN_IDENTIFIER", "TOKEN_CONSTANT", "TOKEN_SEMICOLON", "$accept",
+  "statement", "variable_declaration", YY_NULLPTR
 };
 #endif
 
@@ -543,16 +494,14 @@ static const char *const yytname[] =
    (internal) symbol number NUM (which must be that of a token).  */
 static const yytype_uint16 yytoknum[] =
 {
-       0,   256,   257,   258,   259,   260,   261,   262,   263,   264,
-     265,   266,   267,   268,   269,   270,   271,   272,   273,   274,
-     275,   276,   277,   278,   279
+       0,   256,   257,   258,   259,   260,   261,   262
 };
 # endif
 
-#define YYPACT_NINF -19
+#define YYPACT_NINF -6
 
 #define yypact_value_is_default(Yystate) \
-  (!!((Yystate) == (-19)))
+  (!!((Yystate) == (-6)))
 
 #define YYTABLE_NINF -1
 
@@ -563,11 +512,7 @@ static const yytype_uint16 yytoknum[] =
      STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-     -19,     0,   -19,   -19,   -18,   -11,     4,     6,     7,     8,
-       9,   -17,     2,    11,   -19,   -19,    -3,    10,     1,   -19,
-      12,    13,    14,    18,    19,    20,   -19,    21,    22,   -19,
-     -19,   -19,   -19,   -19,    16,    23,   -19,   -19,   -19,   -19,
-     -19,   -19,   -19,   -19,   -19,   -19
+      -6,     0,    -6,    -4,    -6,    -5,     1,    -6,    -2,    -6
 };
 
   /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -575,23 +520,19 @@ static const yytype_int8 yypact[] =
      means the default is an error.  */
 static const yytype_uint8 yydefact[] =
 {
-       2,     0,     1,    10,     0,     0,     0,     0,     0,     0,
-       0,     0,     0,     0,    21,    22,     0,     0,     0,     3,
-       0,     0,     0,     0,     0,     0,    15,     0,     0,    18,
-      19,    20,     4,     5,     0,     0,     7,     8,    11,    12,
-      13,    14,    16,    17,     9,     6
+       2,     0,     1,     0,     3,     0,     5,     4,     0,     6
 };
 
   /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-     -19,   -19,   -19,   -19
+      -6,    -6,    -6
 };
 
   /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-      -1,     1,    20,    21
+      -1,     1,     5
 };
 
   /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -599,47 +540,31 @@ static const yytype_int8 yydefgoto[] =
      number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_uint8 yytable[] =
 {
-       2,    22,    29,     3,     4,     5,     6,     7,     8,    23,
-       9,    10,    11,    12,    13,    14,    15,    16,    17,    18,
-      32,    30,    34,    19,    24,    35,    25,    26,    27,    28,
-      31,     0,     0,    33,    38,    36,    37,    39,    44,    40,
-      41,    42,    43,     0,     0,     0,    45
+       2,     6,     7,     3,     9,     8,     0,     4
 };
 
 static const yytype_int8 yycheck[] =
 {
-       0,    19,    19,     3,     4,     5,     6,     7,     8,    20,
-      10,    11,    12,    13,    14,    15,    16,    17,    18,    19,
-      23,    19,    21,    23,    20,    24,    20,    20,    20,    20,
-      19,    -1,    -1,    23,    20,    23,    23,    19,    22,    20,
-      20,    20,    20,    -1,    -1,    -1,    23
+       0,     5,     7,     3,     6,     4,    -1,     7
 };
 
   /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
      symbol of state STATE-NUM.  */
 static const yytype_uint8 yystos[] =
 {
-       0,    26,     0,     3,     4,     5,     6,     7,     8,    10,
-      11,    12,    13,    14,    15,    16,    17,    18,    19,    23,
-      27,    28,    19,    20,    20,    20,    20,    20,    20,    19,
-      19,    19,    23,    23,    21,    24,    23,    23,    20,    19,
-      20,    20,    20,    20,    22,    23
+       0,     9,     0,     3,     7,    10,     5,     7,     4,     6
 };
 
   /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
 static const yytype_uint8 yyr1[] =
 {
-       0,    25,    26,    26,    26,    26,    26,    26,    26,    27,
-      28,    28,    28,    28,    28,    28,    28,    28,    28,    28,
-      28,    28,    28
+       0,     8,     9,     9,     9,    10,    10
 };
 
   /* YYR2[YYN] -- Number of symbols on the right hand side of rule YYN.  */
 static const yytype_uint8 yyr2[] =
 {
-       0,     2,     0,     2,     3,     3,     4,     3,     3,     3,
-       1,     3,     3,     3,     3,     2,     3,     3,     2,     2,
-       2,     1,     1
+       0,     2,     0,     2,     3,     2,     4
 };
 
 
@@ -1324,256 +1249,32 @@ yyreduce:
   YY_REDUCE_PRINT (yyn);
   switch (yyn)
     {
-        case 4:
-#line 112 "../src/parser.y" /* yacc.c:1652  */
+        case 5:
+#line 69 "../src/parser.y" /* yacc.c:1652  */
     {
-        printf("Start .data section.\n");
-
-        current_section = DATA_SECTION;
-    }
-#line 1335 "parser.tab.c" /* yacc.c:1652  */
-    break;
-
-  case 5:
-#line 118 "../src/parser.y" /* yacc.c:1652  */
-    {
-        printf("Start .code section.\n");
-
-        current_section = CODE_SECTION;
-    }
-#line 1345 "parser.tab.c" /* yacc.c:1652  */
+                        ASTNode *node = g_new(ASTNode, 1);
+                        node->node_type = VARIABLE_DECLARATION;
+                        node->node.variable_declaration.name = (yyvsp[0].strval);
+                        node->node.variable_declaration.value = 0;
+                        ast = g_slist_append(ast, node);
+                    }
+#line 1262 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 6:
-#line 124 "../src/parser.y" /* yacc.c:1652  */
+#line 76 "../src/parser.y" /* yacc.c:1652  */
     {
-        char *label = (yyvsp[-2].strval);
-
-        printf("Label: %s\n", label);
-
-        // Calculate the address of the instruction that this label should jump to, then save that address in a buffer of OPERAND_SIZE bytes.
-        uint8_t *label_address_buffer = g_malloc0(OPERAND_SIZE);
-        OPERAND_C_TYPE label_address = g_slist_length(instructions_table) * INSTRUCTION_SIZE;
-        memcpy(label_address_buffer, &label_address, OPERAND_SIZE);
-
-        // Store the address buffer in the labels_table hash table with the label name as the key.
-        g_hash_table_insert(labels_table, label, label_address_buffer);
-    }
-#line 1363 "parser.tab.c" /* yacc.c:1652  */
-    break;
-
-  case 9:
-#line 144 "../src/parser.y" /* yacc.c:1652  */
-    {
-    char *variable_name = (yyvsp[-2].strval);
-    OPERAND_C_TYPE variable_value = (yyvsp[0].intval);
-
-    printf("Declaring variable \"%s\" as %d.\n", variable_name, variable_value);
-
-    // Create a Variable structure representing the variable declaration.
-    Variable *variable = g_new(Variable, 1);
-    OPERAND_C_TYPE variable_address = g_hash_table_size(variables_table) * OPERAND_SIZE;
-    memcpy(variable->value, &variable_value, OPERAND_SIZE);
-    memcpy(variable->address, &variable_address, OPERAND_SIZE);
-
-    // Save the Variable structure in the variables_table hash table.
-    g_hash_table_insert(variables_table, variable_name, variable);
-}
-#line 1383 "parser.tab.c" /* yacc.c:1652  */
-    break;
-
-  case 10:
-#line 162 "../src/parser.y" /* yacc.c:1652  */
-    {
-        printf("Instruction: NOP\n");
-
-        Instruction *instruction = g_new(Instruction, 1);
-        instruction->operation = OPERATION_NOP;
-        instructions_table = g_slist_append(instructions_table, instruction);
-    }
-#line 1395 "parser.tab.c" /* yacc.c:1652  */
-    break;
-
-  case 11:
-#line 169 "../src/parser.y" /* yacc.c:1652  */
-    {
-        printf("Instruction: LOAD %s,%s\n", (yyvsp[-1].strval), (yyvsp[0].strval));
-
-        Instruction *instruction = g_new(Instruction, 1);
-        instruction->operation = OPERATION_LOAD;
-        instruction->operand1.operand_address = (yyvsp[-1].strval);
-        instruction->operand2.operand_register = stringToRegister((yyvsp[0].strval));
-        instructions_table = g_slist_append(instructions_table, instruction);
-
-        g_free((yyvsp[0].strval));
-    }
-#line 1411 "parser.tab.c" /* yacc.c:1652  */
-    break;
-
-  case 12:
-#line 180 "../src/parser.y" /* yacc.c:1652  */
-    {
-        printf("Instruction: STORE %s,%s\n", (yyvsp[-1].strval), (yyvsp[0].strval));
-
-        Instruction *instruction = g_new(Instruction, 1);
-        instruction->operation = OPERATION_STORE;
-        instruction->operand1.operand_register = stringToRegister((yyvsp[-1].strval));
-        instruction->operand2.operand_address = (yyvsp[0].strval);
-        instructions_table = g_slist_append(instructions_table, instruction);
-
-        g_free((yyvsp[-1].strval));
-    }
-#line 1427 "parser.tab.c" /* yacc.c:1652  */
-    break;
-
-  case 13:
-#line 191 "../src/parser.y" /* yacc.c:1652  */
-    {
-        printf("Instruction: ADD %s,%s\n", (yyvsp[-1].strval), (yyvsp[0].strval));
-
-        Instruction *instruction = g_new(Instruction, 1);
-        instruction->operation = OPERATION_ADD;
-        instruction->operand1.operand_register = stringToRegister((yyvsp[-1].strval));
-        instruction->operand2.operand_register = stringToRegister((yyvsp[0].strval));
-        instructions_table = g_slist_append(instructions_table, instruction);
-
-        g_free((yyvsp[-1].strval));
-        g_free((yyvsp[0].strval));
-    }
-#line 1444 "parser.tab.c" /* yacc.c:1652  */
-    break;
-
-  case 14:
-#line 203 "../src/parser.y" /* yacc.c:1652  */
-    {
-        printf("Instruction: SUB %s,%s\n", (yyvsp[-1].strval), (yyvsp[0].strval));
-
-        Instruction *instruction = g_new(Instruction, 1);
-        instruction->operation = OPERATION_SUB;
-        instruction->operand1.operand_register = stringToRegister((yyvsp[-1].strval));
-        instruction->operand2.operand_register = stringToRegister((yyvsp[0].strval));
-        instructions_table = g_slist_append(instructions_table, instruction);
-
-        g_free((yyvsp[-1].strval));
-        g_free((yyvsp[0].strval));
-    }
-#line 1461 "parser.tab.c" /* yacc.c:1652  */
-    break;
-
-  case 15:
-#line 215 "../src/parser.y" /* yacc.c:1652  */
-    {
-        printf("Instruction: OUT %s\n", (yyvsp[0].strval));
-
-        Instruction *instruction = g_new(Instruction, 1);
-        instruction->operation = OPERATION_OUT;
-        instruction->operand1.operand_register = stringToRegister((yyvsp[0].strval));
-        instructions_table = g_slist_append(instructions_table, instruction);
-
-        g_free((yyvsp[0].strval));
-    }
-#line 1476 "parser.tab.c" /* yacc.c:1652  */
-    break;
-
-  case 16:
-#line 225 "../src/parser.y" /* yacc.c:1652  */
-    {
-        printf("Instruction: MOV %s,%s\n", (yyvsp[-1].strval), (yyvsp[0].strval));
-
-        Instruction *instruction = g_new(Instruction, 1);
-        instruction->operation = OPERATION_MOV;
-        instruction->operand1.operand_register = stringToRegister((yyvsp[-1].strval));
-        instruction->operand2.operand_register = stringToRegister((yyvsp[0].strval));
-        instructions_table = g_slist_append(instructions_table, instruction);
-
-        g_free((yyvsp[-1].strval));
-        g_free((yyvsp[0].strval));
-    }
-#line 1493 "parser.tab.c" /* yacc.c:1652  */
-    break;
-
-  case 17:
-#line 237 "../src/parser.y" /* yacc.c:1652  */
-    {
-        printf("Instruction: CMP %s,%s\n", (yyvsp[-1].strval), (yyvsp[0].strval));
-
-        Instruction *instruction = g_new(Instruction, 1);
-        instruction->operation = OPERATION_CMP;
-        instruction->operand1.operand_register = stringToRegister((yyvsp[-1].strval));
-        instruction->operand2.operand_register = stringToRegister((yyvsp[0].strval));
-        instructions_table = g_slist_append(instructions_table, instruction);
-
-        g_free((yyvsp[-1].strval));
-        g_free((yyvsp[0].strval));
-    }
-#line 1510 "parser.tab.c" /* yacc.c:1652  */
-    break;
-
-  case 18:
-#line 249 "../src/parser.y" /* yacc.c:1652  */
-    {
-        printf("Instruction: JMPL %s\n", (yyvsp[0].strval));
-
-        Instruction *instruction = g_new(Instruction, 1);
-        instruction->operation = OPERATION_JMPL;
-        instruction->operand1.operand_address = (yyvsp[0].strval);
-        instructions_table = g_slist_append(instructions_table, instruction);
-    }
-#line 1523 "parser.tab.c" /* yacc.c:1652  */
-    break;
-
-  case 19:
-#line 257 "../src/parser.y" /* yacc.c:1652  */
-    {
-        printf("Instruction: JMPE %s\n", (yyvsp[0].strval));
-
-        Instruction *instruction = g_new(Instruction, 1);
-        instruction->operation = OPERATION_JMPE;
-        instruction->operand1.operand_address = (yyvsp[0].strval);
-        instructions_table = g_slist_append(instructions_table, instruction);
-    }
-#line 1536 "parser.tab.c" /* yacc.c:1652  */
-    break;
-
-  case 20:
-#line 265 "../src/parser.y" /* yacc.c:1652  */
-    {
-        printf("Instruction: JMPG %s\n", (yyvsp[0].strval));
-
-        Instruction *instruction = g_new(Instruction, 1);
-        instruction->operation = OPERATION_JMPG;
-        instruction->operand1.operand_address = (yyvsp[0].strval);
-        instructions_table = g_slist_append(instructions_table, instruction);
-    }
-#line 1549 "parser.tab.c" /* yacc.c:1652  */
-    break;
-
-  case 21:
-#line 273 "../src/parser.y" /* yacc.c:1652  */
-    {
-        printf("Instruction: RST\n");
-
-        Instruction *instruction = g_new(Instruction, 1);
-        instruction->operation = OPERATION_RST;
-        instructions_table = g_slist_append(instructions_table, instruction);
-    }
-#line 1561 "parser.tab.c" /* yacc.c:1652  */
-    break;
-
-  case 22:
-#line 280 "../src/parser.y" /* yacc.c:1652  */
-    {
-        printf("Instruction: HALT\n");
-
-        Instruction *instruction = g_new(Instruction, 1);
-        instruction->operation = OPERATION_HALT;
-        instructions_table = g_slist_append(instructions_table, instruction);
-    }
-#line 1573 "parser.tab.c" /* yacc.c:1652  */
+                        ASTNode *node = g_new(ASTNode, 1);
+                        node->node_type = VARIABLE_DECLARATION;
+                        node->node.variable_declaration.name = (yyvsp[-2].strval);
+                        node->node.variable_declaration.value = (yyvsp[0].intval);
+                        ast = g_slist_append(ast, node);
+                    }
+#line 1274 "parser.tab.c" /* yacc.c:1652  */
     break;
 
 
-#line 1577 "parser.tab.c" /* yacc.c:1652  */
+#line 1278 "parser.tab.c" /* yacc.c:1652  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1804,7 +1505,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 289 "../src/parser.y" /* yacc.c:1918  */
+#line 85 "../src/parser.y" /* yacc.c:1918  */
 
 
 // Forward declarations of functions in lexer.l that allow Flex to parse an in-memory buffer instead of a file handle.
@@ -1812,20 +1513,16 @@ void startParseString(const char *);
 void endParseString(void);
 
 int main(int argc, char *argv[]) {
-    // Initialize the hash tables with strings as keys. Use g_free to automatically free the memory used by keys and values.
-    variables_table = g_hash_table_new_full(g_str_hash, g_str_equal, (GDestroyNotify) g_free, (GDestroyNotify) g_free);
-    labels_table = g_hash_table_new_full(g_str_hash, g_str_equal, (GDestroyNotify) g_free, (GDestroyNotify) g_free);
-
-    // Buffer to store the input assembly code.
+    // Buffer to store the input PL/0 code.
     char *input_buffer;
 
     // Show program usage message and exit.
     if (argc < 2) {
-        printf("Usage: ./main program.asm [out.bin]\n");
+        printf("Usage: ./main program.pl0 [out.asm]\n");
         return 1;
     }
 
-    // Read in .asm input file.
+    // Read in .pl0 input file.
     FILE *input_file = fopen(argv[1], "r");
     if (input_file == NULL) {
         fprintf(stderr, "Error: Failed to open file \"%s\" for reading.\n", argv[1]);
@@ -1841,151 +1538,40 @@ int main(int argc, char *argv[]) {
 
     // If no output filename was provided, default to out.bin.
     if (argc == 2) {
-        output_file = fopen("out.bin", "wb");
+        output_file = fopen("out.asm", "w");
         if (output_file == NULL) {
-            fprintf(stderr, "Error: Failed to open file \"out.bin\" for writing.\n");
+            fprintf(stderr, "Error: Failed to open file \"out.asm\" for writing.\n");
             return 1;
         }
     }
 
     // If an output filename was provided, use it.
     else if (argc == 3) {
-        output_file = fopen(argv[2], "wb");
+        output_file = fopen(argv[2], "w");
         if (output_file == NULL) {
             fprintf(stderr, "Error: Failed to open file \"%s\" for writing.\n", argv[2]);
             return 1;
         }
     }
 
-    // Run the Flex/Bison lexer and parser.
+    // Run the Flex/Bison lexer and parser to generate an AST.
     startParseString(input_buffer);
     yyparse();
     endParseString();
 
-    ///////////////////////////////////////////////////////////////////////////////////////
-    // Take the variables_table hash table and convert it into the final binary format.
-    ///////////////////////////////////////////////////////////////////////////////////////
-    // Allocate memory to store the final binary format of the variables (.data) section of the output binary.
-    void *variables_binary = g_malloc0(g_hash_table_size(variables_table) * OPERAND_SIZE);
-    // Iterate over the variables_table hash table.
-    GHashTableIter iter;
-    g_hash_table_iter_init(&iter, variables_table);
-    Variable *variable;
-    while (g_hash_table_iter_next(&iter, NULL, (gpointer) &variable)) {
-        // Convert the variable->address buffer in the Variable structure back into an integer.
-        OPERAND_C_TYPE variable_address;
-        memcpy(&variable_address, variable->address, OPERAND_SIZE);
-        // Copy the variable's value into the final binary format at the location specified by variable_address.
-        memcpy(variables_binary + variable_address, variable->value, OPERAND_SIZE);
+    // Generate the .data section of the assembly file.
+    fprintf(output_file, ".data:\n");
+    for (GSList *iterator = ast; iterator; iterator = iterator->next) {
+        ASTNode *node = iterator->data;
+
+        if (node->node_type == VARIABLE_DECLARATION) {
+            fprintf(output_file, "    %s = %d\n", node->node.variable_declaration.name, node->node.variable_declaration.value);
+        }
     }
 
-    ///////////////////////////////////////////////////////////////////////////////////////
-    // Take the instructions_table hash table and convert it into the final binary format.
-    ///////////////////////////////////////////////////////////////////////////////////////
-    // Allocate memory to store the final binary format of the instructions (.code) section of the output binary.
-    void *instructions_binary = g_malloc0(g_slist_length(instructions_table) * INSTRUCTION_SIZE);
-    // Iterate over the instructions_table singly-linked list.
-    Instruction *instruction;
-    // i counts how many instructions have already been processed by the loop. It is used to calculate where in instructions_binary to place the next instruction.
-    int i = 0;
-    for (GSList *iterator = instructions_table; iterator; iterator = iterator->next) {
-        // Get the instruction.
-        instruction = iterator->data;
-        // Each instruction takes INSTRUCTION_SIZE bytes. Copy the operation to the binary.
-        memcpy(instructions_binary + INSTRUCTION_SIZE * i, &instruction->operation, OPERATION_SIZE);
-        // Work out whether the arguments should be registers, memory addresses, or some combination thereof.
-        gboolean operand1_is_register = FALSE;
-        gboolean operand1_is_address = FALSE;
-        gboolean operand2_is_register = FALSE;
-        gboolean operand2_is_address = FALSE;
-        switch (instruction->operation) {
-            case OPERATION_LOAD:
-                operand1_is_address = TRUE;
-                operand2_is_register = TRUE;
-                break;
-            case OPERATION_STORE:
-                operand1_is_register = TRUE;
-                operand2_is_address = TRUE;
-                break;
-            case OPERATION_ADD:
-                operand1_is_register = TRUE;
-                operand2_is_register = TRUE;
-                break;
-            case OPERATION_SUB:
-                operand1_is_register = TRUE;
-                operand2_is_register = TRUE;
-                break;
-            case OPERATION_OUT:
-                operand1_is_register = TRUE;
-                break;
-            case OPERATION_IN:
-                operand1_is_register = TRUE;
-                break;
-            case OPERATION_MOV:
-                operand1_is_register = TRUE;
-                operand2_is_register = TRUE;
-                break;
-            case OPERATION_CMP:
-                operand1_is_register = TRUE;
-                operand2_is_register = TRUE;
-                break;
-            case OPERATION_JMPL:
-                operand1_is_address = TRUE;
-                break;
-            case OPERATION_JMPE:
-                operand1_is_address = TRUE;
-                break;
-            case OPERATION_JMPG:
-                operand1_is_address = TRUE;
-                break;
-        }
-        // Based on what the operands to this specific operation are supposed to be (registers or addresses), copy operands over to the final binary output.
-        if (operand1_is_register) {
-            memcpy(instructions_binary + INSTRUCTION_SIZE * i + OPERATION_SIZE, &instruction->operand1.operand_register, OPERAND_SIZE);
-        }
-        // If the operation is a jump instruction, then look up the label being jumped to using the labels_table hash table. Retrieve the buffer storing the instruction address that the label should jump to.
-        else if (instruction->operation == OPERATION_JMPL || instruction->operation == OPERATION_JMPE || instruction->operation == OPERATION_JMPG) {
-            uint8_t *binary_instruction_index = g_hash_table_lookup(labels_table, instruction->operand1.operand_address);
-            memcpy(instructions_binary + INSTRUCTION_SIZE * i + OPERATION_SIZE, binary_instruction_index, OPERAND_SIZE);
-        }
-        else if (operand1_is_address) {
-            Variable *variable = g_hash_table_lookup(variables_table, instruction->operand1.operand_address);
-            memcpy(instructions_binary + INSTRUCTION_SIZE * i + OPERATION_SIZE, variable->address, OPERAND_SIZE);
-        }
-        if (operand2_is_register) {
-            memcpy(instructions_binary + INSTRUCTION_SIZE * i + OPERATION_SIZE + OPERAND_SIZE, &instruction->operand2.operand_register, OPERAND_SIZE);
-        }
-        else if (operand2_is_address) {
-            Variable *variable = g_hash_table_lookup(variables_table, instruction->operand2.operand_address);
-            memcpy(instructions_binary + INSTRUCTION_SIZE * i + OPERATION_SIZE + OPERAND_SIZE, variable->address, OPERAND_SIZE);
-        }
-        i++;
-    }
-
-    // Write the final binary format of the .data (variables) section to the output binary file.
-    if (fwrite(variables_binary, 1, g_hash_table_size(variables_table) * OPERAND_SIZE, output_file) != g_hash_table_size(variables_table) * OPERAND_SIZE) {
-        printf("\033[1;31mERROR:\033[0m Could not write %d bytes of data to the file.\n", g_hash_table_size(variables_table) * OPERAND_SIZE);
-    }
-    // Write the magic section separator to the output file.
-    uint8_t section_separator[OPERAND_SIZE];
-    int operation_code = OPERATION_CODE;
-    memcpy(section_separator, &operation_code, sizeof(Operation));
-    if (fwrite(&section_separator, sizeof(uint8_t), OPERATION_SIZE, output_file) != OPERATION_SIZE) {
-        printf("\033[1;31mERROR:\033[0m Could not write %d bytes of data to the file.\n", OPERATION_SIZE);
-    }
-    // Write the final binary format of the .code (instructions) section to the output binary file.
-    if (fwrite(instructions_binary, sizeof(uint8_t), g_slist_length(instructions_table) * INSTRUCTION_SIZE, output_file) != g_slist_length(instructions_table) * INSTRUCTION_SIZE) {
-        printf("\033[1;31mERROR:\033[0m Could not write %d bytes of data to the file.\n", g_slist_length(instructions_table) * INSTRUCTION_SIZE);
-    }
-
-    // Clean up resources.
-    g_hash_table_destroy(variables_table);
-    g_slist_free_full(instructions_table, (GDestroyNotify) freeInstruction);
-    g_hash_table_destroy(labels_table);
-    g_free(input_buffer);
-    g_free(variables_binary);
-    g_free(instructions_binary);
     fclose(output_file);
+
+    return 0;
 }
 
 // Function to print out parser errors from Bison.

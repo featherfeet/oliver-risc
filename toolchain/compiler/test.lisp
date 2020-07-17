@@ -1,6 +1,0 @@
-((var counter 0)
-(while (< counter 5)
-	(out counter)
-	(increment counter)
-)
-(halt))

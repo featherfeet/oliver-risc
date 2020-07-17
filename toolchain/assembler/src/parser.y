@@ -3,7 +3,7 @@
     #include <glib.h>
     #include "assembler.h"
 
-    // Forward declarations for functions provided by the Flex-generated lexer.
+    // Forward declarations for functions provided by the Flex-generated lexer (or defined later in this program).
     int yylex(void);
     void yyerror(char *);
 
