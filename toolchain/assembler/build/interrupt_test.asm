@@ -6,8 +6,8 @@ Program to test interrupts by slowly counting 1 to 5.
     counter = 1
     increment = 1
     max_count = 5
-    //delay_timer = 500000
-    delay_timer = 10
+    delay_timer = 500000
+    //delay_timer = 10
 .code:
     // Load the counter and other variables.
     LOAD counter,B
@@ -35,6 +35,7 @@ Program to test interrupts by slowly counting 1 to 5.
     delay_routine:
         // Setup for delay loop.
         LOAD delay_timer,E
+        // Delay loop.
         delay_loop:
             // Decrement the delay timer (E).
             SUB E,C

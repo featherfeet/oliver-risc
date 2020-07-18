@@ -154,6 +154,7 @@ int main(int argc, char *argv[]) {
                 break;
             case OPERATION_INT:
                 printf(" %s\n", registerToString(operand1));
+                break;
             case OPERATION_ENDINT:
                 printf("\n");
                 break;

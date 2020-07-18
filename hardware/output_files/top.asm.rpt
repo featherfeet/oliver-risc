@@ -1,5 +1,5 @@
 Assembler report for top
-Fri Jul 17 17:52:47 2020
+Sat Jul 18 00:07:59 2020
 Quartus II 64-Bit Version 13.0.1 Build 232 06/12/2013 Service Pack 1 SJ Web Edition
 
 
@@ -38,7 +38,7 @@ applicable agreement for further details.
 +---------------------------------------------------------------+
 ; Assembler Summary                                             ;
 +-----------------------+---------------------------------------+
-; Assembler Status      ; Successful - Fri Jul 17 17:52:47 2020 ;
+; Assembler Status      ; Successful - Sat Jul 18 00:07:59 2020 ;
 ; Revision Name         ; top                                   ;
 ; Top-level Entity Name ; top                                   ;
 ; Family                ; Cyclone II                            ;
@@ -94,8 +94,8 @@ applicable agreement for further details.
 ; Option         ; Setting          ;
 +----------------+------------------+
 ; Device         ; EP2C20F484C7     ;
-; JTAG usercode  ; 0x00336676       ;
-; Checksum       ; 0x00336676       ;
+; JTAG usercode  ; 0x003ABFC0       ;
+; Checksum       ; 0x003ABFC0       ;
 +----------------+------------------+
 
 
@@ -106,7 +106,7 @@ applicable agreement for further details.
 +--------------------+--------------+
 ; Device             ; EPCS16       ;
 ; JTAG usercode      ; 0x00000000   ;
-; Checksum           ; 0x1DB15105   ;
+; Checksum           ; 0x1DA6FC34   ;
 ; Compression Ratio  ; 2            ;
 +--------------------+--------------+
 
@@ -130,13 +130,13 @@ Info: Running Quartus II 64-Bit Assembler
     Info: programming logic devices manufactured by Altera and sold by 
     Info: Altera or its authorized distributors.  Please refer to the 
     Info: applicable agreement for further details.
-    Info: Processing started: Fri Jul 17 17:52:45 2020
+    Info: Processing started: Sat Jul 18 00:07:57 2020
 Info: Command: quartus_asm top
 Info (115031): Writing out detailed assembly data for power analysis
 Info (115030): Assembler is generating device programming files
 Info: Quartus II 64-Bit Assembler was successful. 0 errors, 0 warnings
-    Info: Peak virtual memory: 541 megabytes
-    Info: Processing ended: Fri Jul 17 17:52:47 2020
+    Info: Peak virtual memory: 534 megabytes
+    Info: Processing ended: Sat Jul 18 00:07:59 2020
     Info: Elapsed time: 00:00:02
     Info: Total CPU time (on all processors): 00:00:02
 

@@ -1,4 +1,4 @@
-#include "../assembler/assembler.h"
+#include "assembler.h"
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -41,7 +41,7 @@ int main(int argc, char *argv[]) {
 	}
 	// Execute the .code section of the executable.
 	while (1) {
-		enum Operation operation = code_ram[registers[IP]];
+		Operation operation = code_ram[registers[IP]];
 		uint32_t operand1 = code_ram[registers[IP] + OPERATION_SIZE];
 		uint32_t operand2 = code_ram[registers[IP] + OPERATION_SIZE + OPERAND_SIZE];
 		switch (operation) {
@@ -125,6 +125,9 @@ int main(int argc, char *argv[]) {
 			case OPERATION_HALT:
 				exit(EXIT_SUCCESS);
 				break;
+            default:
+                printf("UNRECOGNIZED INSTRUCTION\n");
+                break;
 		}
 	}
 	return 0;

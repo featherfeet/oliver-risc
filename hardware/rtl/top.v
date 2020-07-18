@@ -350,13 +350,13 @@ begin
                     // No operation.
                     `OPERATION_NOP:
                     begin
-                        //$display("NOP");
+                        $display("NOP");
                         `REGISTER_IP <= `REGISTER_IP + `INSTRUCTION_SIZE_BYTES;
                     end
                     // Load value from RAM to register.
                     `OPERATION_LOAD:
                     begin
-                        //$display("LOAD");
+                        $display("LOAD");
                         if (ram_read_complete)
                         begin
                             registers[operand2] <= {ram_read_data[7:0], registers[operand2][31:8]};
@@ -376,7 +376,7 @@ begin
                     // Store value into RAM from register.
                     `OPERATION_STORE:
                     begin
-                        //$display("STORE");
+                        $display("STORE");
                         if (ram_write_complete)
                         begin
                             operand_byte_index <= operand_byte_index + 8'd1;
@@ -398,7 +398,7 @@ begin
                     // Add two registers and store the result in register A.
                     `OPERATION_ADD:
                     begin
-                        //$display("ADD");
+                        $display("ADD");
                         `REGISTER_A <= registers[operand1] + registers[operand2];
                         `REGISTER_IP <= `REGISTER_IP + `INSTRUCTION_SIZE_BYTES;
                         state <= `STATE_FETCH_OPERATION;
@@ -406,7 +406,7 @@ begin
                     // Subtract two registers and store the result in register A.
                     `OPERATION_SUB:
                     begin
-                        //$display("SUB");
+                        $display("SUB");
                         `REGISTER_A <= registers[operand1] - registers[operand2];
                         `REGISTER_IP <= `REGISTER_IP + `INSTRUCTION_SIZE_BYTES;
                         state <= `STATE_FETCH_OPERATION;
@@ -420,21 +420,21 @@ begin
                     end
                     `OPERATION_IN:
                     begin
-                        //$display("IN");
+                        $display("IN");
                         `REGISTER_IP <= `REGISTER_IP + `INSTRUCTION_SIZE_BYTES;
                         state <= `STATE_FETCH_OPERATION;
                     end
                     // Copy register 1 to register 2.
                     `OPERATION_MOV:
                     begin
-                        //$display("MOV");
+                        $display("MOV");
                         registers[operand2] <= registers[operand1];
                         `REGISTER_IP <= `REGISTER_IP + `INSTRUCTION_SIZE_BYTES;
                         state <= `STATE_FETCH_OPERATION;
                     end
                     `OPERATION_CMP:
                     begin
-                        //$display("CMP");
+                        $display("CMP");
                         if (registers[operand1] < registers[operand2])
                             `REGISTER_A <= 'd0;
                         else if (registers[operand1] == registers[operand2])
@@ -446,6 +446,7 @@ begin
                     end
                     `OPERATION_JMPL:
                     begin
+                        $display("JMPL");
                         if (`REGISTER_A == 0)
                             `REGISTER_IP <= code_section_start_address + operand1;
                         else
@@ -454,6 +455,7 @@ begin
                     end
                     `OPERATION_JMPE:
                     begin
+                        $display("JMPE");
                         if (`REGISTER_A == 1)
                             `REGISTER_IP <= code_section_start_address + operand1;
                         else
@@ -462,6 +464,7 @@ begin
                     end
                     `OPERATION_JMPG:
                     begin
+                        $display("JMPG");
                         if (`REGISTER_A == 2)
                             `REGISTER_IP <= code_section_start_address + operand1;
                         else
@@ -470,10 +473,32 @@ begin
                     end
                     `OPERATION_ISR:
                     begin
+                        $display("ISR");
                         interrupt_vector_table[registers[operand1]] <= operand2;
+                        `REGISTER_IP <= `REGISTER_IP + `INSTRUCTION_SIZE_BYTES;
+                        state <= `STATE_FETCH_OPERATION;
+                    end
+                    `OPERATION_INT:
+                    begin
+                        // TODO: Switch this instruction to add the interrupt
+                        // to the FIFO instead of directly jumping the IP
+                        // register.
+                        $display("INT");
+                        // Save all registers' states (except the IP register).
+                        for (i = 1; i < `NUM_REGISTERS; i = i + 1)
+                            shadow_registers[i] <= registers[i];
+                        // Make the shadow (saved) IP register point at the
+                        // next instruction so that the program flow will
+                        // continue after the interrupt routine completes.
+                        shadow_registers[0] <= `REGISTER_IP + `INSTRUCTION_SIZE_BYTES;
+                        // Jump the current IP register to the interrupt
+                        // routine.
+                        `REGISTER_IP <= code_section_start_address + interrupt_vector_table[registers[operand1]];
+                        state <= `STATE_FETCH_OPERATION;
                     end
                     `OPERATION_RST:
                     begin
+                        $display("RST");
                         `REGISTER_IP <= code_section_start_address;
                         `REGISTER_A <= 'b0;
                         `REGISTER_B <= 'b0;
@@ -486,16 +511,20 @@ begin
                     end
                     `OPERATION_ENDINT:
                     begin
+                        $display("ENDINT");
                         for (i = 0; i < `NUM_REGISTERS; i = i + 1)
                             registers[i] <= shadow_registers[i];
+                        state <= `STATE_FETCH_OPERATION;
                     end
                     `OPERATION_HALT:
                     begin
+                        $display("HALT");
                         state <= `STATE_EXECUTE_INSTRUCTION;
                         $finish;
                     end
                 endcase
             end
+            /*
             // Every cycle, check for interrupts and run the topmost one on the FIFO.
             `STATE_RUN_INTERRUPT:
             begin
@@ -509,10 +538,12 @@ begin
                     `REGISTER_IP <= interrupt_vector_table[interrupt_fifo_data_out];
                 end
             end
+            */
         endcase
     end
 end
 
+/*
 // Interrupt-handling unit:
 reg key_1_previous_value;
 
@@ -540,5 +571,6 @@ begin
         end
     end
 end
+*/
 
 endmodule

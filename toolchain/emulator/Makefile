@@ -1,4 +1,4 @@
-emulator: emulator.c ../assembler/assembler.h
-	gcc -std=c99 -g -o emulator emulator.c
+emulator: emulator.c ../assembler/src/assembler.h
+	gcc -std=c99 -g -I../assembler/src -I.. -o emulator emulator.c
 run: emulator
-	./emulator ../assembler/out.bin
+	./emulator ../assembler/build/out.bin
