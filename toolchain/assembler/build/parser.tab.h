@@ -70,7 +70,10 @@ extern int yydebug;
     TOKEN_EQUALS = 276,
     TOKEN_CONSTANT = 277,
     TOKEN_EOL = 278,
-    TOKEN_COLON = 279
+    TOKEN_COLON = 279,
+    TOKEN_ISR = 280,
+    TOKEN_INT = 281,
+    TOKEN_ENDINT = 282
   };
 #endif
 
@@ -79,12 +82,12 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 100 "../src/parser.y" /* yacc.c:1921  */
+#line 103 "../src/parser.y" /* yacc.c:1921  */
 
     int intval;
     char *strval;
 
-#line 88 "parser.tab.h" /* yacc.c:1921  */
+#line 91 "parser.tab.h" /* yacc.c:1921  */
 };
 
 typedef union YYSTYPE YYSTYPE;

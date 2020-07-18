@@ -4,7 +4,7 @@
 #include "assembler.h" // Symlinked from the assembler's source code.
 #include "../processor.h"
 
-const char *registerToString(enum Register reg) {
+const char *registerToString(Register reg) {
 	switch (reg) {
 		case IP:
 			return "IP";
@@ -27,7 +27,7 @@ const char *registerToString(enum Register reg) {
 	}
 }
 
-const char *operationToString(enum Operation operation) {
+const char *operationToString(Operation operation) {
     switch (operation) {
         case OPERATION_NOP:
             return "NOP";
@@ -59,6 +59,12 @@ const char *operationToString(enum Operation operation) {
             return "HALT";
         case OPERATION_CODE:
             return "CODE";
+        case OPERATION_ISR:
+            return "ISR";
+        case OPERATION_INT:
+            return "INT";
+        case OPERATION_ENDINT:
+            return "ENDINT";
     }
 }
 
@@ -91,7 +97,7 @@ int main(int argc, char *argv[]) {
 	// Loop through and disassemble the .code section of the binary.
     printf(".code:\n");
     for (i = start_of_code_section_offset; i < raw_binary_length; i += INSTRUCTION_SIZE) {
-        enum Operation operation = raw_binary[i];
+        Operation operation = raw_binary[i];
         uint32_t operand1 = 0;
         uint32_t operand2 = 0;
         memcpy(&operand1, raw_binary + i + OPERATION_SIZE, OPERAND_SIZE);
@@ -141,6 +147,14 @@ int main(int argc, char *argv[]) {
                 printf("\n");
                 break;
             case OPERATION_CODE:
+                printf("\n");
+                break;
+            case OPERATION_ISR:
+                printf(" %s, [%#08x]\n", registerToString(operand1), operand2);
+                break;
+            case OPERATION_INT:
+                printf(" %s\n", registerToString(operand1));
+            case OPERATION_ENDINT:
                 printf("\n");
                 break;
         }

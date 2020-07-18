@@ -14,4 +14,4 @@ clean:
 	rm main lex.yy.c parser.tab.c parser.tab.h out.bin
 
 run: main
-	./main fibonacci_slow.asm
+	./main interrupt_test.asm

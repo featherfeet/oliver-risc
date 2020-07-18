@@ -94,6 +94,9 @@
 %token TOKEN_CONSTANT
 %token TOKEN_EOL
 %token TOKEN_COLON
+%token TOKEN_ISR
+%token TOKEN_INT
+%token TOKEN_ENDINT
 
 %start line
 
@@ -284,6 +287,34 @@ instruction: TOKEN_NOP {
         instruction->operation = OPERATION_HALT;
         instructions_table = g_slist_append(instructions_table, instruction);
     }
+    | TOKEN_ISR TOKEN_REGISTER TOKEN_IDENTIFIER {
+        printf("Instruction: ISR %s,%s\n", $<strval>2, $<strval>3);
+
+        Instruction *instruction = g_new(Instruction, 1);
+        instruction->operation = OPERATION_ISR;
+        instruction->operand1.operand_register = stringToRegister($<strval>2);
+        instruction->operand2.operand_address = $<strval>3;
+        instructions_table = g_slist_append(instructions_table, instruction);
+
+        g_free($<strval>2);
+    }
+    | TOKEN_INT TOKEN_REGISTER {
+        printf("Instruction: INT %s\n", $<strval>2);
+
+        Instruction *instruction = g_new(Instruction, 1);
+        instruction->operation = OPERATION_INT;
+        instruction->operand1.operand_register = stringToRegister($<strval>2);
+        instructions_table = g_slist_append(instructions_table, instruction);
+
+        g_free($<strval>2);
+    }
+    | TOKEN_ENDINT {
+        printf("Instruction: ENDINT\n");
+
+        Instruction *instruction = g_new(Instruction, 1);
+        instruction->operation = OPERATION_ENDINT;
+        instructions_table = g_slist_append(instructions_table, instruction);
+    }
 ;
 
 %%
@@ -419,6 +450,12 @@ int main(int argc, char *argv[]) {
             case OPERATION_JMPG:
                 operand1_is_address = TRUE;
                 break;
+            case OPERATION_ISR:
+                operand1_is_register = TRUE;
+                break;
+            case OPERATION_INT:
+                operand1_is_register = TRUE;
+                break;
         }
         // Based on what the operands to this specific operation are supposed to be (registers or addresses), copy operands over to the final binary output.
         if (operand1_is_register) {
@@ -439,6 +476,10 @@ int main(int argc, char *argv[]) {
         else if (operand2_is_address) {
             Variable *variable = g_hash_table_lookup(variables_table, instruction->operand2.operand_address);
             memcpy(instructions_binary + INSTRUCTION_SIZE * i + OPERATION_SIZE + OPERAND_SIZE, variable->address, OPERAND_SIZE);
+        }
+        else if (instruction->operation == OPERATION_ISR) {
+            uint8_t *binary_instruction_index = g_hash_table_lookup(labels_table, instruction->operand2.operand_address);
+            memcpy(instructions_binary + INSTRUCTION_SIZE * i + OPERATION_SIZE + OPERAND_SIZE, binary_instruction_index, OPERAND_SIZE);
         }
         i++;
     }

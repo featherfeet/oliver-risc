@@ -237,6 +237,8 @@ begin
         `REGISTER_F <= 'b0;
         `REGISTER_G <= 'b0;
         `REGISTER_IE <= 'b1;
+        for (i = 0; i < `NUM_INTERRUPTS; i = i + 1)
+            interrupt_vector_table[i] <= 'b0;
     end
     else
     begin
@@ -466,12 +468,10 @@ begin
                             `REGISTER_IP <= `REGISTER_IP + `INSTRUCTION_SIZE_BYTES;
                         state <= `STATE_FETCH_OPERATION;
                     end
-                    /*
                     `OPERATION_ISR:
                     begin
                         interrupt_vector_table[registers[operand1]] <= operand2;
                     end
-                    */
                     `OPERATION_RST:
                     begin
                         `REGISTER_IP <= code_section_start_address;
@@ -524,8 +524,6 @@ begin
         interrupt_fifo_data_in <= 'b0;
         interrupt_fifo_write <= 'b0;
         interrupt_fifo_read <= 'b0;
-        for (i = 0; i < `NUM_INTERRUPTS; i = i + 1)
-            interrupt_vector_table[i] <= 'b0;
     end
     else
     begin

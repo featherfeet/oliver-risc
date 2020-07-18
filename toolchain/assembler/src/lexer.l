@@ -108,6 +108,18 @@
     return TOKEN_HALT;
 }
 
+"ISR" {
+    return TOKEN_ISR;
+}
+
+"INT" {
+    return TOKEN_INT;
+}
+
+"ENDINT" {
+    return TOKEN_ENDINT;
+}
+
 (IP|A|B|C|D|E|F|G) {
     yylval.strval = g_strdup(yytext);
     return TOKEN_REGISTER;
