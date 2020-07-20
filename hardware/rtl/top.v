@@ -19,7 +19,12 @@ module top(
     output DRAM_UDQM,
     output DRAM_RAS_N,
     output DRAM_WE_N,
-    inout [15:0] DRAM_DQ
+    inout [15:0] DRAM_DQ,
+    output wire [3:0] VGA_R,
+    output wire [3:0] VGA_G,
+    output wire [3:0] VGA_B,
+    output wire VGA_HS,
+    output wire VGA_VS
 );
 
 integer i; // Counter used for synthesized for loops.
