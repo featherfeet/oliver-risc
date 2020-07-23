@@ -1,6 +1,6 @@
 Analysis & Synthesis report for top
-Sat Jul 18 00:07:21 2020
-Quartus II 64-Bit Version 13.0.1 Build 232 06/12/2013 Service Pack 1 SJ Web Edition
+Thu Jul 23 16:51:39 2020
+Quartus II 64-Bit Version 13.0.1 Build 232 06/12/2013 Service Pack 1 SJ Full Version
 
 
 ---------------------
@@ -10,36 +10,18 @@ Quartus II 64-Bit Version 13.0.1 Build 232 06/12/2013 Service Pack 1 SJ Web Edit
   2. Analysis & Synthesis Summary
   3. Analysis & Synthesis Settings
   4. Parallel Compilation
-  5. Analysis & Synthesis Source Files Read
-  6. Analysis & Synthesis Resource Usage Summary
-  7. Analysis & Synthesis Resource Utilization by Entity
-  8. State Machine - |top|ram_read_state
-  9. State Machine - |top|ram_write_state
- 10. State Machine - |top|state
- 11. State Machine - |top|numericaldisplay:display|state
- 12. State Machine - |top|sdram_system_new_sdram_controller_0:sdram_controller|m_next
- 13. State Machine - |top|sdram_system_new_sdram_controller_0:sdram_controller|m_state
- 14. State Machine - |top|sdram_system_new_sdram_controller_0:sdram_controller|i_next
- 15. State Machine - |top|sdram_system_new_sdram_controller_0:sdram_controller|i_state
- 16. Registers Removed During Synthesis
- 17. Removed Registers Triggering Further Register Optimizations
- 18. General Register Statistics
- 19. Inverted Register Statistics
- 20. Multiplexer Restructuring Statistics (Restructuring Performed)
- 21. Source assignments for sdram_system_new_sdram_controller_0:sdram_controller
- 22. Parameter Settings for User Entity Instance: Top-level Entity: |top
- 23. Parameter Settings for User Entity Instance: fifo:interrupt_fifo
- 24. Parameter Settings for User Entity Instance: sdram_system_up_clocks_0:up_clocks_0|altpll:DE_Clock_Generator_System
- 25. Parameter Settings for User Entity Instance: numericaldisplay:display
- 26. Parameter Settings for User Entity Instance: numericaldisplay:display|lpm_divide:divider
- 27. altpll Parameter Settings by Entity Instance
- 28. Port Connectivity Checks: "sdram_system_new_sdram_controller_0:sdram_controller|sdram_system_new_sdram_controller_0_input_efifo_module:the_sdram_system_new_sdram_controller_0_input_efifo_module"
- 29. Port Connectivity Checks: "sdram_system_new_sdram_controller_0:sdram_controller"
- 30. Port Connectivity Checks: "sdram_system_up_clocks_0:up_clocks_0"
- 31. Port Connectivity Checks: "fifo:interrupt_fifo"
- 32. Elapsed Time Per Partition
- 33. Analysis & Synthesis Messages
- 34. Analysis & Synthesis Suppressed Messages
+  5. Source assignments for sdram_system_new_sdram_controller_0:sdram_controller
+  6. Parameter Settings for User Entity Instance: Top-level Entity: |top
+  7. Parameter Settings for User Entity Instance: fifo:interrupt_fifo
+  8. Parameter Settings for User Entity Instance: sdram_system_up_clocks_0:up_clocks_0|altpll:DE_Clock_Generator_System
+  9. Parameter Settings for User Entity Instance: numericaldisplay:display
+ 10. Parameter Settings for User Entity Instance: numericaldisplay:display|lpm_divide:divider
+ 11. Port Connectivity Checks: "sdram_system_new_sdram_controller_0:sdram_controller|sdram_system_new_sdram_controller_0_input_efifo_module:the_sdram_system_new_sdram_controller_0_input_efifo_module"
+ 12. Port Connectivity Checks: "sdram_system_new_sdram_controller_0:sdram_controller"
+ 13. Port Connectivity Checks: "sdram_system_up_clocks_0:up_clocks_0"
+ 14. Port Connectivity Checks: "fifo:interrupt_fifo"
+ 15. Analysis & Synthesis Messages
+ 16. Analysis & Synthesis Suppressed Messages
 
 
 
@@ -62,24 +44,24 @@ applicable agreement for further details.
 
 
 
-+--------------------------------------------------------------------------------------+
-; Analysis & Synthesis Summary                                                         ;
-+------------------------------------+-------------------------------------------------+
-; Analysis & Synthesis Status        ; Successful - Sat Jul 18 00:07:21 2020           ;
-; Quartus II 64-Bit Version          ; 13.0.1 Build 232 06/12/2013 SP 1 SJ Web Edition ;
-; Revision Name                      ; top                                             ;
-; Top-level Entity Name              ; top                                             ;
-; Family                             ; Cyclone II                                      ;
-; Total logic elements               ; 3,073                                           ;
-;     Total combinational functions  ; 2,467                                           ;
-;     Dedicated logic registers      ; 1,328                                           ;
-; Total registers                    ; 1328                                            ;
-; Total pins                         ; 81                                              ;
-; Total virtual pins                 ; 0                                               ;
-; Total memory bits                  ; 0                                               ;
-; Embedded Multiplier 9-bit elements ; 0                                               ;
-; Total PLLs                         ; 1                                               ;
-+------------------------------------+-------------------------------------------------+
++---------------------------------------------------------------------------------------+
+; Analysis & Synthesis Summary                                                          ;
++------------------------------------+--------------------------------------------------+
+; Analysis & Synthesis Status        ; Failed - Thu Jul 23 16:51:39 2020                ;
+; Quartus II 64-Bit Version          ; 13.0.1 Build 232 06/12/2013 SP 1 SJ Full Version ;
+; Revision Name                      ; top                                              ;
+; Top-level Entity Name              ; top                                              ;
+; Family                             ; Cyclone II                                       ;
+; Total logic elements               ; N/A until Partition Merge                        ;
+;     Total combinational functions  ; N/A until Partition Merge                        ;
+;     Dedicated logic registers      ; N/A until Partition Merge                        ;
+; Total registers                    ; N/A until Partition Merge                        ;
+; Total pins                         ; N/A until Partition Merge                        ;
+; Total virtual pins                 ; N/A until Partition Merge                        ;
+; Total memory bits                  ; N/A until Partition Merge                        ;
+; Embedded Multiplier 9-bit elements ; N/A until Partition Merge                        ;
+; Total PLLs                         ; N/A until Partition Merge                        ;
++------------------------------------+--------------------------------------------------+
 
 
 +----------------------------------------------------------------------------------------------------------------------+
@@ -176,394 +158,6 @@ Parallel compilation was disabled, but you have multiple processors available. E
 ; Number detected on machine ; 24     ;
 ; Maximum allowed            ; 1      ;
 +----------------------------+--------+
-
-
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-; Analysis & Synthesis Source Files Read                                                                                                                                                            ;
-+-------------------------------------------+-----------------+------------------------------+--------------------------------------------------------------------------------------------+---------+
-; File Name with User-Entered Path          ; Used in Netlist ; File Type                    ; File Name with Absolute Path                                                               ; Library ;
-+-------------------------------------------+-----------------+------------------------------+--------------------------------------------------------------------------------------------+---------+
-; rtl/top.v                                 ; yes             ; User Verilog HDL File        ; /home/oliver/Projects/FPGA_Projects/CPU/hardware/rtl/top.v                                 ;         ;
-; rtl/seven_segment_display.v               ; yes             ; User Verilog HDL File        ; /home/oliver/Projects/FPGA_Projects/CPU/hardware/rtl/seven_segment_display.v               ;         ;
-; rtl/numericaldisplay.v                    ; yes             ; User Verilog HDL File        ; /home/oliver/Projects/FPGA_Projects/CPU/hardware/rtl/numericaldisplay.v                    ;         ;
-; rtl/sdram_system_up_clocks_0.v            ; yes             ; User Verilog HDL File        ; /home/oliver/Projects/FPGA_Projects/CPU/hardware/rtl/sdram_system_up_clocks_0.v            ;         ;
-; rtl/sdram_system_new_sdram_controller_0.v ; yes             ; User Verilog HDL File        ; /home/oliver/Projects/FPGA_Projects/CPU/hardware/rtl/sdram_system_new_sdram_controller_0.v ;         ;
-; rtl/rom.v                                 ; yes             ; User Verilog HDL File        ; /home/oliver/Projects/FPGA_Projects/CPU/hardware/rtl/rom.v                                 ;         ;
-; rtl/defines.v                             ; yes             ; User Verilog HDL File        ; /home/oliver/Projects/FPGA_Projects/CPU/hardware/rtl/defines.v                             ;         ;
-; rtl/fifo.v                                ; yes             ; User Verilog HDL File        ; /home/oliver/Projects/FPGA_Projects/CPU/hardware/rtl/fifo.v                                ;         ;
-; altpll.tdf                                ; yes             ; Megafunction                 ; /home/oliver/altera/13.0sp1/quartus/libraries/megafunctions/altpll.tdf                     ;         ;
-; aglobal130.inc                            ; yes             ; Megafunction                 ; /home/oliver/altera/13.0sp1/quartus/libraries/megafunctions/aglobal130.inc                 ;         ;
-; stratix_pll.inc                           ; yes             ; Megafunction                 ; /home/oliver/altera/13.0sp1/quartus/libraries/megafunctions/stratix_pll.inc                ;         ;
-; stratixii_pll.inc                         ; yes             ; Megafunction                 ; /home/oliver/altera/13.0sp1/quartus/libraries/megafunctions/stratixii_pll.inc              ;         ;
-; cycloneii_pll.inc                         ; yes             ; Megafunction                 ; /home/oliver/altera/13.0sp1/quartus/libraries/megafunctions/cycloneii_pll.inc              ;         ;
-; lpm_divide.tdf                            ; yes             ; Megafunction                 ; /home/oliver/altera/13.0sp1/quartus/libraries/megafunctions/lpm_divide.tdf                 ;         ;
-; abs_divider.inc                           ; yes             ; Megafunction                 ; /home/oliver/altera/13.0sp1/quartus/libraries/megafunctions/abs_divider.inc                ;         ;
-; sign_div_unsign.inc                       ; yes             ; Megafunction                 ; /home/oliver/altera/13.0sp1/quartus/libraries/megafunctions/sign_div_unsign.inc            ;         ;
-; db/lpm_divide_b0j.tdf                     ; yes             ; Auto-Generated Megafunction  ; /home/oliver/Projects/FPGA_Projects/CPU/hardware/db/lpm_divide_b0j.tdf                     ;         ;
-; db/sign_div_unsign_hoi.tdf                ; yes             ; Auto-Generated Megafunction  ; /home/oliver/Projects/FPGA_Projects/CPU/hardware/db/sign_div_unsign_hoi.tdf                ;         ;
-; db/alt_u_div_i2f.tdf                      ; yes             ; Auto-Generated Megafunction  ; /home/oliver/Projects/FPGA_Projects/CPU/hardware/db/alt_u_div_i2f.tdf                      ;         ;
-; db/add_sub_lkc.tdf                        ; yes             ; Auto-Generated Megafunction  ; /home/oliver/Projects/FPGA_Projects/CPU/hardware/db/add_sub_lkc.tdf                        ;         ;
-; db/add_sub_mkc.tdf                        ; yes             ; Auto-Generated Megafunction  ; /home/oliver/Projects/FPGA_Projects/CPU/hardware/db/add_sub_mkc.tdf                        ;         ;
-+-------------------------------------------+-----------------+------------------------------+--------------------------------------------------------------------------------------------+---------+
-
-
-+--------------------------------------------------------+
-; Analysis & Synthesis Resource Usage Summary            ;
-+---------------------------------------------+----------+
-; Resource                                    ; Usage    ;
-+---------------------------------------------+----------+
-; Estimated Total logic elements              ; 3,073    ;
-;                                             ;          ;
-; Total combinational functions               ; 2467     ;
-; Logic element usage by number of LUT inputs ;          ;
-;     -- 4 input functions                    ; 1613     ;
-;     -- 3 input functions                    ; 491      ;
-;     -- <=2 input functions                  ; 363      ;
-;                                             ;          ;
-; Logic elements by mode                      ;          ;
-;     -- normal mode                          ; 2121     ;
-;     -- arithmetic mode                      ; 346      ;
-;                                             ;          ;
-; Total registers                             ; 1328     ;
-;     -- Dedicated logic registers            ; 1328     ;
-;     -- I/O registers                        ; 0        ;
-;                                             ;          ;
-; I/O pins                                    ; 81       ;
-; Embedded Multiplier 9-bit elements          ; 0        ;
-; Total PLLs                                  ; 1        ;
-;     -- PLLs                                 ; 1        ;
-;                                             ;          ;
-; Maximum fan-out node                        ; CLOCK_50 ;
-; Maximum fan-out                             ; 1139     ;
-; Total fan-out                               ; 13202    ;
-; Average fan-out                             ; 3.41     ;
-+---------------------------------------------+----------+
-
-
-+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-; Analysis & Synthesis Resource Utilization by Entity                                                                                                                                                                                                                                                                                                                                                                                ;
-+---------------------------------------------------------------------------------------------------------------------------+-------------------+--------------+-------------+--------------+---------+-----------+------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------+
-; Compilation Hierarchy Node                                                                                                ; LC Combinationals ; LC Registers ; Memory Bits ; DSP Elements ; DSP 9x9 ; DSP 18x18 ; Pins ; Virtual Pins ; Full Hierarchy Name                                                                                                                                                         ; Library Name ;
-+---------------------------------------------------------------------------------------------------------------------------+-------------------+--------------+-------------+--------------+---------+-----------+------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------+
-; |top                                                                                                                      ; 2467 (1919)       ; 1328 (1070)  ; 0           ; 0            ; 0       ; 0         ; 81   ; 0            ; |top                                                                                                                                                                        ; work         ;
-;    |numericaldisplay:display|                                                                                             ; 204 (66)          ; 68 (68)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |top|numericaldisplay:display                                                                                                                                               ; work         ;
-;       |lpm_divide:divider|                                                                                                ; 110 (0)           ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |top|numericaldisplay:display|lpm_divide:divider                                                                                                                            ; work         ;
-;          |lpm_divide_b0j:auto_generated|                                                                                  ; 110 (0)           ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |top|numericaldisplay:display|lpm_divide:divider|lpm_divide_b0j:auto_generated                                                                                              ; work         ;
-;             |sign_div_unsign_hoi:divider|                                                                                 ; 110 (0)           ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |top|numericaldisplay:display|lpm_divide:divider|lpm_divide_b0j:auto_generated|sign_div_unsign_hoi:divider                                                                  ; work         ;
-;                |alt_u_div_i2f:divider|                                                                                    ; 110 (110)         ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |top|numericaldisplay:display|lpm_divide:divider|lpm_divide_b0j:auto_generated|sign_div_unsign_hoi:divider|alt_u_div_i2f:divider                                            ; work         ;
-;       |seven_segment_display:disp0|                                                                                       ; 7 (7)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |top|numericaldisplay:display|seven_segment_display:disp0                                                                                                                   ; work         ;
-;       |seven_segment_display:disp1|                                                                                       ; 7 (7)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |top|numericaldisplay:display|seven_segment_display:disp1                                                                                                                   ; work         ;
-;       |seven_segment_display:disp2|                                                                                       ; 7 (7)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |top|numericaldisplay:display|seven_segment_display:disp2                                                                                                                   ; work         ;
-;       |seven_segment_display:disp3|                                                                                       ; 7 (7)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |top|numericaldisplay:display|seven_segment_display:disp3                                                                                                                   ; work         ;
-;    |rom:program_rom|                                                                                                      ; 113 (113)         ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |top|rom:program_rom                                                                                                                                                        ; work         ;
-;    |sdram_system_new_sdram_controller_0:sdram_controller|                                                                 ; 231 (193)         ; 190 (124)    ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |top|sdram_system_new_sdram_controller_0:sdram_controller                                                                                                                   ; work         ;
-;       |sdram_system_new_sdram_controller_0_input_efifo_module:the_sdram_system_new_sdram_controller_0_input_efifo_module| ; 38 (38)           ; 66 (66)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |top|sdram_system_new_sdram_controller_0:sdram_controller|sdram_system_new_sdram_controller_0_input_efifo_module:the_sdram_system_new_sdram_controller_0_input_efifo_module ; work         ;
-;    |sdram_system_up_clocks_0:up_clocks_0|                                                                                 ; 0 (0)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |top|sdram_system_up_clocks_0:up_clocks_0                                                                                                                                   ; work         ;
-;       |altpll:DE_Clock_Generator_System|                                                                                  ; 0 (0)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |top|sdram_system_up_clocks_0:up_clocks_0|altpll:DE_Clock_Generator_System                                                                                                  ; work         ;
-+---------------------------------------------------------------------------------------------------------------------------+-------------------+--------------+-------------+--------------+---------+-----------+------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------+
-Note: For table entries with two numbers listed, the numbers in parentheses indicate the number of resources of the given type used by the specific entity alone. The numbers listed outside of parentheses indicate the total resources of the given type used by the specific entity and all of its sub-entities in the hierarchy.
-
-
-Encoding Type:  One-Hot
-+-------------------------------------------------------------------------------------------------------------------------------------------------------+
-; State Machine - |top|ram_read_state                                                                                                                   ;
-+---------------------------------------+---------------------------------------+----------------------------------+------------------------------------+
-; Name                                  ; ram_read_state.LATCH_RAM_READ_ADDRESS ; ram_read_state.WAIT_FOR_RAM_READ ; ram_read_state.START_READ_FROM_RAM ;
-+---------------------------------------+---------------------------------------+----------------------------------+------------------------------------+
-; ram_read_state.LATCH_RAM_READ_ADDRESS ; 0                                     ; 0                                ; 0                                  ;
-; ram_read_state.START_READ_FROM_RAM    ; 1                                     ; 0                                ; 1                                  ;
-; ram_read_state.WAIT_FOR_RAM_READ      ; 1                                     ; 1                                ; 0                                  ;
-+---------------------------------------+---------------------------------------+----------------------------------+------------------------------------+
-
-
-Encoding Type:  One-Hot
-+-----------------------------------------------------------------------------------------------------------------------------------------+
-; State Machine - |top|ram_write_state                                                                                                    ;
-+------------------------------------+------------------------------------+--------------------------------+------------------------------+
-; Name                               ; ram_write_state.WAIT_FOR_RAM_WRITE ; ram_write_state.RAM_WRITE_DONE ; ram_write_state.WRITE_TO_RAM ;
-+------------------------------------+------------------------------------+--------------------------------+------------------------------+
-; ram_write_state.WAIT_FOR_RAM_WRITE ; 0                                  ; 0                              ; 0                            ;
-; ram_write_state.WRITE_TO_RAM       ; 1                                  ; 0                              ; 1                            ;
-; ram_write_state.RAM_WRITE_DONE     ; 1                                  ; 1                              ; 0                            ;
-+------------------------------------+------------------------------------+--------------------------------+------------------------------+
-
-
-Encoding Type:  One-Hot
-+----------------------------------------------------------------------------------------------------------------------+
-; State Machine - |top|state                                                                                           ;
-+----------------+----------------+----------------+----------------+----------------+----------------+----------------+
-; Name           ; state.00000101 ; state.00000100 ; state.00000011 ; state.00000010 ; state.00000001 ; state.00000000 ;
-+----------------+----------------+----------------+----------------+----------------+----------------+----------------+
-; state.00000000 ; 0              ; 0              ; 0              ; 0              ; 0              ; 0              ;
-; state.00000001 ; 0              ; 0              ; 0              ; 0              ; 1              ; 1              ;
-; state.00000010 ; 0              ; 0              ; 0              ; 1              ; 0              ; 1              ;
-; state.00000011 ; 0              ; 0              ; 1              ; 0              ; 0              ; 1              ;
-; state.00000100 ; 0              ; 1              ; 0              ; 0              ; 0              ; 1              ;
-; state.00000101 ; 1              ; 0              ; 0              ; 0              ; 0              ; 1              ;
-+----------------+----------------+----------------+----------------+----------------+----------------+----------------+
-
-
-Encoding Type:  One-Hot
-+-----------------------------------------------------+
-; State Machine - |top|numericaldisplay:display|state ;
-+--------------------+--------------------------------+
-; Name               ; state.STATE_DIVIDE             ;
-+--------------------+--------------------------------+
-; state.STATE_WAIT   ; 0                              ;
-; state.STATE_DIVIDE ; 1                              ;
-+--------------------+--------------------------------+
-
-
-Encoding Type:  One-Hot
-+----------------------------------------------------------------------------------------------+
-; State Machine - |top|sdram_system_new_sdram_controller_0:sdram_controller|m_next             ;
-+------------------+------------------+------------------+------------------+------------------+
-; Name             ; m_next.010000000 ; m_next.000010000 ; m_next.000001000 ; m_next.000000001 ;
-+------------------+------------------+------------------+------------------+------------------+
-; m_next.000000001 ; 0                ; 0                ; 0                ; 0                ;
-; m_next.000001000 ; 0                ; 0                ; 1                ; 1                ;
-; m_next.000010000 ; 0                ; 1                ; 0                ; 1                ;
-; m_next.010000000 ; 1                ; 0                ; 0                ; 1                ;
-+------------------+------------------+------------------+------------------+------------------+
-
-
-Encoding Type:  One-Hot
-+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-; State Machine - |top|sdram_system_new_sdram_controller_0:sdram_controller|m_state                                                                                                                     ;
-+-------------------+-------------------+-------------------+-------------------+-------------------+-------------------+-------------------+-------------------+-------------------+-------------------+
-; Name              ; m_state.100000000 ; m_state.010000000 ; m_state.001000000 ; m_state.000100000 ; m_state.000010000 ; m_state.000001000 ; m_state.000000100 ; m_state.000000010 ; m_state.000000001 ;
-+-------------------+-------------------+-------------------+-------------------+-------------------+-------------------+-------------------+-------------------+-------------------+-------------------+
-; m_state.000000001 ; 0                 ; 0                 ; 0                 ; 0                 ; 0                 ; 0                 ; 0                 ; 0                 ; 0                 ;
-; m_state.000000010 ; 0                 ; 0                 ; 0                 ; 0                 ; 0                 ; 0                 ; 0                 ; 1                 ; 1                 ;
-; m_state.000000100 ; 0                 ; 0                 ; 0                 ; 0                 ; 0                 ; 0                 ; 1                 ; 0                 ; 1                 ;
-; m_state.000001000 ; 0                 ; 0                 ; 0                 ; 0                 ; 0                 ; 1                 ; 0                 ; 0                 ; 1                 ;
-; m_state.000010000 ; 0                 ; 0                 ; 0                 ; 0                 ; 1                 ; 0                 ; 0                 ; 0                 ; 1                 ;
-; m_state.000100000 ; 0                 ; 0                 ; 0                 ; 1                 ; 0                 ; 0                 ; 0                 ; 0                 ; 1                 ;
-; m_state.001000000 ; 0                 ; 0                 ; 1                 ; 0                 ; 0                 ; 0                 ; 0                 ; 0                 ; 1                 ;
-; m_state.010000000 ; 0                 ; 1                 ; 0                 ; 0                 ; 0                 ; 0                 ; 0                 ; 0                 ; 1                 ;
-; m_state.100000000 ; 1                 ; 0                 ; 0                 ; 0                 ; 0                 ; 0                 ; 0                 ; 0                 ; 1                 ;
-+-------------------+-------------------+-------------------+-------------------+-------------------+-------------------+-------------------+-------------------+-------------------+-------------------+
-
-
-Encoding Type:  One-Hot
-+----------------------------------------------------------------------------------+
-; State Machine - |top|sdram_system_new_sdram_controller_0:sdram_controller|i_next ;
-+------------+------------+------------+------------+------------------------------+
-; Name       ; i_next.111 ; i_next.101 ; i_next.010 ; i_next.000                   ;
-+------------+------------+------------+------------+------------------------------+
-; i_next.000 ; 0          ; 0          ; 0          ; 0                            ;
-; i_next.010 ; 0          ; 0          ; 1          ; 1                            ;
-; i_next.101 ; 0          ; 1          ; 0          ; 1                            ;
-; i_next.111 ; 1          ; 0          ; 0          ; 1                            ;
-+------------+------------+------------+------------+------------------------------+
-
-
-Encoding Type:  One-Hot
-+-------------------------------------------------------------------------------------------------+
-; State Machine - |top|sdram_system_new_sdram_controller_0:sdram_controller|i_state               ;
-+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
-; Name        ; i_state.111 ; i_state.101 ; i_state.011 ; i_state.010 ; i_state.001 ; i_state.000 ;
-+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
-; i_state.000 ; 0           ; 0           ; 0           ; 0           ; 0           ; 0           ;
-; i_state.001 ; 0           ; 0           ; 0           ; 0           ; 1           ; 1           ;
-; i_state.010 ; 0           ; 0           ; 0           ; 1           ; 0           ; 1           ;
-; i_state.011 ; 0           ; 0           ; 1           ; 0           ; 0           ; 1           ;
-; i_state.101 ; 0           ; 1           ; 0           ; 0           ; 0           ; 1           ;
-; i_state.111 ; 1           ; 0           ; 0           ; 0           ; 0           ; 1           ;
-+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
-
-
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-; Registers Removed During Synthesis                                                                                                                                                                                                                                                                                                                                                          ;
-+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-; Register name                                                                                                                                                                              ; Reason for Removal                                                                                                                                                                             ;
-+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-; sdram_system_new_sdram_controller_0:sdram_controller|i_addr[4,5]                                                                                                                           ; Stuck at VCC due to stuck port data_in                                                                                                                                                         ;
-; sdram_system_new_sdram_controller_0:sdram_controller|i_addr[0..3,6..10]                                                                                                                    ; Merged with sdram_system_new_sdram_controller_0:sdram_controller|i_addr[11]                                                                                                                    ;
-; sdram_controller_data_i[8,9,11..15]                                                                                                                                                        ; Merged with sdram_controller_data_i[10]                                                                                                                                                        ;
-; sdram_controller_be_n_i[1]                                                                                                                                                                 ; Merged with sdram_controller_be_n_i[0]                                                                                                                                                         ;
-; sdram_system_new_sdram_controller_0:sdram_controller|active_data[8,9,11..15]                                                                                                               ; Merged with sdram_system_new_sdram_controller_0:sdram_controller|active_data[10]                                                                                                               ;
-; sdram_system_new_sdram_controller_0:sdram_controller|active_dqm[1]                                                                                                                         ; Merged with sdram_system_new_sdram_controller_0:sdram_controller|active_dqm[0]                                                                                                                 ;
-; sdram_system_new_sdram_controller_0:sdram_controller|sdram_system_new_sdram_controller_0_input_efifo_module:the_sdram_system_new_sdram_controller_0_input_efifo_module|entry_0[8,9,11..15] ; Merged with sdram_system_new_sdram_controller_0:sdram_controller|sdram_system_new_sdram_controller_0_input_efifo_module:the_sdram_system_new_sdram_controller_0_input_efifo_module|entry_0[10] ;
-; sdram_system_new_sdram_controller_0:sdram_controller|sdram_system_new_sdram_controller_0_input_efifo_module:the_sdram_system_new_sdram_controller_0_input_efifo_module|entry_0[17]         ; Merged with sdram_system_new_sdram_controller_0:sdram_controller|sdram_system_new_sdram_controller_0_input_efifo_module:the_sdram_system_new_sdram_controller_0_input_efifo_module|entry_0[16] ;
-; sdram_system_new_sdram_controller_0:sdram_controller|sdram_system_new_sdram_controller_0_input_efifo_module:the_sdram_system_new_sdram_controller_0_input_efifo_module|entry_1[8,9,11..15] ; Merged with sdram_system_new_sdram_controller_0:sdram_controller|sdram_system_new_sdram_controller_0_input_efifo_module:the_sdram_system_new_sdram_controller_0_input_efifo_module|entry_1[10] ;
-; sdram_system_new_sdram_controller_0:sdram_controller|sdram_system_new_sdram_controller_0_input_efifo_module:the_sdram_system_new_sdram_controller_0_input_efifo_module|entry_1[17]         ; Merged with sdram_system_new_sdram_controller_0:sdram_controller|sdram_system_new_sdram_controller_0_input_efifo_module:the_sdram_system_new_sdram_controller_0_input_efifo_module|entry_1[16] ;
-; ram_read_state~7                                                                                                                                                                           ; Lost fanout                                                                                                                                                                                    ;
-; ram_read_state~8                                                                                                                                                                           ; Lost fanout                                                                                                                                                                                    ;
-; ram_read_state~9                                                                                                                                                                           ; Lost fanout                                                                                                                                                                                    ;
-; ram_read_state~10                                                                                                                                                                          ; Lost fanout                                                                                                                                                                                    ;
-; ram_read_state~11                                                                                                                                                                          ; Lost fanout                                                                                                                                                                                    ;
-; ram_read_state~12                                                                                                                                                                          ; Lost fanout                                                                                                                                                                                    ;
-; ram_write_state~4                                                                                                                                                                          ; Lost fanout                                                                                                                                                                                    ;
-; ram_write_state~5                                                                                                                                                                          ; Lost fanout                                                                                                                                                                                    ;
-; ram_write_state~6                                                                                                                                                                          ; Lost fanout                                                                                                                                                                                    ;
-; ram_write_state~7                                                                                                                                                                          ; Lost fanout                                                                                                                                                                                    ;
-; ram_write_state~8                                                                                                                                                                          ; Lost fanout                                                                                                                                                                                    ;
-; ram_write_state~9                                                                                                                                                                          ; Lost fanout                                                                                                                                                                                    ;
-; state~8                                                                                                                                                                                    ; Lost fanout                                                                                                                                                                                    ;
-; state~9                                                                                                                                                                                    ; Lost fanout                                                                                                                                                                                    ;
-; state~10                                                                                                                                                                                   ; Lost fanout                                                                                                                                                                                    ;
-; state~11                                                                                                                                                                                   ; Lost fanout                                                                                                                                                                                    ;
-; state~12                                                                                                                                                                                   ; Lost fanout                                                                                                                                                                                    ;
-; state~13                                                                                                                                                                                   ; Lost fanout                                                                                                                                                                                    ;
-; state~14                                                                                                                                                                                   ; Lost fanout                                                                                                                                                                                    ;
-; state~15                                                                                                                                                                                   ; Lost fanout                                                                                                                                                                                    ;
-; numericaldisplay:display|state~5                                                                                                                                                           ; Lost fanout                                                                                                                                                                                    ;
-; numericaldisplay:display|state~6                                                                                                                                                           ; Lost fanout                                                                                                                                                                                    ;
-; numericaldisplay:display|state~7                                                                                                                                                           ; Lost fanout                                                                                                                                                                                    ;
-; numericaldisplay:display|state~8                                                                                                                                                           ; Lost fanout                                                                                                                                                                                    ;
-; numericaldisplay:display|state~9                                                                                                                                                           ; Lost fanout                                                                                                                                                                                    ;
-; numericaldisplay:display|state~10                                                                                                                                                          ; Lost fanout                                                                                                                                                                                    ;
-; numericaldisplay:display|state~11                                                                                                                                                          ; Lost fanout                                                                                                                                                                                    ;
-; sdram_system_new_sdram_controller_0:sdram_controller|m_next~9                                                                                                                              ; Lost fanout                                                                                                                                                                                    ;
-; sdram_system_new_sdram_controller_0:sdram_controller|m_next~10                                                                                                                             ; Lost fanout                                                                                                                                                                                    ;
-; sdram_system_new_sdram_controller_0:sdram_controller|m_next~13                                                                                                                             ; Lost fanout                                                                                                                                                                                    ;
-; sdram_system_new_sdram_controller_0:sdram_controller|m_next~14                                                                                                                             ; Lost fanout                                                                                                                                                                                    ;
-; sdram_system_new_sdram_controller_0:sdram_controller|m_next~16                                                                                                                             ; Lost fanout                                                                                                                                                                                    ;
-; sdram_system_new_sdram_controller_0:sdram_controller|i_next~4                                                                                                                              ; Lost fanout                                                                                                                                                                                    ;
-; sdram_system_new_sdram_controller_0:sdram_controller|i_next~5                                                                                                                              ; Lost fanout                                                                                                                                                                                    ;
-; sdram_system_new_sdram_controller_0:sdram_controller|i_next~6                                                                                                                              ; Lost fanout                                                                                                                                                                                    ;
-; sdram_system_new_sdram_controller_0:sdram_controller|i_state~14                                                                                                                            ; Lost fanout                                                                                                                                                                                    ;
-; sdram_system_new_sdram_controller_0:sdram_controller|i_state~15                                                                                                                            ; Lost fanout                                                                                                                                                                                    ;
-; sdram_system_new_sdram_controller_0:sdram_controller|i_state~16                                                                                                                            ; Lost fanout                                                                                                                                                                                    ;
-; sdram_controller_data_i[10]                                                                                                                                                                ; Stuck at GND due to stuck port data_in                                                                                                                                                         ;
-; sdram_system_new_sdram_controller_0:sdram_controller|sdram_system_new_sdram_controller_0_input_efifo_module:the_sdram_system_new_sdram_controller_0_input_efifo_module|entry_0[10]         ; Stuck at GND due to stuck port data_in                                                                                                                                                         ;
-; sdram_system_new_sdram_controller_0:sdram_controller|sdram_system_new_sdram_controller_0_input_efifo_module:the_sdram_system_new_sdram_controller_0_input_efifo_module|entry_1[10]         ; Stuck at GND due to stuck port data_in                                                                                                                                                         ;
-; sdram_system_new_sdram_controller_0:sdram_controller|active_data[10]                                                                                                                       ; Stuck at GND due to stuck port data_in                                                                                                                                                         ;
-; sdram_system_new_sdram_controller_0:sdram_controller|m_data[8..15]                                                                                                                         ; Stuck at GND due to stuck port data_in                                                                                                                                                         ;
-; numericaldisplay:display|display_number_index[3]                                                                                                                                           ; Stuck at GND due to stuck port data_in                                                                                                                                                         ;
-; sdram_controller_be_n_i[0]                                                                                                                                                                 ; Stuck at GND due to stuck port data_in                                                                                                                                                         ;
-; sdram_system_new_sdram_controller_0:sdram_controller|sdram_system_new_sdram_controller_0_input_efifo_module:the_sdram_system_new_sdram_controller_0_input_efifo_module|entry_0[16]         ; Stuck at GND due to stuck port data_in                                                                                                                                                         ;
-; sdram_system_new_sdram_controller_0:sdram_controller|sdram_system_new_sdram_controller_0_input_efifo_module:the_sdram_system_new_sdram_controller_0_input_efifo_module|entry_1[16]         ; Stuck at GND due to stuck port data_in                                                                                                                                                         ;
-; sdram_system_new_sdram_controller_0:sdram_controller|active_dqm[0]                                                                                                                         ; Stuck at GND due to stuck port data_in                                                                                                                                                         ;
-; sdram_system_new_sdram_controller_0:sdram_controller|m_dqm[0,1]                                                                                                                            ; Stuck at GND due to stuck port data_in                                                                                                                                                         ;
-; sdram_system_new_sdram_controller_0:sdram_controller|m_count[2]                                                                                                                            ; Stuck at GND due to stuck port data_in                                                                                                                                                         ;
-; Total Number of Removed Registers = 101                                                                                                                                                    ;                                                                                                                                                                                                ;
-+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-
-
-+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-; Removed Registers Triggering Further Register Optimizations                                                                                                                                                                                   ;
-+-----------------------------+---------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-; Register name               ; Reason for Removal        ; Registers Removed due to This Register                                                                                                                                              ;
-+-----------------------------+---------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-; sdram_controller_data_i[10] ; Stuck at GND              ; sdram_system_new_sdram_controller_0:sdram_controller|sdram_system_new_sdram_controller_0_input_efifo_module:the_sdram_system_new_sdram_controller_0_input_efifo_module|entry_0[10], ;
-;                             ; due to stuck port data_in ; sdram_system_new_sdram_controller_0:sdram_controller|sdram_system_new_sdram_controller_0_input_efifo_module:the_sdram_system_new_sdram_controller_0_input_efifo_module|entry_1[10], ;
-;                             ;                           ; sdram_system_new_sdram_controller_0:sdram_controller|active_data[10],                                                                                                               ;
-;                             ;                           ; sdram_system_new_sdram_controller_0:sdram_controller|m_data[8],                                                                                                                     ;
-;                             ;                           ; sdram_system_new_sdram_controller_0:sdram_controller|m_data[9],                                                                                                                     ;
-;                             ;                           ; sdram_system_new_sdram_controller_0:sdram_controller|m_data[10],                                                                                                                    ;
-;                             ;                           ; sdram_system_new_sdram_controller_0:sdram_controller|m_data[11],                                                                                                                    ;
-;                             ;                           ; sdram_system_new_sdram_controller_0:sdram_controller|m_data[12],                                                                                                                    ;
-;                             ;                           ; sdram_system_new_sdram_controller_0:sdram_controller|m_data[13],                                                                                                                    ;
-;                             ;                           ; sdram_system_new_sdram_controller_0:sdram_controller|m_data[14],                                                                                                                    ;
-;                             ;                           ; sdram_system_new_sdram_controller_0:sdram_controller|m_data[15]                                                                                                                     ;
-; sdram_controller_be_n_i[0]  ; Stuck at GND              ; sdram_system_new_sdram_controller_0:sdram_controller|sdram_system_new_sdram_controller_0_input_efifo_module:the_sdram_system_new_sdram_controller_0_input_efifo_module|entry_0[16], ;
-;                             ; due to stuck port data_in ; sdram_system_new_sdram_controller_0:sdram_controller|sdram_system_new_sdram_controller_0_input_efifo_module:the_sdram_system_new_sdram_controller_0_input_efifo_module|entry_1[16], ;
-;                             ;                           ; sdram_system_new_sdram_controller_0:sdram_controller|active_dqm[0],                                                                                                                 ;
-;                             ;                           ; sdram_system_new_sdram_controller_0:sdram_controller|m_dqm[0],                                                                                                                      ;
-;                             ;                           ; sdram_system_new_sdram_controller_0:sdram_controller|m_dqm[1]                                                                                                                       ;
-+-----------------------------+---------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-
-
-+------------------------------------------------------+
-; General Register Statistics                          ;
-+----------------------------------------------+-------+
-; Statistic                                    ; Value ;
-+----------------------------------------------+-------+
-; Total registers                              ; 1328  ;
-; Number of registers using Synchronous Clear  ; 376   ;
-; Number of registers using Synchronous Load   ; 73    ;
-; Number of registers using Asynchronous Clear ; 93    ;
-; Number of registers using Asynchronous Load  ; 0     ;
-; Number of registers using Clock Enable       ; 1232  ;
-; Number of registers using Preset             ; 0     ;
-+----------------------------------------------+-------+
-
-
-+------------------------------------------------------------------------------------+
-; Inverted Register Statistics                                                       ;
-+--------------------------------------------------------------------------+---------+
-; Inverted Register                                                        ; Fan out ;
-+--------------------------------------------------------------------------+---------+
-; sdram_system_new_sdram_controller_0:sdram_controller|m_cmd[1]            ; 2       ;
-; sdram_system_new_sdram_controller_0:sdram_controller|m_cmd[3]            ; 1       ;
-; sdram_system_new_sdram_controller_0:sdram_controller|m_cmd[2]            ; 2       ;
-; sdram_system_new_sdram_controller_0:sdram_controller|m_cmd[0]            ; 2       ;
-; sdram_system_new_sdram_controller_0:sdram_controller|i_addr[11]          ; 10      ;
-; sdram_system_new_sdram_controller_0:sdram_controller|i_cmd[1]            ; 2       ;
-; sdram_system_new_sdram_controller_0:sdram_controller|i_cmd[3]            ; 2       ;
-; sdram_system_new_sdram_controller_0:sdram_controller|i_cmd[2]            ; 2       ;
-; sdram_system_new_sdram_controller_0:sdram_controller|i_cmd[0]            ; 2       ;
-; sdram_system_new_sdram_controller_0:sdram_controller|refresh_counter[12] ; 2       ;
-; sdram_system_new_sdram_controller_0:sdram_controller|refresh_counter[9]  ; 2       ;
-; sdram_system_new_sdram_controller_0:sdram_controller|refresh_counter[8]  ; 2       ;
-; sdram_system_new_sdram_controller_0:sdram_controller|refresh_counter[7]  ; 2       ;
-; sdram_system_new_sdram_controller_0:sdram_controller|refresh_counter[3]  ; 2       ;
-; Total number of inverted registers = 14                                  ;         ;
-+--------------------------------------------------------------------------+---------+
-
-
-+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-; Multiplexer Restructuring Statistics (Restructuring Performed)                                                                                                                         ;
-+--------------------+-----------+---------------+----------------------+------------------------+------------+--------------------------------------------------------------------------+
-; Multiplexer Inputs ; Bus Width ; Baseline Area ; Area if Restructured ; Saving if Restructured ; Registered ; Example Multiplexer Output                                               ;
-+--------------------+-----------+---------------+----------------------+------------------------+------------+--------------------------------------------------------------------------+
-; 4:1                ; 8 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; Yes        ; |top|operation[5]                                                        ;
-; 4:1                ; 32 bits   ; 64 LEs        ; 32 LEs               ; 32 LEs                 ; Yes        ; |top|operand1[28]                                                        ;
-; 4:1                ; 32 bits   ; 64 LEs        ; 32 LEs               ; 32 LEs                 ; Yes        ; |top|operand2[8]                                                         ;
-; 4:1                ; 32 bits   ; 64 LEs        ; 32 LEs               ; 32 LEs                 ; Yes        ; |top|number_to_show[18]                                                  ;
-; 4:1                ; 8 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; Yes        ; |top|ram_stabilization_counter[4]                                        ;
-; 4:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |top|sdram_system_new_sdram_controller_0:sdram_controller|m_dqm[1]       ;
-; 5:1                ; 32 bits   ; 96 LEs        ; 32 LEs               ; 64 LEs                 ; Yes        ; |top|program_rom_address[18]                                             ;
-; 5:1                ; 4 bits    ; 12 LEs        ; 4 LEs                ; 8 LEs                  ; Yes        ; |top|numericaldisplay:display|display_number_index[3]                    ;
-; 5:1                ; 3 bits    ; 9 LEs         ; 3 LEs                ; 6 LEs                  ; Yes        ; |top|numericaldisplay:display|number_to_show_reg[30]                     ;
-; 5:1                ; 16 bits   ; 48 LEs        ; 16 LEs               ; 32 LEs                 ; Yes        ; |top|numericaldisplay:display|display_numbers[0][2]                      ;
-; 5:1                ; 29 bits   ; 87 LEs        ; 58 LEs               ; 29 LEs                 ; Yes        ; |top|numericaldisplay:display|number_to_show_reg[20]                     ;
-; 5:1                ; 4 bits    ; 12 LEs        ; 4 LEs                ; 8 LEs                  ; Yes        ; |top|numericaldisplay:display|display_numbers_buffer[3][1]               ;
-; 5:1                ; 4 bits    ; 12 LEs        ; 4 LEs                ; 8 LEs                  ; Yes        ; |top|numericaldisplay:display|display_numbers_buffer[2][3]               ;
-; 5:1                ; 4 bits    ; 12 LEs        ; 4 LEs                ; 8 LEs                  ; Yes        ; |top|numericaldisplay:display|display_numbers_buffer[1][3]               ;
-; 5:1                ; 4 bits    ; 12 LEs        ; 4 LEs                ; 8 LEs                  ; Yes        ; |top|numericaldisplay:display|display_numbers_buffer[0][1]               ;
-; 5:1                ; 32 bits   ; 96 LEs        ; 32 LEs               ; 64 LEs                 ; Yes        ; |top|interrupt_vector_table[7][1]                                        ;
-; 5:1                ; 32 bits   ; 96 LEs        ; 32 LEs               ; 64 LEs                 ; Yes        ; |top|interrupt_vector_table[6][23]                                       ;
-; 5:1                ; 32 bits   ; 96 LEs        ; 32 LEs               ; 64 LEs                 ; Yes        ; |top|interrupt_vector_table[5][29]                                       ;
-; 5:1                ; 32 bits   ; 96 LEs        ; 32 LEs               ; 64 LEs                 ; Yes        ; |top|interrupt_vector_table[4][9]                                        ;
-; 5:1                ; 32 bits   ; 96 LEs        ; 32 LEs               ; 64 LEs                 ; Yes        ; |top|interrupt_vector_table[3][29]                                       ;
-; 5:1                ; 32 bits   ; 96 LEs        ; 32 LEs               ; 64 LEs                 ; Yes        ; |top|interrupt_vector_table[2][14]                                       ;
-; 5:1                ; 32 bits   ; 96 LEs        ; 32 LEs               ; 64 LEs                 ; Yes        ; |top|interrupt_vector_table[1][8]                                        ;
-; 5:1                ; 32 bits   ; 96 LEs        ; 32 LEs               ; 64 LEs                 ; Yes        ; |top|interrupt_vector_table[0][3]                                        ;
-; 4:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |top|sdram_system_new_sdram_controller_0:sdram_controller|m_bank[1]      ;
-; 5:1                ; 2 bits    ; 6 LEs         ; 4 LEs                ; 2 LEs                  ; Yes        ; |top|sdram_system_new_sdram_controller_0:sdram_controller|i_count[0]     ;
-; 6:1                ; 4 bits    ; 16 LEs        ; 8 LEs                ; 8 LEs                  ; Yes        ; |top|sdram_system_new_sdram_controller_0:sdram_controller|m_addr[8]      ;
-; 7:1                ; 2 bits    ; 8 LEs         ; 6 LEs                ; 2 LEs                  ; Yes        ; |top|sdram_system_new_sdram_controller_0:sdram_controller|m_addr[4]      ;
-; 7:1                ; 6 bits    ; 24 LEs        ; 18 LEs               ; 6 LEs                  ; Yes        ; |top|sdram_system_new_sdram_controller_0:sdram_controller|m_addr[2]      ;
-; 9:1                ; 8 bits    ; 48 LEs        ; 16 LEs               ; 32 LEs                 ; Yes        ; |top|sdram_controller_data_i[6]                                          ;
-; 7:1                ; 8 bits    ; 32 LEs        ; 8 LEs                ; 24 LEs                 ; Yes        ; |top|ram_read_data[6]                                                    ;
-; 12:1               ; 33 bits   ; 264 LEs       ; 0 LEs                ; 264 LEs                ; Yes        ; |top|sdram_system_new_sdram_controller_0:sdram_controller|active_data[7] ;
-; 263:1              ; 32 bits   ; 5600 LEs      ; 96 LEs               ; 5504 LEs               ; Yes        ; |top|registers[8][12]                                                    ;
-; 263:1              ; 32 bits   ; 5600 LEs      ; 96 LEs               ; 5504 LEs               ; Yes        ; |top|registers[7][1]                                                     ;
-; 263:1              ; 32 bits   ; 5600 LEs      ; 96 LEs               ; 5504 LEs               ; Yes        ; |top|registers[6][22]                                                    ;
-; 263:1              ; 32 bits   ; 5600 LEs      ; 96 LEs               ; 5504 LEs               ; Yes        ; |top|registers[5][21]                                                    ;
-; 263:1              ; 32 bits   ; 5600 LEs      ; 96 LEs               ; 5504 LEs               ; Yes        ; |top|registers[4][1]                                                     ;
-; 263:1              ; 32 bits   ; 5600 LEs      ; 96 LEs               ; 5504 LEs               ; Yes        ; |top|registers[3][29]                                                    ;
-; 263:1              ; 32 bits   ; 5600 LEs      ; 96 LEs               ; 5504 LEs               ; Yes        ; |top|registers[2][14]                                                    ;
-; 263:1              ; 30 bits   ; 5250 LEs      ; 120 LEs              ; 5130 LEs               ; Yes        ; |top|registers[1][31]                                                    ;
-; 264:1              ; 2 bits    ; 352 LEs       ; 10 LEs               ; 342 LEs                ; Yes        ; |top|registers[1][1]                                                     ;
-; 262:1              ; 8 bits    ; 1392 LEs      ; 8 LEs                ; 1384 LEs               ; Yes        ; |top|operand_byte_index[2]                                               ;
-; 270:1              ; 32 bits   ; 5760 LEs      ; 192 LEs              ; 5568 LEs               ; Yes        ; |top|registers[0][25]                                                    ;
-; 270:1              ; 22 bits   ; 3960 LEs      ; 88 LEs               ; 3872 LEs               ; Yes        ; |top|sdram_controller_address_i[0]                                       ;
-; 3:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; Yes        ; |top|sdram_system_new_sdram_controller_0:sdram_controller|m_data[14]     ;
-; 4:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; Yes        ; |top|sdram_system_new_sdram_controller_0:sdram_controller|m_data[5]      ;
-; 8:1                ; 32 bits   ; 160 LEs       ; 160 LEs              ; 0 LEs                  ; No         ; |top|Mux93                                                               ;
-; 5:1                ; 2 bits    ; 6 LEs         ; 6 LEs                ; 0 LEs                  ; No         ; |top|numericaldisplay:display|state                                      ;
-; 9:1                ; 32 bits   ; 192 LEs       ; 192 LEs              ; 0 LEs                  ; No         ; |top|Mux47                                                               ;
-; 9:1                ; 32 bits   ; 192 LEs       ; 192 LEs              ; 0 LEs                  ; No         ; |top|Mux18                                                               ;
-; 7:1                ; 2 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; No         ; |top|ram_write_state                                                     ;
-; 6:1                ; 2 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; No         ; |top|ram_read_state                                                      ;
-; 11:1               ; 2 bits    ; 14 LEs        ; 4 LEs                ; 10 LEs                 ; No         ; |top|sdram_system_new_sdram_controller_0:sdram_controller|Selector34     ;
-; 16:1               ; 2 bits    ; 20 LEs        ; 8 LEs                ; 12 LEs                 ; No         ; |top|sdram_system_new_sdram_controller_0:sdram_controller|Selector27     ;
-; 265:1              ; 2 bits    ; 352 LEs       ; 10 LEs               ; 342 LEs                ; No         ; |top|state                                                               ;
-+--------------------+-----------+---------------+----------------------+------------------------+------------+--------------------------------------------------------------------------+
 
 
 +-----------------------------------------------------------------------------+
@@ -1093,23 +687,6 @@ Note: In order to hide this table in the UI and the text report file, please set
 Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
 
 
-+-------------------------------------------------------------------------------------------------------+
-; altpll Parameter Settings by Entity Instance                                                          ;
-+-------------------------------+-----------------------------------------------------------------------+
-; Name                          ; Value                                                                 ;
-+-------------------------------+-----------------------------------------------------------------------+
-; Number of entity instances    ; 1                                                                     ;
-; Entity Instance               ; sdram_system_up_clocks_0:up_clocks_0|altpll:DE_Clock_Generator_System ;
-;     -- OPERATION_MODE         ; NORMAL                                                                ;
-;     -- PLL_TYPE               ; FAST                                                                  ;
-;     -- PRIMARY_CLOCK          ; INCLK0                                                                ;
-;     -- INCLK0_INPUT_FREQUENCY ; 20000                                                                 ;
-;     -- INCLK1_INPUT_FREQUENCY ; 0                                                                     ;
-;     -- VCO_MULTIPLY_BY        ; 0                                                                     ;
-;     -- VCO_DIVIDE_BY          ; 0                                                                     ;
-+-------------------------------+-----------------------------------------------------------------------+
-
-
 +----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 ; Port Connectivity Checks: "sdram_system_new_sdram_controller_0:sdram_controller|sdram_system_new_sdram_controller_0_input_efifo_module:the_sdram_system_new_sdram_controller_0_input_efifo_module" ;
 +--------------+--------+----------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -1152,20 +729,11 @@ Note: In order to hide this table in the UI and the text report file, please set
 
 
 +-------------------------------+
-; Elapsed Time Per Partition    ;
-+----------------+--------------+
-; Partition Name ; Elapsed Time ;
-+----------------+--------------+
-; Top            ; 00:00:16     ;
-+----------------+--------------+
-
-
-+-------------------------------+
 ; Analysis & Synthesis Messages ;
 +-------------------------------+
 Info: *******************************************************************
 Info: Running Quartus II 64-Bit Analysis & Synthesis
-    Info: Version 13.0.1 Build 232 06/12/2013 Service Pack 1 SJ Web Edition
+    Info: Version 13.0.1 Build 232 06/12/2013 Service Pack 1 SJ Full Version
     Info: Copyright (C) 1991-2013 Altera Corporation. All rights reserved.
     Info: Your use of Altera Corporation's design tools, logic functions 
     Info: and other software and tools, and its AMPP partner logic 
@@ -1179,8 +747,8 @@ Info: Running Quartus II 64-Bit Analysis & Synthesis
     Info: programming logic devices manufactured by Altera and sold by 
     Info: Altera or its authorized distributors.  Please refer to the 
     Info: applicable agreement for further details.
-    Info: Processing started: Sat Jul 18 00:07:02 2020
-Info: Command: quartus_map top
+    Info: Processing started: Thu Jul 23 16:51:38 2020
+Info: Command: quartus_map top --parallel=12
 Warning (20028): Parallel compilation is not licensed and has been disabled
 Info (12021): Found 1 design units, including 1 entities, in source file rtl/top.v
     Info (12023): Found entity 1: top
@@ -1203,7 +771,12 @@ Warning (10037): Verilog HDL or VHDL warning at sdram_system_new_sdram_controlle
 Warning (10037): Verilog HDL or VHDL warning at sdram_system_new_sdram_controller_0.v(336): conditional expression evaluates to a constant
 Warning (10037): Verilog HDL or VHDL warning at sdram_system_new_sdram_controller_0.v(680): conditional expression evaluates to a constant
 Info (12127): Elaborating entity "top" for the top level hierarchy
-Warning (10175): Verilog HDL warning at top.v(523): ignoring unsupported system task
+Warning (10175): Verilog HDL warning at top.v(528): ignoring unsupported system task
+Warning (10034): Output port "VGA_R" at top.v(23) has no driver
+Warning (10034): Output port "VGA_G" at top.v(24) has no driver
+Warning (10034): Output port "VGA_B" at top.v(25) has no driver
+Warning (10034): Output port "VGA_HS" at top.v(26) has no driver
+Warning (10034): Output port "VGA_VS" at top.v(28) has no driver
 Info (12128): Elaborating entity "fifo" for hierarchy "fifo:interrupt_fifo"
 Warning (10036): Verilog HDL or VHDL warning at fifo.v(14): object "items" assigned a value but never read
 Warning (10230): Verilog HDL assignment warning at fifo.v(18): truncated value with size 32 to match size of target (1)
@@ -1317,42 +890,14 @@ Warning (12020): Port "aclr" on the entity instantiation of "divider" is connect
 Warning (12020): Port "clken" on the entity instantiation of "divider" is connected to a signal of width 32. The formal width of the signal in the module is 1.  The extra bits will be ignored.
 Warning (12030): Port "remain" on the entity instantiation of "divider" is connected to a signal of width 32. The formal width of the signal in the module is 4.  The extra bits will be left dangling without any fan-out logic.
 Warning (12030): Port "clk" on the entity instantiation of "DE_Clock_Generator_System" is connected to a signal of width 3. The formal width of the signal in the module is 6.  The extra bits will be left dangling without any fan-out logic.
+Error (12239): There is no valid device available
 Warning (12241): 1 hierarchies have connectivity warnings - see the Connectivity Checks report folder
-Info (13000): Registers with preset signals will power-up high
-Info (13003): DEV_CLRn pin will set, and not reset, register with preset signal due to NOT Gate Push-Back
-Warning (13024): Output pins are stuck at VCC or GND
-    Warning (13410): Pin "DRAM_CKE" is stuck at VCC
-    Warning (13410): Pin "DRAM_LDQM" is stuck at GND
-    Warning (13410): Pin "DRAM_UDQM" is stuck at GND
-Info (17049): 38 registers lost all their fanouts during netlist optimizations.
 Info (144001): Generated suppressed messages file /home/oliver/Projects/FPGA_Projects/CPU/hardware/output_files/top.map.smsg
-Info (16010): Generating hard_block partition "hard_block:auto_generated_inst"
-    Info (16011): Adding 1 node(s), including 0 DDIO, 1 PLL, 0 transceiver and 0 LCELL
-Warning (21074): Design contains 13 input pin(s) that do not drive logic
-    Warning (15610): No output dependent on input pin "KEY[1]"
-    Warning (15610): No output dependent on input pin "KEY[2]"
-    Warning (15610): No output dependent on input pin "KEY[3]"
-    Warning (15610): No output dependent on input pin "SW[0]"
-    Warning (15610): No output dependent on input pin "SW[1]"
-    Warning (15610): No output dependent on input pin "SW[2]"
-    Warning (15610): No output dependent on input pin "SW[3]"
-    Warning (15610): No output dependent on input pin "SW[4]"
-    Warning (15610): No output dependent on input pin "SW[5]"
-    Warning (15610): No output dependent on input pin "SW[6]"
-    Warning (15610): No output dependent on input pin "SW[7]"
-    Warning (15610): No output dependent on input pin "SW[8]"
-    Warning (15610): No output dependent on input pin "SW[9]"
-Info (21057): Implemented 3296 device resources after synthesis - the final resource count might be different
-    Info (21058): Implemented 15 input pins
-    Info (21059): Implemented 50 output pins
-    Info (21060): Implemented 16 bidirectional pins
-    Info (21061): Implemented 3214 logic cells
-    Info (21065): Implemented 1 PLLs
-Info: Quartus II 64-Bit Analysis & Synthesis was successful. 0 errors, 44 warnings
-    Info: Peak virtual memory: 684 megabytes
-    Info: Processing ended: Sat Jul 18 00:07:21 2020
-    Info: Elapsed time: 00:00:19
-    Info: Total CPU time (on all processors): 00:00:19
+Error: Quartus II 64-Bit Analysis & Synthesis was unsuccessful. 1 error, 31 warnings
+    Error: Peak virtual memory: 608 megabytes
+    Error: Processing ended: Thu Jul 23 16:51:39 2020
+    Error: Elapsed time: 00:00:01
+    Error: Total CPU time (on all processors): 00:00:02
 
 
 +------------------------------------------+
