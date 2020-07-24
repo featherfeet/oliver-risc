@@ -1,0 +1,2 @@
+Unhacked: quartus_map top --64bit --parallel=12  22.38s user 1.95s system 98% cpu 24.654 total
+Hacked: quartus_map top --64bit --parallel=12  23.28s user 1.40s system 98% cpu 25.025 total
