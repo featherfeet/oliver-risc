@@ -28,11 +28,11 @@ module rom(input[31:0] address, output reg [7:0] output_byte, output done);
 			32'd11:
 				output_byte = 8'd0;
 			32'd12:
-				output_byte = 8'd10;
+				output_byte = 8'd32;
 			32'd13:
-				output_byte = 8'd0;
+				output_byte = 8'd161;
 			32'd14:
-				output_byte = 8'd0;
+				output_byte = 8'd7;
 			32'd15:
 				output_byte = 8'd0;
 			32'd16:

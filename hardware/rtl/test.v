@@ -27,8 +27,8 @@ module test();
     wire[3:0] VGA_R;
     wire[3:0] VGA_G;
     wire[3:0] VGA_B;
-    wire VGA_HSYNC;
-    wire VGA_VSYNC;
+    wire VGA_HS;
+    wire VGA_VS;
     wire VGA_PIXEL_CLOCK;
 
     altera_sdram_partner_module sdram_module (
@@ -62,8 +62,8 @@ module test();
         .VGA_R(VGA_R),
         .VGA_G(VGA_G),
         .VGA_B(VGA_B),
-        .VGA_HSYNC(VGA_HSYNC),
-        .VGA_VSYNC(VGA_VSYNC),
+        .VGA_HS(VGA_HS),
+        .VGA_VS(VGA_VS),
         .VGA_PIXEL_CLOCK(VGA_PIXEL_CLOCK)
     );
     initial begin
@@ -73,8 +73,8 @@ module test();
             dots_per_line,
             lines_per_frame,
             VGA_R, VGA_G, VGA_B,
-            VGA_HSYNC,
-            VGA_VSYNC,
+            VGA_HS,
+            VGA_VS,
             VGA_PIXEL_CLOCK
         );
         reset = 'b0;

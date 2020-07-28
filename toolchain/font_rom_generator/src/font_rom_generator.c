@@ -26,7 +26,7 @@ int main(int argc, char *argv[]) {
     fprintf(verilog_output_file, "module font_rom(input[7:0] character, input[$clog2(%d) - 1:0] character_cell_x, input[$clog2(%d) - 1:0] character_cell_y, output wire pixel_value);\n", CHARACTER_CELL_WIDTH_PIXELS, CHARACTER_CELL_HEIGHT_PIXELS);
     fprintf(verilog_output_file, "reg[0:127] font_storage[0:%d - 1];\n", NUMBER_OF_CHARACTERS);
     fprintf(verilog_output_file, "\tinitial begin\n");
-    fprintf(verilog_output_file, "\t\t$readmemh(\"rtl/font_rom.mem\", font_storage);\n");
+    fprintf(verilog_output_file, "\t\t$readmemh(\"rtl/gpu/font_rom.mem\", font_storage);\n");
     fprintf(verilog_output_file, "\tend\n");
     fprintf(verilog_output_file, "\tassign pixel_value = font_storage[character][character_cell_y * %d + character_cell_x];\n", CHARACTER_CELL_WIDTH_PIXELS);
     fprintf(verilog_output_file, "endmodule");

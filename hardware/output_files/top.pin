@@ -184,7 +184,7 @@ HEX2[6]                      : D3        : output : 3.3-V LVTTL       :         
 HEX3[6]                      : D4        : output : 3.3-V LVTTL       :         : 2         : Y              
 HEX3[1]                      : D5        : output : 3.3-V LVTTL       :         : 2         : Y              
 HEX3[2]                      : D6        : output : 3.3-V LVTTL       :         : 2         : Y              
-GND*                         : D7        :        :                   :         : 3         :                
+VGA_PIXEL_CLOCK              : D7        : output : 3.3-V LVTTL       :         : 3         : N              
 GND*                         : D8        :        :                   :         : 3         :                
 VGA_R[0]                     : D9        : output : 3.3-V LVTTL       :         : 3         : Y              
 GND                          : D10       : gnd    :                   :         :           :                
