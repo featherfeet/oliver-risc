@@ -71,6 +71,8 @@
     #include <stdio.h>
     #include <glib.h>
 
+    #define YYDEBUG 1
+
     // Forward declarations for functions provided by the Flex-generated lexer (or defined later in this program).
     int yylex(void);
     void yyerror(char *);
@@ -81,7 +83,9 @@
     ////////////////////////////////////////////////////////////////////////////////////////////////
     // Data structures for storing the Abstract Syntax Tree (AST) that the parsing step generates.
     ////////////////////////////////////////////////////////////////////////////////////////////////
-    
+
+    typedef struct ast_node ASTNode;
+
     // Different types of nodes (variable declaration, variable assignment, etc.) that can be in the parse tree.
     typedef enum {
         VARIABLE_DECLARATION,
@@ -97,8 +101,32 @@
     // Structure for storing variable assingments like "VAR x = 10;" TODO: Add pointer to an ASTNode for storing expressions so that the user can do things like "x := x + 5;" 
     typedef struct {
         char *name;
-        int value;
+        ASTNode *value;
     } VariableAssignmentNode;
+
+    // Structure for storing expressions like "var1 + 16 - var2".
+    typedef struct expression_node {
+        GSList *terms;
+    } ExpressionNode;
+
+    // Structure for storing terms in an expression.
+    typedef enum {
+        POSITIVE,
+        NEGATIVE
+    } TermSign;
+    typedef enum {
+        VARIABLE,
+        CONSTANT
+    } TermType;
+    typedef union {
+        char *variable_name;
+        int constant;
+    } TermValue;
+    typedef struct term_node {
+        TermSign sign;
+        TermType type;
+        TermValue value;
+    } TermNode;
 
     // Union that can hold any type of node.
     typedef union {
@@ -107,14 +135,14 @@
     } ASTNodeUnion;
 
     // Structure that stores nodes in the parse tree. Stores the type of each node so that the program knows which member of the .node union to access.
-    typedef struct {
+    typedef struct ast_node {
         ASTNodeType node_type;
         ASTNodeUnion node;
     } ASTNode;
 
     GSList *ast = NULL;
 
-#line 118 "parser.tab.c" /* yacc.c:337  */
+#line 146 "parser.tab.c" /* yacc.c:337  */
 # ifndef YY_NULLPTR
 #  if defined __cplusplus
 #   if 201103L <= __cplusplus
@@ -141,7 +169,7 @@
 # define YY_YY_PARSER_TAB_H_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
-# define YYDEBUG 0
+# define YYDEBUG 1
 #endif
 #if YYDEBUG
 extern int yydebug;
@@ -156,7 +184,10 @@ extern int yydebug;
     TOKEN_EQUALS = 259,
     TOKEN_IDENTIFIER = 260,
     TOKEN_CONSTANT = 261,
-    TOKEN_SEMICOLON = 262
+    TOKEN_SEMICOLON = 262,
+    TOKEN_COLON_EQUALS = 263,
+    TOKEN_PLUS = 264,
+    TOKEN_MINUS = 265
   };
 #endif
 
@@ -165,12 +196,15 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 57 "../src/parser.y" /* yacc.c:352  */
+#line 88 "../src/parser.y" /* yacc.c:352  */
 
     int intval;
     char *strval;
+    struct ast_node *node;
+    struct expression_node *expression_node;
+    struct term_node *term_node;
 
-#line 174 "parser.tab.c" /* yacc.c:352  */
+#line 208 "parser.tab.c" /* yacc.c:352  */
 };
 
 typedef union YYSTYPE YYSTYPE;
@@ -418,19 +452,19 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  2
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   7
+#define YYLAST   17
 
 /* YYNTOKENS -- Number of terminals.  */
-#define YYNTOKENS  8
+#define YYNTOKENS  11
 /* YYNNTS -- Number of nonterminals.  */
-#define YYNNTS  3
+#define YYNNTS  6
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  6
+#define YYNRULES  16
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  10
+#define YYNSTATES  24
 
 #define YYUNDEFTOK  2
-#define YYMAXUTOK   262
+#define YYMAXUTOK   265
 
 /* YYTRANSLATE(TOKEN-NUM) -- Symbol number corresponding to TOKEN-NUM
    as returned by yylex, with out-of-bounds checking.  */
@@ -467,14 +501,15 @@ static const yytype_uint8 yytranslate[] =
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     1,     2,     3,     4,
-       5,     6,     7
+       5,     6,     7,     8,     9,    10
 };
 
 #if YYDEBUG
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    64,    64,    65,    66,    69,    76
+       0,   103,   103,   104,   105,   108,   113,   120,   129,   138,
+     143,   148,   155,   162,   169,   176,   183
 };
 #endif
 
@@ -484,8 +519,10 @@ static const yytype_uint8 yyrline[] =
 static const char *const yytname[] =
 {
   "$end", "error", "$undefined", "TOKEN_VAR", "TOKEN_EQUALS",
-  "TOKEN_IDENTIFIER", "TOKEN_CONSTANT", "TOKEN_SEMICOLON", "$accept",
-  "statement", "variable_declaration", YY_NULLPTR
+  "TOKEN_IDENTIFIER", "TOKEN_CONSTANT", "TOKEN_SEMICOLON",
+  "TOKEN_COLON_EQUALS", "TOKEN_PLUS", "TOKEN_MINUS", "$accept",
+  "statement", "variable_declaration", "variable_assignment", "expression",
+  "term", YY_NULLPTR
 };
 #endif
 
@@ -494,14 +531,15 @@ static const char *const yytname[] =
    (internal) symbol number NUM (which must be that of a token).  */
 static const yytype_uint16 yytoknum[] =
 {
-       0,   256,   257,   258,   259,   260,   261,   262
+       0,   256,   257,   258,   259,   260,   261,   262,   263,   264,
+     265
 };
 # endif
 
-#define YYPACT_NINF -6
+#define YYPACT_NINF -5
 
 #define yypact_value_is_default(Yystate) \
-  (!!((Yystate) == (-6)))
+  (!!((Yystate) == (-5)))
 
 #define YYTABLE_NINF -1
 
@@ -512,7 +550,9 @@ static const yytype_uint16 yytoknum[] =
      STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-      -6,     0,    -6,    -4,    -6,    -5,     1,    -6,    -2,    -6
+      -5,     0,    -5,    -1,    -2,    -5,     7,     8,    12,    -5,
+      -5,    -5,    11,     3,    -5,    -5,    -5,    -4,     5,    -5,
+      -5,    -5,    -5,    -5
 };
 
   /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -520,19 +560,21 @@ static const yytype_int8 yypact[] =
      means the default is an error.  */
 static const yytype_uint8 yydefact[] =
 {
-       2,     0,     1,     0,     3,     0,     5,     4,     0,     6
+       2,     0,     1,     0,     0,     3,     0,     0,     6,     9,
+       4,     5,     0,     8,     7,    11,    12,     0,     0,    10,
+      13,    15,    14,    16
 };
 
   /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-      -6,    -6,    -6
+      -5,    -5,    -5,    -5,    -5,    -5
 };
 
   /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-      -1,     1,     5
+      -1,     1,     6,     7,    13,    19
 };
 
   /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -540,31 +582,37 @@ static const yytype_int8 yydefgoto[] =
      number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_uint8 yytable[] =
 {
-       2,     6,     7,     3,     9,     8,     0,     4
+       2,    20,    21,     3,     8,     4,     9,     5,    15,    16,
+      22,    23,    17,    18,    10,    11,    12,    14
 };
 
-static const yytype_int8 yycheck[] =
+static const yytype_uint8 yycheck[] =
 {
-       0,     5,     7,     3,     6,     4,    -1,     7
+       0,     5,     6,     3,     5,     5,     8,     7,     5,     6,
+       5,     6,     9,    10,     7,     7,     4,     6
 };
 
   /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
      symbol of state STATE-NUM.  */
 static const yytype_uint8 yystos[] =
 {
-       0,     9,     0,     3,     7,    10,     5,     7,     4,     6
+       0,    12,     0,     3,     5,     7,    13,    14,     5,     8,
+       7,     7,     4,    15,     6,     5,     6,     9,    10,    16,
+       5,     6,     5,     6
 };
 
   /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
 static const yytype_uint8 yyr1[] =
 {
-       0,     8,     9,     9,     9,    10,    10
+       0,    11,    12,    12,    12,    12,    13,    13,    14,    15,
+      15,    16,    16,    16,    16,    16,    16
 };
 
   /* YYR2[YYN] -- Number of symbols on the right hand side of rule YYN.  */
 static const yytype_uint8 yyr2[] =
 {
-       0,     2,     0,     2,     3,     2,     4
+       0,     2,     0,     2,     3,     3,     2,     4,     3,     0,
+       2,     1,     1,     2,     2,     2,     2
 };
 
 
@@ -1249,32 +1297,150 @@ yyreduce:
   YY_REDUCE_PRINT (yyn);
   switch (yyn)
     {
-        case 5:
-#line 69 "../src/parser.y" /* yacc.c:1652  */
+        case 4:
+#line 105 "../src/parser.y" /* yacc.c:1652  */
+    {
+            ast = g_slist_append(ast, (yyvsp[-1].node));
+         }
+#line 1306 "parser.tab.c" /* yacc.c:1652  */
+    break;
+
+  case 5:
+#line 108 "../src/parser.y" /* yacc.c:1652  */
+    {
+            ast = g_slist_append(ast, (yyvsp[-1].node));
+         }
+#line 1314 "parser.tab.c" /* yacc.c:1652  */
+    break;
+
+  case 6:
+#line 113 "../src/parser.y" /* yacc.c:1652  */
     {
                         ASTNode *node = g_new(ASTNode, 1);
                         node->node_type = VARIABLE_DECLARATION;
                         node->node.variable_declaration.name = (yyvsp[0].strval);
                         node->node.variable_declaration.value = 0;
-                        ast = g_slist_append(ast, node);
+                        (yyval.node) = node;
                     }
-#line 1262 "parser.tab.c" /* yacc.c:1652  */
+#line 1326 "parser.tab.c" /* yacc.c:1652  */
     break;
 
-  case 6:
-#line 76 "../src/parser.y" /* yacc.c:1652  */
+  case 7:
+#line 120 "../src/parser.y" /* yacc.c:1652  */
     {
                         ASTNode *node = g_new(ASTNode, 1);
                         node->node_type = VARIABLE_DECLARATION;
                         node->node.variable_declaration.name = (yyvsp[-2].strval);
                         node->node.variable_declaration.value = (yyvsp[0].intval);
-                        ast = g_slist_append(ast, node);
+                        (yyval.node) = node;
                     }
-#line 1274 "parser.tab.c" /* yacc.c:1652  */
+#line 1338 "parser.tab.c" /* yacc.c:1652  */
+    break;
+
+  case 8:
+#line 129 "../src/parser.y" /* yacc.c:1652  */
+    {
+                       ASTNode *node = g_new(ASTNode, 1);
+                       node->node_type = VARIABLE_ASSIGNMENT;
+                       node->node.variable_assignment.name = (yyvsp[-2].strval);
+                       node->node.variable_assignment.value = (yyvsp[0].expression_node);
+                       (yyval.node) = node;
+                   }
+#line 1350 "parser.tab.c" /* yacc.c:1652  */
+    break;
+
+  case 9:
+#line 138 "../src/parser.y" /* yacc.c:1652  */
+    {
+    ExpressionNode *expression_node = g_new(ExpressionNode, 1);
+    expression_node->terms = NULL;
+    (yyval.expression_node) = expression_node;
+}
+#line 1360 "parser.tab.c" /* yacc.c:1652  */
+    break;
+
+  case 10:
+#line 143 "../src/parser.y" /* yacc.c:1652  */
+    {
+              (yyvsp[-1].expression_node)->terms = g_slist_append((yyvsp[-1].expression_node)->terms, (yyvsp[0].term_node));
+          }
+#line 1368 "parser.tab.c" /* yacc.c:1652  */
+    break;
+
+  case 11:
+#line 148 "../src/parser.y" /* yacc.c:1652  */
+    {
+    TermNode *term_node = g_new(TermNode, 1);
+    term_node->sign = POSITIVE;
+    term_node->type = VARIABLE;
+    term_node->value.variable_name = (yyvsp[0].strval);
+    (yyval.term_node) = term_node;
+}
+#line 1380 "parser.tab.c" /* yacc.c:1652  */
+    break;
+
+  case 12:
+#line 155 "../src/parser.y" /* yacc.c:1652  */
+    {
+        TermNode *term_node = g_new(TermNode, 1);
+        term_node->sign = POSITIVE;
+        term_node->type = CONSTANT;
+        term_node->value.constant = (yyvsp[0].intval);
+        (yyval.term_node) = term_node;
+    }
+#line 1392 "parser.tab.c" /* yacc.c:1652  */
+    break;
+
+  case 13:
+#line 162 "../src/parser.y" /* yacc.c:1652  */
+    {
+        TermNode *term_node = g_new(TermNode, 1);
+        term_node->sign = POSITIVE;
+        term_node->type = VARIABLE;
+        term_node->value.variable_name = (yyvsp[0].strval);
+        (yyval.term_node) = term_node;
+    }
+#line 1404 "parser.tab.c" /* yacc.c:1652  */
+    break;
+
+  case 14:
+#line 169 "../src/parser.y" /* yacc.c:1652  */
+    {
+        TermNode *term_node = g_new(TermNode, 1);
+        term_node->sign = NEGATIVE;
+        term_node->type = VARIABLE;
+        term_node->value.variable_name = (yyvsp[0].strval);
+        (yyval.term_node) = term_node;
+    }
+#line 1416 "parser.tab.c" /* yacc.c:1652  */
+    break;
+
+  case 15:
+#line 176 "../src/parser.y" /* yacc.c:1652  */
+    {
+        TermNode *term_node = g_new(TermNode, 1);
+        term_node->sign = POSITIVE;
+        term_node->type = CONSTANT;
+        term_node->value.constant = (yyvsp[0].intval);
+        (yyval.term_node) = term_node;
+    }
+#line 1428 "parser.tab.c" /* yacc.c:1652  */
+    break;
+
+  case 16:
+#line 183 "../src/parser.y" /* yacc.c:1652  */
+    {
+        TermNode *term_node = g_new(TermNode, 1);
+        term_node->sign = NEGATIVE;
+        term_node->type = CONSTANT;
+        term_node->value.constant = (yyvsp[0].intval);
+        (yyval.term_node) = term_node;
+    }
+#line 1440 "parser.tab.c" /* yacc.c:1652  */
     break;
 
 
-#line 1278 "parser.tab.c" /* yacc.c:1652  */
+#line 1444 "parser.tab.c" /* yacc.c:1652  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1505,7 +1671,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 85 "../src/parser.y" /* yacc.c:1918  */
+#line 192 "../src/parser.y" /* yacc.c:1918  */
 
 
 // Forward declarations of functions in lexer.l that allow Flex to parse an in-memory buffer instead of a file handle.
@@ -1513,6 +1679,8 @@ void startParseString(const char *);
 void endParseString(void);
 
 int main(int argc, char *argv[]) {
+    yydebug = 1;
+
     // Buffer to store the input PL/0 code.
     char *input_buffer;
 

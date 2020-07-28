@@ -38,8 +38,20 @@
     return TOKEN_VAR;
 }
 
+"+" {
+    return TOKEN_PLUS;
+}
+
+"-" {
+    return TOKEN_MINUS;
+}
+
 "=" {
     return TOKEN_EQUALS;
+}
+
+":=" {
+    return TOKEN_COLON_EQUALS;
 }
 
 [a-zA-Z]+[a-zA-Z0-9_]* {

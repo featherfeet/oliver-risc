@@ -2,6 +2,8 @@
     #include <stdio.h>
     #include <glib.h>
 
+    #define YYDEBUG 1
+
     // Forward declarations for functions provided by the Flex-generated lexer (or defined later in this program).
     int yylex(void);
     void yyerror(char *);
@@ -12,7 +14,9 @@
     ////////////////////////////////////////////////////////////////////////////////////////////////
     // Data structures for storing the Abstract Syntax Tree (AST) that the parsing step generates.
     ////////////////////////////////////////////////////////////////////////////////////////////////
-    
+
+    typedef struct ast_node ASTNode;
+
     // Different types of nodes (variable declaration, variable assignment, etc.) that can be in the parse tree.
     typedef enum {
         VARIABLE_DECLARATION,
@@ -28,8 +32,32 @@
     // Structure for storing variable assingments like "VAR x = 10;" TODO: Add pointer to an ASTNode for storing expressions so that the user can do things like "x := x + 5;" 
     typedef struct {
         char *name;
-        int value;
+        ASTNode *value;
     } VariableAssignmentNode;
+
+    // Structure for storing expressions like "var1 + 16 - var2".
+    typedef struct expression_node {
+        GSList *terms;
+    } ExpressionNode;
+
+    // Structure for storing terms in an expression.
+    typedef enum {
+        POSITIVE,
+        NEGATIVE
+    } TermSign;
+    typedef enum {
+        VARIABLE,
+        CONSTANT
+    } TermType;
+    typedef union {
+        char *variable_name;
+        int constant;
+    } TermValue;
+    typedef struct term_node {
+        TermSign sign;
+        TermType type;
+        TermValue value;
+    } TermNode;
 
     // Union that can hold any type of node.
     typedef union {
@@ -38,7 +66,7 @@
     } ASTNodeUnion;
 
     // Structure that stores nodes in the parse tree. Stores the type of each node so that the program knows which member of the .node union to access.
-    typedef struct {
+    typedef struct ast_node {
         ASTNodeType node_type;
         ASTNodeUnion node;
     } ASTNode;
@@ -51,19 +79,35 @@
 %token TOKEN_IDENTIFIER
 %token TOKEN_CONSTANT
 %token TOKEN_SEMICOLON
+%token TOKEN_COLON_EQUALS
+%token TOKEN_PLUS
+%token TOKEN_MINUS
 
 %start statement
 
 %union {
     int intval;
     char *strval;
+    struct ast_node *node;
+    struct expression_node *expression_node;
+    struct term_node *term_node;
 }
+
+%type <node> variable_declaration;
+%type <node> variable_assignment;
+%type <expression_node> expression;
+%type <term_node> term;
 
 %%
 
 statement:
          | statement TOKEN_SEMICOLON
-         | statement variable_declaration TOKEN_SEMICOLON
+         | statement variable_declaration TOKEN_SEMICOLON {
+            ast = g_slist_append(ast, $2);
+         }
+         | statement variable_assignment TOKEN_SEMICOLON {
+            ast = g_slist_append(ast, $2);
+         }
 ;
 
 variable_declaration: TOKEN_VAR TOKEN_IDENTIFIER {
@@ -71,15 +115,78 @@ variable_declaration: TOKEN_VAR TOKEN_IDENTIFIER {
                         node->node_type = VARIABLE_DECLARATION;
                         node->node.variable_declaration.name = $<strval>2;
                         node->node.variable_declaration.value = 0;
-                        ast = g_slist_append(ast, node);
+                        $$ = node;
                     }
                     | TOKEN_VAR TOKEN_IDENTIFIER TOKEN_EQUALS TOKEN_CONSTANT {
                         ASTNode *node = g_new(ASTNode, 1);
                         node->node_type = VARIABLE_DECLARATION;
                         node->node.variable_declaration.name = $<strval>2;
                         node->node.variable_declaration.value = $<intval>4;
-                        ast = g_slist_append(ast, node);
+                        $$ = node;
                     }
+;
+
+variable_assignment: TOKEN_IDENTIFIER TOKEN_COLON_EQUALS expression {
+                       ASTNode *node = g_new(ASTNode, 1);
+                       node->node_type = VARIABLE_ASSIGNMENT;
+                       node->node.variable_assignment.name = $<strval>1;
+                       node->node.variable_assignment.value = $3;
+                       $$ = node;
+                   }
+;
+
+expression: {
+    ExpressionNode *expression_node = g_new(ExpressionNode, 1);
+    expression_node->terms = NULL;
+    $$ = expression_node;
+}
+          | expression term {
+              $1->terms = g_slist_append($1->terms, $2);
+          }
+;
+
+term: TOKEN_IDENTIFIER {
+    TermNode *term_node = g_new(TermNode, 1);
+    term_node->sign = POSITIVE;
+    term_node->type = VARIABLE;
+    term_node->value.variable_name = $<strval>1;
+    $$ = term_node;
+}
+    | TOKEN_CONSTANT {
+        TermNode *term_node = g_new(TermNode, 1);
+        term_node->sign = POSITIVE;
+        term_node->type = CONSTANT;
+        term_node->value.constant = $<intval>1;
+        $$ = term_node;
+    }
+    | TOKEN_PLUS TOKEN_IDENTIFIER {
+        TermNode *term_node = g_new(TermNode, 1);
+        term_node->sign = POSITIVE;
+        term_node->type = VARIABLE;
+        term_node->value.variable_name = $<strval>2;
+        $$ = term_node;
+    }
+    | TOKEN_MINUS TOKEN_IDENTIFIER {
+        TermNode *term_node = g_new(TermNode, 1);
+        term_node->sign = NEGATIVE;
+        term_node->type = VARIABLE;
+        term_node->value.variable_name = $<strval>2;
+        $$ = term_node;
+    }
+    | TOKEN_PLUS TOKEN_CONSTANT {
+        TermNode *term_node = g_new(TermNode, 1);
+        term_node->sign = POSITIVE;
+        term_node->type = CONSTANT;
+        term_node->value.constant = $<intval>2;
+        $$ = term_node;
+    }
+    | TOKEN_MINUS TOKEN_CONSTANT {
+        TermNode *term_node = g_new(TermNode, 1);
+        term_node->sign = NEGATIVE;
+        term_node->type = CONSTANT;
+        term_node->value.constant = $<intval>2;
+        $$ = term_node;
+    }
 ;
 
 %%
@@ -89,6 +196,8 @@ void startParseString(const char *);
 void endParseString(void);
 
 int main(int argc, char *argv[]) {
+    yydebug = 1;
+
     // Buffer to store the input PL/0 code.
     char *input_buffer;
 

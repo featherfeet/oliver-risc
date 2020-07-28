@@ -1,2 +1,1 @@
-VAR myvar_1 = 16;
-VAR myvar_2;
+myvar_1 := 87 + myvar_1 + myvar_2 - 19;

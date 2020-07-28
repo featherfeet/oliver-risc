@@ -38,7 +38,7 @@
 # define YY_YY_PARSER_TAB_H_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
-# define YYDEBUG 0
+# define YYDEBUG 1
 #endif
 #if YYDEBUG
 extern int yydebug;
@@ -53,7 +53,10 @@ extern int yydebug;
     TOKEN_EQUALS = 259,
     TOKEN_IDENTIFIER = 260,
     TOKEN_CONSTANT = 261,
-    TOKEN_SEMICOLON = 262
+    TOKEN_SEMICOLON = 262,
+    TOKEN_COLON_EQUALS = 263,
+    TOKEN_PLUS = 264,
+    TOKEN_MINUS = 265
   };
 #endif
 
@@ -62,12 +65,15 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 57 "../src/parser.y" /* yacc.c:1921  */
+#line 88 "../src/parser.y" /* yacc.c:1921  */
 
     int intval;
     char *strval;
+    struct ast_node *node;
+    struct expression_node *expression_node;
+    struct term_node *term_node;
 
-#line 71 "parser.tab.h" /* yacc.c:1921  */
+#line 77 "parser.tab.h" /* yacc.c:1921  */
 };
 
 typedef union YYSTYPE YYSTYPE;
