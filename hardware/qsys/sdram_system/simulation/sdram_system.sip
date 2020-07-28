@@ -21,6 +21,6 @@ set_global_assignment -library "lib_sdram_system" -name MISC_FILE [file join $::
 set_global_assignment -library "lib_sdram_system" -name MISC_FILE [file join $::quartus(sip_path) "submodules/altera_merlin_slave_translator.sv"]
 set_global_assignment -library "lib_sdram_system" -name MISC_FILE [file join $::quartus(sip_path) "submodules/altera_merlin_master_translator.sv"]
 set_global_assignment -library "lib_sdram_system" -name MISC_FILE [file join $::quartus(sip_path) "submodules/sdram_system_bridge_0.v"]
-set_global_assignment -library "lib_sdram_system" -name MISC_FILE [file join $::quartus(sip_path) "submodules/sdram_system_new_sdram_controller_0.v"]
 set_global_assignment -library "lib_sdram_system" -name MISC_FILE [file join $::quartus(sip_path) "submodules/sdram_system_new_sdram_controller_0_test_component.v"]
+set_global_assignment -library "lib_sdram_system" -name MISC_FILE [file join $::quartus(sip_path) "submodules/sdram_system_new_sdram_controller_0.v"]
 set_global_assignment -library "lib_sdram_system" -name MISC_FILE [file join $::quartus(sip_path) "submodules/sdram_system_up_clocks_0.v"]

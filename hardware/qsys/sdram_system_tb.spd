@@ -65,11 +65,11 @@
    type="VERILOG"
    library="bridge_0" />
  <file
-   path="sdram_system/testbench/sdram_system_tb/simulation/submodules/sdram_system_new_sdram_controller_0.v"
+   path="sdram_system/testbench/sdram_system_tb/simulation/submodules/sdram_system_new_sdram_controller_0_test_component.v"
    type="VERILOG"
    library="new_sdram_controller_0" />
  <file
-   path="sdram_system/testbench/sdram_system_tb/simulation/submodules/sdram_system_new_sdram_controller_0_test_component.v"
+   path="sdram_system/testbench/sdram_system_tb/simulation/submodules/sdram_system_new_sdram_controller_0.v"
    type="VERILOG"
    library="new_sdram_controller_0" />
  <file

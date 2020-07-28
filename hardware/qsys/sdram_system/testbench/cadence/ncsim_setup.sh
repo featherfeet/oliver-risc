@@ -1,5 +1,5 @@
 
-# (C) 2001-2019 Altera Corporation. All rights reserved.
+# (C) 2001-2020 Altera Corporation. All rights reserved.
 # Your use of Altera Corporation's design tools, logic functions and 
 # other software and tools, and its AMPP partner logic functions, and 
 # any output files any of the foregoing (including device programming 
@@ -12,7 +12,7 @@
 # or its authorized distributors. Please refer to the applicable 
 # agreement for further details.
 
-# ACDS 13.0sp1 232 linux 2019.04.04.00:59:10
+# ACDS 13.0sp1 232 linux 2020.07.27.22:31:21
 
 # ----------------------------------------
 # ncsim - auto-generated simulation script
@@ -103,8 +103,8 @@ if [ $SKIP_COM -eq 0 ]; then
   ncvlog -sv "$QSYS_SIMDIR/sdram_system_tb/simulation/submodules/altera_merlin_slave_translator.sv"                    -work new_sdram_controller_0_s1_translator                                         -cdslib ./cds_libs/new_sdram_controller_0_s1_translator.cds.lib                                        
   ncvlog -sv "$QSYS_SIMDIR/sdram_system_tb/simulation/submodules/altera_merlin_master_translator.sv"                   -work bridge_0_avalon_master_translator                                            -cdslib ./cds_libs/bridge_0_avalon_master_translator.cds.lib                                           
   ncvlog     "$QSYS_SIMDIR/sdram_system_tb/simulation/submodules/sdram_system_bridge_0.v"                              -work bridge_0                                                                     -cdslib ./cds_libs/bridge_0.cds.lib                                                                    
-  ncvlog     "$QSYS_SIMDIR/sdram_system_tb/simulation/submodules/sdram_system_new_sdram_controller_0.v"                -work new_sdram_controller_0                                                       -cdslib ./cds_libs/new_sdram_controller_0.cds.lib                                                      
   ncvlog     "$QSYS_SIMDIR/sdram_system_tb/simulation/submodules/sdram_system_new_sdram_controller_0_test_component.v" -work new_sdram_controller_0                                                       -cdslib ./cds_libs/new_sdram_controller_0.cds.lib                                                      
+  ncvlog     "$QSYS_SIMDIR/sdram_system_tb/simulation/submodules/sdram_system_new_sdram_controller_0.v"                -work new_sdram_controller_0                                                       -cdslib ./cds_libs/new_sdram_controller_0.cds.lib                                                      
   ncvlog     "$QSYS_SIMDIR/sdram_system_tb/simulation/submodules/sdram_system_up_clocks_0.v"                           -work up_clocks_0                                                                  -cdslib ./cds_libs/up_clocks_0.cds.lib                                                                 
   ncvlog     "$QSYS_SIMDIR/sdram_system_tb/simulation/submodules/altera_sdram_partner_module.v"                        -work new_sdram_controller_0_my_partner                                            -cdslib ./cds_libs/new_sdram_controller_0_my_partner.cds.lib                                           
   ncvlog -sv "$QSYS_SIMDIR/sdram_system_tb/simulation/submodules/verbosity_pkg.sv"                                     -work sdram_system_inst_avalon_bridge_bfm                                          -cdslib ./cds_libs/sdram_system_inst_avalon_bridge_bfm.cds.lib                                         

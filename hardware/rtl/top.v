@@ -24,7 +24,8 @@ module top(
     output wire [3:0] VGA_G,
     output wire [3:0] VGA_B,
     output wire VGA_HS,
-    output wire VGA_VS
+    output wire VGA_VS,
+    output wire VGA_PIXEL_CLOCK
 );
 
 integer i; // Counter used for synthesized for loops.
@@ -56,6 +57,16 @@ fifo interrupt_fifo(.CLOCK_50(CLOCK_50),
                     .full()
 );
 
+// Integrated GPU.
+gpu integrated_graphics(.CLOCK_50(CLOCK_50),
+                        .reset(~KEY[0]),
+                        .VGA_CLK(VGA_PIXEL_CLOCK),
+                        .VGA_R(VGA_R),
+                        .VGA_G(VGA_G),
+                        .VGA_B(VGA_B),
+                        .VGA_HS(VGA_HS),
+                        .VGA_VS(VGA_VS));
+
 // ROM to read the program from.
 reg [31:0] program_rom_address;
 wire [7:0] program_rom_byte;
@@ -72,7 +83,8 @@ sdram_system_up_clocks_0 up_clocks_0 (
     .reset       (~KEY[0]),                       // clk_in_primary_reset.reset
     .sys_clk     (),                              // sys_clk.clk
     .sys_reset_n (),                              // sys_clk_reset.reset_n
-    .SDRAM_CLK   (DRAM_CLK)                       // sdram_clk.clk
+    .SDRAM_CLK   (DRAM_CLK),                      // sdram_clk.clk
+    .VGA_CLK     (VGA_PIXEL_CLOCK)
 );
 
 // SDRAM controller.

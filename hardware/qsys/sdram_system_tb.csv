@@ -1,12 +1,12 @@
-# system info sdram_system_tb on 2019.04.04.00:59:08
+# system info sdram_system_tb on 2020.07.27.22:31:20
 system_info:
 name,value
 DEVICE,EP2C20F484C7
 DEVICE_FAMILY,Cyclone II
-GENERATION_ID,1554364744
+GENERATION_ID,1595914276
 #
 #
-# Files generated for sdram_system_tb on 2019.04.04.00:59:08
+# Files generated for sdram_system_tb on 2020.07.27.22:31:20
 files:
 filepath,kind,attributes,module,is_top
 sdram_system/testbench/sdram_system_tb/simulation/sdram_system_tb.v,VERILOG,,sdram_system_tb,true
@@ -19,8 +19,8 @@ sdram_system/testbench/sdram_system_tb/simulation/submodules/verbosity_pkg.sv,SY
 sdram_system/testbench/sdram_system_tb/simulation/submodules/altera_conduit_bfm.sv,SYSTEM_VERILOG,,altera_conduit_bfm,false
 sdram_system/testbench/sdram_system_tb/simulation/submodules/altera_sdram_partner_module.v,VERILOG,,altera_sdram_partner_module,false
 sdram_system/testbench/sdram_system_tb/simulation/submodules/sdram_system_up_clocks_0.v,VERILOG,,sdram_system_up_clocks_0,false
-sdram_system/testbench/sdram_system_tb/simulation/submodules/sdram_system_new_sdram_controller_0.v,VERILOG,,sdram_system_new_sdram_controller_0,false
 sdram_system/testbench/sdram_system_tb/simulation/submodules/sdram_system_new_sdram_controller_0_test_component.v,VERILOG,,sdram_system_new_sdram_controller_0,false
+sdram_system/testbench/sdram_system_tb/simulation/submodules/sdram_system_new_sdram_controller_0.v,VERILOG,,sdram_system_new_sdram_controller_0,false
 sdram_system/testbench/sdram_system_tb/simulation/submodules/sdram_system_bridge_0.v,VERILOG,,sdram_system_bridge_0,false
 sdram_system/testbench/sdram_system_tb/simulation/submodules/altera_merlin_master_translator.sv,SYSTEM_VERILOG,,altera_merlin_master_translator,false
 sdram_system/testbench/sdram_system_tb/simulation/submodules/altera_merlin_slave_translator.sv,SYSTEM_VERILOG,,altera_merlin_slave_translator,false

@@ -1,0 +1,3 @@
+[submodule "hardware/verilog-vga-simulator"]
+	path = hardware/verilog-vga-simulator
+	url = https://github.com/apparentlymart/verilog-vga-simulator

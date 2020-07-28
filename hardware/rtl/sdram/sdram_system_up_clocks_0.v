@@ -54,6 +54,7 @@ module sdram_system_up_clocks_0 (
 
 	// Outputs
 	SDRAM_CLK,
+	VGA_CLK,
 	sys_clk,
 	sys_reset_n
 );
@@ -74,6 +75,7 @@ input						reset;
 
 // Outputs
 output					SDRAM_CLK;
+output					VGA_CLK;
 output					sys_clk;
 output					sys_reset_n;
 
@@ -94,7 +96,6 @@ wire			[ 2: 0]	sys_mem_clks;
 wire						clk_locked;
 
 wire						video_in_clk;
-wire						VGA_CLK;
 
 // Internal Registers
 

@@ -1,5 +1,5 @@
 
-# (C) 2001-2019 Altera Corporation. All rights reserved.
+# (C) 2001-2020 Altera Corporation. All rights reserved.
 # Your use of Altera Corporation's design tools, logic functions and 
 # other software and tools, and its AMPP partner logic functions, and 
 # any output files any of the foregoing (including device programming 
@@ -12,7 +12,7 @@
 # or its authorized distributors. Please refer to the applicable 
 # agreement for further details.
 
-# ACDS 13.0sp1 232 linux 2019.04.04.00:59:09
+# ACDS 13.0sp1 232 linux 2020.07.27.22:31:21
 
 # ----------------------------------------
 # Auto-generated simulation script
@@ -138,8 +138,8 @@ alias com {
   vlog -sv "$QSYS_SIMDIR/sdram_system_tb/simulation/submodules/altera_merlin_slave_translator.sv"                                                  -work new_sdram_controller_0_s1_translator                                        
   vlog -sv "$QSYS_SIMDIR/sdram_system_tb/simulation/submodules/altera_merlin_master_translator.sv"                                                 -work bridge_0_avalon_master_translator                                           
   vlog     "$QSYS_SIMDIR/sdram_system_tb/simulation/submodules/sdram_system_bridge_0.v"                                                            -work bridge_0                                                                    
-  vlog     "$QSYS_SIMDIR/sdram_system_tb/simulation/submodules/sdram_system_new_sdram_controller_0.v"                                              -work new_sdram_controller_0                                                      
   vlog     "$QSYS_SIMDIR/sdram_system_tb/simulation/submodules/sdram_system_new_sdram_controller_0_test_component.v"                               -work new_sdram_controller_0                                                      
+  vlog     "$QSYS_SIMDIR/sdram_system_tb/simulation/submodules/sdram_system_new_sdram_controller_0.v"                                              -work new_sdram_controller_0                                                      
   vlog     "$QSYS_SIMDIR/sdram_system_tb/simulation/submodules/sdram_system_up_clocks_0.v"                                                         -work up_clocks_0                                                                 
   vlog     "$QSYS_SIMDIR/sdram_system_tb/simulation/submodules/altera_sdram_partner_module.v"                                                      -work new_sdram_controller_0_my_partner                                           
   vlog -sv "$QSYS_SIMDIR/sdram_system_tb/simulation/submodules/altera_conduit_bfm.sv"                                -L altera_avalon_vip_pkgs_lib -work sdram_system_inst_avalon_bridge_bfm                                         

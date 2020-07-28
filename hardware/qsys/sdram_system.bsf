@@ -40,7 +40,7 @@ applicable agreement for further details.
 	(port
 		(pt 0 320)
 		(input)
-		(text "avalon_bridge_address[22..0]" (rect 0 0 118 12)(font "Arial" (font_size 8)))
+		(text "avalon_bridge_address[22..0]" (rect 0 0 117 12)(font "Arial" (font_size 8)))
 		(text "avalon_bridge_address[22..0]" (rect 4 309 172 320)(font "Arial" (font_size 8)))
 		(line (pt 0 320)(pt 176 320)(line_width 3))
 	)
