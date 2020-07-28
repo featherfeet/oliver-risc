@@ -130,6 +130,11 @@
     return TOKEN_IDENTIFIER;
 }
 
+\[0x[A-Fa-f0-9_]+\] {
+    yylval.strval = g_strdup(yytext);
+    return TOKEN_MEMORY_ADDRESS;
+}
+
 ":" {
     return TOKEN_COLON;
 }

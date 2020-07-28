@@ -77,7 +77,7 @@ rom program_rom (
     .done(program_rom_done)
 );
 
-// Clock generator for SDRAM.
+// Clock generator for SDRAM and VGA.
 sdram_system_up_clocks_0 up_clocks_0 (
     .CLOCK_50    (CLOCK_50),                      // clk_in_primary.clk
     .reset       (~KEY[0]),                       // clk_in_primary_reset.reset
@@ -216,6 +216,7 @@ task read_from_ram;
         endcase
     end
 endtask
+
 // Counter used to wait for the RAM to finish stabilizing.
 reg[7:0] ram_stabilization_counter;
 // Counter used to read the 4-byte operands.

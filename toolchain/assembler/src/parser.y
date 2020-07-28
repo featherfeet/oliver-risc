@@ -66,6 +66,8 @@
             case OPERATION_JMPG:
                 g_free(instruction->operand1.operand_address);
                 break;
+            default:
+                break;
         }
 
         g_free(instruction);
@@ -97,6 +99,7 @@
 %token TOKEN_ISR
 %token TOKEN_INT
 %token TOKEN_ENDINT
+%token TOKEN_MEMORY_ADDRESS
 
 %start line
 
@@ -170,7 +173,18 @@ instruction: TOKEN_NOP {
         instructions_table = g_slist_append(instructions_table, instruction);
     }
     | TOKEN_LOAD TOKEN_IDENTIFIER TOKEN_REGISTER {
-        printf("Instruction: LOAD %s,%s\n", $<strval>2, $<strval>3);
+        printf("Instruction: LOAD (variable) %s,%s\n", $<strval>2, $<strval>3);
+
+        Instruction *instruction = g_new(Instruction, 1);
+        instruction->operation = OPERATION_LOAD;
+        instruction->operand1.operand_address = $<strval>2;
+        instruction->operand2.operand_register = stringToRegister($<strval>3);
+        instructions_table = g_slist_append(instructions_table, instruction);
+
+        g_free($<strval>3);
+    }
+    | TOKEN_LOAD TOKEN_MEMORY_ADDRESS TOKEN_REGISTER {
+        printf("Instruction: LOAD (address) %s,%s\n", $<strval>2, $<strval>3);
 
         Instruction *instruction = g_new(Instruction, 1);
         instruction->operation = OPERATION_LOAD;
@@ -181,7 +195,18 @@ instruction: TOKEN_NOP {
         g_free($<strval>3);
     }
     | TOKEN_STORE TOKEN_REGISTER TOKEN_IDENTIFIER {
-        printf("Instruction: STORE %s,%s\n", $<strval>2, $<strval>3);
+        printf("Instruction: STORE (variable) %s,%s\n", $<strval>2, $<strval>3);
+
+        Instruction *instruction = g_new(Instruction, 1);
+        instruction->operation = OPERATION_STORE;
+        instruction->operand1.operand_register = stringToRegister($<strval>2);
+        instruction->operand2.operand_address = $<strval>3;
+        instructions_table = g_slist_append(instructions_table, instruction);
+
+        g_free($<strval>2);
+    }
+    | TOKEN_STORE TOKEN_REGISTER TOKEN_MEMORY_ADDRESS {
+        printf("Instruction: STORE (address) %s,%s\n", $<strval>2, $<strval>3);
 
         Instruction *instruction = g_new(Instruction, 1);
         instruction->operation = OPERATION_STORE;
@@ -456,6 +481,8 @@ int main(int argc, char *argv[]) {
             case OPERATION_INT:
                 operand1_is_register = TRUE;
                 break;
+            default:
+                break;
         }
         // Based on what the operands to this specific operation are supposed to be (registers or addresses), copy operands over to the final binary output.
         if (operand1_is_register) {
@@ -467,15 +494,35 @@ int main(int argc, char *argv[]) {
             memcpy(instructions_binary + INSTRUCTION_SIZE * i + OPERATION_SIZE, binary_instruction_index, OPERAND_SIZE);
         }
         else if (operand1_is_address) {
-            Variable *variable = g_hash_table_lookup(variables_table, instruction->operand1.operand_address);
-            memcpy(instructions_binary + INSTRUCTION_SIZE * i + OPERATION_SIZE, variable->address, OPERAND_SIZE);
+            char *address_string = instruction->operand1.operand_address;
+            // Two kinds of addresses are supported. Addresses can be variable names from the .data section like `var5_second` OR hex memory addresses like `[0xFF]`.
+            // Addresses that start with [ must be hex memory addresses.
+            if (address_string[0] == '[') {
+                OPERAND_C_TYPE address = strtol(address_string + 1, NULL, 16);
+                memcpy(instructions_binary + INSTRUCTION_SIZE * i + OPERATION_SIZE, &address, OPERAND_SIZE);
+            }
+            // Other addresses are variables.
+            else {
+                Variable *variable = g_hash_table_lookup(variables_table, instruction->operand1.operand_address);
+                memcpy(instructions_binary + INSTRUCTION_SIZE * i + OPERATION_SIZE, variable->address, OPERAND_SIZE);
+            }
         }
         if (operand2_is_register) {
             memcpy(instructions_binary + INSTRUCTION_SIZE * i + OPERATION_SIZE + OPERAND_SIZE, &instruction->operand2.operand_register, OPERAND_SIZE);
         }
         else if (operand2_is_address) {
-            Variable *variable = g_hash_table_lookup(variables_table, instruction->operand2.operand_address);
-            memcpy(instructions_binary + INSTRUCTION_SIZE * i + OPERATION_SIZE + OPERAND_SIZE, variable->address, OPERAND_SIZE);
+            char *address_string = instruction->operand2.operand_address;
+            // Two kinds of addresses are supported. Addresses can be variable names from the .data section like `var5_second` OR hex memory addresses like `[0xFF]`.
+            // Addresses that start with [ must be hex memory addresses.
+            if (address_string[0] == '[') {
+                OPERAND_C_TYPE address = strtol(address_string + 1, NULL, 16);
+                memcpy(instructions_binary + INSTRUCTION_SIZE * i + OPERATION_SIZE + OPERAND_SIZE, &address, OPERAND_SIZE);
+            }
+            // Other addresses are variables.
+            else {
+                Variable *variable = g_hash_table_lookup(variables_table, instruction->operand1.operand_address);
+                memcpy(instructions_binary + INSTRUCTION_SIZE * i + OPERATION_SIZE + OPERAND_SIZE, variable->address, OPERAND_SIZE);
+            }
         }
         else if (instruction->operation == OPERATION_ISR) {
             uint8_t *binary_instruction_index = g_hash_table_lookup(labels_table, instruction->operand2.operand_address);

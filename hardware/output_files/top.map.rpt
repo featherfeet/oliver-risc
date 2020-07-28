@@ -1,5 +1,5 @@
 Analysis & Synthesis report for top
-Mon Jul 27 22:51:19 2020
+Tue Jul 28 01:59:20 2020
 Quartus II 64-Bit Version 13.0.1 Build 232 06/12/2013 Service Pack 1 SJ Web Edition
 
 
@@ -67,15 +67,15 @@ applicable agreement for further details.
 +--------------------------------------------------------------------------------------+
 ; Analysis & Synthesis Summary                                                         ;
 +------------------------------------+-------------------------------------------------+
-; Analysis & Synthesis Status        ; Successful - Mon Jul 27 22:51:19 2020           ;
+; Analysis & Synthesis Status        ; Successful - Tue Jul 28 01:59:20 2020           ;
 ; Quartus II 64-Bit Version          ; 13.0.1 Build 232 06/12/2013 SP 1 SJ Web Edition ;
 ; Revision Name                      ; top                                             ;
 ; Top-level Entity Name              ; top                                             ;
 ; Family                             ; Cyclone II                                      ;
-; Total logic elements               ; 3,456                                           ;
-;     Total combinational functions  ; 2,850                                           ;
-;     Dedicated logic registers      ; 1,368                                           ;
-; Total registers                    ; 1368                                            ;
+; Total logic elements               ; 3,371                                           ;
+;     Total combinational functions  ; 2,765                                           ;
+;     Dedicated logic registers      ; 1,336                                           ;
+; Total registers                    ; 1336                                            ;
 ; Total pins                         ; 96                                              ;
 ; Total virtual pins                 ; 0                                               ;
 ; Total memory bits                  ; 0                                               ;
@@ -224,20 +224,20 @@ applicable agreement for further details.
 +---------------------------------------------+----------+
 ; Resource                                    ; Usage    ;
 +---------------------------------------------+----------+
-; Estimated Total logic elements              ; 3,456    ;
+; Estimated Total logic elements              ; 3,371    ;
 ;                                             ;          ;
-; Total combinational functions               ; 2850     ;
+; Total combinational functions               ; 2765     ;
 ; Logic element usage by number of LUT inputs ;          ;
-;     -- 4 input functions                    ; 1888     ;
-;     -- 3 input functions                    ; 537      ;
-;     -- <=2 input functions                  ; 425      ;
+;     -- 4 input functions                    ; 1831     ;
+;     -- 3 input functions                    ; 454      ;
+;     -- <=2 input functions                  ; 480      ;
 ;                                             ;          ;
 ; Logic elements by mode                      ;          ;
-;     -- normal mode                          ; 2465     ;
+;     -- normal mode                          ; 2380     ;
 ;     -- arithmetic mode                      ; 385      ;
 ;                                             ;          ;
-; Total registers                             ; 1368     ;
-;     -- Dedicated logic registers            ; 1368     ;
+; Total registers                             ; 1336     ;
+;     -- Dedicated logic registers            ; 1336     ;
 ;     -- I/O registers                        ; 0        ;
 ;                                             ;          ;
 ; I/O pins                                    ; 96       ;
@@ -246,9 +246,9 @@ applicable agreement for further details.
 ;     -- PLLs                                 ; 1        ;
 ;                                             ;          ;
 ; Maximum fan-out node                        ; CLOCK_50 ;
-; Maximum fan-out                             ; 1159     ;
-; Total fan-out                               ; 14708    ;
-; Average fan-out                             ; 3.41     ;
+; Maximum fan-out                             ; 1127     ;
+; Total fan-out                               ; 14243    ;
+; Average fan-out                             ; 3.39     ;
 +---------------------------------------------+----------+
 
 
@@ -257,9 +257,9 @@ applicable agreement for further details.
 +---------------------------------------------------------------------------------------------------------------------------+-------------------+--------------+-------------+--------------+---------+-----------+------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------+
 ; Compilation Hierarchy Node                                                                                                ; LC Combinationals ; LC Registers ; Memory Bits ; DSP Elements ; DSP 9x9 ; DSP 18x18 ; Pins ; Virtual Pins ; Full Hierarchy Name                                                                                                                                                         ; Library Name ;
 +---------------------------------------------------------------------------------------------------------------------------+-------------------+--------------+-------------+--------------+---------+-----------+------+--------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------+--------------+
-; |top                                                                                                                      ; 2850 (1918)       ; 1368 (1070)  ; 0           ; 0            ; 0       ; 0         ; 96   ; 0            ; |top                                                                                                                                                                        ; work         ;
-;    |gpu:integrated_graphics|                                                                                              ; 388 (51)          ; 40 (20)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |top|gpu:integrated_graphics                                                                                                                                                ; work         ;
-;       |font_rom:font_glyphs|                                                                                              ; 282 (282)         ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |top|gpu:integrated_graphics|font_rom:font_glyphs                                                                                                                           ; work         ;
+; |top                                                                                                                      ; 2765 (1921)       ; 1336 (1038)  ; 0           ; 0            ; 0       ; 0         ; 96   ; 0            ; |top                                                                                                                                                                        ; work         ;
+;    |gpu:integrated_graphics|                                                                                              ; 385 (49)          ; 40 (20)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |top|gpu:integrated_graphics                                                                                                                                                ; work         ;
+;       |font_rom:font_glyphs|                                                                                              ; 281 (281)         ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |top|gpu:integrated_graphics|font_rom:font_glyphs                                                                                                                           ; work         ;
 ;       |vga640x480:vga|                                                                                                    ; 55 (55)           ; 20 (20)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |top|gpu:integrated_graphics|vga640x480:vga                                                                                                                                 ; work         ;
 ;    |numericaldisplay:display|                                                                                             ; 204 (66)          ; 68 (68)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |top|numericaldisplay:display                                                                                                                                               ; work         ;
 ;       |lpm_divide:divider|                                                                                                ; 110 (0)           ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |top|numericaldisplay:display|lpm_divide:divider                                                                                                                            ; work         ;
@@ -270,7 +270,7 @@ applicable agreement for further details.
 ;       |seven_segment_display:disp1|                                                                                       ; 7 (7)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |top|numericaldisplay:display|seven_segment_display:disp1                                                                                                                   ; work         ;
 ;       |seven_segment_display:disp2|                                                                                       ; 7 (7)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |top|numericaldisplay:display|seven_segment_display:disp2                                                                                                                   ; work         ;
 ;       |seven_segment_display:disp3|                                                                                       ; 7 (7)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |top|numericaldisplay:display|seven_segment_display:disp3                                                                                                                   ; work         ;
-;    |rom:program_rom|                                                                                                      ; 109 (109)         ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |top|rom:program_rom                                                                                                                                                        ; work         ;
+;    |rom:program_rom|                                                                                                      ; 24 (24)           ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |top|rom:program_rom                                                                                                                                                        ; work         ;
 ;    |sdram_system_new_sdram_controller_0:sdram_controller|                                                                 ; 231 (193)         ; 190 (124)    ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |top|sdram_system_new_sdram_controller_0:sdram_controller                                                                                                                   ; work         ;
 ;       |sdram_system_new_sdram_controller_0_input_efifo_module:the_sdram_system_new_sdram_controller_0_input_efifo_module| ; 38 (38)           ; 66 (66)      ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |top|sdram_system_new_sdram_controller_0:sdram_controller|sdram_system_new_sdram_controller_0_input_efifo_module:the_sdram_system_new_sdram_controller_0_input_efifo_module ; work         ;
 ;    |sdram_system_up_clocks_0:up_clocks_0|                                                                                 ; 0 (0)             ; 0 (0)        ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |top|sdram_system_up_clocks_0:up_clocks_0                                                                                                                                   ; work         ;
@@ -5393,7 +5393,7 @@ Encoding Type:  One-Hot
 ; gpu:integrated_graphics|text_buffer[7][64][4]                    ; Stuck at GND due to stuck port data_in ;
 ; gpu:integrated_graphics|text_buffer[7][64][5]                    ; Stuck at GND due to stuck port data_in ;
 ; gpu:integrated_graphics|text_buffer[7][64][6]                    ; Stuck at GND due to stuck port data_in ;
-; Total Number of Removed Registers = 15461                        ;                                        ;
+; Total Number of Removed Registers = 15493                        ;                                        ;
 +------------------------------------------------------------------+----------------------------------------+
 * Table truncated at 5000 items. To change the number of removed registers reported, set the "Number of Removed Registers Reported" option under Assignments->Settings->Analysis and Synthesis Settings->More Settings
 
@@ -5403,18 +5403,18 @@ Encoding Type:  One-Hot
 +----------------------------------------------+---------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 ; Register name                                ; Reason for Removal        ; Registers Removed due to This Register                                                                                                                                              ;
 +----------------------------------------------+---------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-; gpu:integrated_graphics|text_buffer[0][1][7] ; Stuck at GND              ; gpu:integrated_graphics|text_buffer[3][10][7],                                                                                                                                      ;
-;                                              ; due to stuck port data_in ; gpu:integrated_graphics|text_buffer[3][11][0],                                                                                                                                      ;
-;                                              ;                           ; gpu:integrated_graphics|text_buffer[3][11][1],                                                                                                                                      ;
-;                                              ;                           ; gpu:integrated_graphics|text_buffer[3][11][2],                                                                                                                                      ;
-;                                              ;                           ; gpu:integrated_graphics|text_buffer[3][11][3],                                                                                                                                      ;
-;                                              ;                           ; gpu:integrated_graphics|text_buffer[3][11][4],                                                                                                                                      ;
-;                                              ;                           ; gpu:integrated_graphics|text_buffer[3][11][5],                                                                                                                                      ;
-;                                              ;                           ; gpu:integrated_graphics|text_buffer[3][11][6],                                                                                                                                      ;
-;                                              ;                           ; gpu:integrated_graphics|text_buffer[3][11][7],                                                                                                                                      ;
-;                                              ;                           ; gpu:integrated_graphics|text_buffer[3][12][0],                                                                                                                                      ;
-;                                              ;                           ; gpu:integrated_graphics|text_buffer[3][12][1],                                                                                                                                      ;
-;                                              ;                           ; gpu:integrated_graphics|text_buffer[3][12][2]                                                                                                                                       ;
+; gpu:integrated_graphics|text_buffer[0][1][7] ; Stuck at GND              ; gpu:integrated_graphics|text_buffer[3][16][4],                                                                                                                                      ;
+;                                              ; due to stuck port data_in ; gpu:integrated_graphics|text_buffer[3][16][5],                                                                                                                                      ;
+;                                              ;                           ; gpu:integrated_graphics|text_buffer[3][16][6],                                                                                                                                      ;
+;                                              ;                           ; gpu:integrated_graphics|text_buffer[3][16][7],                                                                                                                                      ;
+;                                              ;                           ; gpu:integrated_graphics|text_buffer[3][17][0],                                                                                                                                      ;
+;                                              ;                           ; gpu:integrated_graphics|text_buffer[3][17][1],                                                                                                                                      ;
+;                                              ;                           ; gpu:integrated_graphics|text_buffer[3][17][2],                                                                                                                                      ;
+;                                              ;                           ; gpu:integrated_graphics|text_buffer[3][17][3],                                                                                                                                      ;
+;                                              ;                           ; gpu:integrated_graphics|text_buffer[3][17][4],                                                                                                                                      ;
+;                                              ;                           ; gpu:integrated_graphics|text_buffer[3][17][5],                                                                                                                                      ;
+;                                              ;                           ; gpu:integrated_graphics|text_buffer[3][17][6],                                                                                                                                      ;
+;                                              ;                           ; gpu:integrated_graphics|text_buffer[3][17][7]                                                                                                                                       ;
 ; sdram_controller_data_i[10]                  ; Stuck at GND              ; sdram_system_new_sdram_controller_0:sdram_controller|sdram_system_new_sdram_controller_0_input_efifo_module:the_sdram_system_new_sdram_controller_0_input_efifo_module|entry_0[10], ;
 ;                                              ; due to stuck port data_in ; sdram_system_new_sdram_controller_0:sdram_controller|sdram_system_new_sdram_controller_0_input_efifo_module:the_sdram_system_new_sdram_controller_0_input_efifo_module|entry_1[10], ;
 ;                                              ;                           ; sdram_system_new_sdram_controller_0:sdram_controller|active_data[10],                                                                                                               ;
@@ -5439,12 +5439,12 @@ Encoding Type:  One-Hot
 +----------------------------------------------+-------+
 ; Statistic                                    ; Value ;
 +----------------------------------------------+-------+
-; Total registers                              ; 1368  ;
+; Total registers                              ; 1336  ;
 ; Number of registers using Synchronous Clear  ; 403   ;
 ; Number of registers using Synchronous Load   ; 73    ;
 ; Number of registers using Asynchronous Clear ; 93    ;
 ; Number of registers using Asynchronous Load  ; 0     ;
-; Number of registers using Clock Enable       ; 1262  ;
+; Number of registers using Clock Enable       ; 1230  ;
 ; Number of registers using Preset             ; 0     ;
 +----------------------------------------------+-------+
 
@@ -6179,7 +6179,7 @@ Info: Running Quartus II 64-Bit Analysis & Synthesis
     Info: programming logic devices manufactured by Altera and sold by 
     Info: Altera or its authorized distributors.  Please refer to the 
     Info: applicable agreement for further details.
-    Info: Processing started: Mon Jul 27 22:50:54 2020
+    Info: Processing started: Tue Jul 28 01:58:55 2020
 Info: Command: quartus_map top --parallel=12
 Info (20032): Parallel compilation is enabled and will use up to 12 processors
 Info (12021): Found 1 design units, including 1 entities, in source file rtl/top.v
@@ -6209,7 +6209,7 @@ Warning (10037): Verilog HDL or VHDL warning at sdram_system_new_sdram_controlle
 Warning (10037): Verilog HDL or VHDL warning at sdram_system_new_sdram_controller_0.v(336): conditional expression evaluates to a constant
 Warning (10037): Verilog HDL or VHDL warning at sdram_system_new_sdram_controller_0.v(680): conditional expression evaluates to a constant
 Info (12127): Elaborating entity "top" for the top level hierarchy
-Warning (10175): Verilog HDL warning at top.v(540): ignoring unsupported system task
+Warning (10175): Verilog HDL warning at top.v(541): ignoring unsupported system task
 Info (12128): Elaborating entity "fifo" for hierarchy "fifo:interrupt_fifo"
 Warning (10036): Verilog HDL or VHDL warning at fifo.v(14): object "items" assigned a value but never read
 Warning (10230): Verilog HDL assignment warning at fifo.v(18): truncated value with size 32 to match size of target (1)
@@ -6364,15 +6364,15 @@ Warning (21074): Design contains 13 input pin(s) that do not drive logic
     Warning (15610): No output dependent on input pin "SW[7]"
     Warning (15610): No output dependent on input pin "SW[8]"
     Warning (15610): No output dependent on input pin "SW[9]"
-Info (21057): Implemented 3694 device resources after synthesis - the final resource count might be different
+Info (21057): Implemented 3577 device resources after synthesis - the final resource count might be different
     Info (21058): Implemented 15 input pins
     Info (21059): Implemented 65 output pins
     Info (21060): Implemented 16 bidirectional pins
-    Info (21061): Implemented 3597 logic cells
+    Info (21061): Implemented 3480 logic cells
     Info (21065): Implemented 1 PLLs
 Info: Quartus II 64-Bit Analysis & Synthesis was successful. 0 errors, 53 warnings
-    Info: Peak virtual memory: 724 megabytes
-    Info: Processing ended: Mon Jul 27 22:51:19 2020
+    Info: Peak virtual memory: 721 megabytes
+    Info: Processing ended: Tue Jul 28 01:59:20 2020
     Info: Elapsed time: 00:00:25
     Info: Total CPU time (on all processors): 00:00:25
 

@@ -73,7 +73,8 @@ extern int yydebug;
     TOKEN_COLON = 279,
     TOKEN_ISR = 280,
     TOKEN_INT = 281,
-    TOKEN_ENDINT = 282
+    TOKEN_ENDINT = 282,
+    TOKEN_MEMORY_ADDRESS = 283
   };
 #endif
 
@@ -82,12 +83,12 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 103 "../src/parser.y" /* yacc.c:1921  */
+#line 106 "../src/parser.y" /* yacc.c:1921  */
 
     int intval;
     char *strval;
 
-#line 91 "parser.tab.h" /* yacc.c:1921  */
+#line 92 "parser.tab.h" /* yacc.c:1921  */
 };
 
 typedef union YYSTYPE YYSTYPE;
