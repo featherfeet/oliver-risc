@@ -120,6 +120,14 @@
     return TOKEN_ENDINT;
 }
 
+"RLOAD" {
+    return TOKEN_RLOAD;
+}
+
+"RSTORE" {
+    return TOKEN_RSTORE;
+}
+
 (IP|A|B|C|D|E|F|G) {
     yylval.strval = g_strdup(yytext);
     return TOKEN_REGISTER;

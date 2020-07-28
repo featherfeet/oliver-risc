@@ -100,6 +100,8 @@
 %token TOKEN_INT
 %token TOKEN_ENDINT
 %token TOKEN_MEMORY_ADDRESS
+%token TOKEN_RLOAD
+%token TOKEN_RSTORE
 
 %start line
 
@@ -194,6 +196,18 @@ instruction: TOKEN_NOP {
 
         g_free($<strval>3);
     }
+    | TOKEN_RLOAD TOKEN_REGISTER TOKEN_REGISTER {
+        printf("Instruction: RLOAD %s,%s\n", $<strval>2, $<strval>3);
+
+        Instruction *instruction = g_new(Instruction, 1);
+        instruction->operation = OPERATION_RLOAD;
+        instruction->operand1.operand_register = stringToRegister($<strval>2);
+        instruction->operand2.operand_register = stringToRegister($<strval>3);
+        instructions_table = g_slist_append(instructions_table, instruction);
+
+        g_free($<strval>2);
+        g_free($<strval>3);
+    }
     | TOKEN_STORE TOKEN_REGISTER TOKEN_IDENTIFIER {
         printf("Instruction: STORE (variable) %s,%s\n", $<strval>2, $<strval>3);
 
@@ -215,6 +229,18 @@ instruction: TOKEN_NOP {
         instructions_table = g_slist_append(instructions_table, instruction);
 
         g_free($<strval>2);
+    }
+    | TOKEN_RSTORE TOKEN_REGISTER TOKEN_REGISTER {
+        printf("Instruction: RSTORE %s,%s\n", $<strval>2, $<strval>3);
+
+        Instruction *instruction = g_new(Instruction, 1);
+        instruction->operation = OPERATION_RSTORE;
+        instruction->operand1.operand_register = stringToRegister($<strval>2);
+        instruction->operand2.operand_register = stringToRegister($<strval>3);
+        instructions_table = g_slist_append(instructions_table, instruction);
+
+        g_free($<strval>2);
+        g_free($<strval>3);
     }
     | TOKEN_ADD TOKEN_REGISTER TOKEN_REGISTER {
         printf("Instruction: ADD %s,%s\n", $<strval>2, $<strval>3);
@@ -480,6 +506,14 @@ int main(int argc, char *argv[]) {
                 break;
             case OPERATION_INT:
                 operand1_is_register = TRUE;
+                break;
+            case OPERATION_RLOAD:
+                operand1_is_register = TRUE;
+                operand2_is_register = TRUE;
+                break;
+            case OPERATION_RSTORE:
+                operand1_is_register = TRUE;
+                operand2_is_register = TRUE;
                 break;
             default:
                 break;

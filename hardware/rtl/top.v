@@ -371,7 +371,7 @@ begin
                         $display("NOP");
                         `REGISTER_IP <= `REGISTER_IP + `INSTRUCTION_SIZE_BYTES;
                     end
-                    // Load value from RAM to register.
+                    // Load value from RAM address to register.
                     `OPERATION_LOAD:
                     begin
                         $display("LOAD");
@@ -383,6 +383,26 @@ begin
                         end
                         else
                             read_from_ram(operand1 + operand_byte_index);
+                        if (operand_byte_index == `OPERAND_SIZE_BYTES)
+                        begin
+                            //$display("Loaded value %d from address %d in RAM to register %d.", registers[operand2], operand1, operand2);
+                            operand_byte_index <= 'b0;
+                            `REGISTER_IP <= `REGISTER_IP + `INSTRUCTION_SIZE_BYTES;
+                            state <= `STATE_FETCH_OPERATION;
+                        end
+                    end
+                    // Load value from RAM address (stored in a register) to a register.
+                    `OPERATION_RLOAD:
+                    begin
+                        $display("RLOAD");
+                        if (ram_read_complete)
+                        begin
+                            registers[operand2] <= {ram_read_data[7:0], registers[operand2][31:8]};
+                            operand_byte_index <= operand_byte_index + 8'd1;
+                            ram_read_complete <= 'b0;
+                        end
+                        else
+                            read_from_ram(registers[operand1] + operand_byte_index);
                         if (operand_byte_index == `OPERAND_SIZE_BYTES)
                         begin
                             //$display("Loaded value %d from address %d in RAM to register %d.", registers[operand2], operand1, operand2);
@@ -404,6 +424,28 @@ begin
                         else
                         begin
                             write_to_ram(operand2 + operand_byte_index, registers[operand1][7:0]);
+                        end
+                        if (operand_byte_index == `OPERAND_SIZE_BYTES)
+                        begin
+                            sdram_controller_wr_n_i <= 'b1;
+                            operand_byte_index <= 'b0;
+                            `REGISTER_IP <= `REGISTER_IP + `INSTRUCTION_SIZE_BYTES;
+                            state <= `STATE_FETCH_OPERATION;
+                        end
+                    end
+                    // Store value into RAM (at address specified by a register) from a register.
+                    `OPERATION_RSTORE:
+                    begin
+                        $display("RSTORE");
+                        if (ram_write_complete)
+                        begin
+                            operand_byte_index <= operand_byte_index + 8'd1;
+                            registers[operand1] <= {registers[operand1][7:0], registers[operand1][`OPERAND_SIZE_BITS - 1:8]};
+                            ram_write_complete <= 'b0;
+                        end
+                        else
+                        begin
+                            write_to_ram(registers[operand2] + operand_byte_index, registers[operand1][7:0]);
                         end
                         if (operand_byte_index == `OPERAND_SIZE_BYTES)
                         begin

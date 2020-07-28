@@ -1,9 +1,7 @@
 # Oliver-RISC: The Ultimate RISC Processor
 
 The CPU has 8MB of SDRAM.
-The SDRAM is split into the .data and the .code sections.
-On bootup, the FPGA reads out a binary from the SD card or RAM and places it at 32'd0 in the code RAM.
-The FPGA then reads the first instruction from 32'd0 and executes it. Then, it executes the next instruction, etc.
+On bootup, the FPGA loads a binary from the ROM to the SDRAM (at address 32'd0). The FPGA detects the magic byte (the CODE instruction), which it uses to know where the .data section ends and the .code section begins. The FPGA then starts executing instructions from the start of the .code section. The .data and .code sections are addressed separately.
 
 Registers (32 bits each, addressed using a 32-bit code):
 IP - 32'd0 - Instruction pointer. SDRAM address of the instruction to execute.
@@ -20,23 +18,33 @@ IR - 32'b9 - Interrupt-running register. Is set to 1 while an interrupt in is pr
 Shadow registers:
 
 Instructions:
-* NOP                                             - No operation. Takes 1 clock cycle.
+* NOP                                             - No operation. Useful for delays.
+
 * LOAD <memory_address>,<register>                - Load the 32 bits at <memory_address> in SDRAM into the register identified by <register>
 * STORE <register>,<memory_address>               - Save the 32 bits in <register> to <memory_address> in SDRAM.
+* RLOAD <register1>,<register2>                   - Load the 32 bits at the memory address stored in <register1> into <register2>.
+* RSTORE <register1>,<register2>                  - Save the 32 bits in <register1> to the memory address stored in <register2>.
+
 * ADD <register1>,<register2>                     - Add <register1> to <register2> and store the result in register A.
 * SUB <register1>,<register2>                     - Subtract <register2> from <register1> and store the result in register A.
-* OUT <register>,                                 - Write the contents of <register> to serial.
-* IN <register>,                                  - Read 32 bits from serial and place them in <register>.
+
+* OUT <register>,                                 - Write the contents of <register> to the 7-segment displays.
+* IN <register>,                                  - (Not currently implemented) Read 32 bits from serial and place them in <register>.
+
 * MOV <register1>,<register2>                     - Copy register1 to register2.
+
 * CMP <register1>,<register2>                     - If register1 < register2, set reg A to 0. If =, set reg A to 1. If >, set reg A to 2.
 * JMPL <memory_address>,                          - If reg A == 0, jump the instruction pointer register to <memory_address>.
 * JMPE <memory_address>,                          - If reg A == 1, jump the instruction pointer register to <memory_address>.
 * JMPG <memory_address>,                          - If reg A == 2, jump the instruction pointer register to <memory_address>.
+
 * RST                                             - Clear all registers to 0 (including the instruction pointer).
 * HALT                                            - Stop the CPU.
+
 * ISR <register>,<code_address>                   - Sets up an interrupt service routine. <register> is the register containing the interrupt number (8 interrupts are available). <code_address> is the address of the first instruction in the ISR routine.
 * INT <register>,                                 - Triggers an interrupt from software. <register> is the register containing the interrupt number (8 interrupts exist).
 * ENDINT                                          - Ends an interrupt routine. MUST be placed as the last instruction in an interrupt routine. Restores all registers (including the instruction pointer) to their states before the interrupt was executed.
+
 * CODE                                            - Switch from the .data section of the program to the .code section.
 
 Example program to print out numbers 1-5:

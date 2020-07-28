@@ -24,6 +24,8 @@
 `define OPERATION_ISR             15
 `define OPERATION_INT             16
 `define OPERATION_ENDINT          17
+`define OPERATION_RLOAD           18
+`define OPERATION_RSTORE          19
 
 `define NUM_REGISTERS             9
 `define REGISTER_IP               registers[0]

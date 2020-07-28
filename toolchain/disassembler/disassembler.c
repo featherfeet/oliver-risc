@@ -65,6 +65,10 @@ const char *operationToString(Operation operation) {
             return "INT";
         case OPERATION_ENDINT:
             return "ENDINT";
+        case OPERATION_RLOAD:
+            return "RLOAD";
+        case OPERATION_RSTORE:
+            return "RSTORE";
     }
 }
 
@@ -157,6 +161,12 @@ int main(int argc, char *argv[]) {
                 break;
             case OPERATION_ENDINT:
                 printf("\n");
+                break;
+            case OPERATION_RLOAD:
+                printf(" %s, %s\n", registerToString(operand1), registerToString(operand2));
+                break;
+            case OPERATION_RSTORE:
+                printf(" %s, %s\n", registerToString(operand1), registerToString(operand2));
                 break;
         }
     }

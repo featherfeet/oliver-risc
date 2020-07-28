@@ -36,7 +36,9 @@ typedef enum {
 	OPERATION_CODE,
     OPERATION_ISR,
     OPERATION_INT,
-    OPERATION_ENDINT
+    OPERATION_ENDINT,
+    OPERATION_RLOAD,
+    OPERATION_RSTORE
 } Operation;
 
 typedef enum {

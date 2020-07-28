@@ -205,7 +205,9 @@ extern int yydebug;
     TOKEN_ISR = 280,
     TOKEN_INT = 281,
     TOKEN_ENDINT = 282,
-    TOKEN_MEMORY_ADDRESS = 283
+    TOKEN_MEMORY_ADDRESS = 283,
+    TOKEN_RLOAD = 284,
+    TOKEN_RSTORE = 285
   };
 #endif
 
@@ -214,12 +216,12 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 106 "../src/parser.y" /* yacc.c:352  */
+#line 108 "../src/parser.y" /* yacc.c:352  */
 
     int intval;
     char *strval;
 
-#line 223 "parser.tab.c" /* yacc.c:352  */
+#line 225 "parser.tab.c" /* yacc.c:352  */
 };
 
 typedef union YYSTYPE YYSTYPE;
@@ -467,19 +469,19 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  2
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   54
+#define YYLAST   59
 
 /* YYNTOKENS -- Number of terminals.  */
-#define YYNTOKENS  29
+#define YYNTOKENS  31
 /* YYNNTS -- Number of nonterminals.  */
 #define YYNNTS  4
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  27
+#define YYNRULES  29
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  55
+#define YYNSTATES  61
 
 #define YYUNDEFTOK  2
-#define YYMAXUTOK   283
+#define YYMAXUTOK   285
 
 /* YYTRANSLATE(TOKEN-NUM) -- Symbol number corresponding to TOKEN-NUM
    as returned by yylex, with out-of-bounds checking.  */
@@ -518,16 +520,16 @@ static const yytype_uint8 yytranslate[] =
        2,     2,     2,     2,     2,     2,     1,     2,     3,     4,
        5,     6,     7,     8,     9,    10,    11,    12,    13,    14,
       15,    16,    17,    18,    19,    20,    21,    22,    23,    24,
-      25,    26,    27,    28
+      25,    26,    27,    28,    29,    30
 };
 
 #if YYDEBUG
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,   114,   114,   116,   118,   124,   130,   144,   146,   150,
-     168,   175,   186,   197,   208,   219,   231,   243,   253,   265,
-     277,   285,   293,   301,   308,   315,   326,   336
+       0,   116,   116,   118,   120,   126,   132,   146,   148,   152,
+     170,   177,   188,   199,   211,   222,   233,   245,   257,   269,
+     279,   291,   303,   311,   319,   327,   334,   341,   352,   362
 };
 #endif
 
@@ -542,8 +544,8 @@ static const char *const yytname[] =
   "TOKEN_HALT", "TOKEN_DOT_DATA", "TOKEN_DOT_CODE", "TOKEN_IDENTIFIER",
   "TOKEN_REGISTER", "TOKEN_EQUALS", "TOKEN_CONSTANT", "TOKEN_EOL",
   "TOKEN_COLON", "TOKEN_ISR", "TOKEN_INT", "TOKEN_ENDINT",
-  "TOKEN_MEMORY_ADDRESS", "$accept", "line", "variable_declaration",
-  "instruction", YY_NULLPTR
+  "TOKEN_MEMORY_ADDRESS", "TOKEN_RLOAD", "TOKEN_RSTORE", "$accept", "line",
+  "variable_declaration", "instruction", YY_NULLPTR
 };
 #endif
 
@@ -554,7 +556,8 @@ static const yytype_uint16 yytoknum[] =
 {
        0,   256,   257,   258,   259,   260,   261,   262,   263,   264,
      265,   266,   267,   268,   269,   270,   271,   272,   273,   274,
-     275,   276,   277,   278,   279,   280,   281,   282,   283
+     275,   276,   277,   278,   279,   280,   281,   282,   283,   284,
+     285
 };
 # endif
 
@@ -572,12 +575,13 @@ static const yytype_uint16 yytoknum[] =
      STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-     -20,     0,   -20,   -20,     1,   -19,   -18,   -11,     4,    12,
-      13,     3,    15,    16,   -20,   -20,    14,    17,     7,   -20,
-      18,    19,   -20,    20,    21,    22,    25,     2,    26,    27,
-     -20,    28,    29,   -20,   -20,   -20,   -20,   -20,    30,    31,
-      32,   -20,   -20,   -20,   -20,   -20,   -20,   -20,   -20,   -20,
-     -20,   -20,   -20,   -20,   -20
+     -20,     0,   -20,   -20,     3,   -19,   -18,   -11,     1,     8,
+      14,    17,    18,    19,   -20,   -20,    -3,    16,    11,   -20,
+      20,    21,   -20,    22,    23,    24,    25,    26,    29,     5,
+      30,    31,   -20,    32,    33,   -20,   -20,   -20,   -20,   -20,
+      34,    35,    36,   -20,    37,    39,   -20,   -20,   -20,   -20,
+     -20,   -20,   -20,   -20,   -20,   -20,   -20,   -20,   -20,   -20,
+     -20
 };
 
   /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -586,11 +590,12 @@ static const yytype_int8 yypact[] =
 static const yytype_uint8 yydefact[] =
 {
        2,     0,     1,    10,     0,     0,     0,     0,     0,     0,
-       0,     0,     0,     0,    23,    24,     0,     0,     0,     3,
-       0,     0,    27,     0,     0,     0,     0,     0,     0,     0,
-      17,     0,     0,    20,    21,    22,     4,     5,     0,     0,
-       0,    26,     7,     8,    11,    12,    13,    14,    15,    16,
-      18,    19,     9,     6,    25
+       0,     0,     0,     0,    25,    26,     0,     0,     0,     3,
+       0,     0,    29,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,    19,     0,     0,    22,    23,    24,     4,     5,
+       0,     0,     0,    28,     0,     0,     7,     8,    11,    12,
+      14,    15,    17,    18,    20,    21,     9,     6,    27,    13,
+      16
 };
 
   /* YYPGOTO[NTERM-NUM].  */
@@ -602,7 +607,7 @@ static const yytype_int8 yypgoto[] =
   /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-      -1,     1,    23,    24
+      -1,     1,    25,    26
 };
 
   /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -610,50 +615,51 @@ static const yytype_int8 yydefgoto[] =
      number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_uint8 yytable[] =
 {
-       2,    27,    28,     3,     4,     5,     6,     7,     8,    29,
+       2,    29,    30,     3,     4,     5,     6,     7,     8,    31,
        9,    10,    11,    12,    13,    14,    15,    16,    17,    18,
-      25,    46,    33,    19,    30,    20,    21,    22,    38,    26,
-      47,    39,    31,    32,    34,    35,     0,    36,    40,    41,
-      37,     0,    44,    42,    43,    45,    48,    49,    50,    51,
-       0,    54,    52,     0,    53
+      38,    32,    27,    19,    50,    20,    21,    22,    33,    23,
+      24,    28,    40,    51,    34,    41,    35,    36,    37,    39,
+      42,    43,    44,    45,     0,     0,    48,    46,    47,    49,
+      52,    53,    54,    55,     0,    58,    56,    59,    57,    60
 };
 
 static const yytype_int8 yycheck[] =
 {
        0,    20,    20,     3,     4,     5,     6,     7,     8,    20,
       10,    11,    12,    13,    14,    15,    16,    17,    18,    19,
-      19,    19,    19,    23,    20,    25,    26,    27,    21,    28,
-      28,    24,    20,    20,    19,    19,    -1,    23,    20,    20,
-      23,    -1,    20,    23,    23,    20,    20,    20,    20,    20,
-      -1,    19,    22,    -1,    23
+      23,    20,    19,    23,    19,    25,    26,    27,    20,    29,
+      30,    28,    21,    28,    20,    24,    19,    19,    19,    23,
+      20,    20,    20,    20,    -1,    -1,    20,    23,    23,    20,
+      20,    20,    20,    20,    -1,    19,    22,    20,    23,    20
 };
 
   /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
      symbol of state STATE-NUM.  */
 static const yytype_uint8 yystos[] =
 {
-       0,    30,     0,     3,     4,     5,     6,     7,     8,    10,
+       0,    32,     0,     3,     4,     5,     6,     7,     8,    10,
       11,    12,    13,    14,    15,    16,    17,    18,    19,    23,
-      25,    26,    27,    31,    32,    19,    28,    20,    20,    20,
-      20,    20,    20,    19,    19,    19,    23,    23,    21,    24,
-      20,    20,    23,    23,    20,    20,    19,    28,    20,    20,
-      20,    20,    22,    23,    19
+      25,    26,    27,    29,    30,    33,    34,    19,    28,    20,
+      20,    20,    20,    20,    20,    19,    19,    19,    23,    23,
+      21,    24,    20,    20,    20,    20,    23,    23,    20,    20,
+      19,    28,    20,    20,    20,    20,    22,    23,    19,    20,
+      20
 };
 
   /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
 static const yytype_uint8 yyr1[] =
 {
-       0,    29,    30,    30,    30,    30,    30,    30,    30,    31,
-      32,    32,    32,    32,    32,    32,    32,    32,    32,    32,
-      32,    32,    32,    32,    32,    32,    32,    32
+       0,    31,    32,    32,    32,    32,    32,    32,    32,    33,
+      34,    34,    34,    34,    34,    34,    34,    34,    34,    34,
+      34,    34,    34,    34,    34,    34,    34,    34,    34,    34
 };
 
   /* YYR2[YYN] -- Number of symbols on the right hand side of rule YYN.  */
 static const yytype_uint8 yyr2[] =
 {
        0,     2,     0,     2,     3,     3,     4,     3,     3,     3,
-       1,     3,     3,     3,     3,     3,     3,     2,     3,     3,
-       2,     2,     2,     1,     1,     3,     2,     1
+       1,     3,     3,     3,     3,     3,     3,     3,     3,     2,
+       3,     3,     2,     2,     2,     1,     1,     3,     2,     1
 };
 
 
@@ -1339,27 +1345,27 @@ yyreduce:
   switch (yyn)
     {
         case 4:
-#line 118 "../src/parser.y" /* yacc.c:1652  */
+#line 120 "../src/parser.y" /* yacc.c:1652  */
     {
         printf("Start .data section.\n");
 
         current_section = DATA_SECTION;
     }
-#line 1349 "parser.tab.c" /* yacc.c:1652  */
+#line 1355 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 5:
-#line 124 "../src/parser.y" /* yacc.c:1652  */
+#line 126 "../src/parser.y" /* yacc.c:1652  */
     {
         printf("Start .code section.\n");
 
         current_section = CODE_SECTION;
     }
-#line 1359 "parser.tab.c" /* yacc.c:1652  */
+#line 1365 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 6:
-#line 130 "../src/parser.y" /* yacc.c:1652  */
+#line 132 "../src/parser.y" /* yacc.c:1652  */
     {
         char *label = (yyvsp[-2].strval);
 
@@ -1373,11 +1379,11 @@ yyreduce:
         // Store the address buffer in the labels_table hash table with the label name as the key.
         g_hash_table_insert(labels_table, label, label_address_buffer);
     }
-#line 1377 "parser.tab.c" /* yacc.c:1652  */
+#line 1383 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 9:
-#line 150 "../src/parser.y" /* yacc.c:1652  */
+#line 152 "../src/parser.y" /* yacc.c:1652  */
     {
     char *variable_name = (yyvsp[-2].strval);
     OPERAND_C_TYPE variable_value = (yyvsp[0].intval);
@@ -1393,11 +1399,11 @@ yyreduce:
     // Save the Variable structure in the variables_table hash table.
     g_hash_table_insert(variables_table, variable_name, variable);
 }
-#line 1397 "parser.tab.c" /* yacc.c:1652  */
+#line 1403 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 10:
-#line 168 "../src/parser.y" /* yacc.c:1652  */
+#line 170 "../src/parser.y" /* yacc.c:1652  */
     {
         printf("Instruction: NOP\n");
 
@@ -1405,11 +1411,11 @@ yyreduce:
         instruction->operation = OPERATION_NOP;
         instructions_table = g_slist_append(instructions_table, instruction);
     }
-#line 1409 "parser.tab.c" /* yacc.c:1652  */
+#line 1415 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 11:
-#line 175 "../src/parser.y" /* yacc.c:1652  */
+#line 177 "../src/parser.y" /* yacc.c:1652  */
     {
         printf("Instruction: LOAD (variable) %s,%s\n", (yyvsp[-1].strval), (yyvsp[0].strval));
 
@@ -1421,11 +1427,11 @@ yyreduce:
 
         g_free((yyvsp[0].strval));
     }
-#line 1425 "parser.tab.c" /* yacc.c:1652  */
+#line 1431 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 12:
-#line 186 "../src/parser.y" /* yacc.c:1652  */
+#line 188 "../src/parser.y" /* yacc.c:1652  */
     {
         printf("Instruction: LOAD (address) %s,%s\n", (yyvsp[-1].strval), (yyvsp[0].strval));
 
@@ -1437,11 +1443,28 @@ yyreduce:
 
         g_free((yyvsp[0].strval));
     }
-#line 1441 "parser.tab.c" /* yacc.c:1652  */
+#line 1447 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 13:
-#line 197 "../src/parser.y" /* yacc.c:1652  */
+#line 199 "../src/parser.y" /* yacc.c:1652  */
+    {
+        printf("Instruction: RLOAD %s,%s\n", (yyvsp[-1].strval), (yyvsp[0].strval));
+
+        Instruction *instruction = g_new(Instruction, 1);
+        instruction->operation = OPERATION_RLOAD;
+        instruction->operand1.operand_register = stringToRegister((yyvsp[-1].strval));
+        instruction->operand2.operand_register = stringToRegister((yyvsp[0].strval));
+        instructions_table = g_slist_append(instructions_table, instruction);
+
+        g_free((yyvsp[-1].strval));
+        g_free((yyvsp[0].strval));
+    }
+#line 1464 "parser.tab.c" /* yacc.c:1652  */
+    break;
+
+  case 14:
+#line 211 "../src/parser.y" /* yacc.c:1652  */
     {
         printf("Instruction: STORE (variable) %s,%s\n", (yyvsp[-1].strval), (yyvsp[0].strval));
 
@@ -1453,11 +1476,11 @@ yyreduce:
 
         g_free((yyvsp[-1].strval));
     }
-#line 1457 "parser.tab.c" /* yacc.c:1652  */
+#line 1480 "parser.tab.c" /* yacc.c:1652  */
     break;
 
-  case 14:
-#line 208 "../src/parser.y" /* yacc.c:1652  */
+  case 15:
+#line 222 "../src/parser.y" /* yacc.c:1652  */
     {
         printf("Instruction: STORE (address) %s,%s\n", (yyvsp[-1].strval), (yyvsp[0].strval));
 
@@ -1469,11 +1492,28 @@ yyreduce:
 
         g_free((yyvsp[-1].strval));
     }
-#line 1473 "parser.tab.c" /* yacc.c:1652  */
+#line 1496 "parser.tab.c" /* yacc.c:1652  */
     break;
 
-  case 15:
-#line 219 "../src/parser.y" /* yacc.c:1652  */
+  case 16:
+#line 233 "../src/parser.y" /* yacc.c:1652  */
+    {
+        printf("Instruction: RSTORE %s,%s\n", (yyvsp[-1].strval), (yyvsp[0].strval));
+
+        Instruction *instruction = g_new(Instruction, 1);
+        instruction->operation = OPERATION_RSTORE;
+        instruction->operand1.operand_register = stringToRegister((yyvsp[-1].strval));
+        instruction->operand2.operand_register = stringToRegister((yyvsp[0].strval));
+        instructions_table = g_slist_append(instructions_table, instruction);
+
+        g_free((yyvsp[-1].strval));
+        g_free((yyvsp[0].strval));
+    }
+#line 1513 "parser.tab.c" /* yacc.c:1652  */
+    break;
+
+  case 17:
+#line 245 "../src/parser.y" /* yacc.c:1652  */
     {
         printf("Instruction: ADD %s,%s\n", (yyvsp[-1].strval), (yyvsp[0].strval));
 
@@ -1486,11 +1526,11 @@ yyreduce:
         g_free((yyvsp[-1].strval));
         g_free((yyvsp[0].strval));
     }
-#line 1490 "parser.tab.c" /* yacc.c:1652  */
+#line 1530 "parser.tab.c" /* yacc.c:1652  */
     break;
 
-  case 16:
-#line 231 "../src/parser.y" /* yacc.c:1652  */
+  case 18:
+#line 257 "../src/parser.y" /* yacc.c:1652  */
     {
         printf("Instruction: SUB %s,%s\n", (yyvsp[-1].strval), (yyvsp[0].strval));
 
@@ -1503,11 +1543,11 @@ yyreduce:
         g_free((yyvsp[-1].strval));
         g_free((yyvsp[0].strval));
     }
-#line 1507 "parser.tab.c" /* yacc.c:1652  */
+#line 1547 "parser.tab.c" /* yacc.c:1652  */
     break;
 
-  case 17:
-#line 243 "../src/parser.y" /* yacc.c:1652  */
+  case 19:
+#line 269 "../src/parser.y" /* yacc.c:1652  */
     {
         printf("Instruction: OUT %s\n", (yyvsp[0].strval));
 
@@ -1518,11 +1558,11 @@ yyreduce:
 
         g_free((yyvsp[0].strval));
     }
-#line 1522 "parser.tab.c" /* yacc.c:1652  */
+#line 1562 "parser.tab.c" /* yacc.c:1652  */
     break;
 
-  case 18:
-#line 253 "../src/parser.y" /* yacc.c:1652  */
+  case 20:
+#line 279 "../src/parser.y" /* yacc.c:1652  */
     {
         printf("Instruction: MOV %s,%s\n", (yyvsp[-1].strval), (yyvsp[0].strval));
 
@@ -1535,11 +1575,11 @@ yyreduce:
         g_free((yyvsp[-1].strval));
         g_free((yyvsp[0].strval));
     }
-#line 1539 "parser.tab.c" /* yacc.c:1652  */
+#line 1579 "parser.tab.c" /* yacc.c:1652  */
     break;
 
-  case 19:
-#line 265 "../src/parser.y" /* yacc.c:1652  */
+  case 21:
+#line 291 "../src/parser.y" /* yacc.c:1652  */
     {
         printf("Instruction: CMP %s,%s\n", (yyvsp[-1].strval), (yyvsp[0].strval));
 
@@ -1552,11 +1592,11 @@ yyreduce:
         g_free((yyvsp[-1].strval));
         g_free((yyvsp[0].strval));
     }
-#line 1556 "parser.tab.c" /* yacc.c:1652  */
+#line 1596 "parser.tab.c" /* yacc.c:1652  */
     break;
 
-  case 20:
-#line 277 "../src/parser.y" /* yacc.c:1652  */
+  case 22:
+#line 303 "../src/parser.y" /* yacc.c:1652  */
     {
         printf("Instruction: JMPL %s\n", (yyvsp[0].strval));
 
@@ -1565,11 +1605,11 @@ yyreduce:
         instruction->operand1.operand_address = (yyvsp[0].strval);
         instructions_table = g_slist_append(instructions_table, instruction);
     }
-#line 1569 "parser.tab.c" /* yacc.c:1652  */
+#line 1609 "parser.tab.c" /* yacc.c:1652  */
     break;
 
-  case 21:
-#line 285 "../src/parser.y" /* yacc.c:1652  */
+  case 23:
+#line 311 "../src/parser.y" /* yacc.c:1652  */
     {
         printf("Instruction: JMPE %s\n", (yyvsp[0].strval));
 
@@ -1578,11 +1618,11 @@ yyreduce:
         instruction->operand1.operand_address = (yyvsp[0].strval);
         instructions_table = g_slist_append(instructions_table, instruction);
     }
-#line 1582 "parser.tab.c" /* yacc.c:1652  */
+#line 1622 "parser.tab.c" /* yacc.c:1652  */
     break;
 
-  case 22:
-#line 293 "../src/parser.y" /* yacc.c:1652  */
+  case 24:
+#line 319 "../src/parser.y" /* yacc.c:1652  */
     {
         printf("Instruction: JMPG %s\n", (yyvsp[0].strval));
 
@@ -1591,11 +1631,11 @@ yyreduce:
         instruction->operand1.operand_address = (yyvsp[0].strval);
         instructions_table = g_slist_append(instructions_table, instruction);
     }
-#line 1595 "parser.tab.c" /* yacc.c:1652  */
+#line 1635 "parser.tab.c" /* yacc.c:1652  */
     break;
 
-  case 23:
-#line 301 "../src/parser.y" /* yacc.c:1652  */
+  case 25:
+#line 327 "../src/parser.y" /* yacc.c:1652  */
     {
         printf("Instruction: RST\n");
 
@@ -1603,11 +1643,11 @@ yyreduce:
         instruction->operation = OPERATION_RST;
         instructions_table = g_slist_append(instructions_table, instruction);
     }
-#line 1607 "parser.tab.c" /* yacc.c:1652  */
+#line 1647 "parser.tab.c" /* yacc.c:1652  */
     break;
 
-  case 24:
-#line 308 "../src/parser.y" /* yacc.c:1652  */
+  case 26:
+#line 334 "../src/parser.y" /* yacc.c:1652  */
     {
         printf("Instruction: HALT\n");
 
@@ -1615,11 +1655,11 @@ yyreduce:
         instruction->operation = OPERATION_HALT;
         instructions_table = g_slist_append(instructions_table, instruction);
     }
-#line 1619 "parser.tab.c" /* yacc.c:1652  */
+#line 1659 "parser.tab.c" /* yacc.c:1652  */
     break;
 
-  case 25:
-#line 315 "../src/parser.y" /* yacc.c:1652  */
+  case 27:
+#line 341 "../src/parser.y" /* yacc.c:1652  */
     {
         printf("Instruction: ISR %s,%s\n", (yyvsp[-1].strval), (yyvsp[0].strval));
 
@@ -1631,11 +1671,11 @@ yyreduce:
 
         g_free((yyvsp[-1].strval));
     }
-#line 1635 "parser.tab.c" /* yacc.c:1652  */
+#line 1675 "parser.tab.c" /* yacc.c:1652  */
     break;
 
-  case 26:
-#line 326 "../src/parser.y" /* yacc.c:1652  */
+  case 28:
+#line 352 "../src/parser.y" /* yacc.c:1652  */
     {
         printf("Instruction: INT %s\n", (yyvsp[0].strval));
 
@@ -1646,11 +1686,11 @@ yyreduce:
 
         g_free((yyvsp[0].strval));
     }
-#line 1650 "parser.tab.c" /* yacc.c:1652  */
+#line 1690 "parser.tab.c" /* yacc.c:1652  */
     break;
 
-  case 27:
-#line 336 "../src/parser.y" /* yacc.c:1652  */
+  case 29:
+#line 362 "../src/parser.y" /* yacc.c:1652  */
     {
         printf("Instruction: ENDINT\n");
 
@@ -1658,11 +1698,11 @@ yyreduce:
         instruction->operation = OPERATION_ENDINT;
         instructions_table = g_slist_append(instructions_table, instruction);
     }
-#line 1662 "parser.tab.c" /* yacc.c:1652  */
+#line 1702 "parser.tab.c" /* yacc.c:1652  */
     break;
 
 
-#line 1666 "parser.tab.c" /* yacc.c:1652  */
+#line 1706 "parser.tab.c" /* yacc.c:1652  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1893,7 +1933,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 345 "../src/parser.y" /* yacc.c:1918  */
+#line 371 "../src/parser.y" /* yacc.c:1918  */
 
 
 // Forward declarations of functions in lexer.l that allow Flex to parse an in-memory buffer instead of a file handle.
@@ -2032,6 +2072,14 @@ int main(int argc, char *argv[]) {
                 break;
             case OPERATION_INT:
                 operand1_is_register = TRUE;
+                break;
+            case OPERATION_RLOAD:
+                operand1_is_register = TRUE;
+                operand2_is_register = TRUE;
+                break;
+            case OPERATION_RSTORE:
+                operand1_is_register = TRUE;
+                operand2_is_register = TRUE;
                 break;
             default:
                 break;
