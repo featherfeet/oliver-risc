@@ -128,6 +128,10 @@
     return TOKEN_RSTORE;
 }
 
+"CLOAD" {
+    return TOKEN_CLOAD;
+}
+
 (IP|A|B|C|D|E|F|G) {
     yylval.strval = g_strdup(yytext);
     return TOKEN_REGISTER;

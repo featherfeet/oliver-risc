@@ -411,6 +411,14 @@ begin
                             state <= `STATE_FETCH_OPERATION;
                         end
                     end
+                    // Load value from constant operand into a register.
+                    `OPERATION_CLOAD:
+                    begin
+                        $display("CLOAD");
+                        registers[operand2] <= operand1;
+                        `REGISTER_IP <= `REGISTER_IP + `INSTRUCTION_SIZE_BYTES;
+                        state <= `STATE_FETCH_OPERATION;
+                    end
                     // Store value into RAM from register.
                     `OPERATION_STORE:
                     begin

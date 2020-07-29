@@ -16,6 +16,7 @@
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
     typedef struct ast_node ASTNode;
+    typedef struct expression_node ExpressionNode;
 
     // Different types of nodes (variable declaration, variable assignment, etc.) that can be in the parse tree.
     typedef enum {
@@ -32,7 +33,7 @@
     // Structure for storing variable assingments like "VAR x = 10;" TODO: Add pointer to an ASTNode for storing expressions so that the user can do things like "x := x + 5;" 
     typedef struct {
         char *name;
-        ASTNode *value;
+        ExpressionNode *value;
     } VariableAssignmentNode;
 
     // Structure for storing expressions like "var1 + 16 - var2".
@@ -72,6 +73,16 @@
     } ASTNode;
 
     GSList *ast = NULL;
+
+    ///////////////////////////////////////////////////////
+    // Functions for generating assembly from AST nodes.
+    ///////////////////////////////////////////////////////
+    // Function that takes a file pointer and a pointer to an ExpressionNode in order to generate the assembly to evaluate the expression into register A.
+    void evaluateExpression(FILE *output_file, ExpressionNode *node) {
+        for (GSList *iterator = node->terms; iterator; iterator->next) {
+            TermNode *term = iterator->data;
+        }
+    }
 %}
 
 %token TOKEN_VAR
@@ -250,7 +261,18 @@ int main(int argc, char *argv[]) {
         ASTNode *node = iterator->data;
 
         if (node->node_type == VARIABLE_DECLARATION) {
+            fprintf(output_file, "    // Declaring variable `%s`.\n", node->node.variable_declaration.name);
             fprintf(output_file, "    %s = %d\n", node->node.variable_declaration.name, node->node.variable_declaration.value);
+        }
+    }
+
+    // Generate the .code section of the assembly file.
+    fprintf(output_file, ".code:\n");
+    for (GSList *iterator = ast; iterator; iterator = iterator->next) {
+        ASTNode *node = iterator->data;
+
+        if (node->node_type == VARIABLE_ASSIGNMENT) {
+            evaluateExpression(output_file, node->node.variable_assignment.value);
         }
     }
 

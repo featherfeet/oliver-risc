@@ -69,6 +69,8 @@ const char *operationToString(Operation operation) {
             return "RLOAD";
         case OPERATION_RSTORE:
             return "RSTORE";
+        case OPERATION_CLOAD:
+            return "CLOAD";
     }
 }
 
@@ -167,6 +169,9 @@ int main(int argc, char *argv[]) {
                 break;
             case OPERATION_RSTORE:
                 printf(" %s, %s\n", registerToString(operand1), registerToString(operand2));
+                break;
+            case OPERATION_CLOAD:
+                printf(" %d, %s\n", operand1, registerToString(operand2));
                 break;
         }
     }

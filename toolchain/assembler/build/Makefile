@@ -13,5 +13,5 @@ debug: lex.yy.c parser.tab.h parser.tab.c ../src/assembler.h ../../processor.h
 clean:
 	rm main lex.yy.c parser.tab.c parser.tab.h out.bin
 
-run: main rstore_rload_test.asm
-	./main rstore_rload_test.asm
+run: main cload_test.asm
+	./main cload_test.asm

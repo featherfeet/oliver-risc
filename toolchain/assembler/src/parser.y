@@ -102,6 +102,7 @@
 %token TOKEN_MEMORY_ADDRESS
 %token TOKEN_RLOAD
 %token TOKEN_RSTORE
+%token TOKEN_CLOAD
 
 %start line
 
@@ -240,6 +241,17 @@ instruction: TOKEN_NOP {
         instructions_table = g_slist_append(instructions_table, instruction);
 
         g_free($<strval>2);
+        g_free($<strval>3);
+    }
+    | TOKEN_CLOAD TOKEN_CONSTANT TOKEN_REGISTER {
+        printf("Instruction: CLOAD %d,%s\n", $<intval>2, $<strval>3);
+
+        Instruction *instruction = g_new(Instruction, 1);
+        instruction->operation = OPERATION_CLOAD;
+        instruction->operand1.operand_constant = $<intval>2;
+        instruction->operand2.operand_register = stringToRegister($<strval>3);
+        instructions_table = g_slist_append(instructions_table, instruction);
+
         g_free($<strval>3);
     }
     | TOKEN_ADD TOKEN_REGISTER TOKEN_REGISTER {
@@ -461,6 +473,8 @@ int main(int argc, char *argv[]) {
         gboolean operand1_is_address = FALSE;
         gboolean operand2_is_register = FALSE;
         gboolean operand2_is_address = FALSE;
+        gboolean operand1_is_constant = FALSE;
+        gboolean operand2_is_constant = FALSE;
         switch (instruction->operation) {
             case OPERATION_LOAD:
                 operand1_is_address = TRUE;
@@ -515,12 +529,18 @@ int main(int argc, char *argv[]) {
                 operand1_is_register = TRUE;
                 operand2_is_register = TRUE;
                 break;
+            case OPERATION_CLOAD:
+                operand1_is_constant = TRUE;
+                operand2_is_register = TRUE;
             default:
                 break;
         }
         // Based on what the operands to this specific operation are supposed to be (registers or addresses), copy operands over to the final binary output.
         if (operand1_is_register) {
             memcpy(instructions_binary + INSTRUCTION_SIZE * i + OPERATION_SIZE, &instruction->operand1.operand_register, OPERAND_SIZE);
+        }
+        else if (operand1_is_constant) {
+            memcpy(instructions_binary + INSTRUCTION_SIZE * i + OPERATION_SIZE, &instruction->operand1.operand_constant, OPERAND_SIZE);
         }
         // If the operation is a jump instruction, then look up the label being jumped to using the labels_table hash table. Retrieve the buffer storing the instruction address that the label should jump to.
         else if (instruction->operation == OPERATION_JMPL || instruction->operation == OPERATION_JMPE || instruction->operation == OPERATION_JMPG) {
@@ -543,6 +563,9 @@ int main(int argc, char *argv[]) {
         }
         if (operand2_is_register) {
             memcpy(instructions_binary + INSTRUCTION_SIZE * i + OPERATION_SIZE + OPERAND_SIZE, &instruction->operand2.operand_register, OPERAND_SIZE);
+        }
+        else if (operand2_is_constant) {
+            memcpy(instructions_binary + INSTRUCTION_SIZE * i + OPERATION_SIZE + OPERAND_SIZE, &instruction->operand2.operand_constant, OPERAND_SIZE);
         }
         else if (operand2_is_address) {
             char *address_string = instruction->operand2.operand_address;

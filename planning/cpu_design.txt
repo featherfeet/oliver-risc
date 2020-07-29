@@ -24,6 +24,7 @@ Instructions:
 * STORE <register>,<memory_address>               - Save the 32 bits in <register> to <memory_address> in SDRAM.
 * RLOAD <register1>,<register2>                   - Load the 32 bits at the memory address stored in <register1> into <register2>.
 * RSTORE <register1>,<register2>                  - Save the 32 bits in <register1> to the memory address stored in <register2>.
+* CLOAD <constant>,<register>                     - Load a 32-bit constant operand into a register.
 
 * ADD <register1>,<register2>                     - Add <register1> to <register2> and store the result in register A.
 * SUB <register1>,<register2>                     - Subtract <register2> from <register1> and store the result in register A.

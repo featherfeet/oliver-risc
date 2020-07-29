@@ -38,7 +38,8 @@ typedef enum {
     OPERATION_INT,
     OPERATION_ENDINT,
     OPERATION_RLOAD,
-    OPERATION_RSTORE
+    OPERATION_RSTORE,
+    OPERATION_CLOAD
 } Operation;
 
 typedef enum {
@@ -67,6 +68,7 @@ typedef struct {
 typedef union {
     Register operand_register;
     char *operand_address;
+    OPERAND_C_TYPE operand_constant;
 } Operand;
 
 // Represent an instruction like "MOV A,B" or whatever.
