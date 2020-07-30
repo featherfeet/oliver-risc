@@ -1,4 +1,5 @@
 `include "defines.v"
+`include "gpu/gpu_defines.v"
 
 module top(
     input [3:0] KEY,
@@ -58,6 +59,11 @@ fifo interrupt_fifo(.CLOCK_50(CLOCK_50),
 );
 
 // Integrated GPU.
+reg [$clog2(`GPU_TEXT_DISPLAY_ROWS) - 1:0] gpu_row_to_access;
+reg [$clog2(`GPU_TEXT_DISPLAY_COLUMNS) - 1:0] gpu_column_to_access;
+reg gpu_write_enable;
+reg [7:0] gpu_character_to_write;
+wire [7:0] gpu_character_read;
 gpu integrated_graphics(.CLOCK_50(CLOCK_50),
                         .reset(~KEY[0]),
                         .VGA_CLK(VGA_PIXEL_CLOCK),
@@ -65,7 +71,12 @@ gpu integrated_graphics(.CLOCK_50(CLOCK_50),
                         .VGA_G(VGA_G),
                         .VGA_B(VGA_B),
                         .VGA_HS(VGA_HS),
-                        .VGA_VS(VGA_VS));
+                        .VGA_VS(VGA_VS),
+                        .row_to_access(gpu_row_to_access),
+                        .column_to_access(gpu_column_to_access),
+                        .write_enable(gpu_write_enable),
+                        .character_to_write(gpu_character_to_write),
+                        .character_read(gpu_character_read));
 
 // ROM to read the program from.
 reg [31:0] program_rom_address;
@@ -441,7 +452,7 @@ begin
                             state <= `STATE_FETCH_OPERATION;
                         end
                     end
-                    // Store value into RAM (at address specified by a register) from a register.
+                    // Store value into RAM (at address specified by a register) from a register. registers[operand1] is the value being stored. registers[operand2] is the address in RAM to store at.
                     `OPERATION_RSTORE:
                     begin
                         $display("RSTORE");

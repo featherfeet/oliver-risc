@@ -1,5 +1,5 @@
 Assembler report for top
-Wed Jul 29 14:39:03 2020
+Thu Jul 30 13:45:39 2020
 Quartus II 64-Bit Version 13.0.1 Build 232 06/12/2013 Service Pack 1 SJ Web Edition
 
 
@@ -38,7 +38,7 @@ applicable agreement for further details.
 +---------------------------------------------------------------+
 ; Assembler Summary                                             ;
 +-----------------------+---------------------------------------+
-; Assembler Status      ; Successful - Wed Jul 29 14:39:03 2020 ;
+; Assembler Status      ; Successful - Thu Jul 30 13:45:39 2020 ;
 ; Revision Name         ; top                                   ;
 ; Top-level Entity Name ; top                                   ;
 ; Family                ; Cyclone II                            ;
@@ -130,13 +130,13 @@ Info: Running Quartus II 64-Bit Assembler
     Info: programming logic devices manufactured by Altera and sold by 
     Info: Altera or its authorized distributors.  Please refer to the 
     Info: applicable agreement for further details.
-    Info: Processing started: Wed Jul 29 14:39:01 2020
+    Info: Processing started: Thu Jul 30 13:45:37 2020
 Info: Command: quartus_asm top
 Info (115031): Writing out detailed assembly data for power analysis
 Info (115030): Assembler is generating device programming files
 Info: Quartus II 64-Bit Assembler was successful. 0 errors, 0 warnings
-    Info: Peak virtual memory: 544 megabytes
-    Info: Processing ended: Wed Jul 29 14:39:03 2020
+    Info: Peak virtual memory: 548 megabytes
+    Info: Processing ended: Thu Jul 30 13:45:39 2020
     Info: Elapsed time: 00:00:02
     Info: Total CPU time (on all processors): 00:00:02
 

@@ -1,28 +1,29 @@
+`include "gpu/gpu_defines.v"
+
 module gpu(
-    input CLOCK_50,
-    input reset,
-    input VGA_CLK,
-    output wire [3:0] VGA_R,
-    output wire [3:0] VGA_G,
-    output wire [3:0] VGA_B,
-    output wire VGA_HS,
-    output wire VGA_VS
+    // Clock and reset signals.
+    input CLOCK_50,                           // 50 MHz clock used as a base clock for communications between the CPU and GPU.
+    input reset,                              // Reset (active-high).
+    // VGA signals.
+    input VGA_CLK,                            // 25 (technically should be 25.175) MHz clock for VGA pixels.
+    output wire [3:0] VGA_R,                  // VGA red pin (4-bit resistor DAC).
+    output wire [3:0] VGA_G,                  // VGA green pin (4-bit resistor DAC).
+    output wire [3:0] VGA_B,                  // VGA blue pin (4-bit resistor DAC).
+    output wire VGA_HS,                       // VGA h-sync signal.
+    output wire VGA_VS,                       // VGA v-sync signal.
+    // CPU interface signals.
+    input [$clog2(`GPU_TEXT_DISPLAY_ROWS) - 1:0] row_to_access, // Used by the CPU to address a specific row of text for reading/writing.
+    input [$clog2(`GPU_TEXT_DISPLAY_COLUMNS) - 1:0] column_to_access, // Used by the CPU to address a specific column of text for reading/writing.
+    input write_enable, // Set high by the CPU to write character_to_write to text_buffer[row_to_access][column_to_access]. If low, then the character at text_buffer[row_to_access][column_to_access] is read out into the character_read output.
+    input [7:0] character_to_write, // Used by the CPU to write a character to a location in the text buffer.
+    output reg [7:0] character_read // Used to send a character read from the text buffer back to the CPU.
 );
-
-// Size of the text display.
-parameter text_display_rows = 5'd24;
-parameter text_display_columns = 7'd80;
-parameter display_width_pixels = 10'd640;
-parameter display_height_pixels = 9'd480;
-
-parameter character_cell_width = display_width_pixels / text_display_columns;
-parameter character_cell_height = display_height_pixels / text_display_rows;
 
 integer i;
 integer j;
 
 // Buffer holding the text that is being displayed on-screen. Each cell in the 2-D array is a byte (8 bits) storing an ASCII character.
-reg[7:0] text_buffer[text_display_rows - 1:0][text_display_columns - 1:0];
+reg[7:0] text_buffer[`GPU_TEXT_DISPLAY_ROWS - 1:0][`GPU_TEXT_DISPLAY_COLUMNS - 1:0];
 
 // Create a VGA controller with 25 MHz pixel clock.
 wire blanking;
@@ -38,11 +39,11 @@ vga640x480 vga(.i_clk(CLOCK_50),
                .o_y(pixel_y));
 
 // Registers for tracking the coordinates of the current pixel being drawn within the current character cell.
-reg[$clog2(character_cell_width) - 1:0] character_cell_x; // Units: pixels, Range: 0 to character_cell_width - 1
-reg[$clog2(character_cell_height) - 1:0] character_cell_y; // Units: pixels, Range: 0 to character_cell_height - 1
+reg[$clog2(`GPU_CHARACTER_CELL_WIDTH) - 1:0] character_cell_x; // Units: pixels, Range: 0 to character_cell_width - 1
+reg[$clog2(`GPU_CHARACTER_CELL_HEIGHT) - 1:0] character_cell_y; // Units: pixels, Range: 0 to character_cell_height - 1
 // Registers for tracking the current character cell's location.
-reg[$clog2(text_display_rows) - 1:0] current_row; // Units: rows of text, Range: 0 to text_display_rows - 1
-reg[$clog2(text_display_columns) - 1:0] current_column; // Units: columns of text, Range: 0 to text_display_columns - 1
+reg[$clog2(`GPU_TEXT_DISPLAY_ROWS) - 1:0] current_row; // Units: rows of text, Range: 0 to text_display_rows - 1
+reg[$clog2(`GPU_TEXT_DISPLAY_COLUMNS) - 1:0] current_column; // Units: columns of text, Range: 0 to text_display_columns - 1
 
 // Combinational logic for rendering pixels.
 wire[7:0] current_character; // The character currently being drawn.
@@ -59,26 +60,32 @@ font_rom font_glyphs(.character(current_character),
                      .character_cell_y(character_cell_y),
                      .pixel_value(current_pixel_value));
 
+// Sequential logic for letting the CPU access the GPU's text buffer.
+always @(posedge CLOCK_50)
+begin
+    if (reset)
+    begin
+        for (i = 0; i < `GPU_TEXT_DISPLAY_ROWS; i = i + 1)
+            for (j = 0; j < `GPU_TEXT_DISPLAY_COLUMNS; j = j + 1)
+                text_buffer[i][j] <= 'd0;
+    end
+    else
+    begin
+        if (write_enable)
+        begin
+            $display("Writing character %c to row %d, column %d in GPU text buffer.", character_to_write, row_to_access, column_to_access);
+            text_buffer[row_to_access][column_to_access] <= character_to_write;
+        end
+        else
+            character_read <= text_buffer[row_to_access][column_to_access];
+    end
+end
+
 // Sequential logic for counting pixels, rows, and columns.
 always @(posedge VGA_CLK)
 begin
     if (reset)
     begin
-        for (i = 3; i < text_display_rows; i = i + 1)
-        begin
-            for (j = 0; j < text_display_columns; j = j + 1)
-            begin
-                text_buffer[i][j] <= 'd0;
-            end
-        end
-        for (j = 1; j < text_display_columns - 1; j = j + 1)
-            text_buffer[0][j] <= 'd65;
-        text_buffer[0][0] <= 'd35;
-        text_buffer[0][text_display_columns - 1] <= 'd36;
-        for (j = 0; j < text_display_columns; j = j + 1)
-            text_buffer[1][j] <= 'd66;
-        for (j = 0; j < text_display_columns; j = j + 1)
-            text_buffer[2][j] <= 'd67;
         character_cell_x <= 'h0;
         character_cell_y <= 'h0;
         current_row <= 'h0;
@@ -88,14 +95,14 @@ begin
     else if (~blanking)
     begin
         $display("Rendering.");
-        if (current_column == text_display_columns)
+        if (current_column == `GPU_TEXT_DISPLAY_COLUMNS)
         begin
             character_cell_x <= 'd0;
             current_column <= 'd0;
         end
         else
         begin
-            if (character_cell_x + 'd1 == character_cell_width)
+            if (character_cell_x + 'd1 == `GPU_CHARACTER_CELL_WIDTH)
             begin
                 character_cell_x <= 'd0;
                 current_column <= current_column + 'd1;
@@ -111,12 +118,12 @@ begin
         end
         else
         begin
-            if (character_cell_y == character_cell_height)
+            if (character_cell_y == `GPU_CHARACTER_CELL_HEIGHT)
             begin
                 character_cell_y <= 'd0;
                 current_row <= current_row + 'd1;
             end
-            else if (pixel_x == display_width_pixels)
+            else if (pixel_x == `GPU_DISPLAY_WIDTH_PIXELS)
                 character_cell_y <= character_cell_y + 'd1;
         end
     end
