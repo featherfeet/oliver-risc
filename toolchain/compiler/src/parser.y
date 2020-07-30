@@ -79,8 +79,25 @@
     ///////////////////////////////////////////////////////
     // Function that takes a file pointer and a pointer to an ExpressionNode in order to generate the assembly to evaluate the expression into register A.
     void evaluateExpression(FILE *output_file, ExpressionNode *node) {
-        for (GSList *iterator = node->terms; iterator; iterator->next) {
+        fprintf(output_file, "// Evaluate expression:\n");
+        fprintf(output_file, "CLOAD 0,A\n");
+
+        for (GSList *iterator = node->terms; iterator; iterator = iterator->next) {
             TermNode *term = iterator->data;
+
+            if (term->type == CONSTANT) {
+                fprintf(output_file, "CLOAD %d,B\n", term->value.constant);
+            }
+            else if (term->type == VARIABLE) {
+                fprintf(output_file, "LOAD %s,B\n", term->value.variable_name);
+            }
+
+            if (term->sign == POSITIVE) {
+                fprintf(output_file, "ADD A,B\n");
+            }
+            else if (term->sign == NEGATIVE) {
+                fprintf(output_file, "SUB A,B\n");
+            }
         }
     }
 %}
@@ -273,6 +290,7 @@ int main(int argc, char *argv[]) {
 
         if (node->node_type == VARIABLE_ASSIGNMENT) {
             evaluateExpression(output_file, node->node.variable_assignment.value);
+            fprintf(output_file, "STORE A,%s\n", node->node.variable_assignment.name);
         }
     }
 

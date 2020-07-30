@@ -85,6 +85,7 @@
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
     typedef struct ast_node ASTNode;
+    typedef struct expression_node ExpressionNode;
 
     // Different types of nodes (variable declaration, variable assignment, etc.) that can be in the parse tree.
     typedef enum {
@@ -101,7 +102,7 @@
     // Structure for storing variable assingments like "VAR x = 10;" TODO: Add pointer to an ASTNode for storing expressions so that the user can do things like "x := x + 5;" 
     typedef struct {
         char *name;
-        ASTNode *value;
+        ExpressionNode *value;
     } VariableAssignmentNode;
 
     // Structure for storing expressions like "var1 + 16 - var2".
@@ -142,7 +143,34 @@
 
     GSList *ast = NULL;
 
-#line 146 "parser.tab.c" /* yacc.c:337  */
+    ///////////////////////////////////////////////////////
+    // Functions for generating assembly from AST nodes.
+    ///////////////////////////////////////////////////////
+    // Function that takes a file pointer and a pointer to an ExpressionNode in order to generate the assembly to evaluate the expression into register A.
+    void evaluateExpression(FILE *output_file, ExpressionNode *node) {
+        fprintf(output_file, "// Evaluate expression:\n");
+        fprintf(output_file, "CLOAD 0,A\n");
+
+        for (GSList *iterator = node->terms; iterator; iterator = iterator->next) {
+            TermNode *term = iterator->data;
+
+            if (term->type == CONSTANT) {
+                fprintf(output_file, "CLOAD %d,B\n", term->value.constant);
+            }
+            else if (term->type == VARIABLE) {
+                fprintf(output_file, "LOAD %s,B\n", term->value.variable_name);
+            }
+
+            if (term->sign == POSITIVE) {
+                fprintf(output_file, "ADD A,B\n");
+            }
+            else if (term->sign == NEGATIVE) {
+                fprintf(output_file, "SUB A,B\n");
+            }
+        }
+    }
+
+#line 174 "parser.tab.c" /* yacc.c:337  */
 # ifndef YY_NULLPTR
 #  if defined __cplusplus
 #   if 201103L <= __cplusplus
@@ -196,7 +224,7 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 88 "../src/parser.y" /* yacc.c:352  */
+#line 116 "../src/parser.y" /* yacc.c:352  */
 
     int intval;
     char *strval;
@@ -204,7 +232,7 @@ union YYSTYPE
     struct expression_node *expression_node;
     struct term_node *term_node;
 
-#line 208 "parser.tab.c" /* yacc.c:352  */
+#line 236 "parser.tab.c" /* yacc.c:352  */
 };
 
 typedef union YYSTYPE YYSTYPE;
@@ -508,8 +536,8 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,   103,   103,   104,   105,   108,   113,   120,   129,   138,
-     143,   148,   155,   162,   169,   176,   183
+       0,   131,   131,   132,   133,   136,   141,   148,   157,   166,
+     171,   176,   183,   190,   197,   204,   211
 };
 #endif
 
@@ -1298,23 +1326,23 @@ yyreduce:
   switch (yyn)
     {
         case 4:
-#line 105 "../src/parser.y" /* yacc.c:1652  */
+#line 133 "../src/parser.y" /* yacc.c:1652  */
     {
             ast = g_slist_append(ast, (yyvsp[-1].node));
          }
-#line 1306 "parser.tab.c" /* yacc.c:1652  */
+#line 1334 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 5:
-#line 108 "../src/parser.y" /* yacc.c:1652  */
+#line 136 "../src/parser.y" /* yacc.c:1652  */
     {
             ast = g_slist_append(ast, (yyvsp[-1].node));
          }
-#line 1314 "parser.tab.c" /* yacc.c:1652  */
+#line 1342 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 6:
-#line 113 "../src/parser.y" /* yacc.c:1652  */
+#line 141 "../src/parser.y" /* yacc.c:1652  */
     {
                         ASTNode *node = g_new(ASTNode, 1);
                         node->node_type = VARIABLE_DECLARATION;
@@ -1322,11 +1350,11 @@ yyreduce:
                         node->node.variable_declaration.value = 0;
                         (yyval.node) = node;
                     }
-#line 1326 "parser.tab.c" /* yacc.c:1652  */
+#line 1354 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 7:
-#line 120 "../src/parser.y" /* yacc.c:1652  */
+#line 148 "../src/parser.y" /* yacc.c:1652  */
     {
                         ASTNode *node = g_new(ASTNode, 1);
                         node->node_type = VARIABLE_DECLARATION;
@@ -1334,11 +1362,11 @@ yyreduce:
                         node->node.variable_declaration.value = (yyvsp[0].intval);
                         (yyval.node) = node;
                     }
-#line 1338 "parser.tab.c" /* yacc.c:1652  */
+#line 1366 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 8:
-#line 129 "../src/parser.y" /* yacc.c:1652  */
+#line 157 "../src/parser.y" /* yacc.c:1652  */
     {
                        ASTNode *node = g_new(ASTNode, 1);
                        node->node_type = VARIABLE_ASSIGNMENT;
@@ -1346,29 +1374,29 @@ yyreduce:
                        node->node.variable_assignment.value = (yyvsp[0].expression_node);
                        (yyval.node) = node;
                    }
-#line 1350 "parser.tab.c" /* yacc.c:1652  */
+#line 1378 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 9:
-#line 138 "../src/parser.y" /* yacc.c:1652  */
+#line 166 "../src/parser.y" /* yacc.c:1652  */
     {
     ExpressionNode *expression_node = g_new(ExpressionNode, 1);
     expression_node->terms = NULL;
     (yyval.expression_node) = expression_node;
 }
-#line 1360 "parser.tab.c" /* yacc.c:1652  */
+#line 1388 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 10:
-#line 143 "../src/parser.y" /* yacc.c:1652  */
+#line 171 "../src/parser.y" /* yacc.c:1652  */
     {
               (yyvsp[-1].expression_node)->terms = g_slist_append((yyvsp[-1].expression_node)->terms, (yyvsp[0].term_node));
           }
-#line 1368 "parser.tab.c" /* yacc.c:1652  */
+#line 1396 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 11:
-#line 148 "../src/parser.y" /* yacc.c:1652  */
+#line 176 "../src/parser.y" /* yacc.c:1652  */
     {
     TermNode *term_node = g_new(TermNode, 1);
     term_node->sign = POSITIVE;
@@ -1376,71 +1404,71 @@ yyreduce:
     term_node->value.variable_name = (yyvsp[0].strval);
     (yyval.term_node) = term_node;
 }
-#line 1380 "parser.tab.c" /* yacc.c:1652  */
+#line 1408 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 12:
-#line 155 "../src/parser.y" /* yacc.c:1652  */
-    {
-        TermNode *term_node = g_new(TermNode, 1);
-        term_node->sign = POSITIVE;
-        term_node->type = CONSTANT;
-        term_node->value.constant = (yyvsp[0].intval);
-        (yyval.term_node) = term_node;
-    }
-#line 1392 "parser.tab.c" /* yacc.c:1652  */
-    break;
-
-  case 13:
-#line 162 "../src/parser.y" /* yacc.c:1652  */
-    {
-        TermNode *term_node = g_new(TermNode, 1);
-        term_node->sign = POSITIVE;
-        term_node->type = VARIABLE;
-        term_node->value.variable_name = (yyvsp[0].strval);
-        (yyval.term_node) = term_node;
-    }
-#line 1404 "parser.tab.c" /* yacc.c:1652  */
-    break;
-
-  case 14:
-#line 169 "../src/parser.y" /* yacc.c:1652  */
-    {
-        TermNode *term_node = g_new(TermNode, 1);
-        term_node->sign = NEGATIVE;
-        term_node->type = VARIABLE;
-        term_node->value.variable_name = (yyvsp[0].strval);
-        (yyval.term_node) = term_node;
-    }
-#line 1416 "parser.tab.c" /* yacc.c:1652  */
-    break;
-
-  case 15:
-#line 176 "../src/parser.y" /* yacc.c:1652  */
-    {
-        TermNode *term_node = g_new(TermNode, 1);
-        term_node->sign = POSITIVE;
-        term_node->type = CONSTANT;
-        term_node->value.constant = (yyvsp[0].intval);
-        (yyval.term_node) = term_node;
-    }
-#line 1428 "parser.tab.c" /* yacc.c:1652  */
-    break;
-
-  case 16:
 #line 183 "../src/parser.y" /* yacc.c:1652  */
     {
         TermNode *term_node = g_new(TermNode, 1);
+        term_node->sign = POSITIVE;
+        term_node->type = CONSTANT;
+        term_node->value.constant = (yyvsp[0].intval);
+        (yyval.term_node) = term_node;
+    }
+#line 1420 "parser.tab.c" /* yacc.c:1652  */
+    break;
+
+  case 13:
+#line 190 "../src/parser.y" /* yacc.c:1652  */
+    {
+        TermNode *term_node = g_new(TermNode, 1);
+        term_node->sign = POSITIVE;
+        term_node->type = VARIABLE;
+        term_node->value.variable_name = (yyvsp[0].strval);
+        (yyval.term_node) = term_node;
+    }
+#line 1432 "parser.tab.c" /* yacc.c:1652  */
+    break;
+
+  case 14:
+#line 197 "../src/parser.y" /* yacc.c:1652  */
+    {
+        TermNode *term_node = g_new(TermNode, 1);
+        term_node->sign = NEGATIVE;
+        term_node->type = VARIABLE;
+        term_node->value.variable_name = (yyvsp[0].strval);
+        (yyval.term_node) = term_node;
+    }
+#line 1444 "parser.tab.c" /* yacc.c:1652  */
+    break;
+
+  case 15:
+#line 204 "../src/parser.y" /* yacc.c:1652  */
+    {
+        TermNode *term_node = g_new(TermNode, 1);
+        term_node->sign = POSITIVE;
+        term_node->type = CONSTANT;
+        term_node->value.constant = (yyvsp[0].intval);
+        (yyval.term_node) = term_node;
+    }
+#line 1456 "parser.tab.c" /* yacc.c:1652  */
+    break;
+
+  case 16:
+#line 211 "../src/parser.y" /* yacc.c:1652  */
+    {
+        TermNode *term_node = g_new(TermNode, 1);
         term_node->sign = NEGATIVE;
         term_node->type = CONSTANT;
         term_node->value.constant = (yyvsp[0].intval);
         (yyval.term_node) = term_node;
     }
-#line 1440 "parser.tab.c" /* yacc.c:1652  */
+#line 1468 "parser.tab.c" /* yacc.c:1652  */
     break;
 
 
-#line 1444 "parser.tab.c" /* yacc.c:1652  */
+#line 1472 "parser.tab.c" /* yacc.c:1652  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1671,7 +1699,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 192 "../src/parser.y" /* yacc.c:1918  */
+#line 220 "../src/parser.y" /* yacc.c:1918  */
 
 
 // Forward declarations of functions in lexer.l that allow Flex to parse an in-memory buffer instead of a file handle.
@@ -1733,7 +1761,19 @@ int main(int argc, char *argv[]) {
         ASTNode *node = iterator->data;
 
         if (node->node_type == VARIABLE_DECLARATION) {
+            fprintf(output_file, "    // Declaring variable `%s`.\n", node->node.variable_declaration.name);
             fprintf(output_file, "    %s = %d\n", node->node.variable_declaration.name, node->node.variable_declaration.value);
+        }
+    }
+
+    // Generate the .code section of the assembly file.
+    fprintf(output_file, ".code:\n");
+    for (GSList *iterator = ast; iterator; iterator = iterator->next) {
+        ASTNode *node = iterator->data;
+
+        if (node->node_type == VARIABLE_ASSIGNMENT) {
+            evaluateExpression(output_file, node->node.variable_assignment.value);
+            fprintf(output_file, "STORE A,%s\n", node->node.variable_assignment.name);
         }
     }
 
