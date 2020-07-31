@@ -59,8 +59,7 @@ fifo interrupt_fifo(.CLOCK_50(CLOCK_50),
 );
 
 // Integrated GPU.
-reg [$clog2(`GPU_TEXT_DISPLAY_ROWS) - 1:0] gpu_row_to_access;
-reg [$clog2(`GPU_TEXT_DISPLAY_COLUMNS) - 1:0] gpu_column_to_access;
+reg [$clog2(`GPU_TEXT_BUFFER_LENGTH) - 1:0] gpu_cell_to_access;
 reg gpu_write_enable;
 reg [7:0] gpu_character_to_write;
 wire [7:0] gpu_character_read;
@@ -72,8 +71,7 @@ gpu integrated_graphics(.CLOCK_50(CLOCK_50),
                         .VGA_B(VGA_B),
                         .VGA_HS(VGA_HS),
                         .VGA_VS(VGA_VS),
-                        .row_to_access(gpu_row_to_access),
-                        .column_to_access(gpu_column_to_access),
+                        .cell_to_access(gpu_cell_to_access),
                         .write_enable(gpu_write_enable),
                         .character_to_write(gpu_character_to_write),
                         .character_read(gpu_character_read));
@@ -597,9 +595,9 @@ begin
                     end
                     `OPERATION_HALT:
                     begin
-                        $display("HALT");
+                        //$display("HALT");
                         state <= `STATE_EXECUTE_INSTRUCTION;
-                        $finish;
+                        //$finish;
                     end
                 endcase
             end

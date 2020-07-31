@@ -78,6 +78,7 @@ module test();
             VGA_PIXEL_CLOCK
         );
         reset = 'b0;
-        #80000 reset = 'hF;
+        //#80000 reset = 'hF;
+        #80 reset = 'hF;
     end
 endmodule

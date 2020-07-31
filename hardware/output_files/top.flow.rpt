@@ -1,6 +1,6 @@
 Flow report for top
-Thu Jul 30 13:51:32 2020
-Quartus II 32-bit Version 13.0.1 Build 232 06/12/2013 Service Pack 1 SJ Web Edition
+Thu Jul 30 18:31:00 2020
+Quartus II 64-Bit Version 13.0.1 Build 232 06/12/2013 Service Pack 1 SJ Web Edition
 
 
 ---------------------
@@ -40,17 +40,17 @@ applicable agreement for further details.
 +--------------------------------------------------------------------------------------+
 ; Flow Summary                                                                         ;
 +------------------------------------+-------------------------------------------------+
-; Flow Status                        ; Successful - Thu Jul 30 13:45:39 2020           ;
+; Flow Status                        ; Successful - Thu Jul 30 18:31:00 2020           ;
 ; Quartus II 64-Bit Version          ; 13.0.1 Build 232 06/12/2013 SP 1 SJ Web Edition ;
 ; Revision Name                      ; top                                             ;
 ; Top-level Entity Name              ; top                                             ;
 ; Family                             ; Cyclone II                                      ;
 ; Device                             ; EP2C20F484C7                                    ;
 ; Timing Models                      ; Final                                           ;
-; Total logic elements               ; 3,330 / 18,752 ( 18 % )                         ;
-;     Total combinational functions  ; 2,934 / 18,752 ( 16 % )                         ;
-;     Dedicated logic registers      ; 1,313 / 18,752 ( 7 % )                          ;
-; Total registers                    ; 1355                                            ;
+; Total logic elements               ; 4,187 / 18,752 ( 22 % )                         ;
+;     Total combinational functions  ; 3,790 / 18,752 ( 20 % )                         ;
+;     Dedicated logic registers      ; 1,319 / 18,752 ( 7 % )                          ;
+; Total registers                    ; 1361                                            ;
 ; Total pins                         ; 96 / 315 ( 30 % )                               ;
 ; Total virtual pins                 ; 0                                               ;
 ; Total memory bits                  ; 0 / 239,616 ( 0 % )                             ;
@@ -64,7 +64,7 @@ applicable agreement for further details.
 +-------------------+---------------------+
 ; Option            ; Setting             ;
 +-------------------+---------------------+
-; Start date & time ; 07/30/2020 13:44:47 ;
+; Start date & time ; 07/30/2020 18:29:52 ;
 ; Main task         ; Compilation         ;
 ; Revision Name     ; top                 ;
 +-------------------+---------------------+
@@ -75,7 +75,7 @@ applicable agreement for further details.
 +-------------------------------------+---------------------------------------+---------------+-------------+----------------+
 ; Assignment Name                     ; Value                                 ; Default Value ; Entity Name ; Section Id     ;
 +-------------------------------------+---------------------------------------+---------------+-------------+----------------+
-; COMPILER_SIGNATURE_ID               ; 0.159614188719901                     ; --            ; --          ; --             ;
+; COMPILER_SIGNATURE_ID               ; 0.159615899106560                     ; --            ; --          ; --             ;
 ; EDA_OUTPUT_DATA_FORMAT              ; Verilog Hdl                           ; --            ; --          ; eda_simulation ;
 ; EDA_SIMULATION_TOOL                 ; ModelSim-Altera (Verilog)             ; <None>        ; --          ; --             ;
 ; MAX_CORE_JUNCTION_TEMP              ; 85                                    ; --            ; --          ; --             ;
@@ -89,29 +89,27 @@ applicable agreement for further details.
 +-------------------------------------+---------------------------------------+---------------+-------------+----------------+
 
 
-+-------------------------------------------------------------------------------------------------------------------------------+
-; Flow Elapsed Time                                                                                                             ;
-+---------------------------+--------------+-------------------------+---------------------+------------------------------------+
-; Module Name               ; Elapsed Time ; Average Processors Used ; Peak Virtual Memory ; Total CPU Time (on all processors) ;
-+---------------------------+--------------+-------------------------+---------------------+------------------------------------+
-; Analysis & Synthesis      ; 00:00:25     ; 1.0                     ; 678 MB              ; 00:00:25                           ;
-; Fitter                    ; 00:00:21     ; 2.3                     ; 876 MB              ; 00:00:41                           ;
-; Assembler                 ; 00:00:02     ; 1.0                     ; 548 MB              ; 00:00:02                           ;
-; TimeQuest Timing Analyzer ; 00:00:03     ; 1.0                     ; 356 MB              ; 00:00:03                           ;
-; Total                     ; 00:00:51     ; --                      ; --                  ; 00:01:11                           ;
-+---------------------------+--------------+-------------------------+---------------------+------------------------------------+
++--------------------------------------------------------------------------------------------------------------------------+
+; Flow Elapsed Time                                                                                                        ;
++----------------------+--------------+-------------------------+---------------------+------------------------------------+
+; Module Name          ; Elapsed Time ; Average Processors Used ; Peak Virtual Memory ; Total CPU Time (on all processors) ;
++----------------------+--------------+-------------------------+---------------------+------------------------------------+
+; Analysis & Synthesis ; 00:00:38     ; 1.0                     ; 680 MB              ; 00:00:39                           ;
+; Fitter               ; 00:00:23     ; 3.5                     ; 935 MB              ; 00:00:48                           ;
+; Assembler            ; 00:00:02     ; 1.0                     ; 545 MB              ; 00:00:02                           ;
+; Total                ; 00:01:03     ; --                      ; --                  ; 00:01:29                           ;
++----------------------+--------------+-------------------------+---------------------+------------------------------------+
 
 
-+-----------------------------------------------------------------------------------------------+
-; Flow OS Summary                                                                               ;
-+---------------------------+------------------+------------------+------------+----------------+
-; Module Name               ; Machine Hostname ; OS Name          ; OS Version ; Processor type ;
-+---------------------------+------------------+------------------+------------+----------------+
-; Analysis & Synthesis      ; olivers-desktop  ; Debian GNU/Linux ; 10         ; x86_64         ;
-; Fitter                    ; olivers-desktop  ; Debian GNU/Linux ; 10         ; x86_64         ;
-; Assembler                 ; olivers-desktop  ; Debian GNU/Linux ; 10         ; x86_64         ;
-; TimeQuest Timing Analyzer ; olivers-centos   ; CentOS release   ; 6          ; i686           ;
-+---------------------------+------------------+------------------+------------+----------------+
++------------------------------------------------------------------------------------------+
+; Flow OS Summary                                                                          ;
++----------------------+------------------+------------------+------------+----------------+
+; Module Name          ; Machine Hostname ; OS Name          ; OS Version ; Processor type ;
++----------------------+------------------+------------------+------------+----------------+
+; Analysis & Synthesis ; olivers-desktop  ; Debian GNU/Linux ; 10         ; x86_64         ;
+; Fitter               ; olivers-desktop  ; Debian GNU/Linux ; 10         ; x86_64         ;
+; Assembler            ; olivers-desktop  ; Debian GNU/Linux ; 10         ; x86_64         ;
++----------------------+------------------+------------------+------------+----------------+
 
 
 ------------
@@ -120,7 +118,6 @@ applicable agreement for further details.
 quartus_map top --parallel=12
 quartus_fit top --parallel=12
 quartus_asm top
-quartus_sta top -c top
 
 
 
