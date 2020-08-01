@@ -278,15 +278,17 @@ instruction: TOKEN_NOP {
         g_free($<strval>2);
         g_free($<strval>3);
     }
-    | TOKEN_OUT TOKEN_REGISTER {
-        printf("Instruction: OUT %s\n", $<strval>2);
+    | TOKEN_OUT TOKEN_REGISTER TOKEN_REGISTER {
+        printf("Instruction: OUT %s,%s\n", $<strval>2, $<strval>3);
 
         Instruction *instruction = g_new(Instruction, 1);
         instruction->operation = OPERATION_OUT;
         instruction->operand1.operand_register = stringToRegister($<strval>2);
+        instruction->operand2.operand_register = stringToRegister($<strval>3);
         instructions_table = g_slist_append(instructions_table, instruction);
 
         g_free($<strval>2);
+        g_free($<strval>3);
     }
     | TOKEN_MOV TOKEN_REGISTER TOKEN_REGISTER {
         printf("Instruction: MOV %s,%s\n", $<strval>2, $<strval>3);
@@ -494,6 +496,7 @@ int main(int argc, char *argv[]) {
                 break;
             case OPERATION_OUT:
                 operand1_is_register = TRUE;
+                operand2_is_register = TRUE;
                 break;
             case OPERATION_IN:
                 operand1_is_register = TRUE;

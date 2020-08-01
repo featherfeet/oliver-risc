@@ -13,5 +13,5 @@ debug: lex.yy.c parser.tab.h parser.tab.c ../src/assembler.h ../../processor.h
 clean:
 	rm main lex.yy.c parser.tab.c parser.tab.h out.bin
 
-run: main cload_test.asm
-	./main cload_test.asm
+run: main gpu_test.asm
+	./main gpu_test.asm

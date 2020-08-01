@@ -75,6 +75,7 @@ gpu integrated_graphics(.CLOCK_50(CLOCK_50),
                         .write_enable(gpu_write_enable),
                         .character_to_write(gpu_character_to_write),
                         .character_read(gpu_character_read));
+reg gpu_access_state;
 
 // ROM to read the program from.
 reg [31:0] program_rom_address;
@@ -129,17 +130,6 @@ sdram_system_new_sdram_controller_0 sdram_controller(
     .zs_ras_n                       (DRAM_RAS_N),
     .zs_we_n                        (DRAM_WE_N),
     .init_done                      (sdram_controller_init_done)
-);
-
-reg[31:0] number_to_show;
-numericaldisplay display(
-    .CLOCK_50(CLOCK_50),
-    .RST_N(KEY[0]),
-    .number_to_show(number_to_show),
-    .HEX0(HEX0),
-    .HEX1(HEX1),
-    .HEX2(HEX2),
-    .HEX3(HEX3)
 );
 
 // Task for writing to RAM.
@@ -254,7 +244,6 @@ begin
         ram_read_complete <= 'b0;
         ram_read_data <= 'b0;
         operand_byte_index <= 'b0;
-        number_to_show <= 'b0;
         `REGISTER_IP <= 'b0;
         `REGISTER_A <= 'b0;
         `REGISTER_B <= 'b0;
@@ -266,6 +255,7 @@ begin
         `REGISTER_IE <= 'b1;
         for (i = 0; i < `NUM_INTERRUPTS; i = i + 1)
             interrupt_vector_table[i] <= 'b0;
+        gpu_access_state <= `GPU_ACCESS_STATE_SETUP;
     end
     else
     begin
@@ -488,12 +478,24 @@ begin
                         `REGISTER_IP <= `REGISTER_IP + `INSTRUCTION_SIZE_BYTES;
                         state <= `STATE_FETCH_OPERATION;
                     end
+                    // Write to the I/O "memory" space (currently just the GPU's text buffer). operand1 is the register number of the register containing the address to write to. operand2 is the register containing the value to write.
                     `OPERATION_OUT:
                     begin
-                        $display("\033[1;32mOUTPUT: %d\033[0m", registers[operand1]);
-                        number_to_show <= registers[operand1];
-                        `REGISTER_IP <= `REGISTER_IP + `INSTRUCTION_SIZE_BYTES;
-                        state <= `STATE_FETCH_OPERATION;
+                        $display("OUT");
+                        if (gpu_access_state == `GPU_ACCESS_STATE_SETUP)
+                        begin
+                            gpu_write_enable <= 'b1;
+                            gpu_cell_to_access <= registers[operand1];
+                            gpu_character_to_write <= registers[operand2];
+                            gpu_access_state <= `GPU_ACCESS_STATE_FINISH;
+                        end
+                        else
+                        begin
+                            gpu_write_enable <= 'b0;
+                            gpu_access_state <= `GPU_ACCESS_STATE_SETUP;
+                            `REGISTER_IP <= `REGISTER_IP + `INSTRUCTION_SIZE_BYTES;
+                            state <= `STATE_FETCH_OPERATION;
+                        end
                     end
                     `OPERATION_IN:
                     begin
