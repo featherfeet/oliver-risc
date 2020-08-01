@@ -10,7 +10,12 @@ module dual_port_ram(
     output reg [7:0] port_b_data_out
 );
 
-    reg[7:0] ram_buffer[`GPU_TEXT_BUFFER_LENGTH - 1:0];
+    reg[0:7] ram_buffer[0:`GPU_TEXT_BUFFER_LENGTH - 1];
+
+    initial begin
+        $display("Loading boot screen...");
+		$readmemh("rtl/gpu/boot_screen.mem", ram_buffer);
+    end
 
     always @(posedge CLOCK_50)
     begin
