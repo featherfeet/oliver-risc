@@ -506,6 +506,7 @@ set_global_assignment -name VERILOG_FILE rtl/fifo.v
 set_global_assignment -name VERILOG_FILE rtl/gpu/vga640x480.v
 set_global_assignment -name VERILOG_FILE rtl/gpu/gpu.v
 set_global_assignment -name VERILOG_FILE rtl/gpu/gpu_defines.v
+set_global_assignment -name VERILOG_FILE rtl/gpu/dual_port_ram.v
 set_global_assignment -name VERILOG_FILE rtl/gpu/font_rom.v
 set_global_assignment -name POWER_PRESET_COOLING_SOLUTION "23 MM HEAT SINK WITH 200 LFPM AIRFLOW"
 set_global_assignment -name POWER_BOARD_THERMAL_MODEL "NONE (CONSERVATIVE)"
