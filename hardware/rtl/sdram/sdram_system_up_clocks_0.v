@@ -91,7 +91,7 @@ localparam SYS_CLK_DIV	= 1;
  *                 Internal Wires and Registers Declarations                 *
  *****************************************************************************/
 // Internal Wires
-wire			[ 2: 0]	sys_mem_clks;
+wire			[ 5: 0]	sys_mem_clks; // Changed by Oliver from 2 : 0 to 5 : 0 so that Icarus won't give a warning.
 
 wire						clk_locked;
 
@@ -134,7 +134,7 @@ altpll DE_Clock_Generator_System (
 	.inclk			({1'b0, CLOCK_50}),
 
 	// Outputs
-	.clk				(sys_mem_clks),
+	.clk			({sys_mem_clks}),
 	.locked			(clk_locked),
 
 	// Unused

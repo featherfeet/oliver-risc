@@ -1,37 +1,23 @@
 [*]
 [*] GTKWave Analyzer v3.3.98 (w)1999-2019 BSI
-[*] Sun Aug  2 00:11:25 2020
+[*] Sun Aug  2 21:22:32 2020
 [*]
 [dumpfile] "/home/oliver/Projects/FPGA_Projects/CPU/hardware/dump.lxt"
-[dumpfile_mtime] "Sun Aug  2 00:01:56 2020"
-[dumpfile_size] 15093145
+[dumpfile_mtime] "Sun Aug  2 21:21:36 2020"
+[dumpfile_size] 15804764
 [savefile] "/home/oliver/Projects/FPGA_Projects/CPU/hardware/savefile.gtkw"
-[timestart] 307355600
+[timestart] 19076550
 [size] 1920 1016
 [pos] -39 -39
-*-16.516769 307800000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-12.565705 19100000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] test.
 [treeopen] test.top_instantiation.
+[treeopen] test.top_instantiation.up_clocks_0.
 [sst_width] 228
-[signals_width] 300
+[signals_width] 94
 [sst_expanded] 1
 [sst_vpaned_height] 285
-@28
-test.top_instantiation.CLOCK_50[0]
-test.top_instantiation.integrated_graphics.VGA_CLK[0]
-@22
-test.top_instantiation.VGA_R[3:0]
-test.top_instantiation.VGA_G[3:0]
-test.top_instantiation.VGA_B[3:0]
-@24
-test.top_instantiation.integrated_graphics.current_character_cell[10:0]
-@820
-test.top_instantiation.integrated_graphics.current_character[7:0]
-@25
-test.top_instantiation.integrated_graphics.pixel_x[9:0]
-@24
-test.top_instantiation.integrated_graphics.pixel_y[8:0]
-@28
-test.top_instantiation.integrated_graphics.blanking[0]
+@29
+test.top_instantiation.up_clocks_0.DE_Clock_Generator_System.clk[5:0]
 [pattern_trace] 1
 [pattern_trace] 0

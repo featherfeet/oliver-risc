@@ -43,19 +43,20 @@ reg [`OPERAND_SIZE_BITS - 1:0] code_section_start_address; // Where (in RAM) the
 reg [`OPERAND_SIZE_BITS - 1:0] interrupt_vector_table [`NUM_INTERRUPTS - 1:0]; // interrupt_vector_table[0] is the address of ISR number 0.
 
 // Interrupt FIFO -- interrupts are placed into this fifo for processing.
-reg [31:0] interrupt_fifo_data_in;
+reg [`OPERAND_SIZE_BITS - 1:0] interrupt_fifo_data_in;
 reg interrupt_fifo_write;
 wire interrupt_fifo_empty;
-wire interrupt_fifo_data_out;
+wire interrupt_fifo_full;
+wire [`OPERAND_SIZE_BITS - 1:0] interrupt_fifo_data_out;
 reg interrupt_fifo_read;
-fifo interrupt_fifo(.CLOCK_50(CLOCK_50),
+fifo #(.ITEM_SIZE_BITS(`OPERAND_SIZE_BITS), .FIFO_SIZE(10)) interrupt_fifo(.CLOCK_50(CLOCK_50),
                     .RST_N(KEY[0]),
                     .data_in(interrupt_fifo_data_in),
                     .write(interrupt_fifo_write),
                     .data_out(interrupt_fifo_data_out),
                     .read(interrupt_fifo_read),
                     .empty(interrupt_fifo_empty),
-                    .full()
+                    .full(interrupt_fifo_full)
 );
 
 // Integrated GPU.

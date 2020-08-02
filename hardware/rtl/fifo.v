@@ -3,10 +3,10 @@ module fifo #(parameter ITEM_SIZE_BITS = 32, parameter FIFO_SIZE = 10) (
     input RST_N,
     input [ITEM_SIZE_BITS - 1:0] data_in,
     input write,
-    output wire [ITEM_SIZE_BITS - 1:0] data_out,
+    output reg [ITEM_SIZE_BITS - 1:0] data_out,
     input read,
-    output empty,
-    output full
+    output wire empty,
+    output wire full
 );
 
 reg [$clog2(FIFO_SIZE) - 1:0] write_pointer;
@@ -26,9 +26,10 @@ begin
     begin
         write_pointer <= 'b0;
         read_pointer <= 'b0;
+        data_out <= 'b0;
         current_fifo_size <= 'b0;
-        for (i = 0; i < FIFO_SIZE; i = i + 1)
-            items[i] <= 'b0;
+        for (i = 0; i < FIFO_SIZE; i++)
+            items[i] = 'b0;
     end
     else
     begin
@@ -43,6 +44,7 @@ begin
         if (read && ~empty)
         begin
             current_fifo_size <= current_fifo_size - 'b1;
+            data_out <= items[read_pointer];
             read_pointer <= read_pointer + 'b1;
             if (read_pointer == FIFO_SIZE - 'b1)
                 read_pointer <= 'b0;
