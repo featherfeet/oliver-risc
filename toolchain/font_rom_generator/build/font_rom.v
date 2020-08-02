@@ -4,5 +4,10 @@ module font_rom(input CLOCK_50, input[7:0] character, input[$clog2(8) - 1:0] cha
 		$readmemh("rtl/gpu/font_rom.mem", font_storage);
 	end
 	always @(posedge CLOCK_50)
-		pixel_value <= font_storage[character][character_cell_y * 8 + character_cell_x];
+	begin
+	if ((character_cell_y * 'd7 + character_cell_x) > 'd127)
+		pixel_value <= 'b0;
+	else
+		pixel_value <= font_storage[character][character_cell_y * 'd8 + character_cell_x];
+	end
 endmodule
