@@ -493,6 +493,13 @@ set_location_assignment PIN_Y7 -to SRAM_LB_N
 set_location_assignment PIN_T8 -to SRAM_OE_N
 set_location_assignment PIN_W7 -to SRAM_UB_N
 set_location_assignment PIN_AA10 -to SRAM_WE_N
+
+# SD card pin assignments copied from the SD card audio player example.
+set_location_assignment PIN_V20 -to SD_CLK
+set_location_assignment PIN_Y20 -to SD_CMD
+set_location_assignment PIN_W20 -to SD_DAT
+set_location_assignment PIN_U20 -to SD_DAT3
+
 set_global_assignment -name STRATIX_DEVICE_IO_STANDARD "3.3-V LVTTL"
 set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
 set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
