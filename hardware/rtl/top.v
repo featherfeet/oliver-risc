@@ -58,6 +58,7 @@ fifo #(.ITEM_SIZE_BITS(`OPERAND_SIZE_BITS), .FIFO_SIZE(10)) interrupt_fifo(.CLOC
                     .empty(interrupt_fifo_empty),
                     .full(interrupt_fifo_full)
 );
+reg interrupt_fifo_access_state;
 
 // Integrated GPU.
 reg [$clog2(`GPU_TEXT_BUFFER_LENGTH) - 1:0] gpu_cell_to_access;
@@ -223,6 +224,15 @@ reg[7:0] ram_stabilization_counter;
 reg[7:0] operand_byte_index;
 // State machine for the entire CPU's operation.
 reg[7:0] state;
+
+// Task to advance the state machine to the next instruction.
+task next_instruction;
+begin
+    `REGISTER_IP <= `REGISTER_IP + `INSTRUCTION_SIZE_BYTES;
+    state <= `STATE_RUN_INTERRUPT;
+end
+endtask
+
 always @(posedge CLOCK_50)
 begin
     if (KEY[0] == 0)
@@ -257,6 +267,10 @@ begin
         for (i = 0; i < `NUM_INTERRUPTS; i = i + 1)
             interrupt_vector_table[i] <= 'b0;
         gpu_access_state <= `GPU_ACCESS_STATE_SETUP;
+        interrupt_fifo_write <= 'b0;
+        interrupt_fifo_data_in <= 'b0;
+        interrupt_fifo_read <= 'b0;
+        interrupt_fifo_access_state <= `INTERRUPT_FIFO_ACCESS_STATE_SETUP;
     end
     else
     begin
@@ -369,7 +383,7 @@ begin
                     `OPERATION_NOP:
                     begin
                         $display("NOP");
-                        `REGISTER_IP <= `REGISTER_IP + `INSTRUCTION_SIZE_BYTES;
+                        next_instruction();
                     end
                     // Load value from RAM address to register.
                     `OPERATION_LOAD:
@@ -387,8 +401,7 @@ begin
                         begin
                             //$display("Loaded value %d from address %d in RAM to register %d.", registers[operand2], operand1, operand2);
                             operand_byte_index <= 'b0;
-                            `REGISTER_IP <= `REGISTER_IP + `INSTRUCTION_SIZE_BYTES;
-                            state <= `STATE_FETCH_OPERATION;
+                            next_instruction();
                         end
                     end
                     // Load value from RAM address (stored in a register) to a register.
@@ -407,8 +420,7 @@ begin
                         begin
                             //$display("Loaded value %d from address %d in RAM to register %d.", registers[operand2], operand1, operand2);
                             operand_byte_index <= 'b0;
-                            `REGISTER_IP <= `REGISTER_IP + `INSTRUCTION_SIZE_BYTES;
-                            state <= `STATE_FETCH_OPERATION;
+                            next_instruction();
                         end
                     end
                     // Load value from constant operand into a register.
@@ -416,8 +428,7 @@ begin
                     begin
                         $display("CLOAD");
                         registers[operand2] <= operand1;
-                        `REGISTER_IP <= `REGISTER_IP + `INSTRUCTION_SIZE_BYTES;
-                        state <= `STATE_FETCH_OPERATION;
+                        next_instruction();
                     end
                     // Store value into RAM from register.
                     `OPERATION_STORE:
@@ -437,8 +448,7 @@ begin
                         begin
                             sdram_controller_wr_n_i <= 'b1;
                             operand_byte_index <= 'b0;
-                            `REGISTER_IP <= `REGISTER_IP + `INSTRUCTION_SIZE_BYTES;
-                            state <= `STATE_FETCH_OPERATION;
+                            next_instruction();
                         end
                     end
                     // Store value into RAM (at address specified by a register) from a register. registers[operand1] is the value being stored. registers[operand2] is the address in RAM to store at.
@@ -459,8 +469,7 @@ begin
                         begin
                             sdram_controller_wr_n_i <= 'b1;
                             operand_byte_index <= 'b0;
-                            `REGISTER_IP <= `REGISTER_IP + `INSTRUCTION_SIZE_BYTES;
-                            state <= `STATE_FETCH_OPERATION;
+                            next_instruction();
                         end
                     end
                     // Add two registers and store the result in register A.
@@ -468,23 +477,21 @@ begin
                     begin
                         $display("ADD");
                         `REGISTER_A <= registers[operand1] + registers[operand2];
-                        `REGISTER_IP <= `REGISTER_IP + `INSTRUCTION_SIZE_BYTES;
-                        state <= `STATE_FETCH_OPERATION;
+                        next_instruction();
                     end
                     // Subtract two registers and store the result in register A.
                     `OPERATION_SUB:
                     begin
                         $display("SUB");
                         `REGISTER_A <= registers[operand1] - registers[operand2];
-                        `REGISTER_IP <= `REGISTER_IP + `INSTRUCTION_SIZE_BYTES;
-                        state <= `STATE_FETCH_OPERATION;
+                        next_instruction();
                     end
-                    // Write to the I/O "memory" space (currently just the GPU's text buffer). operand1 is the register number of the register containing the address to write to. operand2 is the register containing the value to write.
+                    // Write to the I/O "memory" space (currently just the GPU's text buffer). operand1 is the register number of the register containing the address to write to. operand2 is the register number of the register containing the value to write.
                     `OPERATION_OUT:
                     begin
-                        $display("OUT");
                         if (gpu_access_state == `GPU_ACCESS_STATE_SETUP)
                         begin
+                            $display("OUT [address %d, character '%c']", registers[operand1], registers[operand2]);
                             gpu_write_enable <= 'b1;
                             gpu_cell_to_access <= registers[operand1];
                             gpu_character_to_write <= registers[operand2];
@@ -494,23 +501,20 @@ begin
                         begin
                             gpu_write_enable <= 'b0;
                             gpu_access_state <= `GPU_ACCESS_STATE_SETUP;
-                            `REGISTER_IP <= `REGISTER_IP + `INSTRUCTION_SIZE_BYTES;
-                            state <= `STATE_FETCH_OPERATION;
+                            next_instruction();
                         end
                     end
                     `OPERATION_IN:
                     begin
                         $display("IN");
-                        `REGISTER_IP <= `REGISTER_IP + `INSTRUCTION_SIZE_BYTES;
-                        state <= `STATE_FETCH_OPERATION;
+                        next_instruction();
                     end
                     // Copy register 1 to register 2.
                     `OPERATION_MOV:
                     begin
                         $display("MOV");
                         registers[operand2] <= registers[operand1];
-                        `REGISTER_IP <= `REGISTER_IP + `INSTRUCTION_SIZE_BYTES;
-                        state <= `STATE_FETCH_OPERATION;
+                        next_instruction();
                     end
                     `OPERATION_CMP:
                     begin
@@ -521,8 +525,7 @@ begin
                             `REGISTER_A <= 'd1;
                         else
                             `REGISTER_A <= 'd2;
-                        `REGISTER_IP <= `REGISTER_IP + `INSTRUCTION_SIZE_BYTES;
-                        state <= `STATE_FETCH_OPERATION;
+                        next_instruction();
                     end
                     `OPERATION_JMPL:
                     begin
@@ -531,7 +534,7 @@ begin
                             `REGISTER_IP <= code_section_start_address + operand1;
                         else
                             `REGISTER_IP <= `REGISTER_IP + `INSTRUCTION_SIZE_BYTES;
-                        state <= `STATE_FETCH_OPERATION;
+                        state <= `STATE_RUN_INTERRUPT;
                     end
                     `OPERATION_JMPE:
                     begin
@@ -540,7 +543,7 @@ begin
                             `REGISTER_IP <= code_section_start_address + operand1;
                         else
                             `REGISTER_IP <= `REGISTER_IP + `INSTRUCTION_SIZE_BYTES;
-                        state <= `STATE_FETCH_OPERATION;
+                        state <= `STATE_RUN_INTERRUPT;
                     end
                     `OPERATION_JMPG:
                     begin
@@ -549,32 +552,29 @@ begin
                             `REGISTER_IP <= code_section_start_address + operand1;
                         else
                             `REGISTER_IP <= `REGISTER_IP + `INSTRUCTION_SIZE_BYTES;
-                        state <= `STATE_FETCH_OPERATION;
+                        state <= `STATE_RUN_INTERRUPT;
                     end
                     `OPERATION_ISR:
                     begin
                         $display("ISR");
                         interrupt_vector_table[registers[operand1]] <= operand2;
-                        `REGISTER_IP <= `REGISTER_IP + `INSTRUCTION_SIZE_BYTES;
-                        state <= `STATE_FETCH_OPERATION;
+                        next_instruction();
                     end
                     `OPERATION_INT:
                     begin
-                        // TODO: Switch this instruction to add the interrupt
-                        // to the FIFO instead of directly jumping the IP
-                        // register.
                         $display("INT");
-                        // Save all registers' states (except the IP register).
-                        for (i = 1; i < `NUM_REGISTERS; i = i + 1)
-                            shadow_registers[i] <= registers[i];
-                        // Make the shadow (saved) IP register point at the
-                        // next instruction so that the program flow will
-                        // continue after the interrupt routine completes.
-                        shadow_registers[0] <= `REGISTER_IP + `INSTRUCTION_SIZE_BYTES;
-                        // Jump the current IP register to the interrupt
-                        // routine.
-                        `REGISTER_IP <= code_section_start_address + interrupt_vector_table[registers[operand1]];
-                        state <= `STATE_FETCH_OPERATION;
+                        if (interrupt_fifo_access_state == `INTERRUPT_FIFO_ACCESS_STATE_SETUP)
+                        begin
+                            interrupt_fifo_data_in <= registers[operand1];
+                            interrupt_fifo_write <= 'b1;
+                            interrupt_fifo_access_state <= `INTERRUPT_FIFO_ACCESS_STATE_FINISH;
+                        end
+                        else
+                        begin
+                            state <= `STATE_RUN_INTERRUPT;
+                            interrupt_fifo_write <= 'b0;
+                            interrupt_fifo_access_state <= `INTERRUPT_FIFO_ACCESS_STATE_SETUP;
+                        end
                     end
                     `OPERATION_RST:
                     begin
@@ -587,14 +587,15 @@ begin
                         `REGISTER_E <= 'b0;
                         `REGISTER_F <= 'b0;
                         `REGISTER_G <= 'b0;
-                        state <= `STATE_FETCH_OPERATION;
+                        // TODO: Clear interrupt vector table and interrupt FIFO.
+                        state <= `STATE_RUN_INTERRUPT;
                     end
                     `OPERATION_ENDINT:
                     begin
                         $display("ENDINT");
                         for (i = 0; i < `NUM_REGISTERS; i = i + 1)
                             registers[i] <= shadow_registers[i];
-                        state <= `STATE_FETCH_OPERATION;
+                        state <= `STATE_RUN_INTERRUPT;
                     end
                     `OPERATION_HALT:
                     begin
@@ -604,53 +605,36 @@ begin
                     end
                 endcase
             end
-            /*
             // Every cycle, check for interrupts and run the topmost one on the FIFO.
             `STATE_RUN_INTERRUPT:
             begin
-                // If there is an interrupt to process...
-                if (~interrupt_fifo_empty)
+                // If there are no interrupts to process (and we're not in the middle of processing one), proceed to the next state.
+                if (interrupt_fifo_empty && interrupt_fifo_access_state == `INTERRUPT_FIFO_ACCESS_STATE_SETUP)
+                    state <= `STATE_FETCH_OPERATION;
+                // If there is an interrupt to process, read it from the interrupt FIFO.
+                else if (~interrupt_fifo_empty && interrupt_fifo_access_state == `INTERRUPT_FIFO_ACCESS_STATE_SETUP)
                 begin
-                    // Save all registers' states.
-                    for (i = 0; i < `NUM_REGISTERS; i = i + 1)
+                    interrupt_fifo_read <= 'b1;
+                    interrupt_fifo_access_state <= `INTERRUPT_FIFO_ACCESS_STATE_FINISH;
+                end
+                // Process the interrupt that was read from the FIFO.
+                else if (interrupt_fifo_access_state == `INTERRUPT_FIFO_ACCESS_STATE_FINISH)
+                begin
+                    // Save all registers' states (except the IP register).
+                    for (i = 1; i < `NUM_REGISTERS; i = i + 1)
                         shadow_registers[i] <= registers[i];
-                    // Look up the location of the interrupt code, and jump the instruction pointer to that location.
-                    `REGISTER_IP <= interrupt_vector_table[interrupt_fifo_data_out];
+                    // Make the shadow (saved) IP register point at the next instruction so that the program flow will continue after the interrupt routine completes.
+                    shadow_registers[0] <= `REGISTER_IP + `INSTRUCTION_SIZE_BYTES;
+                    // Jump the current IP register to the interrupt routine.
+                    `REGISTER_IP <= code_section_start_address + interrupt_vector_table[interrupt_fifo_data_out];
+                    // Stop reading from the FIFO.
+                    interrupt_fifo_read <= 'b0;
+                    interrupt_fifo_access_state <= `INTERRUPT_FIFO_ACCESS_STATE_SETUP;
+                    state <= `STATE_FETCH_OPERATION;
                 end
             end
-            */
         endcase
     end
 end
-
-/*
-// Interrupt-handling unit:
-reg key_1_previous_value;
-
-always @(posedge CLOCK_50)
-begin
-    if (KEY[0] == 0)
-    begin
-        key_1_previous_value <= 'b1;
-        interrupt_fifo_data_in <= 'b0;
-        interrupt_fifo_write <= 'b0;
-        interrupt_fifo_read <= 'b0;
-    end
-    else
-    begin
-        if (KEY[1] != key_1_previous_value)
-        begin
-            $display("Pushing interrupt type 0 to FIFO.");
-            interrupt_fifo_data_in <= 'b0;
-            interrupt_fifo_write <= 'b1;
-            key_1_previous_value <= KEY[1];
-        end
-        else
-        begin
-            interrupt_fifo_write <= 'b0;
-        end
-    end
-end
-*/
 
 endmodule

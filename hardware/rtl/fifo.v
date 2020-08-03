@@ -28,7 +28,7 @@ begin
         read_pointer <= 'b0;
         data_out <= 'b0;
         current_fifo_size <= 'b0;
-        for (i = 0; i < FIFO_SIZE; i++)
+        for (i = 0; i < FIFO_SIZE; i = i + 1)
             items[i] = 'b0;
     end
     else

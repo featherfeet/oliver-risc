@@ -7,7 +7,7 @@ Program to test interrupts by slowly counting 1 to 5.
     increment = 1
     max_count = 5
     delay_timer = 500000
-    //delay_timer = 10
+    // delay_timer = 10
 .code:
     // Load the counter and other variables.
     LOAD counter,B
@@ -15,10 +15,15 @@ Program to test interrupts by slowly counting 1 to 5.
     LOAD max_count,D
     // Set up the interrupt routine 1.
     ISR B,delay_routine
+    // Load value 0 to register F.
+    CLOAD 0,F
+    // Load value 48 to register G. Adding 48 to a number gives you the ASCII value for that number.
+    CLOAD 48,G
     // Main loop.
     counter_loop:
-        // Output the counter.
-        OUT B
+        // Output the counter to character cell 0 on-screen.
+        ADD G,B
+        OUT F,A
         // Increment the counter (B).
         ADD B,C
         MOV A,B

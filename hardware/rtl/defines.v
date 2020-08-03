@@ -9,6 +9,9 @@
 `define GPU_ACCESS_STATE_SETUP    0
 `define GPU_ACCESS_STATE_FINISH   1
 
+`define INTERRUPT_FIFO_ACCESS_STATE_SETUP 0
+`define INTERRUPT_FIFO_ACCESS_STATE_FINISH 1
+
 `define OPERATION_NOP             0
 `define OPERATION_LOAD            1
 `define OPERATION_STORE           2
