@@ -4,11 +4,7 @@
 module top(
     input [3:0] KEY,
     input CLOCK_50,
-    input [9:0] SW,
-    output [6:0] HEX0,
-    output [6:0] HEX1,
-    output [6:0] HEX2,
-    output [6:0] HEX3,
+
     output DRAM_CLK,
     output [11:0] DRAM_ADDR,
     output DRAM_BA_0,
@@ -21,12 +17,18 @@ module top(
     output DRAM_RAS_N,
     output DRAM_WE_N,
     inout [15:0] DRAM_DQ,
+
     output wire [3:0] VGA_R,
     output wire [3:0] VGA_G,
     output wire [3:0] VGA_B,
     output wire VGA_HS,
     output wire VGA_VS,
-    output wire VGA_PIXEL_CLOCK
+    output wire VGA_PIXEL_CLOCK,
+
+    input PS2_CLK,
+    input PS2_DAT,
+    output wire [7:0] LEDG,
+    output wire [35:0] GPIO_0
 );
 
 integer i; // Counter used for synthesized for loops.
@@ -59,6 +61,13 @@ fifo #(.ITEM_SIZE_BITS(`OPERAND_SIZE_BITS), .FIFO_SIZE(10)) interrupt_fifo(.CLOC
                     .full(interrupt_fifo_full)
 );
 reg interrupt_fifo_access_state;
+
+// PS/2 keyboard.
+assign GPIO_0[0] = PS2_CLK;
+assign GPIO_0[1] = PS2_DAT;
+keyboard ps2_keyboard(.scancode(LEDG),
+                      .PS2_CLK(PS2_CLK),
+                      .PS2_DAT(PS2_DAT));
 
 // Integrated GPU.
 reg [$clog2(`GPU_TEXT_BUFFER_LENGTH) - 1:0] gpu_cell_to_access;
