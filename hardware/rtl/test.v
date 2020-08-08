@@ -69,6 +69,8 @@ module test();
     initial begin
         $dumpfile("dump.lxt");
         $dumpvars(0, test);
+        for (i = 0; i < `NUM_REGISTERS; i = i + 1)
+            $dumpvars(0, top_instantiation.registers[i]);
         $vgasimInit(
             dots_per_line,
             lines_per_frame,

@@ -273,6 +273,7 @@ begin
         `REGISTER_F <= 'b0;
         `REGISTER_G <= 'b0;
         `REGISTER_IE <= 'b1;
+        `REGISTER_IR <= 'b0;
         for (i = 0; i < `NUM_INTERRUPTS; i = i + 1)
             interrupt_vector_table[i] <= 'b0;
         gpu_access_state <= `GPU_ACCESS_STATE_SETUP;
@@ -605,6 +606,7 @@ begin
                         for (i = 0; i < `NUM_REGISTERS; i = i + 1)
                             registers[i] <= shadow_registers[i];
                         state <= `STATE_RUN_INTERRUPT;
+                        //`REGISTER_IR <= 'b0;
                     end
                     `OPERATION_HALT:
                     begin
@@ -620,8 +622,8 @@ begin
                 // If there are no interrupts to process (and we're not in the middle of processing one), proceed to the next state.
                 if (interrupt_fifo_empty && interrupt_fifo_access_state == `INTERRUPT_FIFO_ACCESS_STATE_SETUP)
                     state <= `STATE_FETCH_OPERATION;
-                // If there is an interrupt to process, read it from the interrupt FIFO.
-                else if (~interrupt_fifo_empty && interrupt_fifo_access_state == `INTERRUPT_FIFO_ACCESS_STATE_SETUP)
+                // If there is an interrupt to process (and we are not currently servicing an ISR), read it from the interrupt FIFO.
+                else if (~`REGISTER_IR && ~interrupt_fifo_empty && interrupt_fifo_access_state == `INTERRUPT_FIFO_ACCESS_STATE_SETUP)
                 begin
                     interrupt_fifo_read <= 'b1;
                     interrupt_fifo_access_state <= `INTERRUPT_FIFO_ACCESS_STATE_FINISH;
@@ -629,6 +631,8 @@ begin
                 // Process the interrupt that was read from the FIFO.
                 else if (interrupt_fifo_access_state == `INTERRUPT_FIFO_ACCESS_STATE_FINISH)
                 begin
+                    // Set the interrupt-running register.
+                    `REGISTER_IR <= 'b1;
                     // Save all registers' states (except the IP register).
                     for (i = 1; i < `NUM_REGISTERS; i = i + 1)
                         shadow_registers[i] <= registers[i];
