@@ -63,9 +63,13 @@ fifo #(.ITEM_SIZE_BITS(`OPERAND_SIZE_BITS), .FIFO_SIZE(10)) interrupt_fifo(.CLOC
 reg interrupt_fifo_access_state;
 
 // PS/2 keyboard.
-assign GPIO_0[0] = PS2_CLK;
-assign GPIO_0[1] = PS2_DAT;
-keyboard ps2_keyboard(.scancode(LEDG),
+wire[7:0] keyboard_scancode;
+wire keyboard_scancode_ready;
+assign GPIO_0[0] = PS2_CLK; // DEBUG
+assign GPIO_0[1] = PS2_DAT; // DEBUG
+assign LEDG = keyboard_scancode; // DEBUG
+keyboard ps2_keyboard(.scancode(keyboard_scancode),
+                      .ready(keyboard_scancode_ready),
                       .PS2_CLK(PS2_CLK),
                       .PS2_DAT(PS2_DAT));
 

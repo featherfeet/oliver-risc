@@ -9,7 +9,7 @@ module test();
     integer i;
     reg[3:0] reset = 4'd0;
     reg clk = 1'b1;
-    always #5 clk = ~clk;
+    always #10 clk = ~clk;
 
     wire SDRAM_CLK;
     wire [11:0] DRAM_ADDR;
