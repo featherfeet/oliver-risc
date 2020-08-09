@@ -1,2 +1,8 @@
-Desktop: scripts/synth.sh  69.86s user 2.89s system 119% cpu 1:01.11 total
-Laptop:  scripts/synth.sh  66.41s user 1.52s system 114% cpu 59.125 total
+Desktop:                        scripts/synth.sh  69.86s user 2.89s system 119% cpu 1:01.11 total
+Laptop:                         scripts/synth.sh  66.41s user 1.52s system 114% cpu 59.125 total
+EC2 Z1D instance with 24 cores (no parallel): real	0m41.017s
+                                              user	0m40.406s
+                                              sys	0m0.564s
+EC2 Z1D instance with 24 cores (parallel): real	0m38.655s
+                                           user	0m43.225s
+                                           sys	0m2.141s
