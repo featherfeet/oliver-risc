@@ -1,0 +1,2 @@
+Desktop: scripts/synth.sh  69.86s user 2.89s system 119% cpu 1:01.11 total
+Laptop:  scripts/synth.sh  66.41s user 1.52s system 114% cpu 59.125 total

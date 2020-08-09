@@ -1,7 +1,7 @@
 %{
-    #include <stdlib.h>
-    #include <glib.h>
-    #include "parser.tab.h"
+    extern "C" {
+        #include "parser.tab.h"
+    }
 %}
 
 %x SINGLE_LINE_COMMENT
@@ -55,7 +55,7 @@
 }
 
 [a-zA-Z]+[a-zA-Z0-9_]* {
-    yylval.strval = g_strdup(yytext);
+    yylval.strval = yytext;
     return TOKEN_IDENTIFIER;
 }
 

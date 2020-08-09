@@ -34,11 +34,11 @@
 /* Undocumented macros, especially those whose name start with YY_,
    are private implementation details.  Do not rely on them.  */
 
-#ifndef YY_YY_PARSER_TAB_H_INCLUDED
-# define YY_YY_PARSER_TAB_H_INCLUDED
+#ifndef YY_YY_HOME_OLIVER_PROJECTS_FPGA_PROJECTS_CPU_TOOLCHAIN_COMPILER_BUILD_PARSER_HPP_INCLUDED
+# define YY_YY_HOME_OLIVER_PROJECTS_FPGA_PROJECTS_CPU_TOOLCHAIN_COMPILER_BUILD_PARSER_HPP_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
-# define YYDEBUG 1
+# define YYDEBUG 0
 #endif
 #if YYDEBUG
 extern int yydebug;
@@ -65,7 +65,7 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 116 "../src/parser.y" /* yacc.c:1921  */
+#line 118 "src/parser.y" /* yacc.c:1921  */
 
     int intval;
     char *strval;
@@ -73,7 +73,7 @@ union YYSTYPE
     struct expression_node *expression_node;
     struct term_node *term_node;
 
-#line 77 "parser.tab.h" /* yacc.c:1921  */
+#line 77 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.hpp" /* yacc.c:1921  */
 };
 
 typedef union YYSTYPE YYSTYPE;
@@ -86,4 +86,4 @@ extern YYSTYPE yylval;
 
 int yyparse (void);
 
-#endif /* !YY_YY_PARSER_TAB_H_INCLUDED  */
+#endif /* !YY_YY_HOME_OLIVER_PROJECTS_FPGA_PROJECTS_CPU_TOOLCHAIN_COMPILER_BUILD_PARSER_HPP_INCLUDED  */

@@ -1,0 +1,1 @@
+/usr/bin/c++    -rdynamic CMakeFiles/main.dir/parser.cpp.o CMakeFiles/main.dir/lexer.cpp.o  -o main -lfl 
