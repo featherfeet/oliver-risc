@@ -1,8 +1,9 @@
 #ifndef AST_H
 #define AST_H
 
+#include <string>
 #include <vector>
-#include <memory>
+#include <ostream>
 #include "processor.h"
 
 enum ASTNodeType {
@@ -13,14 +14,22 @@ enum ASTNodeType {
     TERM_NODE
 };
 
-
-class ASTStatementNode {
+class ASTNode {
+    public:
+        virtual ASTNodeType getNodeType() = 0;
 };
 
-class ASTRootNode {
-    std::vector<std::shared_ptr<ASTStatementNode>> children;
+class ASTStatementNode : public ASTNode {
+};
+
+class ASTRootNode : ASTNode {
+    std::string generateGraphvizCode(int level, int node_id, ASTNode *statement);
+
+    std::vector<ASTStatementNode*> children;
     public:
-        void addStatement(std::shared_ptr<ASTStatementNode> node);
+        void addStatement(ASTStatementNode *node);
+        void showGraph();
+        ASTNodeType getNodeType();
 };
 
 class ASTVariableDeclarationNode : public ASTStatementNode {
@@ -30,6 +39,7 @@ class ASTVariableDeclarationNode : public ASTStatementNode {
     public:
         ASTVariableDeclarationNode(std::string variable_name);
         ASTVariableDeclarationNode(std::string variable_name, OPERAND_C_TYPE value);
+        ASTNodeType getNodeType();
 };
 
 enum TermNodeSign {
@@ -42,7 +52,7 @@ enum TermNodeType {
     CONSTANT
 };
 
-class ASTTermNode {
+class ASTTermNode : public ASTNode {
     TermNodeSign sign;
     TermNodeType type;
     OPERAND_C_TYPE constant_value;
@@ -51,21 +61,26 @@ class ASTTermNode {
     public:
         ASTTermNode(TermNodeSign sign, OPERAND_C_TYPE constant_value);
         ASTTermNode(TermNodeSign sign, std::string variable_name);
+        ASTNodeType getNodeType();
 };
 
-class ASTExpressionNode {
-    std::vector<std::shared_ptr<ASTTermNode>> terms;
+class ASTExpressionNode : public ASTNode {
+    std::vector<ASTTermNode*> terms;
 
     public:
-        void addTerm(std::shared_ptr<ASTTermNode> term);
+        void addTerm(ASTTermNode *term);
+        ASTNodeType getNodeType();
+        std::vector<ASTTermNode*> getTerms();
 };
 
 class ASTVariableAssignmentNode : public ASTStatementNode {
     std::string variable_name;
-    std::shared_ptr<ASTExpressionNode> value;
+    ASTExpressionNode *value;
 
     public:
-        ASTVariableAssignmentNode(std::string variable_name, std::shared_ptr<ASTExpressionNode> value);
+        ASTVariableAssignmentNode(std::string variable_name, ASTExpressionNode *value);
+        ASTExpressionNode *getExpressionNode();
+        ASTNodeType getNodeType();
 };
 
 #endif // AST_H

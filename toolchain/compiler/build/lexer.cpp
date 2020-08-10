@@ -461,14 +461,13 @@ int yy_flex_debug = 0;
 char *yytext;
 #line 1 "src/lexer.l"
 #line 2 "src/lexer.l"
-    #include <stdlib.h>
-    #include <glib.h>
-    extern "C" {
-        #include "parser.tab.h"
-    }
-#line 470 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/lexer.cpp"
+    extern "C" int yylex();
+    #include "parser.hpp"
 
-#line 472 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/lexer.cpp"
+    #include <string.h>
+#line 469 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/lexer.cpp"
+
+#line 471 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/lexer.cpp"
 
 #define INITIAL 0
 #define SINGLE_LINE_COMMENT 1
@@ -687,10 +686,10 @@ YY_DECL
 		}
 
 	{
-#line 12 "src/lexer.l"
+#line 11 "src/lexer.l"
 
 
-#line 694 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/lexer.cpp"
+#line 693 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/lexer.cpp"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -749,98 +748,98 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 14 "src/lexer.l"
+#line 13 "src/lexer.l"
 {
     BEGIN(SINGLE_LINE_COMMENT);
 }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 18 "src/lexer.l"
+#line 17 "src/lexer.l"
 {
 }
 	YY_BREAK
 case 3:
 /* rule 3 can match eol */
 YY_RULE_SETUP
-#line 21 "src/lexer.l"
+#line 20 "src/lexer.l"
 {
     BEGIN(INITIAL);
 }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 25 "src/lexer.l"
+#line 24 "src/lexer.l"
 {
     BEGIN(MULTILINE_COMMENT);
 }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 29 "src/lexer.l"
+#line 28 "src/lexer.l"
 {
 }
 	YY_BREAK
 case 6:
 /* rule 6 can match eol */
 YY_RULE_SETUP
-#line 32 "src/lexer.l"
+#line 31 "src/lexer.l"
 {
 }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 35 "src/lexer.l"
+#line 34 "src/lexer.l"
 {
     BEGIN(INITIAL);
 }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 39 "src/lexer.l"
+#line 38 "src/lexer.l"
 {
     return TOKEN_VAR;
 }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 43 "src/lexer.l"
+#line 42 "src/lexer.l"
 {
     return TOKEN_PLUS;
 }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 47 "src/lexer.l"
+#line 46 "src/lexer.l"
 {
     return TOKEN_MINUS;
 }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 51 "src/lexer.l"
+#line 50 "src/lexer.l"
 {
     return TOKEN_EQUALS;
 }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 55 "src/lexer.l"
+#line 54 "src/lexer.l"
 {
     return TOKEN_COLON_EQUALS;
 }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 59 "src/lexer.l"
+#line 58 "src/lexer.l"
 {
-    yylval.strval = g_strdup(yytext);
+    yylval.strval = strdup(yytext);
     return TOKEN_IDENTIFIER;
 }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 64 "src/lexer.l"
+#line 63 "src/lexer.l"
 {
     yylval.intval = atoi(yytext);
     return TOKEN_CONSTANT;
@@ -848,7 +847,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 69 "src/lexer.l"
+#line 68 "src/lexer.l"
 {
     return TOKEN_SEMICOLON;
 }
@@ -856,24 +855,24 @@ YY_RULE_SETUP
 case 16:
 /* rule 16 can match eol */
 YY_RULE_SETUP
-#line 73 "src/lexer.l"
+#line 72 "src/lexer.l"
 {
     // Ignore whitespace characters (spaces and tabs and newlines). TODO: USE NEWLINES.
 }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 77 "src/lexer.l"
+#line 76 "src/lexer.l"
 {
     printf("Unknown character %c\n", *yytext);
 }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 80 "src/lexer.l"
+#line 79 "src/lexer.l"
 ECHO;
 	YY_BREAK
-#line 877 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/lexer.cpp"
+#line 876 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/lexer.cpp"
 case YY_STATE_EOF(INITIAL):
 case YY_STATE_EOF(SINGLE_LINE_COMMENT):
 case YY_STATE_EOF(MULTILINE_COMMENT):
@@ -1880,7 +1879,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 80 "src/lexer.l"
+#line 79 "src/lexer.l"
 
 
 void startParseString(const char *str) {

@@ -43,6 +43,12 @@
 #if YYDEBUG
 extern int yydebug;
 #endif
+/* "%code requires" blocks.  */
+#line 21 "src/parser.y" /* yacc.c:1921  */
+
+    #include "ast.h"
+
+#line 52 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.hpp" /* yacc.c:1921  */
 
 /* Token type.  */
 #ifndef YYTOKENTYPE
@@ -65,15 +71,17 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 118 "src/parser.y" /* yacc.c:1921  */
+#line 36 "src/parser.y" /* yacc.c:1921  */
 
     int intval;
     char *strval;
-    struct ast_node *node;
-    struct expression_node *expression_node;
-    struct term_node *term_node;
+    ASTStatementNode *statement_node;
+    ASTVariableDeclarationNode *variable_declaration_node;
+    ASTVariableAssignmentNode *variable_assignment_node;
+    ASTExpressionNode *expression_node;
+    ASTTermNode *term_node;
 
-#line 77 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.hpp" /* yacc.c:1921  */
+#line 85 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.hpp" /* yacc.c:1921  */
 };
 
 typedef union YYSTYPE YYSTYPE;

@@ -68,8 +68,11 @@
 /* First part of user prologue.  */
 #line 1 "src/parser.y" /* yacc.c:337  */
 
-    #include <stdio.h>
-    #include <glib.h>
+    #include <iostream>
+    #include <string>
+    #include <sstream>
+    #include <fstream>
+    #include "ast.h"
 
     #define YYDEBUG 1
 
@@ -79,100 +82,11 @@
         void yyerror(char *);
     }
 
-    // File handle for the .asm output file of the compiler.
-    FILE *output_file;
+    // Start of the AST.
+    ASTRootNode *ast = new ASTRootNode();
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////
-    // Data structures for storing the Abstract Syntax Tree (AST) that the parsing step generates.
-    ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    typedef struct ast_node ASTNode;
-    typedef struct expression_node ExpressionNode;
-
-    // Different types of nodes (variable declaration, variable assignment, etc.) that can be in the parse tree.
-    typedef enum {
-        VARIABLE_DECLARATION,
-        VARIABLE_ASSIGNMENT
-    } ASTNodeType;
-
-    // Structure for storing variable declarations like "VAR x = 10;" Does not have a pointer to any sub-node because variable declarations do not have any nested syntax.
-    typedef struct {
-        char *name;
-        int value;
-    } VariableDeclarationNode;
-
-    // Structure for storing variable assingments like "VAR x = 10;" TODO: Add pointer to an ASTNode for storing expressions so that the user can do things like "x := x + 5;" 
-    typedef struct {
-        char *name;
-        ExpressionNode *value;
-    } VariableAssignmentNode;
-
-    // Structure for storing expressions like "var1 + 16 - var2".
-    typedef struct expression_node {
-        GSList *terms;
-    } ExpressionNode;
-
-    // Structure for storing terms in an expression.
-    typedef enum {
-        POSITIVE,
-        NEGATIVE
-    } TermSign;
-    typedef enum {
-        VARIABLE,
-        CONSTANT
-    } TermType;
-    typedef union {
-        char *variable_name;
-        int constant;
-    } TermValue;
-    typedef struct term_node {
-        TermSign sign;
-        TermType type;
-        TermValue value;
-    } TermNode;
-
-    // Union that can hold any type of node.
-    typedef union {
-        VariableDeclarationNode variable_declaration;
-        VariableAssignmentNode variable_assignment;
-    } ASTNodeUnion;
-
-    // Structure that stores nodes in the parse tree. Stores the type of each node so that the program knows which member of the .node union to access.
-    typedef struct ast_node {
-        ASTNodeType node_type;
-        ASTNodeUnion node;
-    } ASTNode;
-
-    GSList *ast = NULL;
-
-    ///////////////////////////////////////////////////////
-    // Functions for generating assembly from AST nodes.
-    ///////////////////////////////////////////////////////
-    // Function that takes a file pointer and a pointer to an ExpressionNode in order to generate the assembly to evaluate the expression into register A.
-    void evaluateExpression(FILE *output_file, ExpressionNode *node) {
-        fprintf(output_file, "// Evaluate expression:\n");
-        fprintf(output_file, "CLOAD 0,A\n");
-
-        for (GSList *iterator = node->terms; iterator; iterator = iterator->next) {
-            TermNode *term = (TermNode *) iterator->data;
-
-            if (term->type == CONSTANT) {
-                fprintf(output_file, "CLOAD %d,B\n", term->value.constant);
-            }
-            else if (term->type == VARIABLE) {
-                fprintf(output_file, "LOAD %s,B\n", term->value.variable_name);
-            }
-
-            if (term->sign == POSITIVE) {
-                fprintf(output_file, "ADD A,B\n");
-            }
-            else if (term->sign == NEGATIVE) {
-                fprintf(output_file, "SUB A,B\n");
-            }
-        }
-    }
-
-#line 176 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:337  */
+#line 90 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:337  */
 # ifndef YY_NULLPTR
 #  if defined __cplusplus
 #   if 201103L <= __cplusplus
@@ -204,6 +118,12 @@
 #if YYDEBUG
 extern int yydebug;
 #endif
+/* "%code requires" blocks.  */
+#line 21 "src/parser.y" /* yacc.c:352  */
+
+    #include "ast.h"
+
+#line 127 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:352  */
 
 /* Token type.  */
 #ifndef YYTOKENTYPE
@@ -226,15 +146,17 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 118 "src/parser.y" /* yacc.c:352  */
+#line 36 "src/parser.y" /* yacc.c:352  */
 
     int intval;
     char *strval;
-    struct ast_node *node;
-    struct expression_node *expression_node;
-    struct term_node *term_node;
+    ASTStatementNode *statement_node;
+    ASTVariableDeclarationNode *variable_declaration_node;
+    ASTVariableAssignmentNode *variable_assignment_node;
+    ASTExpressionNode *expression_node;
+    ASTTermNode *term_node;
 
-#line 238 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:352  */
+#line 160 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:352  */
 };
 
 typedef union YYSTYPE YYSTYPE;
@@ -482,12 +404,12 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  2
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   17
+#define YYLAST   16
 
 /* YYNTOKENS -- Number of terminals.  */
 #define YYNTOKENS  11
 /* YYNNTS -- Number of nonterminals.  */
-#define YYNNTS  6
+#define YYNNTS  7
 /* YYNRULES -- Number of rules.  */
 #define YYNRULES  16
 /* YYNSTATES -- Number of states.  */
@@ -538,8 +460,8 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,   133,   133,   134,   135,   138,   143,   150,   159,   168,
-     173,   178,   185,   192,   199,   206,   213
+       0,    56,    56,    57,    62,    65,    70,    73,    78,    83,
+      86,    91,    94,    97,   100,   103,   106
 };
 #endif
 
@@ -550,7 +472,7 @@ static const char *const yytname[] =
 {
   "$end", "error", "$undefined", "TOKEN_VAR", "TOKEN_EQUALS",
   "TOKEN_IDENTIFIER", "TOKEN_CONSTANT", "TOKEN_SEMICOLON",
-  "TOKEN_COLON_EQUALS", "TOKEN_PLUS", "TOKEN_MINUS", "$accept",
+  "TOKEN_COLON_EQUALS", "TOKEN_PLUS", "TOKEN_MINUS", "$accept", "program",
   "statement", "variable_declaration", "variable_assignment", "expression",
   "term", YY_NULLPTR
 };
@@ -566,10 +488,10 @@ static const yytype_uint16 yytoknum[] =
 };
 # endif
 
-#define YYPACT_NINF -5
+#define YYPACT_NINF -6
 
 #define yypact_value_is_default(Yystate) \
-  (!!((Yystate) == (-5)))
+  (!!((Yystate) == (-6)))
 
 #define YYTABLE_NINF -1
 
@@ -580,9 +502,9 @@ static const yytype_uint16 yytoknum[] =
      STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-      -5,     0,    -5,    -1,    -2,    -5,     7,     8,    12,    -5,
-      -5,    -5,    11,     3,    -5,    -5,    -5,    -4,     5,    -5,
-      -5,    -5,    -5,    -5
+      -6,     3,    -6,    -3,    -1,    -6,     7,     8,     9,    -6,
+      -6,    -6,    10,    -5,    -6,    -6,    -6,     4,     6,    -6,
+      -6,    -6,    -6,    -6
 };
 
   /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -598,13 +520,13 @@ static const yytype_uint8 yydefact[] =
   /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-      -5,    -5,    -5,    -5,    -5,    -5
+      -6,    -6,    -6,    -6,    -6,    -6,    -6
 };
 
   /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-      -1,     1,     6,     7,    13,    19
+      -1,     1,     5,     6,     7,    13,    19
 };
 
   /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -612,36 +534,36 @@ static const yytype_int8 yydefgoto[] =
      number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_uint8 yytable[] =
 {
-       2,    20,    21,     3,     8,     4,     9,     5,    15,    16,
-      22,    23,    17,    18,    10,    11,    12,    14
+      15,    16,     8,     2,    17,    18,     3,     9,     4,    20,
+      21,    22,    23,    12,    10,    11,    14
 };
 
 static const yytype_uint8 yycheck[] =
 {
-       0,     5,     6,     3,     5,     5,     8,     7,     5,     6,
-       5,     6,     9,    10,     7,     7,     4,     6
+       5,     6,     5,     0,     9,    10,     3,     8,     5,     5,
+       6,     5,     6,     4,     7,     7,     6
 };
 
   /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
      symbol of state STATE-NUM.  */
 static const yytype_uint8 yystos[] =
 {
-       0,    12,     0,     3,     5,     7,    13,    14,     5,     8,
-       7,     7,     4,    15,     6,     5,     6,     9,    10,    16,
+       0,    12,     0,     3,     5,    13,    14,    15,     5,     8,
+       7,     7,     4,    16,     6,     5,     6,     9,    10,    17,
        5,     6,     5,     6
 };
 
   /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
 static const yytype_uint8 yyr1[] =
 {
-       0,    11,    12,    12,    12,    12,    13,    13,    14,    15,
-      15,    16,    16,    16,    16,    16,    16
+       0,    11,    12,    12,    13,    13,    14,    14,    15,    16,
+      16,    17,    17,    17,    17,    17,    17
 };
 
   /* YYR2[YYN] -- Number of symbols on the right hand side of rule YYN.  */
 static const yytype_uint8 yyr2[] =
 {
-       0,     2,     0,     2,     3,     3,     2,     4,     3,     0,
+       0,     2,     0,     2,     2,     2,     2,     4,     3,     0,
        2,     1,     1,     2,     2,     2,     2
 };
 
@@ -1327,150 +1249,120 @@ yyreduce:
   YY_REDUCE_PRINT (yyn);
   switch (yyn)
     {
-        case 4:
-#line 135 "src/parser.y" /* yacc.c:1652  */
+        case 3:
+#line 57 "src/parser.y" /* yacc.c:1652  */
     {
-            ast = g_slist_append(ast, (yyvsp[-1].node));
+           ast->addStatement((yyvsp[0].statement_node));
+       }
+#line 1258 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:1652  */
+    break;
+
+  case 4:
+#line 62 "src/parser.y" /* yacc.c:1652  */
+    {
+            (yyval.statement_node) = (yyvsp[-1].variable_declaration_node);
          }
-#line 1336 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:1652  */
+#line 1266 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 5:
-#line 138 "src/parser.y" /* yacc.c:1652  */
+#line 65 "src/parser.y" /* yacc.c:1652  */
     {
-            ast = g_slist_append(ast, (yyvsp[-1].node));
+            (yyval.statement_node) = (yyvsp[-1].variable_assignment_node);
          }
-#line 1344 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:1652  */
+#line 1274 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 6:
-#line 143 "src/parser.y" /* yacc.c:1652  */
+#line 70 "src/parser.y" /* yacc.c:1652  */
     {
-                        ASTNode *node = g_new(ASTNode, 1);
-                        node->node_type = VARIABLE_DECLARATION;
-                        node->node.variable_declaration.name = (yyvsp[0].strval);
-                        node->node.variable_declaration.value = 0;
-                        (yyval.node) = node;
+                        (yyval.variable_declaration_node) = new ASTVariableDeclarationNode((yyvsp[0].strval));
                     }
-#line 1356 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:1652  */
+#line 1282 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 7:
-#line 150 "src/parser.y" /* yacc.c:1652  */
+#line 73 "src/parser.y" /* yacc.c:1652  */
     {
-                        ASTNode *node = g_new(ASTNode, 1);
-                        node->node_type = VARIABLE_DECLARATION;
-                        node->node.variable_declaration.name = (yyvsp[-2].strval);
-                        node->node.variable_declaration.value = (yyvsp[0].intval);
-                        (yyval.node) = node;
+                        (yyval.variable_declaration_node) = new ASTVariableDeclarationNode((yyvsp[-2].strval), (yyvsp[0].intval));
                     }
-#line 1368 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:1652  */
+#line 1290 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 8:
-#line 159 "src/parser.y" /* yacc.c:1652  */
+#line 78 "src/parser.y" /* yacc.c:1652  */
     {
-                       ASTNode *node = g_new(ASTNode, 1);
-                       node->node_type = VARIABLE_ASSIGNMENT;
-                       node->node.variable_assignment.name = (yyvsp[-2].strval);
-                       node->node.variable_assignment.value = (yyvsp[0].expression_node);
-                       (yyval.node) = node;
-                   }
-#line 1380 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:1652  */
+                   (yyval.variable_assignment_node) = new ASTVariableAssignmentNode((yyvsp[-2].strval), (yyvsp[0].expression_node));
+}
+#line 1298 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 9:
-#line 168 "src/parser.y" /* yacc.c:1652  */
+#line 83 "src/parser.y" /* yacc.c:1652  */
     {
-    ExpressionNode *expression_node = g_new(ExpressionNode, 1);
-    expression_node->terms = NULL;
-    (yyval.expression_node) = expression_node;
+          (yyval.expression_node) = new ASTExpressionNode();
 }
-#line 1390 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:1652  */
+#line 1306 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 10:
-#line 173 "src/parser.y" /* yacc.c:1652  */
+#line 86 "src/parser.y" /* yacc.c:1652  */
     {
-              (yyvsp[-1].expression_node)->terms = g_slist_append((yyvsp[-1].expression_node)->terms, (yyvsp[0].term_node));
+              (yyvsp[-1].expression_node)->addTerm((yyvsp[0].term_node));
           }
-#line 1398 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:1652  */
+#line 1314 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 11:
-#line 178 "src/parser.y" /* yacc.c:1652  */
+#line 91 "src/parser.y" /* yacc.c:1652  */
     {
-    TermNode *term_node = g_new(TermNode, 1);
-    term_node->sign = POSITIVE;
-    term_node->type = VARIABLE;
-    term_node->value.variable_name = (yyvsp[0].strval);
-    (yyval.term_node) = term_node;
+    (yyval.term_node) = new ASTTermNode(POSITIVE, (yyvsp[0].strval));
 }
-#line 1410 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:1652  */
+#line 1322 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 12:
-#line 185 "src/parser.y" /* yacc.c:1652  */
+#line 94 "src/parser.y" /* yacc.c:1652  */
     {
-        TermNode *term_node = g_new(TermNode, 1);
-        term_node->sign = POSITIVE;
-        term_node->type = CONSTANT;
-        term_node->value.constant = (yyvsp[0].intval);
-        (yyval.term_node) = term_node;
+        (yyval.term_node) = new ASTTermNode(POSITIVE, (yyvsp[0].intval));
     }
-#line 1422 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:1652  */
+#line 1330 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 13:
-#line 192 "src/parser.y" /* yacc.c:1652  */
+#line 97 "src/parser.y" /* yacc.c:1652  */
     {
-        TermNode *term_node = g_new(TermNode, 1);
-        term_node->sign = POSITIVE;
-        term_node->type = VARIABLE;
-        term_node->value.variable_name = (yyvsp[0].strval);
-        (yyval.term_node) = term_node;
+        (yyval.term_node) = new ASTTermNode(POSITIVE, (yyvsp[0].strval));
     }
-#line 1434 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:1652  */
+#line 1338 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 14:
-#line 199 "src/parser.y" /* yacc.c:1652  */
+#line 100 "src/parser.y" /* yacc.c:1652  */
     {
-        TermNode *term_node = g_new(TermNode, 1);
-        term_node->sign = NEGATIVE;
-        term_node->type = VARIABLE;
-        term_node->value.variable_name = (yyvsp[0].strval);
-        (yyval.term_node) = term_node;
+        (yyval.term_node) = new ASTTermNode(NEGATIVE, (yyvsp[0].strval));
     }
-#line 1446 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:1652  */
+#line 1346 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 15:
-#line 206 "src/parser.y" /* yacc.c:1652  */
+#line 103 "src/parser.y" /* yacc.c:1652  */
     {
-        TermNode *term_node = g_new(TermNode, 1);
-        term_node->sign = POSITIVE;
-        term_node->type = CONSTANT;
-        term_node->value.constant = (yyvsp[0].intval);
-        (yyval.term_node) = term_node;
+        (yyval.term_node) = new ASTTermNode(POSITIVE, (yyvsp[0].intval));
     }
-#line 1458 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:1652  */
+#line 1354 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 16:
-#line 213 "src/parser.y" /* yacc.c:1652  */
+#line 106 "src/parser.y" /* yacc.c:1652  */
     {
-        TermNode *term_node = g_new(TermNode, 1);
-        term_node->sign = NEGATIVE;
-        term_node->type = CONSTANT;
-        term_node->value.constant = (yyvsp[0].intval);
-        (yyval.term_node) = term_node;
+        (yyval.term_node) = new ASTTermNode(NEGATIVE, (yyvsp[0].intval));
     }
-#line 1470 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:1652  */
+#line 1362 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:1652  */
     break;
 
 
-#line 1474 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:1652  */
+#line 1366 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:1652  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1701,7 +1593,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 222 "src/parser.y" /* yacc.c:1918  */
+#line 111 "src/parser.y" /* yacc.c:1918  */
 
 
 // Forward declarations of functions in lexer.l that allow Flex to parse an in-memory buffer instead of a file handle.
@@ -1711,80 +1603,27 @@ void endParseString(void);
 int main(int argc, char *argv[]) {
     yydebug = 1;
 
-    // Buffer to store the input PL/0 code.
-    char *input_buffer;
-
-    // Show program usage message and exit.
-    if (argc < 2) {
-        printf("Usage: ./main program.pl0 [out.asm]\n");
+    if (argc != 2) {
+        std::cout << "Usage: ./main program.pl0" << std::endl;
         return 1;
     }
 
-    // Read in .pl0 input file.
-    FILE *input_file = fopen(argv[1], "r");
-    if (input_file == NULL) {
-        fprintf(stderr, "Error: Failed to open file \"%s\" for reading.\n", argv[1]);
-        return 1;
-    }
-    fseek(input_file, 0, SEEK_END);
-    size_t input_file_size = (size_t) ftell(input_file);
-    rewind(input_file);
-    input_buffer = (char *) g_malloc0(input_file_size + 1);
-    size_t bytes_read = fread(input_buffer, 1, input_file_size, input_file);
-    input_buffer[bytes_read] = '\0';
-    fclose(input_file);
+    std::ifstream input_file(argv[1]);
+    std::stringstream input_file_stringstream;
+    input_file_stringstream << input_file.rdbuf();
+    std::string input_buffer = input_file_stringstream.str();
+    input_file.close();
 
-    // If no output filename was provided, default to out.bin.
-    if (argc == 2) {
-        output_file = fopen("out.asm", "w");
-        if (output_file == NULL) {
-            fprintf(stderr, "Error: Failed to open file \"out.asm\" for writing.\n");
-            return 1;
-        }
-    }
-
-    // If an output filename was provided, use it.
-    else if (argc == 3) {
-        output_file = fopen(argv[2], "w");
-        if (output_file == NULL) {
-            fprintf(stderr, "Error: Failed to open file \"%s\" for writing.\n", argv[2]);
-            return 1;
-        }
-    }
-
-    // Run the Flex/Bison lexer and parser to generate an AST.
-    startParseString(input_buffer);
+    startParseString(input_buffer.c_str());
     yyparse();
     endParseString();
 
-    // Generate the .data section of the assembly file.
-    fprintf(output_file, ".data:\n");
-    for (GSList *iterator = ast; iterator; iterator = iterator->next) {
-        ASTNode *node = (ASTNode *) iterator->data;
-
-        if (node->node_type == VARIABLE_DECLARATION) {
-            fprintf(output_file, "    // Declaring variable `%s`.\n", node->node.variable_declaration.name);
-            fprintf(output_file, "    %s = %d\n", node->node.variable_declaration.name, node->node.variable_declaration.value);
-        }
-    }
-
-    // Generate the .code section of the assembly file.
-    fprintf(output_file, ".code:\n");
-    for (GSList *iterator = ast; iterator; iterator = iterator->next) {
-        ASTNode *node = (ASTNode *) iterator->data;
-
-        if (node->node_type == VARIABLE_ASSIGNMENT) {
-            evaluateExpression(output_file, node->node.variable_assignment.value);
-            fprintf(output_file, "STORE A,%s\n", node->node.variable_assignment.name);
-        }
-    }
-
-    fclose(output_file);
+    ast->showGraph();
 
     return 0;
 }
 
 // Function to print out parser errors from Bison.
 void yyerror(char *s) {
-    fprintf(stderr, "Error: %s\n", s);
+    std::cerr << "Error: " << s << std::endl;
 }

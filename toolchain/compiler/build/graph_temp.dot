@@ -1,0 +1,19 @@
+digraph ast {
+    "0_0" [label="root", shape=box];
+    "1_0" [label="variable declaration", shape=box];
+    "0_0" -> "1_0"
+    "1_1" [label="variable declaration", shape=box];
+    "0_0" -> "1_1"
+    "1_2" [label="variable assignment", shape=box];
+    "2_0" [label="expression", shape=box];
+    "3_0" [label="term", shape=box];
+    "2_0" -> "3_0"
+    "3_1" [label="term", shape=box];
+    "2_0" -> "3_1"
+    "3_2" [label="term", shape=box];
+    "2_0" -> "3_2"
+    "3_3" [label="term", shape=box];
+    "2_0" -> "3_3"
+    "1_2" -> "2_0";
+    "0_0" -> "1_2"
+}

@@ -1,7 +1,8 @@
 %{
-    extern "C" {
-        #include "parser.tab.h"
-    }
+    extern "C" int yylex();
+    #include "parser.hpp"
+
+    #include <string.h>
 %}
 
 %x SINGLE_LINE_COMMENT
@@ -55,7 +56,7 @@
 }
 
 [a-zA-Z]+[a-zA-Z0-9_]* {
-    yylval.strval = yytext;
+    yylval.strval = strdup(yytext);
     return TOKEN_IDENTIFIER;
 }
 
