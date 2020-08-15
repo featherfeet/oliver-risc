@@ -11,6 +11,9 @@ module test();
     reg clk = 1'b1;
     always #10 clk = ~clk;
 
+    reg PS2_CLK = 'b1;
+    reg PS2_DAT = 'b1;
+
     wire SDRAM_CLK;
     wire [11:0] DRAM_ADDR;
     wire DRAM_BA_0;
@@ -64,9 +67,12 @@ module test();
         .VGA_B(VGA_B),
         .VGA_HS(VGA_HS),
         .VGA_VS(VGA_VS),
-        .VGA_PIXEL_CLOCK(VGA_PIXEL_CLOCK)
+        .VGA_PIXEL_CLOCK(VGA_PIXEL_CLOCK),
+        .PS2_CLK(PS2_CLK),
+        .PS2_DAT(PS2_DAT)
     );
     initial begin
+        PS2_CLK = 'b1;
         $dumpfile("dump.lxt");
         $dumpvars(0, test);
         for (i = 0; i < `NUM_REGISTERS; i = i + 1)
@@ -82,5 +88,73 @@ module test();
         reset = 'b0;
         //#80000 reset = 'hF;
         #80 reset = 'hF;
+        #150_000;
+        #10 PS2_DAT = 'b0; // START
+        #10 PS2_CLK = 'b0;
+        #10 PS2_CLK = 'b1;
+        #10 PS2_DAT = 'b0; // DATA0
+        #10 PS2_CLK = 'b0;
+        #10 PS2_CLK = 'b1;
+        #10 PS2_DAT = 'b0; // DATA1
+        #10 PS2_CLK = 'b0;
+        #10 PS2_CLK = 'b1;
+        #10 PS2_DAT = 'b0; // DATA2
+        #10 PS2_CLK = 'b0;
+        #10 PS2_CLK = 'b1;
+        #10 PS2_DAT = 'b0; // DATA3
+        #10 PS2_CLK = 'b0;
+        #10 PS2_CLK = 'b1;
+        #10 PS2_DAT = 'b1; // DATA4
+        #10 PS2_CLK = 'b0;
+        #10 PS2_CLK = 'b1;
+        #10 PS2_DAT = 'b1; // DATA5
+        #10 PS2_CLK = 'b0;
+        #10 PS2_CLK = 'b1;
+        #10 PS2_DAT = 'b1; // DATA6
+        #10 PS2_CLK = 'b0;
+        #10 PS2_CLK = 'b1;
+        #10 PS2_DAT = 'b1; // DATA7
+        #10 PS2_CLK = 'b0;
+        #10 PS2_CLK = 'b1;
+        #10 PS2_DAT = 'b0; // PARITY
+        #10 PS2_CLK = 'b0;
+        #10 PS2_CLK = 'b1;
+        #10 PS2_DAT = 'b0; // STOP
+        #10 PS2_CLK = 'b0;
+        #10 PS2_CLK = 'b1;
+        #300;
+        #10 PS2_DAT = 'b0; // START
+        #10 PS2_CLK = 'b0;
+        #10 PS2_CLK = 'b1;
+        #10 PS2_DAT = 'b0; // DATA0
+        #10 PS2_CLK = 'b0;
+        #10 PS2_CLK = 'b1;
+        #10 PS2_DAT = 'b1; // DATA1
+        #10 PS2_CLK = 'b0;
+        #10 PS2_CLK = 'b1;
+        #10 PS2_DAT = 'b0; // DATA2
+        #10 PS2_CLK = 'b0;
+        #10 PS2_CLK = 'b1;
+        #10 PS2_DAT = 'b1; // DATA3
+        #10 PS2_CLK = 'b0;
+        #10 PS2_CLK = 'b1;
+        #10 PS2_DAT = 'b1; // DATA4
+        #10 PS2_CLK = 'b0;
+        #10 PS2_CLK = 'b1;
+        #10 PS2_DAT = 'b0; // DATA5
+        #10 PS2_CLK = 'b0;
+        #10 PS2_CLK = 'b1;
+        #10 PS2_DAT = 'b0; // DATA6
+        #10 PS2_CLK = 'b0;
+        #10 PS2_CLK = 'b1;
+        #10 PS2_DAT = 'b0; // DATA7
+        #10 PS2_CLK = 'b0;
+        #10 PS2_CLK = 'b1;
+        #10 PS2_DAT = 'b0; // PARITY
+        #10 PS2_CLK = 'b0;
+        #10 PS2_CLK = 'b1;
+        #10 PS2_DAT = 'b0; // STOP
+        #10 PS2_CLK = 'b0;
+        #10 PS2_CLK = 'b1;
     end
 endmodule

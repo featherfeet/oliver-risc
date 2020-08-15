@@ -1,33 +1,34 @@
 [*]
 [*] GTKWave Analyzer v3.3.98 (w)1999-2019 BSI
-[*] Mon Aug  3 01:43:44 2020
+[*] Sat Aug 15 03:17:50 2020
 [*]
 [dumpfile] "/home/oliver/Projects/FPGA_Projects/CPU/hardware/dump.lxt"
-[dumpfile_mtime] "Mon Aug  3 01:42:04 2020"
-[dumpfile_size] 6982945
+[dumpfile_mtime] "Sat Aug 15 03:14:39 2020"
+[dumpfile_size] 19377366
 [savefile] "/home/oliver/Projects/FPGA_Projects/CPU/hardware/savefile.gtkw"
-[timestart] 131365000
+[timestart] 152410100
 [size] 1920 1016
 [pos] -1 -1
-*-14.646544 131450000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-16.677301 152740000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] test.
-[treeopen] test.top_instantiation.
-[sst_width] 228
-[signals_width] 316
+[sst_width] 292
+[signals_width] 350
 [sst_expanded] 1
 [sst_vpaned_height] 285
+@22
+test.top_instantiation.interrupt_value_fifo_data_in[31:0]
+@28
+test.top_instantiation.interrupt_value_fifo_write[0]
+@22
+test.top_instantiation.keyboard_scancode_fifo_data_out[7:0]
+@28
+test.top_instantiation.CLOCK_50[0]
+test.top_instantiation.keyboard_scancode_fifo_read[0]
 @24
 test.top_instantiation.state[7:0]
 @28
-test.top_instantiation.interrupt_fifo_access_state[0]
-test.top_instantiation.CLOCK_50[0]
-@24
-test.top_instantiation.interrupt_fifo_data_in[31:0]
-@28
-test.top_instantiation.interrupt_fifo_write[0]
-@24
-test.top_instantiation.operation[7:0]
+test.top_instantiation.keyboard_scancode_fifo_empty[0]
 @25
-test.top_instantiation.interrupt_fifo_access_state[0]
+test.top_instantiation.keyboard_scancode_fifo_access_state[2:0]
 [pattern_trace] 1
 [pattern_trace] 0

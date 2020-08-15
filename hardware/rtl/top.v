@@ -39,7 +39,8 @@ reg [`OPERAND_SIZE_BITS - 1:0] operand1;
 reg [`OPERAND_SIZE_BITS - 1:0] operand2;
 reg [`OPERAND_SIZE_BITS - 1:0] registers [`NUM_REGISTERS - 1:0]; // IP, A, B, C, D, E, F, and G: eight 32-bit registers.
 reg [`OPERAND_SIZE_BITS - 1:0] shadow_registers [`NUM_REGISTERS - 1:0]; // "registers" is copied to here while an interrupt is running.
-reg [`OPERAND_SIZE_BITS - 1:0] code_section_start_address; // Where (in RAM) the instructions are located. code_section_start_address + IP is the address of the current instruction. Address is in bytes.
+reg [`OPERAND_SIZE_BITS - 1:0] code_section_start_address; // Where (in RAM) the instructions are located.
+reg [`OPERAND_SIZE_BITS - 1:0] program_end_address; // Where (in RAM) the binary ends.
 
 // Interrupt vector table -- sets the memory addresses of the interrupt service routines.
 reg [`OPERAND_SIZE_BITS - 1:0] interrupt_vector_table [`NUM_INTERRUPTS - 1:0]; // interrupt_vector_table[0] is the address of ISR number 0.
@@ -62,6 +63,19 @@ fifo #(.ITEM_SIZE_BITS(`OPERAND_SIZE_BITS), .FIFO_SIZE(10)) interrupt_fifo(.CLOC
 );
 reg interrupt_fifo_access_state;
 
+// Interrupt value FIFO -- used to store data that needs to be passed to interrupt service routines.
+// Is always read/written in sync with the interrupt FIFO, so the empty/full signals aren't necessary.
+reg [`OPERAND_SIZE_BITS - 1:0] interrupt_value_fifo_data_in;
+reg interrupt_value_fifo_write;
+wire [`OPERAND_SIZE_BITS - 1:0] interrupt_value_fifo_data_out;
+reg interrupt_value_fifo_read;
+fifo #(.ITEM_SIZE_BITS(`OPERAND_SIZE_BITS), .FIFO_SIZE(10)) interrupt_value_fifo(.CLOCK_50(CLOCK_50),
+                                                                                .RST_N(KEY[0]),
+                                                                                .data_in(interrupt_value_fifo_data_in),
+                                                                                .write(interrupt_value_fifo_write),
+                                                                                .data_out(interrupt_value_fifo_data_out),
+                                                                                .read(interrupt_value_fifo_read));
+
 // PS/2 keyboard.
 wire[7:0] keyboard_scancode;
 wire keyboard_scancode_ready;
@@ -72,6 +86,21 @@ keyboard ps2_keyboard(.scancode(keyboard_scancode),
                       .ready(keyboard_scancode_ready),
                       .PS2_CLK(PS2_CLK),
                       .PS2_DAT(PS2_DAT));
+
+// FIFO to store keys.
+wire [7:0] keyboard_scancode_fifo_data_out;
+reg keyboard_scancode_fifo_read;
+wire keyboard_scancode_fifo_empty;
+wire keyboard_scancode_fifo_full;
+reg[2:0] keyboard_scancode_fifo_access_state;
+fifo #(.ITEM_SIZE_BITS(8), .FIFO_SIZE(5)) keyboard_scancodes_fifo(.CLOCK_50(CLOCK_50),
+                                                                  .RST_N(KEY[0]),
+                                                                  .data_in(keyboard_scancode),
+                                                                  .write(keyboard_scancode_ready),
+                                                                  .data_out(keyboard_scancode_fifo_data_out),
+                                                                  .read(keyboard_scancode_fifo_read),
+                                                                  .empty(keyboard_scancode_fifo_empty),
+                                                                  .full(keyboard_scancode_fifo_full));
 
 // Integrated GPU.
 reg [$clog2(`GPU_TEXT_BUFFER_LENGTH) - 1:0] gpu_cell_to_access;
@@ -248,6 +277,7 @@ endtask
 
 always @(posedge CLOCK_50)
 begin
+    // RESET LOGIC
     if (KEY[0] == 0)
     begin
         sdram_controller_address_i <= 'b0;
@@ -285,6 +315,12 @@ begin
         interrupt_fifo_data_in <= 'b0;
         interrupt_fifo_read <= 'b0;
         interrupt_fifo_access_state <= `INTERRUPT_FIFO_ACCESS_STATE_SETUP;
+        keyboard_scancode_fifo_read <= 'b0;
+        keyboard_scancode_fifo_access_state <= `KEYBOARD_SCANCODE_FIFO_ACCESS_STATE_READ_START;
+        interrupt_value_fifo_write <= 'b0;
+        interrupt_value_fifo_read <= 'b0;
+        code_section_start_address <= 'b0;
+        program_end_address <= 'b0;
     end
     else
     begin
@@ -312,6 +348,7 @@ begin
                 begin
                     $display("%t: Changing state to STATE_FETCH_OPERATION", $time);
                     sdram_controller_wr_n_i <= 'b1;
+                    program_end_address <= program_rom_address;
                     state <= `STATE_FETCH_OPERATION;
                 end
                 else
@@ -500,16 +537,21 @@ begin
                         `REGISTER_A <= registers[operand1] - registers[operand2];
                         next_instruction();
                     end
-                    // Write to the I/O "memory" space (currently just the GPU's text buffer). operand1 is the register number of the register containing the address to write to. operand2 is the register number of the register containing the value to write.
+                    // Write to the I/O "memory" space (currently just the GPU's text buffer and the interrupt value). operand1 is the register number of the register containing the address to write to. operand2 is the register number of the register containing the value to write.
                     `OPERATION_OUT:
                     begin
-                        if (gpu_access_state == `GPU_ACCESS_STATE_SETUP)
+                        if (gpu_access_state == `GPU_ACCESS_STATE_SETUP && registers[operand1] < `GPU_TEXT_BUFFER_LENGTH)
                         begin
                             $display("OUT [address %d, character '%c']", registers[operand1], registers[operand2]);
                             gpu_write_enable <= 'b1;
                             gpu_cell_to_access <= registers[operand1];
                             gpu_character_to_write <= registers[operand2];
                             gpu_access_state <= `GPU_ACCESS_STATE_FINISH;
+                        end
+                        else if (registers[operand1] == `INTERRUPT_VALUE_PORT)
+                        begin
+                            $display("Error: CPU cannot write to interrupt value port.");
+                            next_instruction(); // You cannot write to the interrupt value port.
                         end
                         else
                         begin
@@ -518,10 +560,29 @@ begin
                             next_instruction();
                         end
                     end
+                    // Read from the I/O "memory" space. operand1 is the
+                    // register number of the register containing the address
+                    // to write to. operand2 is the register number of the
+                    // register to read into.
                     `OPERATION_IN:
                     begin
                         $display("IN");
-                        next_instruction();
+                        if (gpu_access_state == `GPU_ACCESS_STATE_SETUP && registers[operand1] < `GPU_TEXT_BUFFER_LENGTH)
+                        begin
+                            gpu_cell_to_access <= registers[operand1];
+                            gpu_access_state <= `GPU_ACCESS_STATE_FINISH;
+                        end
+                        else if (registers[operand1] == `INTERRUPT_VALUE_PORT)
+                        begin
+                            registers[operand2] <= interrupt_value_fifo_data_out;
+                            next_instruction();
+                        end
+                        else
+                        begin
+                            registers[operand2] <= {24'b0, gpu_character_read};
+                            gpu_access_state <= `GPU_ACCESS_STATE_SETUP;
+                            next_instruction();
+                        end
                     end
                     // Copy register 1 to register 2.
                     `OPERATION_MOV:
@@ -582,11 +643,14 @@ begin
                             interrupt_fifo_data_in <= registers[operand1];
                             interrupt_fifo_write <= 'b1;
                             interrupt_fifo_access_state <= `INTERRUPT_FIFO_ACCESS_STATE_FINISH;
+                            interrupt_value_fifo_data_in <= 'b0;
+                            interrupt_value_fifo_write <= 'b1;
                         end
                         else
                         begin
                             state <= `STATE_RUN_INTERRUPT;
                             interrupt_fifo_write <= 'b0;
+                            interrupt_value_fifo_write <= 'b0;
                             interrupt_fifo_access_state <= `INTERRUPT_FIFO_ACCESS_STATE_SETUP;
                         end
                     end
@@ -625,11 +689,12 @@ begin
             begin
                 // If there are no interrupts to process (and we're not in the middle of processing one), proceed to the next state.
                 if (interrupt_fifo_empty && interrupt_fifo_access_state == `INTERRUPT_FIFO_ACCESS_STATE_SETUP)
-                    state <= `STATE_FETCH_OPERATION;
+                    state <= `STATE_ADD_INTERRUPTS;
                 // If there is an interrupt to process (and we are not currently servicing an ISR), read it from the interrupt FIFO.
                 else if (~`REGISTER_IR && ~interrupt_fifo_empty && interrupt_fifo_access_state == `INTERRUPT_FIFO_ACCESS_STATE_SETUP)
                 begin
                     interrupt_fifo_read <= 'b1;
+                    interrupt_value_fifo_read <= 'b1;
                     interrupt_fifo_access_state <= `INTERRUPT_FIFO_ACCESS_STATE_FINISH;
                 end
                 // Process the interrupt that was read from the FIFO.
@@ -640,14 +705,48 @@ begin
                     // Save all registers' states (except the IP register).
                     for (i = 1; i < `NUM_REGISTERS; i = i + 1)
                         shadow_registers[i] <= registers[i];
-                    // Make the shadow (saved) IP register point at the next instruction so that the program flow will continue after the interrupt routine completes.
-                    shadow_registers[0] <= `REGISTER_IP + `INSTRUCTION_SIZE_BYTES;
+                    // Make the shadow (saved) IP register point at the next instruction so that the program flow will continue after the interrupt routine completes (unless IP will go past the end of the program.
+                    if (`REGISTER_IP + `INSTRUCTION_SIZE_BYTES >= program_end_address)
+                        shadow_registers[0] <= `REGISTER_IP;
+                    else
+                        shadow_registers[0] <= `REGISTER_IP + `INSTRUCTION_SIZE_BYTES;
                     // Jump the current IP register to the interrupt routine.
                     `REGISTER_IP <= code_section_start_address + interrupt_vector_table[interrupt_fifo_data_out];
                     // Stop reading from the FIFO.
                     interrupt_fifo_read <= 'b0;
+                    interrupt_value_fifo_read <= 'b0;
                     interrupt_fifo_access_state <= `INTERRUPT_FIFO_ACCESS_STATE_SETUP;
+                    state <= `STATE_ADD_INTERRUPTS;
+                end
+            end
+            // Add any new hardware-triggered interrupts (keycodes, GPIO events, etc.) to the interrupt FIFO.
+            `STATE_ADD_INTERRUPTS:
+            begin
+                if (keyboard_scancode_fifo_empty && keyboard_scancode_fifo_access_state == `KEYBOARD_SCANCODE_FIFO_ACCESS_STATE_READ_START)
                     state <= `STATE_FETCH_OPERATION;
+                else if (~keyboard_scancode_fifo_empty && keyboard_scancode_fifo_access_state == `KEYBOARD_SCANCODE_FIFO_ACCESS_STATE_READ_START)
+                begin
+                    keyboard_scancode_fifo_read <= 'b1;
+                    keyboard_scancode_fifo_access_state <= `KEYBOARD_SCANCODE_FIFO_ACCESS_STATE_READ_END;
+                end
+                else if (keyboard_scancode_fifo_access_state == `KEYBOARD_SCANCODE_FIFO_ACCESS_STATE_READ_END)
+                    keyboard_scancode_fifo_access_state <= `KEYBOARD_SCANCODE_FIFO_ACCESS_STATE_WRITE_START;
+                else if (keyboard_scancode_fifo_access_state == `KEYBOARD_SCANCODE_FIFO_ACCESS_STATE_WRITE_START)
+                begin
+                    keyboard_scancode_fifo_read <= 'b0;
+                    interrupt_fifo_write <= 'b1;
+                    interrupt_fifo_data_in <= `INTERRUPT_TYPE_KEY;
+                    interrupt_value_fifo_data_in <= {24'b0, keyboard_scancode_fifo_data_out};
+                    interrupt_value_fifo_write <= 'b1;
+                    keyboard_scancode_fifo_access_state <= `KEYBOARD_SCANCODE_FIFO_ACCESS_STATE_WRITE_END;
+                end
+                else if (keyboard_scancode_fifo_access_state == `KEYBOARD_SCANCODE_FIFO_ACCESS_STATE_WRITE_END)
+                    keyboard_scancode_fifo_access_state <= `KEYBOARD_SCANCODE_FIFO_ACCESS_STATE_FINISH;
+                else if (keyboard_scancode_fifo_access_state == `KEYBOARD_SCANCODE_FIFO_ACCESS_STATE_FINISH)
+                begin
+                    interrupt_fifo_write <= 'b0;
+                    interrupt_value_fifo_write <= 'b0;
+                    keyboard_scancode_fifo_access_state <= `KEYBOARD_SCANCODE_FIFO_ACCESS_STATE_READ_START;
                 end
             end
         endcase

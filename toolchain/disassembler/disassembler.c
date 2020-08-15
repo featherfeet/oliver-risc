@@ -129,7 +129,7 @@ int main(int argc, char *argv[]) {
                 printf(" %s, %s\n", registerToString(operand1), registerToString(operand2));
                 break;
             case OPERATION_IN:
-                printf(" %s\n", registerToString(operand1));
+                printf(" %s, %s\n", registerToString(operand1), registerToString(operand2));
                 break;
             case OPERATION_MOV:
                 printf(" %s, %s\n", registerToString(operand1), registerToString(operand2));
