@@ -6,5 +6,5 @@ CXX_FLAGS = -g   -std=gnu++17
 
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/src -I/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/.. 
+CXX_INCLUDES = -I/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/src -I/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/.. -I/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/include 
 

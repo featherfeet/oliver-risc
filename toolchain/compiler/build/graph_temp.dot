@@ -1,19 +1,19 @@
 digraph ast {
     "0_0" [label="Root", shape=box];
     "1_0" [label="Declare `myvar_1` as 7.", shape=box];
-    "0_0" -> "1_0"
+    "0_0" -> "1_0";
     "1_1" [label="Declare `myvar_2` as 15.", shape=box];
-    "0_0" -> "1_1"
+    "0_0" -> "1_1";
     "1_2" [label="Assign variable `myvar_1`.", shape=box];
     "2_0" [label="Expression", shape=box];
     "3_0" [label="+ 87", shape=box];
-    "2_0" -> "3_0"
+    "2_0" -> "3_0";
     "3_1" [label="+ myvar_1", shape=box];
-    "2_0" -> "3_1"
+    "2_0" -> "3_1";
     "3_2" [label="+ myvar_2", shape=box];
-    "2_0" -> "3_2"
+    "2_0" -> "3_2";
     "3_3" [label="- 19", shape=box];
-    "2_0" -> "3_3"
+    "2_0" -> "3_3";
     "1_2" -> "2_0";
-    "0_0" -> "1_2"
+    "0_0" -> "1_2";
 }

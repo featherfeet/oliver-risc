@@ -1,7 +1,11 @@
 #include "ast.h"
 #include "processor.h"
-#include <fstream>
 #include <sstream>
+#include <fstream>
+
+#define FMT_HEADER_ONLY
+#include <fmt/format.h>
+
 #include <string>
 #include <memory>
 #include <cstdlib>
@@ -13,39 +17,37 @@ void ASTRootNode::addStatement(ASTStatementNode *node) {
 std::string ASTRootNode::generateGraphvizCode(int level, int node_id, ASTNode *statement) {
     std::stringstream output;
 
-    std::stringstream my_identifier_sstream;
-    my_identifier_sstream << "\"" << level << "_" << node_id << "\"";
-    std::string my_identifier = my_identifier_sstream.str();
+    std::string my_identifier = fmt::format("\"{}_{}\"", level, node_id);
 
     if (statement->getNodeType() == ROOT_NODE) {
         output << "digraph ast {" << std::endl;
-        output << "    " << my_identifier << " [label=\"" << statement->getHumanReadable() << "\", shape=box];" << std::endl;
+        output << fmt::format("    {} [label=\"{}\", shape=box];\n", my_identifier, statement->getHumanReadable());
         for (int i = 0; i < children.size(); i++) {
             output << generateGraphvizCode(level + 1, i, children[i]);
-            output << "    " << my_identifier << " -> \"" << level + 1 << "_" << i << "\"" << std::endl;
+            output << fmt::format("    {} -> \"{}_{}\";\n", my_identifier, level + 1, i);
         }
         output << "}" << std::endl;
     }
     else if (statement->getNodeType() == VARIABLE_DECLARATION_NODE) {
-        output << "    " << my_identifier << " [label=\"" << statement->getHumanReadable() << "\", shape=box];" << std::endl;
+        output << fmt::format("    {} [label=\"{}\", shape=box];\n", my_identifier, statement->getHumanReadable());
     }
     else if (statement->getNodeType() == VARIABLE_ASSIGNMENT_NODE) {
-        output << "    " << my_identifier << " [label=\"" << statement->getHumanReadable() << "\", shape=box];" << std::endl;
+        output << fmt::format("    {} [label=\"{}\", shape=box];\n", my_identifier, statement->getHumanReadable());
         ASTVariableAssignmentNode *variable_assignment = (ASTVariableAssignmentNode *) statement;
         output << generateGraphvizCode(level + 1, 0, variable_assignment->getExpressionNode());
-        output << "    " << my_identifier << " -> \"" << level + 1 << "_" << 0 << "\";" << std::endl;
+        output << fmt::format("    {} -> \"{}_0\";\n", my_identifier, level + 1);
     }
     else if (statement->getNodeType() == EXPRESSION_NODE) {
-        output << "    " << my_identifier << " [label=\"" << statement->getHumanReadable() << "\", shape=box];" << std::endl;
+        output << fmt::format("    {} [label=\"{}\", shape=box];\n", my_identifier, statement->getHumanReadable());
         ASTExpressionNode *expression = (ASTExpressionNode *) statement;
         std::vector<ASTTermNode*> terms = expression->getTerms();
         for (int i = 0; i < terms.size(); i++) {
             output << generateGraphvizCode(level + 1, i, terms[i]);
-            output << "    " << my_identifier << " -> \"" << level + 1 << "_" << i << "\"" << std::endl;
+            output << fmt::format("    {} -> \"{}_{}\";\n", my_identifier, level + 1, i);
         }
     }
     else if (statement->getNodeType() == TERM_NODE) {
-        output << "    " << my_identifier << " [label=\"" << statement->getHumanReadable() << "\", shape=box];" << std::endl;
+        output << fmt::format("    {} [label=\"{}\", shape=box];\n", my_identifier, statement->getHumanReadable());
     }
 
     return output.str();
@@ -83,9 +85,7 @@ ASTNodeType ASTVariableDeclarationNode::getNodeType() {
 }
 
 std::string ASTVariableDeclarationNode::getHumanReadable() {
-    std::stringstream human_readable;
-    human_readable << "Declare `" << variable_name << "` as " << value << ".";
-    return human_readable.str();
+    return fmt::format("Declare `{}` as {}.", variable_name, value);
 }
 
 ASTTermNode::ASTTermNode(TermNodeSign sign, OPERAND_C_TYPE constant_value) {
@@ -151,7 +151,5 @@ ASTExpressionNode *ASTVariableAssignmentNode::getExpressionNode() {
 }
 
 std::string ASTVariableAssignmentNode::getHumanReadable() {
-    std::stringstream human_readable;
-    human_readable << "Assign variable `" << variable_name << "`.";
-    return human_readable.str();
+    return fmt::format("Assign variable `{}`.", variable_name);
 }

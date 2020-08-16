@@ -12,5 +12,8 @@ CMakeFiles/main.dir/parser.cpp.o
  /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp
 CMakeFiles/main.dir/src/ast.cpp.o
  ../../processor.h
+ ../include/fmt/core.h
+ ../include/fmt/format-inl.h
+ ../include/fmt/format.h
  /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/src/ast.cpp
  /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/src/ast.h

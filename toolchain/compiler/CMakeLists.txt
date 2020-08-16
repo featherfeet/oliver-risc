@@ -11,7 +11,7 @@ FLEX_TARGET(MyScanner src/lexer.l ${CMAKE_CURRENT_BINARY_DIR}/lexer.cpp)
 BISON_TARGET(MyParser src/parser.y ${CMAKE_CURRENT_BINARY_DIR}/parser.cpp)
 ADD_FLEX_BISON_DEPENDENCY(MyScanner MyParser)
 
-include_directories(src/ ../)
+include_directories(src/ ../ include/)
 add_executable(main 
                src/ast.cpp
                ${BISON_MyParser_OUTPUTS}
