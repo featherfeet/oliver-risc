@@ -19,7 +19,7 @@ std::string ASTRootNode::generateGraphvizCode(int level, int node_id, ASTNode *s
 
     if (statement->getNodeType() == ROOT_NODE) {
         output << "digraph ast {" << std::endl;
-        output << "    " << my_identifier << " [label=\"root\", shape=box];" << std::endl;
+        output << "    " << my_identifier << " [label=\"" << statement->getHumanReadable() << "\", shape=box];" << std::endl;
         for (int i = 0; i < children.size(); i++) {
             output << generateGraphvizCode(level + 1, i, children[i]);
             output << "    " << my_identifier << " -> \"" << level + 1 << "_" << i << "\"" << std::endl;
@@ -27,16 +27,16 @@ std::string ASTRootNode::generateGraphvizCode(int level, int node_id, ASTNode *s
         output << "}" << std::endl;
     }
     else if (statement->getNodeType() == VARIABLE_DECLARATION_NODE) {
-        output << "    " << my_identifier << " [label=\"variable declaration\", shape=box];" << std::endl;
+        output << "    " << my_identifier << " [label=\"" << statement->getHumanReadable() << "\", shape=box];" << std::endl;
     }
     else if (statement->getNodeType() == VARIABLE_ASSIGNMENT_NODE) {
-        output << "    " << my_identifier << " [label=\"variable assignment\", shape=box];" << std::endl;
+        output << "    " << my_identifier << " [label=\"" << statement->getHumanReadable() << "\", shape=box];" << std::endl;
         ASTVariableAssignmentNode *variable_assignment = (ASTVariableAssignmentNode *) statement;
         output << generateGraphvizCode(level + 1, 0, variable_assignment->getExpressionNode());
         output << "    " << my_identifier << " -> \"" << level + 1 << "_" << 0 << "\";" << std::endl;
     }
     else if (statement->getNodeType() == EXPRESSION_NODE) {
-        output << "    " << my_identifier << " [label=\"expression\", shape=box];" << std::endl;
+        output << "    " << my_identifier << " [label=\"" << statement->getHumanReadable() << "\", shape=box];" << std::endl;
         ASTExpressionNode *expression = (ASTExpressionNode *) statement;
         std::vector<ASTTermNode*> terms = expression->getTerms();
         for (int i = 0; i < terms.size(); i++) {
@@ -45,7 +45,7 @@ std::string ASTRootNode::generateGraphvizCode(int level, int node_id, ASTNode *s
         }
     }
     else if (statement->getNodeType() == TERM_NODE) {
-        output << "    " << my_identifier << " [label=\"term\", shape=box];" << std::endl;
+        output << "    " << my_identifier << " [label=\"" << statement->getHumanReadable() << "\", shape=box];" << std::endl;
     }
 
     return output.str();
@@ -53,6 +53,10 @@ std::string ASTRootNode::generateGraphvizCode(int level, int node_id, ASTNode *s
 
 ASTNodeType ASTRootNode::getNodeType() {
     return ROOT_NODE;
+}
+
+std::string ASTRootNode::getHumanReadable() {
+    return "Root";
 }
 
 void ASTRootNode::showGraph() {
@@ -78,6 +82,12 @@ ASTNodeType ASTVariableDeclarationNode::getNodeType() {
     return VARIABLE_DECLARATION_NODE;
 }
 
+std::string ASTVariableDeclarationNode::getHumanReadable() {
+    std::stringstream human_readable;
+    human_readable << "Declare `" << variable_name << "` as " << value << ".";
+    return human_readable.str();
+}
+
 ASTTermNode::ASTTermNode(TermNodeSign sign, OPERAND_C_TYPE constant_value) {
     this->sign = sign;
     this->constant_value = constant_value;
@@ -94,12 +104,33 @@ ASTNodeType ASTTermNode::getNodeType() {
     return TERM_NODE;
 }
 
+std::string ASTTermNode::getHumanReadable() {
+    std::stringstream human_readable;
+    if (sign == POSITIVE) {
+        human_readable << "+ ";
+    }
+    else {
+        human_readable << "- ";
+    }
+    if (type == VARIABLE) {
+        human_readable << variable_name;
+    }
+    else {
+        human_readable << constant_value;
+    }
+    return human_readable.str();
+}
+
 void ASTExpressionNode::addTerm(ASTTermNode *term) {
     terms.push_back(term);
 }
 
 ASTNodeType ASTExpressionNode::getNodeType() {
     return EXPRESSION_NODE;
+}
+
+std::string ASTExpressionNode::getHumanReadable() {
+    return "Expression";
 }
 
 std::vector<ASTTermNode*> ASTExpressionNode::getTerms() {
@@ -117,4 +148,10 @@ ASTNodeType ASTVariableAssignmentNode::getNodeType() {
 
 ASTExpressionNode *ASTVariableAssignmentNode::getExpressionNode() {
     return value;
+}
+
+std::string ASTVariableAssignmentNode::getHumanReadable() {
+    std::stringstream human_readable;
+    human_readable << "Assign variable `" << variable_name << "`.";
+    return human_readable.str();
 }

@@ -17,6 +17,7 @@ enum ASTNodeType {
 class ASTNode {
     public:
         virtual ASTNodeType getNodeType() = 0;
+        virtual std::string getHumanReadable() = 0;
 };
 
 class ASTStatementNode : public ASTNode {
@@ -30,6 +31,7 @@ class ASTRootNode : ASTNode {
         void addStatement(ASTStatementNode *node);
         void showGraph();
         ASTNodeType getNodeType();
+        std::string getHumanReadable();
 };
 
 class ASTVariableDeclarationNode : public ASTStatementNode {
@@ -40,6 +42,7 @@ class ASTVariableDeclarationNode : public ASTStatementNode {
         ASTVariableDeclarationNode(std::string variable_name);
         ASTVariableDeclarationNode(std::string variable_name, OPERAND_C_TYPE value);
         ASTNodeType getNodeType();
+        std::string getHumanReadable();
 };
 
 enum TermNodeSign {
@@ -62,6 +65,7 @@ class ASTTermNode : public ASTNode {
         ASTTermNode(TermNodeSign sign, OPERAND_C_TYPE constant_value);
         ASTTermNode(TermNodeSign sign, std::string variable_name);
         ASTNodeType getNodeType();
+        std::string getHumanReadable();
 };
 
 class ASTExpressionNode : public ASTNode {
@@ -71,6 +75,7 @@ class ASTExpressionNode : public ASTNode {
         void addTerm(ASTTermNode *term);
         ASTNodeType getNodeType();
         std::vector<ASTTermNode*> getTerms();
+        std::string getHumanReadable();
 };
 
 class ASTVariableAssignmentNode : public ASTStatementNode {
@@ -81,6 +86,7 @@ class ASTVariableAssignmentNode : public ASTStatementNode {
         ASTVariableAssignmentNode(std::string variable_name, ASTExpressionNode *value);
         ASTExpressionNode *getExpressionNode();
         ASTNodeType getNodeType();
+        std::string getHumanReadable();
 };
 
 #endif // AST_H
