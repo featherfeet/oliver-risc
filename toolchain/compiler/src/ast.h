@@ -27,7 +27,7 @@ class ASTStatementNode : public ASTNode {
 };
 
 class ASTRootNode : public ASTNode {
-    std::string generateGraphvizCode(int level, int node_id, ASTNode *statement);
+    std::string generateGraphvizCode(std::string node_id, ASTNode *statement);
 
     std::vector<ASTStatementNode*> children;
     public:
@@ -44,6 +44,7 @@ class ASTBeginEndBlockNode : public ASTStatementNode {
         ASTNodeType getNodeType();
         void addStatement(ASTStatementNode *node);
         std::string getHumanReadable();
+        std::vector<ASTStatementNode*> getChildren();
 };
 
 class ASTVariableDeclarationNode : public ASTStatementNode {
@@ -121,12 +122,14 @@ class ASTConditionNode : public ASTNode {
 
 class ASTConditionalNode : public ASTStatementNode {
     ASTConditionNode *condition;
-    ASTStatementNode *statement;
+    ASTBeginEndBlockNode *begin_end_block;
 
     public:
-        ASTConditionalNode(ASTConditionNode *condition, ASTStatementNode *statement);
+        ASTConditionalNode(ASTConditionNode *condition, ASTBeginEndBlockNode *begin_end_block);
         ASTNodeType getNodeType();
         std::string getHumanReadable();
+        ASTConditionNode *getCondition();
+        ASTBeginEndBlockNode *getBeginEndBlock();
 };
 
 class ASTVariableAssignmentNode : public ASTStatementNode {

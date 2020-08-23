@@ -14,40 +14,73 @@ void ASTRootNode::addStatement(ASTStatementNode *node) {
     children.push_back(node);
 }
 
-std::string ASTRootNode::generateGraphvizCode(int level, int node_id, ASTNode *statement) {
+std::string ASTRootNode::generateGraphvizCode(std::string node_id, ASTNode *statement) {
     std::stringstream output;
-
-    std::string my_identifier = fmt::format("\"{}_{}\"", level, node_id);
 
     if (statement->getNodeType() == ROOT_NODE) {
         output << "digraph ast {" << std::endl;
-        output << fmt::format("    {} [label=\"{}\", shape=box];\n", my_identifier, statement->getHumanReadable());
+        output << fmt::format("    \"{}\" [label=\"{}\", shape=box];", node_id, statement->getHumanReadable()) << std::endl;
         for (int i = 0; i < children.size(); i++) {
-            output << generateGraphvizCode(level + 1, i, children[i]);
-            output << fmt::format("    {} -> \"{}_{}\";\n", my_identifier, level + 1, i);
+            output << generateGraphvizCode(fmt::format("{}_{}", node_id, i), children[i]);
+            output << fmt::format("    \"{}\" -> \"{}_{}\";", node_id, node_id, i) << std::endl;
         }
         output << "}" << std::endl;
     }
     else if (statement->getNodeType() == VARIABLE_DECLARATION_NODE) {
-        output << fmt::format("    {} [label=\"{}\", shape=box];\n", my_identifier, statement->getHumanReadable());
+        output << fmt::format("    \"{}\" [label=\"{}\", shape=box];", node_id, statement->getHumanReadable()) << std::endl;
     }
     else if (statement->getNodeType() == VARIABLE_ASSIGNMENT_NODE) {
-        output << fmt::format("    {} [label=\"{}\", shape=box];\n", my_identifier, statement->getHumanReadable());
+        output << fmt::format("    \"{}\" [label=\"{}\", shape=box];", node_id, statement->getHumanReadable()) << std::endl;
+
         ASTVariableAssignmentNode *variable_assignment = (ASTVariableAssignmentNode *) statement;
-        output << generateGraphvizCode(level + 1, 0, variable_assignment->getExpressionNode());
-        output << fmt::format("    {} -> \"{}_0\";\n", my_identifier, level + 1);
+
+        output << generateGraphvizCode(node_id + "_0", variable_assignment->getExpressionNode());
+        output << fmt::format("    \"{}\" -> \"{}_0\";", node_id, node_id) << std::endl;
     }
     else if (statement->getNodeType() == EXPRESSION_NODE) {
-        output << fmt::format("    {} [label=\"{}\", shape=box];\n", my_identifier, statement->getHumanReadable());
+        output << fmt::format("    \"{}\" [label=\"{}\", shape=box];", node_id, statement->getHumanReadable()) << std::endl;
+
         ASTExpressionNode *expression = (ASTExpressionNode *) statement;
+
         std::vector<ASTTermNode*> terms = expression->getTerms();
         for (int i = 0; i < terms.size(); i++) {
-            output << generateGraphvizCode(level + 1, i, terms[i]);
-            output << fmt::format("    {} -> \"{}_{}\";\n", my_identifier, level + 1, i);
+            output << generateGraphvizCode(fmt::format("{}_{}", node_id, i), terms[i]);
+            output << fmt::format("    \"{}\" -> \"{}_{}\";", node_id, node_id, i) << std::endl;
         }
     }
     else if (statement->getNodeType() == TERM_NODE) {
-        output << fmt::format("    {} [label=\"{}\", shape=box];\n", my_identifier, statement->getHumanReadable());
+        output << fmt::format("    \"{}\" [label=\"{}\", shape=box];", node_id, statement->getHumanReadable()) << std::endl;
+    }
+    else if (statement->getNodeType() == CONDITIONAL_NODE) {
+        output << fmt::format("    \"{}\" [label=\"{}\", shape=box];", node_id, statement->getHumanReadable()) << std::endl;
+
+        ASTConditionalNode *conditional = (ASTConditionalNode *) statement;
+
+        output << generateGraphvizCode(node_id + "_0", conditional->getCondition());
+        output << fmt::format("    \"{}\" -> \"{}_0\";", node_id, node_id) << std::endl;
+        output << generateGraphvizCode(node_id + "_1", conditional->getBeginEndBlock());
+        output << fmt::format("    \"{}\" -> \"{}_1\";", node_id, node_id) << std::endl;
+    }
+    else if (statement->getNodeType() == CONDITION_NODE) {
+        output << fmt::format("    \"{}\" [label=\"{}\", shape=box];", node_id, statement->getHumanReadable()) << std::endl;
+
+        ASTConditionNode *condition = (ASTConditionNode *) statement;
+
+        output << generateGraphvizCode(node_id + "_0", condition->getExpression1());
+        output << fmt::format("    \"{}\" -> \"{}_0\";", node_id, node_id) << std::endl;
+        output << generateGraphvizCode(node_id + "_1", condition->getExpression2());
+        output << fmt::format("    \"{}\" -> \"{}_1\";", node_id, node_id) << std::endl;
+    }
+    else if (statement->getNodeType() == BEGIN_END_BLOCK_NODE) {
+        output << fmt::format("    \"{}\" [label=\"{}\", shape=box];", node_id, statement->getHumanReadable()) << std::endl;
+
+        ASTBeginEndBlockNode *begin_end_block = (ASTBeginEndBlockNode *) statement;
+        std::vector<ASTStatementNode*> children = begin_end_block->getChildren();
+
+        for (int i = 0; i < children.size(); i++) {
+            output << generateGraphvizCode(fmt::format("{}_{}", node_id, i), children[i]);
+            output << fmt::format("    \"{}\" -> \"{}_{}\";", node_id, node_id, i) << std::endl;
+        }
     }
 
     return output.str();
@@ -68,7 +101,7 @@ std::vector<ASTStatementNode*> ASTRootNode::getChildren() {
 void ASTRootNode::showGraph() {
     std::ofstream graphviz_file;
     graphviz_file.open("graph_temp.dot");
-    graphviz_file << generateGraphvizCode(0, 0, this);
+    graphviz_file << generateGraphvizCode("0", this);
     graphviz_file.close();
     std::system("dot -Tpdf graph_temp.dot -o graph_temp.pdf");
     std::system("xdg-open graph_temp.pdf");
@@ -84,6 +117,10 @@ ASTNodeType ASTBeginEndBlockNode::getNodeType() {
 
 std::string ASTBeginEndBlockNode::getHumanReadable() {
     return "begin . . . end block";
+}
+
+std::vector<ASTStatementNode*> ASTBeginEndBlockNode::getChildren() {
+    return children;
 }
 
 ASTVariableDeclarationNode::ASTVariableDeclarationNode(std::string variable_name) {
@@ -156,9 +193,9 @@ ASTExpressionNode *ASTConditionNode::getExpression2() {
     return expression2;
 }
 
-ASTConditionalNode::ASTConditionalNode(ASTConditionNode *condition, ASTStatementNode *statement) {
+ASTConditionalNode::ASTConditionalNode(ASTConditionNode *condition, ASTBeginEndBlockNode *begin_end_block) {
     this->condition = condition;
-    this->statement = statement;
+    this->begin_end_block = begin_end_block;
 }
 
 ASTNodeType ASTConditionalNode::getNodeType() {
@@ -167,6 +204,14 @@ ASTNodeType ASTConditionalNode::getNodeType() {
 
 std::string ASTConditionalNode::getHumanReadable() {
     return "Conditional";
+}
+
+ASTConditionNode *ASTConditionalNode::getCondition() {
+    return condition;
+}
+
+ASTBeginEndBlockNode *ASTConditionalNode::getBeginEndBlock() {
+    return begin_end_block;
 }
 
 ASTTermNode::ASTTermNode(TermNodeSign sign, OPERAND_C_TYPE constant_value) {
