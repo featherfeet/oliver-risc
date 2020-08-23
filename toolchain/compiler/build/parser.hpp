@@ -44,7 +44,7 @@
 extern int yydebug;
 #endif
 /* "%code requires" blocks.  */
-#line 24 "src/parser.y" /* yacc.c:1921  */
+#line 21 "src/parser.y" /* yacc.c:1921  */
 
     #include "ast.h"
 
@@ -80,7 +80,7 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 48 "src/parser.y" /* yacc.c:1921  */
+#line 45 "src/parser.y" /* yacc.c:1921  */
 
     int intval;
     char *strval;

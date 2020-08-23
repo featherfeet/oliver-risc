@@ -1,7 +1,7 @@
-//VAR myvar_1 = 7;
-//VAR myvar_2 = 15;
+VAR myvar_1 = 7;
+VAR myvar_2 = 15;
 
-//myvar_1 := 87 + myvar_1 + myvar_2 - 19;
+myvar_1 := 87 + myvar_1 + myvar_2 - 19;
 
 if myvar_1 - 3 >= myvar_2 then
 begin

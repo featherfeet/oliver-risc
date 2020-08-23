@@ -16,9 +16,6 @@
 
     // Start of the AST.
     ASTRootNode *ast;
-
-    // Used for storing expressions as they are being built (temp var).
-    ASTExpressionNode *expression_temp = nullptr;
 %}
 
 %code requires {
@@ -143,17 +140,12 @@ term: TOKEN_IDENTIFIER {
     }
 ;
 
-expression: term expression {
-          if (expression_temp == nullptr) {
-              expression_temp = new ASTExpressionNode();
+expression: {
+    $$ = new ASTExpressionNode();
+}
+          | expression term {
+              $1->addTerm($2);
           }
-          expression_temp->addTerm($1);
-          $$ = expression_temp;
-}
-          | {
-              $$ = expression_temp;
-              expression_temp = nullptr;
-}
 ;
 
 condition: expression TOKEN_NOT_EQUALS expression {
