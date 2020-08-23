@@ -44,7 +44,7 @@
 extern int yydebug;
 #endif
 /* "%code requires" blocks.  */
-#line 21 "src/parser.y" /* yacc.c:1921  */
+#line 24 "src/parser.y" /* yacc.c:1921  */
 
     #include "ast.h"
 
@@ -62,7 +62,16 @@ extern int yydebug;
     TOKEN_SEMICOLON = 262,
     TOKEN_COLON_EQUALS = 263,
     TOKEN_PLUS = 264,
-    TOKEN_MINUS = 265
+    TOKEN_MINUS = 265,
+    TOKEN_IF = 266,
+    TOKEN_THEN = 267,
+    TOKEN_BEGIN = 268,
+    TOKEN_END = 269,
+    TOKEN_NOT_EQUALS = 270,
+    TOKEN_LESS_THAN = 271,
+    TOKEN_LESS_THAN_OR_EQUAL_TO = 272,
+    TOKEN_GREATER_THAN = 273,
+    TOKEN_GREATER_THAN_OR_EQUAL_TO = 274
   };
 #endif
 
@@ -71,7 +80,7 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 36 "src/parser.y" /* yacc.c:1921  */
+#line 48 "src/parser.y" /* yacc.c:1921  */
 
     int intval;
     char *strval;
@@ -80,8 +89,11 @@ union YYSTYPE
     ASTVariableAssignmentNode *variable_assignment_node;
     ASTExpressionNode *expression_node;
     ASTTermNode *term_node;
+    ASTConditionalNode *conditional_node;
+    ASTConditionNode *condition_node;
+    ASTBeginEndBlockNode *begin_end_block_node;
 
-#line 85 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.hpp" /* yacc.c:1921  */
+#line 97 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.hpp" /* yacc.c:1921  */
 };
 
 typedef union YYSTYPE YYSTYPE;

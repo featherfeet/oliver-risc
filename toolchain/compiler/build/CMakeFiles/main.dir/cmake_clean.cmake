@@ -3,6 +3,7 @@ file(REMOVE_RECURSE
   "parser.hpp"
   "lexer.cpp"
   "CMakeFiles/main.dir/src/ast.cpp.o"
+  "CMakeFiles/main.dir/src/asmgenerator.cpp.o"
   "CMakeFiles/main.dir/parser.cpp.o"
   "CMakeFiles/main.dir/lexer.cpp.o"
   "main.pdb"

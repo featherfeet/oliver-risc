@@ -55,6 +55,42 @@
     return TOKEN_COLON_EQUALS;
 }
 
+"if" {
+    return TOKEN_IF;
+}
+
+"then" {
+    return TOKEN_THEN;
+}
+
+"begin" {
+    return TOKEN_BEGIN;
+}
+
+"end" {
+    return TOKEN_END;
+}
+
+"#" {
+    return TOKEN_NOT_EQUALS;
+}
+
+"<" {
+    return TOKEN_LESS_THAN;
+}
+
+"<=" {
+    return TOKEN_LESS_THAN_OR_EQUAL_TO;
+}
+
+">" {
+    return TOKEN_GREATER_THAN;
+}
+
+">=" {
+    return TOKEN_GREATER_THAN_OR_EQUAL_TO;
+}
+
 [a-zA-Z]+[a-zA-Z0-9_]* {
     yylval.strval = strdup(yytext);
     return TOKEN_IDENTIFIER;

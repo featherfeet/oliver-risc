@@ -7,8 +7,17 @@ CMakeFiles/main.dir/lexer.cpp.o: lexer.cpp
 CMakeFiles/main.dir/lexer.cpp.o: parser.hpp
 
 CMakeFiles/main.dir/parser.cpp.o: ../../processor.h
+CMakeFiles/main.dir/parser.cpp.o: ../src/asmgenerator.h
 CMakeFiles/main.dir/parser.cpp.o: ../src/ast.h
 CMakeFiles/main.dir/parser.cpp.o: parser.cpp
+
+CMakeFiles/main.dir/src/asmgenerator.cpp.o: ../../processor.h
+CMakeFiles/main.dir/src/asmgenerator.cpp.o: ../include/fmt/core.h
+CMakeFiles/main.dir/src/asmgenerator.cpp.o: ../include/fmt/format-inl.h
+CMakeFiles/main.dir/src/asmgenerator.cpp.o: ../include/fmt/format.h
+CMakeFiles/main.dir/src/asmgenerator.cpp.o: ../src/asmgenerator.cpp
+CMakeFiles/main.dir/src/asmgenerator.cpp.o: ../src/asmgenerator.h
+CMakeFiles/main.dir/src/asmgenerator.cpp.o: ../src/ast.h
 
 CMakeFiles/main.dir/src/ast.cpp.o: ../../processor.h
 CMakeFiles/main.dir/src/ast.cpp.o: ../include/fmt/core.h

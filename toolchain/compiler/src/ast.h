@@ -11,7 +11,10 @@ enum ASTNodeType {
     VARIABLE_DECLARATION_NODE,
     VARIABLE_ASSIGNMENT_NODE,
     EXPRESSION_NODE,
-    TERM_NODE
+    TERM_NODE,
+    CONDITION_NODE,
+    CONDITIONAL_NODE,
+    BEGIN_END_BLOCK_NODE
 };
 
 class ASTNode {
@@ -23,7 +26,7 @@ class ASTNode {
 class ASTStatementNode : public ASTNode {
 };
 
-class ASTRootNode : ASTNode {
+class ASTRootNode : public ASTNode {
     std::string generateGraphvizCode(int level, int node_id, ASTNode *statement);
 
     std::vector<ASTStatementNode*> children;
@@ -31,6 +34,15 @@ class ASTRootNode : ASTNode {
         void addStatement(ASTStatementNode *node);
         void showGraph();
         ASTNodeType getNodeType();
+        std::string getHumanReadable();
+        std::vector<ASTStatementNode*> getChildren();
+};
+
+class ASTBeginEndBlockNode : public ASTStatementNode {
+    std::vector<ASTStatementNode*> children;
+    public:
+        ASTNodeType getNodeType();
+        void addStatement(ASTStatementNode *node);
         std::string getHumanReadable();
 };
 
@@ -43,6 +55,8 @@ class ASTVariableDeclarationNode : public ASTStatementNode {
         ASTVariableDeclarationNode(std::string variable_name, OPERAND_C_TYPE value);
         ASTNodeType getNodeType();
         std::string getHumanReadable();
+        std::string getVariableName();
+        OPERAND_C_TYPE getValue();
 };
 
 enum TermNodeSign {
@@ -66,6 +80,10 @@ class ASTTermNode : public ASTNode {
         ASTTermNode(TermNodeSign sign, std::string variable_name);
         ASTNodeType getNodeType();
         std::string getHumanReadable();
+        TermNodeSign getSign();
+        TermNodeType getType();
+        OPERAND_C_TYPE getConstantValue();
+        std::string getVariableName();
 };
 
 class ASTExpressionNode : public ASTNode {
@@ -78,6 +96,39 @@ class ASTExpressionNode : public ASTNode {
         std::string getHumanReadable();
 };
 
+enum ConditionNodeComparison {
+    NOT_EQUALS,
+    EQUALS,
+    LESS_THAN,
+    LESS_THAN_OR_EQUAL_TO,
+    GREATER_THAN,
+    GREATER_THAN_OR_EQUAL_TO
+};
+
+class ASTConditionNode : public ASTNode {
+    ConditionNodeComparison comparison;
+    ASTExpressionNode *expression1;
+    ASTExpressionNode *expression2;
+
+    public:
+        ASTConditionNode(ConditionNodeComparison comparison, ASTExpressionNode *expression1, ASTExpressionNode *expression2);
+        ASTNodeType getNodeType();
+        std::string getHumanReadable();
+        ConditionNodeComparison getComparison();
+        ASTExpressionNode *getExpression1();
+        ASTExpressionNode *getExpression2();
+};
+
+class ASTConditionalNode : public ASTStatementNode {
+    ASTConditionNode *condition;
+    ASTStatementNode *statement;
+
+    public:
+        ASTConditionalNode(ASTConditionNode *condition, ASTStatementNode *statement);
+        ASTNodeType getNodeType();
+        std::string getHumanReadable();
+};
+
 class ASTVariableAssignmentNode : public ASTStatementNode {
     std::string variable_name;
     ASTExpressionNode *value;
@@ -87,6 +138,7 @@ class ASTVariableAssignmentNode : public ASTStatementNode {
         ASTExpressionNode *getExpressionNode();
         ASTNodeType getNodeType();
         std::string getHumanReadable();
+        std::string getVariableName();
 };
 
 #endif // AST_H

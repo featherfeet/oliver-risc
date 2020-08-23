@@ -177,6 +177,33 @@ parser.cpp.s:
 	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/parser.cpp.s
 .PHONY : parser.cpp.s
 
+src/asmgenerator.o: src/asmgenerator.cpp.o
+
+.PHONY : src/asmgenerator.o
+
+# target to build an object file
+src/asmgenerator.cpp.o:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/asmgenerator.cpp.o
+.PHONY : src/asmgenerator.cpp.o
+
+src/asmgenerator.i: src/asmgenerator.cpp.i
+
+.PHONY : src/asmgenerator.i
+
+# target to preprocess a source file
+src/asmgenerator.cpp.i:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/asmgenerator.cpp.i
+.PHONY : src/asmgenerator.cpp.i
+
+src/asmgenerator.s: src/asmgenerator.cpp.s
+
+.PHONY : src/asmgenerator.s
+
+# target to generate assembly for a file
+src/asmgenerator.cpp.s:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/asmgenerator.cpp.s
+.PHONY : src/asmgenerator.cpp.s
+
 src/ast.o: src/ast.cpp.o
 
 .PHONY : src/ast.o
@@ -219,6 +246,9 @@ help:
 	@echo "... parser.o"
 	@echo "... parser.i"
 	@echo "... parser.s"
+	@echo "... src/asmgenerator.o"
+	@echo "... src/asmgenerator.i"
+	@echo "... src/asmgenerator.s"
 	@echo "... src/ast.o"
 	@echo "... src/ast.i"
 	@echo "... src/ast.s"

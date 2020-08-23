@@ -61,6 +61,10 @@ std::string ASTRootNode::getHumanReadable() {
     return "Root";
 }
 
+std::vector<ASTStatementNode*> ASTRootNode::getChildren() {
+    return children;
+}
+
 void ASTRootNode::showGraph() {
     std::ofstream graphviz_file;
     graphviz_file.open("graph_temp.dot");
@@ -68,6 +72,18 @@ void ASTRootNode::showGraph() {
     graphviz_file.close();
     std::system("dot -Tpdf graph_temp.dot -o graph_temp.pdf");
     std::system("xdg-open graph_temp.pdf");
+}
+
+void ASTBeginEndBlockNode::addStatement(ASTStatementNode *statement) {
+    children.push_back(statement);
+}
+
+ASTNodeType ASTBeginEndBlockNode::getNodeType() {
+    return BEGIN_END_BLOCK_NODE;
+}
+
+std::string ASTBeginEndBlockNode::getHumanReadable() {
+    return "begin . . . end block";
 }
 
 ASTVariableDeclarationNode::ASTVariableDeclarationNode(std::string variable_name) {
@@ -86,6 +102,71 @@ ASTNodeType ASTVariableDeclarationNode::getNodeType() {
 
 std::string ASTVariableDeclarationNode::getHumanReadable() {
     return fmt::format("Declare `{}` as {}.", variable_name, value);
+}
+
+std::string ASTVariableDeclarationNode::getVariableName() {
+    return variable_name;
+}
+
+OPERAND_C_TYPE ASTVariableDeclarationNode::getValue() {
+    return value;
+}
+
+ASTConditionNode::ASTConditionNode(ConditionNodeComparison comparison, ASTExpressionNode *expression1, ASTExpressionNode *expression2) {
+    this->comparison = comparison;
+    this->expression1 = expression1;
+    this->expression2 = expression2;
+}
+
+ASTNodeType ASTConditionNode::getNodeType() {
+    return CONDITION_NODE;
+}
+
+std::string ASTConditionNode::getHumanReadable() {
+    if (comparison == NOT_EQUALS) {
+        return "Condition: #";
+    }
+    else if (comparison == EQUALS) {
+        return "Condition: =";
+    }
+    else if (comparison == LESS_THAN) {
+        return "Condition: <";
+    }
+    else if (comparison == LESS_THAN_OR_EQUAL_TO) {
+        return "Condition: <=";
+    }
+    else if (comparison == GREATER_THAN) {
+        return "Condition: >";
+    }
+    else if (comparison == GREATER_THAN_OR_EQUAL_TO) {
+        return "Condition: >=";
+    }
+    return "Condition: unknown";
+}
+
+ConditionNodeComparison ASTConditionNode::getComparison() {
+    return comparison;
+}
+
+ASTExpressionNode *ASTConditionNode::getExpression1() {
+    return expression1;
+}
+
+ASTExpressionNode *ASTConditionNode::getExpression2() {
+    return expression2;
+}
+
+ASTConditionalNode::ASTConditionalNode(ASTConditionNode *condition, ASTStatementNode *statement) {
+    this->condition = condition;
+    this->statement = statement;
+}
+
+ASTNodeType ASTConditionalNode::getNodeType() {
+    return CONDITIONAL_NODE;
+}
+
+std::string ASTConditionalNode::getHumanReadable() {
+    return "Conditional";
 }
 
 ASTTermNode::ASTTermNode(TermNodeSign sign, OPERAND_C_TYPE constant_value) {
@@ -121,6 +202,22 @@ std::string ASTTermNode::getHumanReadable() {
     return human_readable.str();
 }
 
+TermNodeSign ASTTermNode::getSign() {
+    return sign;
+}
+
+TermNodeType ASTTermNode::getType() {
+    return type;
+}
+
+OPERAND_C_TYPE ASTTermNode::getConstantValue() {
+    return constant_value;
+}
+
+std::string ASTTermNode::getVariableName() {
+    return variable_name;
+}
+
 void ASTExpressionNode::addTerm(ASTTermNode *term) {
     terms.push_back(term);
 }
@@ -152,4 +249,8 @@ ASTExpressionNode *ASTVariableAssignmentNode::getExpressionNode() {
 
 std::string ASTVariableAssignmentNode::getHumanReadable() {
     return fmt::format("Assign variable `{}`.", variable_name);
+}
+
+std::string ASTVariableAssignmentNode::getVariableName() {
+    return variable_name;
 }

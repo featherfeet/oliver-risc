@@ -14,6 +14,7 @@ ADD_FLEX_BISON_DEPENDENCY(MyScanner MyParser)
 include_directories(src/ ../ include/)
 add_executable(main 
                src/ast.cpp
+               src/asmgenerator.cpp
                ${BISON_MyParser_OUTPUTS}
                ${FLEX_MyScanner_OUTPUTS})
 target_link_libraries(main

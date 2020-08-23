@@ -1,0 +1,580 @@
+Grammar
+
+    0 $accept: program $end
+
+    1 program: %empty
+    2        | program statement
+
+    3 statement: variable_declaration TOKEN_SEMICOLON
+    4          | variable_assignment TOKEN_SEMICOLON
+    5          | conditional TOKEN_SEMICOLON
+    6          | begin_end_block TOKEN_SEMICOLON
+
+    7 variable_declaration: TOKEN_VAR TOKEN_IDENTIFIER
+    8                     | TOKEN_VAR TOKEN_IDENTIFIER TOKEN_EQUALS TOKEN_CONSTANT
+
+    9 variable_assignment: TOKEN_IDENTIFIER TOKEN_COLON_EQUALS expression
+
+   10 conditional: TOKEN_IF condition TOKEN_THEN statement
+
+   11 begin_end_block: TOKEN_BEGIN statement_sequence TOKEN_END
+
+   12 statement_sequence: statement
+   13                   | statement_sequence statement
+
+   14 term: TOKEN_IDENTIFIER
+   15     | TOKEN_CONSTANT
+   16     | TOKEN_PLUS TOKEN_IDENTIFIER
+   17     | TOKEN_MINUS TOKEN_IDENTIFIER
+   18     | TOKEN_PLUS TOKEN_CONSTANT
+   19     | TOKEN_MINUS TOKEN_CONSTANT
+
+   20 expression: term expression
+   21           | %empty
+
+   22 condition: expression TOKEN_NOT_EQUALS expression
+   23          | expression TOKEN_EQUALS expression
+   24          | expression TOKEN_LESS_THAN expression
+   25          | expression TOKEN_LESS_THAN_OR_EQUAL_TO expression
+   26          | expression TOKEN_GREATER_THAN expression
+   27          | expression TOKEN_GREATER_THAN_OR_EQUAL_TO expression
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+error (256)
+TOKEN_VAR (258) 7 8
+TOKEN_EQUALS (259) 8 23
+TOKEN_IDENTIFIER <strval> (260) 7 8 9 14 16 17
+TOKEN_CONSTANT <intval> (261) 8 15 18 19
+TOKEN_SEMICOLON (262) 3 4 5 6
+TOKEN_COLON_EQUALS (263) 9
+TOKEN_PLUS (264) 16 18
+TOKEN_MINUS (265) 17 19
+TOKEN_IF (266) 10
+TOKEN_THEN (267) 10
+TOKEN_BEGIN (268) 11
+TOKEN_END (269) 11
+TOKEN_NOT_EQUALS (270) 22
+TOKEN_LESS_THAN (271) 24
+TOKEN_LESS_THAN_OR_EQUAL_TO (272) 25
+TOKEN_GREATER_THAN (273) 26
+TOKEN_GREATER_THAN_OR_EQUAL_TO (274) 27
+
+
+Nonterminals, with rules where they appear
+
+$accept (20)
+    on left: 0
+program (21)
+    on left: 1 2, on right: 0 2
+statement <statement_node> (22)
+    on left: 3 4 5 6, on right: 2 10 12 13
+variable_declaration <variable_declaration_node> (23)
+    on left: 7 8, on right: 3
+variable_assignment <variable_assignment_node> (24)
+    on left: 9, on right: 4
+conditional <conditional_node> (25)
+    on left: 10, on right: 5
+begin_end_block <begin_end_block_node> (26)
+    on left: 11, on right: 6
+statement_sequence <begin_end_block_node> (27)
+    on left: 12 13, on right: 11 13
+term <term_node> (28)
+    on left: 14 15 16 17 18 19, on right: 20
+expression <expression_node> (29)
+    on left: 20 21, on right: 9 20 22 23 24 25 26 27
+condition <condition_node> (30)
+    on left: 22 23 24 25 26 27, on right: 10
+
+
+State 0
+
+    0 $accept: . program $end
+
+    $default  reduce using rule 1 (program)
+
+    program  go to state 1
+
+
+State 1
+
+    0 $accept: program . $end
+    2 program: program . statement
+
+    $end              shift, and go to state 2
+    TOKEN_VAR         shift, and go to state 3
+    TOKEN_IDENTIFIER  shift, and go to state 4
+    TOKEN_IF          shift, and go to state 5
+    TOKEN_BEGIN       shift, and go to state 6
+
+    statement             go to state 7
+    variable_declaration  go to state 8
+    variable_assignment   go to state 9
+    conditional           go to state 10
+    begin_end_block       go to state 11
+
+
+State 2
+
+    0 $accept: program $end .
+
+    $default  accept
+
+
+State 3
+
+    7 variable_declaration: TOKEN_VAR . TOKEN_IDENTIFIER
+    8                     | TOKEN_VAR . TOKEN_IDENTIFIER TOKEN_EQUALS TOKEN_CONSTANT
+
+    TOKEN_IDENTIFIER  shift, and go to state 12
+
+
+State 4
+
+    9 variable_assignment: TOKEN_IDENTIFIER . TOKEN_COLON_EQUALS expression
+
+    TOKEN_COLON_EQUALS  shift, and go to state 13
+
+
+State 5
+
+   10 conditional: TOKEN_IF . condition TOKEN_THEN statement
+
+    TOKEN_IDENTIFIER  shift, and go to state 14
+    TOKEN_CONSTANT    shift, and go to state 15
+    TOKEN_PLUS        shift, and go to state 16
+    TOKEN_MINUS       shift, and go to state 17
+
+    $default  reduce using rule 21 (expression)
+
+    term        go to state 18
+    expression  go to state 19
+    condition   go to state 20
+
+
+State 6
+
+   11 begin_end_block: TOKEN_BEGIN . statement_sequence TOKEN_END
+
+    TOKEN_VAR         shift, and go to state 3
+    TOKEN_IDENTIFIER  shift, and go to state 4
+    TOKEN_IF          shift, and go to state 5
+    TOKEN_BEGIN       shift, and go to state 6
+
+    statement             go to state 21
+    variable_declaration  go to state 8
+    variable_assignment   go to state 9
+    conditional           go to state 10
+    begin_end_block       go to state 11
+    statement_sequence    go to state 22
+
+
+State 7
+
+    2 program: program statement .
+
+    $default  reduce using rule 2 (program)
+
+
+State 8
+
+    3 statement: variable_declaration . TOKEN_SEMICOLON
+
+    TOKEN_SEMICOLON  shift, and go to state 23
+
+
+State 9
+
+    4 statement: variable_assignment . TOKEN_SEMICOLON
+
+    TOKEN_SEMICOLON  shift, and go to state 24
+
+
+State 10
+
+    5 statement: conditional . TOKEN_SEMICOLON
+
+    TOKEN_SEMICOLON  shift, and go to state 25
+
+
+State 11
+
+    6 statement: begin_end_block . TOKEN_SEMICOLON
+
+    TOKEN_SEMICOLON  shift, and go to state 26
+
+
+State 12
+
+    7 variable_declaration: TOKEN_VAR TOKEN_IDENTIFIER .
+    8                     | TOKEN_VAR TOKEN_IDENTIFIER . TOKEN_EQUALS TOKEN_CONSTANT
+
+    TOKEN_EQUALS  shift, and go to state 27
+
+    $default  reduce using rule 7 (variable_declaration)
+
+
+State 13
+
+    9 variable_assignment: TOKEN_IDENTIFIER TOKEN_COLON_EQUALS . expression
+
+    TOKEN_IDENTIFIER  shift, and go to state 14
+    TOKEN_CONSTANT    shift, and go to state 15
+    TOKEN_PLUS        shift, and go to state 16
+    TOKEN_MINUS       shift, and go to state 17
+
+    $default  reduce using rule 21 (expression)
+
+    term        go to state 18
+    expression  go to state 28
+
+
+State 14
+
+   14 term: TOKEN_IDENTIFIER .
+
+    $default  reduce using rule 14 (term)
+
+
+State 15
+
+   15 term: TOKEN_CONSTANT .
+
+    $default  reduce using rule 15 (term)
+
+
+State 16
+
+   16 term: TOKEN_PLUS . TOKEN_IDENTIFIER
+   18     | TOKEN_PLUS . TOKEN_CONSTANT
+
+    TOKEN_IDENTIFIER  shift, and go to state 29
+    TOKEN_CONSTANT    shift, and go to state 30
+
+
+State 17
+
+   17 term: TOKEN_MINUS . TOKEN_IDENTIFIER
+   19     | TOKEN_MINUS . TOKEN_CONSTANT
+
+    TOKEN_IDENTIFIER  shift, and go to state 31
+    TOKEN_CONSTANT    shift, and go to state 32
+
+
+State 18
+
+   20 expression: term . expression
+
+    TOKEN_IDENTIFIER  shift, and go to state 14
+    TOKEN_CONSTANT    shift, and go to state 15
+    TOKEN_PLUS        shift, and go to state 16
+    TOKEN_MINUS       shift, and go to state 17
+
+    $default  reduce using rule 21 (expression)
+
+    term        go to state 18
+    expression  go to state 33
+
+
+State 19
+
+   22 condition: expression . TOKEN_NOT_EQUALS expression
+   23          | expression . TOKEN_EQUALS expression
+   24          | expression . TOKEN_LESS_THAN expression
+   25          | expression . TOKEN_LESS_THAN_OR_EQUAL_TO expression
+   26          | expression . TOKEN_GREATER_THAN expression
+   27          | expression . TOKEN_GREATER_THAN_OR_EQUAL_TO expression
+
+    TOKEN_EQUALS                    shift, and go to state 34
+    TOKEN_NOT_EQUALS                shift, and go to state 35
+    TOKEN_LESS_THAN                 shift, and go to state 36
+    TOKEN_LESS_THAN_OR_EQUAL_TO     shift, and go to state 37
+    TOKEN_GREATER_THAN              shift, and go to state 38
+    TOKEN_GREATER_THAN_OR_EQUAL_TO  shift, and go to state 39
+
+
+State 20
+
+   10 conditional: TOKEN_IF condition . TOKEN_THEN statement
+
+    TOKEN_THEN  shift, and go to state 40
+
+
+State 21
+
+   12 statement_sequence: statement .
+
+    $default  reduce using rule 12 (statement_sequence)
+
+
+State 22
+
+   11 begin_end_block: TOKEN_BEGIN statement_sequence . TOKEN_END
+   13 statement_sequence: statement_sequence . statement
+
+    TOKEN_VAR         shift, and go to state 3
+    TOKEN_IDENTIFIER  shift, and go to state 4
+    TOKEN_IF          shift, and go to state 5
+    TOKEN_BEGIN       shift, and go to state 6
+    TOKEN_END         shift, and go to state 41
+
+    statement             go to state 42
+    variable_declaration  go to state 8
+    variable_assignment   go to state 9
+    conditional           go to state 10
+    begin_end_block       go to state 11
+
+
+State 23
+
+    3 statement: variable_declaration TOKEN_SEMICOLON .
+
+    $default  reduce using rule 3 (statement)
+
+
+State 24
+
+    4 statement: variable_assignment TOKEN_SEMICOLON .
+
+    $default  reduce using rule 4 (statement)
+
+
+State 25
+
+    5 statement: conditional TOKEN_SEMICOLON .
+
+    $default  reduce using rule 5 (statement)
+
+
+State 26
+
+    6 statement: begin_end_block TOKEN_SEMICOLON .
+
+    $default  reduce using rule 6 (statement)
+
+
+State 27
+
+    8 variable_declaration: TOKEN_VAR TOKEN_IDENTIFIER TOKEN_EQUALS . TOKEN_CONSTANT
+
+    TOKEN_CONSTANT  shift, and go to state 43
+
+
+State 28
+
+    9 variable_assignment: TOKEN_IDENTIFIER TOKEN_COLON_EQUALS expression .
+
+    $default  reduce using rule 9 (variable_assignment)
+
+
+State 29
+
+   16 term: TOKEN_PLUS TOKEN_IDENTIFIER .
+
+    $default  reduce using rule 16 (term)
+
+
+State 30
+
+   18 term: TOKEN_PLUS TOKEN_CONSTANT .
+
+    $default  reduce using rule 18 (term)
+
+
+State 31
+
+   17 term: TOKEN_MINUS TOKEN_IDENTIFIER .
+
+    $default  reduce using rule 17 (term)
+
+
+State 32
+
+   19 term: TOKEN_MINUS TOKEN_CONSTANT .
+
+    $default  reduce using rule 19 (term)
+
+
+State 33
+
+   20 expression: term expression .
+
+    $default  reduce using rule 20 (expression)
+
+
+State 34
+
+   23 condition: expression TOKEN_EQUALS . expression
+
+    TOKEN_IDENTIFIER  shift, and go to state 14
+    TOKEN_CONSTANT    shift, and go to state 15
+    TOKEN_PLUS        shift, and go to state 16
+    TOKEN_MINUS       shift, and go to state 17
+
+    $default  reduce using rule 21 (expression)
+
+    term        go to state 18
+    expression  go to state 44
+
+
+State 35
+
+   22 condition: expression TOKEN_NOT_EQUALS . expression
+
+    TOKEN_IDENTIFIER  shift, and go to state 14
+    TOKEN_CONSTANT    shift, and go to state 15
+    TOKEN_PLUS        shift, and go to state 16
+    TOKEN_MINUS       shift, and go to state 17
+
+    $default  reduce using rule 21 (expression)
+
+    term        go to state 18
+    expression  go to state 45
+
+
+State 36
+
+   24 condition: expression TOKEN_LESS_THAN . expression
+
+    TOKEN_IDENTIFIER  shift, and go to state 14
+    TOKEN_CONSTANT    shift, and go to state 15
+    TOKEN_PLUS        shift, and go to state 16
+    TOKEN_MINUS       shift, and go to state 17
+
+    $default  reduce using rule 21 (expression)
+
+    term        go to state 18
+    expression  go to state 46
+
+
+State 37
+
+   25 condition: expression TOKEN_LESS_THAN_OR_EQUAL_TO . expression
+
+    TOKEN_IDENTIFIER  shift, and go to state 14
+    TOKEN_CONSTANT    shift, and go to state 15
+    TOKEN_PLUS        shift, and go to state 16
+    TOKEN_MINUS       shift, and go to state 17
+
+    $default  reduce using rule 21 (expression)
+
+    term        go to state 18
+    expression  go to state 47
+
+
+State 38
+
+   26 condition: expression TOKEN_GREATER_THAN . expression
+
+    TOKEN_IDENTIFIER  shift, and go to state 14
+    TOKEN_CONSTANT    shift, and go to state 15
+    TOKEN_PLUS        shift, and go to state 16
+    TOKEN_MINUS       shift, and go to state 17
+
+    $default  reduce using rule 21 (expression)
+
+    term        go to state 18
+    expression  go to state 48
+
+
+State 39
+
+   27 condition: expression TOKEN_GREATER_THAN_OR_EQUAL_TO . expression
+
+    TOKEN_IDENTIFIER  shift, and go to state 14
+    TOKEN_CONSTANT    shift, and go to state 15
+    TOKEN_PLUS        shift, and go to state 16
+    TOKEN_MINUS       shift, and go to state 17
+
+    $default  reduce using rule 21 (expression)
+
+    term        go to state 18
+    expression  go to state 49
+
+
+State 40
+
+   10 conditional: TOKEN_IF condition TOKEN_THEN . statement
+
+    TOKEN_VAR         shift, and go to state 3
+    TOKEN_IDENTIFIER  shift, and go to state 4
+    TOKEN_IF          shift, and go to state 5
+    TOKEN_BEGIN       shift, and go to state 6
+
+    statement             go to state 50
+    variable_declaration  go to state 8
+    variable_assignment   go to state 9
+    conditional           go to state 10
+    begin_end_block       go to state 11
+
+
+State 41
+
+   11 begin_end_block: TOKEN_BEGIN statement_sequence TOKEN_END .
+
+    $default  reduce using rule 11 (begin_end_block)
+
+
+State 42
+
+   13 statement_sequence: statement_sequence statement .
+
+    $default  reduce using rule 13 (statement_sequence)
+
+
+State 43
+
+    8 variable_declaration: TOKEN_VAR TOKEN_IDENTIFIER TOKEN_EQUALS TOKEN_CONSTANT .
+
+    $default  reduce using rule 8 (variable_declaration)
+
+
+State 44
+
+   23 condition: expression TOKEN_EQUALS expression .
+
+    $default  reduce using rule 23 (condition)
+
+
+State 45
+
+   22 condition: expression TOKEN_NOT_EQUALS expression .
+
+    $default  reduce using rule 22 (condition)
+
+
+State 46
+
+   24 condition: expression TOKEN_LESS_THAN expression .
+
+    $default  reduce using rule 24 (condition)
+
+
+State 47
+
+   25 condition: expression TOKEN_LESS_THAN_OR_EQUAL_TO expression .
+
+    $default  reduce using rule 25 (condition)
+
+
+State 48
+
+   26 condition: expression TOKEN_GREATER_THAN expression .
+
+    $default  reduce using rule 26 (condition)
+
+
+State 49
+
+   27 condition: expression TOKEN_GREATER_THAN_OR_EQUAL_TO expression .
+
+    $default  reduce using rule 27 (condition)
+
+
+State 50
+
+   10 conditional: TOKEN_IF condition TOKEN_THEN statement .
+
+    $default  reduce using rule 10 (conditional)
