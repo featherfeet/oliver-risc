@@ -1734,12 +1734,18 @@ void endParseString(void);
 int main(int argc, char *argv[]) {
     yydebug = 1;
 
-    if (argc != 2) {
-        std::cout << "Usage: ./main program.pl0" << std::endl;
+    if (argc < 2) {
+        std::cout << "Usage: ./main program.pl0 [output.asm]" << std::endl;
         return 1;
     }
 
-    std::ifstream input_file(argv[1]);
+    const char *input_filename = argv[1];
+    const char *output_filename = "output.asm";
+    if (argc == 3) {
+        output_filename = argv[2];
+    }
+
+    std::ifstream input_file(input_filename);
     std::stringstream input_file_stringstream;
     input_file_stringstream << input_file.rdbuf();
     std::string input_buffer = input_file_stringstream.str();
@@ -1749,11 +1755,15 @@ int main(int argc, char *argv[]) {
     yyparse();
     endParseString();
 
-    ast->showGraph();
+    // Uncomment to display Graphviz-based AST visualization.
+    // ast->showGraph();
 
     AssemblyGenerator asmGenerator;
     asmGenerator.generateAsm(ast);
-    std::cout << asmGenerator.getGeneratedAssembly() << std::endl;
+
+    std::ofstream output_file(output_filename, std::ofstream::out);
+    output_file << asmGenerator.getGeneratedAssembly();
+    output_file.close();
 
     return 0;
 }
