@@ -561,8 +561,8 @@ begin
                         end
                     end
                     // Read from the I/O "memory" space. operand1 is the
-                    // register number of the register containing the address
-                    // to write to. operand2 is the register number of the
+                    // register number of the register containing the port
+                    // number to read from. operand2 is the register number of the
                     // register to read into.
                     `OPERATION_IN:
                     begin

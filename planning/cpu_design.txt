@@ -29,8 +29,8 @@ Instructions:
 * ADD <register1>,<register2>                     - Add <register1> to <register2> and store the result in register A.
 * SUB <register1>,<register2>                     - Subtract <register2> from <register1> and store the result in register A.
 
-* OUT <register>,                                 - Write the contents of <register> to the 7-segment displays.
-* IN <register>,                                  - (Not currently implemented) Read 32 bits from serial and place them in <register>.
+* OUT <register1>,<register2>                     - Write the contents of <register2> to the port number stored in <register1>.
+* IN <register1>,<register2>                      - Read from the port specified in <register1> into the register specified in <register2>.
 
 * MOV <register1>,<register2>                     - Copy register1 to register2.
 
@@ -42,7 +42,7 @@ Instructions:
 * RST                                             - Clear all registers to 0 (including the instruction pointer).
 * HALT                                            - Stop the CPU.
 
-* ISR <register>,<code_address>                   - Sets up an interrupt service routine. <register> is the register containing the interrupt number (8 interrupts are available). <code_address> is the address of the first instruction in the ISR routine.
+* ISR <register1>,<register2>                   - Sets up an interrupt service routine. <register1> is the register containing the interrupt number (8 interrupts are available). <register2> is a register containing the address of the first instruction in the ISR.
 * INT <register>,                                 - Triggers an interrupt from software. <register> is the register containing the interrupt number (8 interrupts exist).
 * ENDINT                                          - Ends an interrupt routine. MUST be placed as the last instruction in an interrupt routine. Restores all registers (including the instruction pointer) to their states before the interrupt was executed.
 
@@ -72,11 +72,10 @@ Interrupt system:
 When an interrupt event is fired AND interrupt-enable register is 1, it gets pushed to a FIFO of interrupts.
 When the CPU decides it has time to execute the interrupt, then it pops it from the FIFO. It then looks up the interrupt number in the IVT (interrupt vector table). It uses the IVT to find the memory address of the ISR (interrupt service routine).
 It copies all registers (IP and A-G) to the set of shadow registers. It then sets the IP register to the memory address of the ISR and executes ISR code. The ISR code sets the interrupt-running register to 1 to indicate that an interrupt is being run. While this register is 1, new interrupts will be added to the FIFO but not executed.
-At the end of the ISR, it calls the RET instruction, which copies all of the shadow registers over to the normal registers. This has the effect of setting the IP and interrupt-running registers back to what they were before.
+At the end of the ISR, it calls the ENDINT instruction, which copies all of the shadow registers over to the normal registers. This has the effect of setting the IP and interrupt-running registers back to what they were before.
 The program then a) does the next interrupt in the FIFO or b) keeps executing normal code if there are no more interrupts in the FIFO.
 
 Future planned features:
-Interrupt handling for timing, GPIO events, and keyboard input. Use a set of shadow registers to save registers. Use interrupt vector table. Use interrupt-enable register.
 Use a stack to push/pop the call stack.
 GPIO control instructions.
 A proper ALU.
