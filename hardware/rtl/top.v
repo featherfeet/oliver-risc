@@ -236,7 +236,10 @@ task read_from_ram;
             LATCH_RAM_READ_ADDRESS:
             begin
                 sdram_controller_address_i <= ram_read_address;
-                ram_read_state <= START_READ_FROM_RAM;
+                if (~sdram_controller_waitrequest_o)
+                    ram_read_state <= START_READ_FROM_RAM;
+                else
+                    ram_read_state <= LATCH_RAM_READ_ADDRESS;
             end
             START_READ_FROM_RAM:
             begin
