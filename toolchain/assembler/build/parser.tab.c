@@ -2174,7 +2174,7 @@ int main(int argc, char *argv[]) {
             }
             // Other addresses are variables.
             else {
-                Variable *variable = g_hash_table_lookup(variables_table, instruction->operand1.operand_address);
+                Variable *variable = g_hash_table_lookup(variables_table, instruction->operand2.operand_address);
                 memcpy(instructions_binary + INSTRUCTION_SIZE * i + OPERATION_SIZE + OPERAND_SIZE, variable->address, OPERAND_SIZE);
             }
         }

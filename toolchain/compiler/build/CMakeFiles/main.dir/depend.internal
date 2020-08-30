@@ -19,6 +19,7 @@ CMakeFiles/main.dir/src/asmgenerator.cpp.o
  /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/src/asmgenerator.cpp
  /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/src/asmgenerator.h
  /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/src/ast.h
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/src/util.h
 CMakeFiles/main.dir/src/ast.cpp.o
  ../../processor.h
  ../include/fmt/core.h
@@ -26,3 +27,7 @@ CMakeFiles/main.dir/src/ast.cpp.o
  ../include/fmt/format.h
  /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/src/ast.cpp
  /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/src/ast.h
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/src/util.h
+CMakeFiles/main.dir/src/util.cpp.o
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/src/util.cpp
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/src/util.h

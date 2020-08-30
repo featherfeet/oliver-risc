@@ -18,6 +18,7 @@ CMakeFiles/main.dir/src/asmgenerator.cpp.o: ../include/fmt/format.h
 CMakeFiles/main.dir/src/asmgenerator.cpp.o: ../src/asmgenerator.cpp
 CMakeFiles/main.dir/src/asmgenerator.cpp.o: ../src/asmgenerator.h
 CMakeFiles/main.dir/src/asmgenerator.cpp.o: ../src/ast.h
+CMakeFiles/main.dir/src/asmgenerator.cpp.o: ../src/util.h
 
 CMakeFiles/main.dir/src/ast.cpp.o: ../../processor.h
 CMakeFiles/main.dir/src/ast.cpp.o: ../include/fmt/core.h
@@ -25,4 +26,8 @@ CMakeFiles/main.dir/src/ast.cpp.o: ../include/fmt/format-inl.h
 CMakeFiles/main.dir/src/ast.cpp.o: ../include/fmt/format.h
 CMakeFiles/main.dir/src/ast.cpp.o: ../src/ast.cpp
 CMakeFiles/main.dir/src/ast.cpp.o: ../src/ast.h
+CMakeFiles/main.dir/src/ast.cpp.o: ../src/util.h
+
+CMakeFiles/main.dir/src/util.cpp.o: ../src/util.cpp
+CMakeFiles/main.dir/src/util.cpp.o: ../src/util.h
 

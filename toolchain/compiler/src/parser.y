@@ -39,6 +39,9 @@
 %token TOKEN_LESS_THAN_OR_EQUAL_TO
 %token TOKEN_GREATER_THAN
 %token TOKEN_GREATER_THAN_OR_EQUAL_TO
+%token TOKEN_CALL
+%token TOKEN_WHILE
+%token TOKEN_DO
 
 %start program
 
@@ -53,6 +56,8 @@
     ASTConditionalNode *conditional_node;
     ASTConditionNode *condition_node;
     ASTBeginEndBlockNode *begin_end_block_node;
+    ASTFunctionCallNode *function_call_node;
+    ASTWhileLoopNode *while_loop_node;
 }
 
 %type <strval> TOKEN_IDENTIFIER;
@@ -66,6 +71,8 @@
 %type <condition_node> condition;
 %type <begin_end_block_node> begin_end_block;
 %type <begin_end_block_node> statement_sequence;
+%type <function_call_node> function_call;
+%type <while_loop_node> while_loop;
 
 %%
 
@@ -84,6 +91,12 @@ statement: variable_declaration TOKEN_SEMICOLON {
             $$ = $1;
          }
          | conditional TOKEN_SEMICOLON {
+            $$ = $1;
+         }
+         | function_call TOKEN_SEMICOLON {
+            $$ = $1;
+         }
+         | while_loop TOKEN_SEMICOLON {
             $$ = $1;
          }
 ;
@@ -168,6 +181,16 @@ condition: expression TOKEN_NOT_EQUALS expression {
          }
 ;
 
+function_call: TOKEN_CALL TOKEN_IDENTIFIER {
+    $$ = new ASTFunctionCallNode($2);
+}
+;
+
+while_loop: TOKEN_WHILE condition TOKEN_DO begin_end_block {
+    $$ = new ASTWhileLoopNode($2, $4);
+}
+;
+
 %%
 
 // Forward declarations of functions in lexer.l that allow Flex to parse an in-memory buffer instead of a file handle.
@@ -199,7 +222,7 @@ int main(int argc, char *argv[]) {
     endParseString();
 
     // Uncomment to display Graphviz-based AST visualization.
-    // ast->showGraph();
+//    ast->showGraph();
 
     AssemblyGenerator asmGenerator;
     asmGenerator.generateAsm(ast);

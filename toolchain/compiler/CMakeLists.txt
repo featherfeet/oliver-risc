@@ -15,6 +15,7 @@ include_directories(src/ ../ include/)
 add_executable(main 
                src/ast.cpp
                src/asmgenerator.cpp
+               src/util.cpp
                ${BISON_MyParser_OUTPUTS}
                ${FLEX_MyScanner_OUTPUTS})
 target_link_libraries(main

@@ -1,10 +1,25 @@
+/*
 VAR myvar_1 = 7;
 VAR myvar_2 = 15;
 
 myvar_1 := 87 + myvar_1 + myvar_2 - 19;
 
-if myvar_1 - 3 >= myvar_2 then
-begin
+IF myvar_1 - 3 >= myvar_2 THEN
+BEGIN
     myvar_1 := 12;
     myvar_2 := 47 + 2;
-end;
+END;
+
+B := 97;
+A := 0;
+CALL OUT;
+*/
+VAR i = 0;
+
+WHILE i <= 5 DO
+BEGIN
+    B := i + 49;
+    A := 0;
+    CALL OUT;
+    i := i + 1;
+END;

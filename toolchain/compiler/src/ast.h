@@ -14,7 +14,9 @@ enum ASTNodeType {
     TERM_NODE,
     CONDITION_NODE,
     CONDITIONAL_NODE,
-    BEGIN_END_BLOCK_NODE
+    BEGIN_END_BLOCK_NODE,
+    FUNCTION_CALL_NODE,
+    WHILE_LOOP_NODE
 };
 
 class ASTNode {
@@ -142,6 +144,28 @@ class ASTVariableAssignmentNode : public ASTStatementNode {
         ASTNodeType getNodeType();
         std::string getHumanReadable();
         std::string getVariableName();
+};
+
+class ASTFunctionCallNode : public ASTStatementNode {
+    std::string function_name;
+
+    public:
+        ASTFunctionCallNode(std::string function_name);
+        ASTNodeType getNodeType();
+        std::string getHumanReadable();
+        std::string getFunctionName();
+};
+
+class ASTWhileLoopNode : public ASTStatementNode {
+    ASTConditionNode *condition;
+    ASTBeginEndBlockNode *begin_end_block;
+
+    public:
+        ASTWhileLoopNode(ASTConditionNode *condition, ASTBeginEndBlockNode *begin_end_block);
+        ASTNodeType getNodeType();
+        std::string getHumanReadable();
+        ASTConditionNode *getCondition();
+        ASTBeginEndBlockNode *getBeginEndBlock();
 };
 
 #endif // AST_H

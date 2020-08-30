@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include "util.h"
 #include "asmgenerator.h"
 
 #define FMT_HEADER_ONLY
@@ -38,7 +39,17 @@ void AssemblyGenerator::generateAsm(ASTNode *node) {
         ASTVariableAssignmentNode *assignment = (ASTVariableAssignmentNode *) node;
 
         generateAsm(assignment->getExpressionNode());
-        code_section << fmt::format("    STORE A,{}", assignment->getVariableName()) << std::endl;
+
+        std::string variable_name = assignment->getVariableName();
+        if (isRegister(variable_name)) {
+            if (variable_name != "A") {
+                code_section << fmt::format("    MOV A,{}", variable_name) << std::endl;
+            }
+        }
+        else {
+            code_section << fmt::format("    STORE A,{}", assignment->getVariableName()) << std::endl;
+        }
+
         code_section << "    // End variable assignment node." << std::endl;
     }
 
@@ -74,26 +85,8 @@ void AssemblyGenerator::generateAsm(ASTNode *node) {
 
         generateAsm(conditional->getCondition());
 
-        generateAsm(conditional->getBeginEndBlock());
-
-        code_section << fmt::format("    label{}:", label_counter) << std::endl;
-        label_counter++;
-        code_section << "    // End conditional node." << std::endl;
-    }
-
-    else if (node->getNodeType() == CONDITION_NODE) {
-        code_section << "    // Start condition node." << std::endl;
-        ASTConditionNode *condition = (ASTConditionNode *) node;
-
         std::string skip_label = fmt::format("label{}", label_counter);
-
-        generateAsm(condition->getExpression1());
-        code_section << "    MOV A,C" << std::endl;
-
-        generateAsm(condition->getExpression2());
-
-        code_section << "    CMP C,A" << std::endl;
-        ConditionNodeComparison comparison = condition->getComparison();
+        ConditionNodeComparison comparison = conditional->getCondition()->getComparison();
         if (comparison == NOT_EQUALS) {
             code_section << fmt::format("    JMPE {}", skip_label) << std::endl;
         }
@@ -115,6 +108,24 @@ void AssemblyGenerator::generateAsm(ASTNode *node) {
         else if (comparison == GREATER_THAN_OR_EQUAL_TO) {
             code_section << fmt::format("    JMPL {}", skip_label) << std::endl;
         }
+
+        generateAsm(conditional->getBeginEndBlock());
+
+        code_section << fmt::format("    {}:", skip_label) << std::endl;
+        label_counter++;
+        code_section << "    // End conditional node." << std::endl;
+    }
+
+    else if (node->getNodeType() == CONDITION_NODE) {
+        code_section << "    // Start condition node." << std::endl;
+        ASTConditionNode *condition = (ASTConditionNode *) node;
+
+        generateAsm(condition->getExpression1());
+        code_section << "    MOV A,C" << std::endl;
+
+        generateAsm(condition->getExpression2());
+
+        code_section << "    CMP C,A" << std::endl;
         code_section << "    // End condition node." << std::endl;
     }
 
@@ -127,5 +138,62 @@ void AssemblyGenerator::generateAsm(ASTNode *node) {
             generateAsm(children[i]);
         }
         code_section << "    // End begin . . . end block node." << std::endl;
+    }
+
+    else if (node->getNodeType() == FUNCTION_CALL_NODE) {
+        code_section << "    // Start function call node." << std::endl;
+        ASTFunctionCallNode *function_call = (ASTFunctionCallNode *) node;
+
+        if (function_call->getFunctionName() == "OUT") {
+            code_section << "    OUT A,B" << std::endl;
+        }
+        else {
+            std::cout << "\033[1;31mERROR: Custom functions are currently not supported.\033[0m" << std::endl;
+        }
+
+        code_section << "    // End function call node." << std::endl;
+    }
+
+    else if (node->getNodeType() == WHILE_LOOP_NODE) {
+        code_section << "    // Start while loop node." << std::endl;
+        ASTWhileLoopNode *while_loop = (ASTWhileLoopNode *) node;
+
+        generateAsm(while_loop->getCondition());
+
+        std::string start_label = fmt::format("label{}", label_counter);
+        label_counter++;
+
+        code_section << fmt::format("    {}:", start_label) << std::endl;
+
+        std::string skip_label = fmt::format("label{}", label_counter);
+        label_counter++;
+        ConditionNodeComparison comparison = while_loop->getCondition()->getComparison();
+        if (comparison == NOT_EQUALS) {
+            code_section << fmt::format("    JMPE {}", skip_label) << std::endl;
+        }
+        else if (comparison == EQUALS) {
+            code_section << fmt::format("    JMPL {}", skip_label) << std::endl;
+            code_section << fmt::format("    JMPG {}", skip_label) << std::endl;
+        }
+        else if (comparison == LESS_THAN) {
+            code_section << fmt::format("    JMPE {}", skip_label) << std::endl;
+            code_section << fmt::format("    JMPG {}", skip_label) << std::endl;
+        }
+        else if (comparison == LESS_THAN_OR_EQUAL_TO) {
+            code_section << fmt::format("    JMPG {}", skip_label) << std::endl;
+        }
+        else if (comparison == GREATER_THAN) {
+            code_section << fmt::format("    JMPE {}", skip_label) << std::endl;
+            code_section << fmt::format("    JMPL {}", skip_label) << std::endl;
+        }
+        else if (comparison == GREATER_THAN_OR_EQUAL_TO) {
+            code_section << fmt::format("    JMPL {}", skip_label) << std::endl;
+        }
+
+        generateAsm(while_loop->getBeginEndBlock());
+
+        code_section << "    CMP A,A" << std::endl;
+        code_section << fmt::format("    JMPE {}", start_label) << std::endl;
+        code_section << fmt::format("    {}:", skip_label) << std::endl;
     }
 }

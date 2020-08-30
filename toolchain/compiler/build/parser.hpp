@@ -71,7 +71,10 @@ extern int yydebug;
     TOKEN_LESS_THAN = 271,
     TOKEN_LESS_THAN_OR_EQUAL_TO = 272,
     TOKEN_GREATER_THAN = 273,
-    TOKEN_GREATER_THAN_OR_EQUAL_TO = 274
+    TOKEN_GREATER_THAN_OR_EQUAL_TO = 274,
+    TOKEN_CALL = 275,
+    TOKEN_WHILE = 276,
+    TOKEN_DO = 277
   };
 #endif
 
@@ -80,7 +83,7 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 45 "src/parser.y" /* yacc.c:1921  */
+#line 48 "src/parser.y" /* yacc.c:1921  */
 
     int intval;
     char *strval;
@@ -92,8 +95,10 @@ union YYSTYPE
     ASTConditionalNode *conditional_node;
     ASTConditionNode *condition_node;
     ASTBeginEndBlockNode *begin_end_block_node;
+    ASTFunctionCallNode *function_call_node;
+    ASTWhileLoopNode *while_loop_node;
 
-#line 97 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.hpp" /* yacc.c:1921  */
+#line 102 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.hpp" /* yacc.c:1921  */
 };
 
 typedef union YYSTYPE YYSTYPE;

@@ -1,5 +1,6 @@
 #include "ast.h"
 #include "processor.h"
+#include "util.h"
 #include <sstream>
 #include <fstream>
 
@@ -81,6 +82,19 @@ std::string ASTRootNode::generateGraphvizCode(std::string node_id, ASTNode *stat
             output << generateGraphvizCode(fmt::format("{}_{}", node_id, i), children[i]);
             output << fmt::format("    \"{}\" -> \"{}_{}\";", node_id, node_id, i) << std::endl;
         }
+    }
+    else if (statement->getNodeType() == FUNCTION_CALL_NODE) {
+        output << fmt::format("    \"{}\" [label=\"{}\", shape=box];", node_id, statement->getHumanReadable()) << std::endl;
+    }
+    else if (statement->getNodeType() == WHILE_LOOP_NODE) {
+        output << fmt::format("    \"{}\" [label=\"{}\", shape=box];", node_id, statement->getHumanReadable()) << std::endl;
+
+        ASTWhileLoopNode *while_loop = (ASTWhileLoopNode *) statement;
+
+        output << generateGraphvizCode(node_id + "_0", while_loop->getCondition());
+        output << fmt::format("    \"{}\" -> \"{}_0\";", node_id, node_id) << std::endl;
+        output << generateGraphvizCode(node_id + "_1", while_loop->getBeginEndBlock());
+        output << fmt::format("    \"{}\" -> \"{}_1\";", node_id, node_id) << std::endl;
     }
 
     return output.str();
@@ -293,9 +307,49 @@ ASTExpressionNode *ASTVariableAssignmentNode::getExpressionNode() {
 }
 
 std::string ASTVariableAssignmentNode::getHumanReadable() {
+    if (isRegister(variable_name)) {
+        return fmt::format("Assign register {}.", variable_name);
+    }
     return fmt::format("Assign variable `{}`.", variable_name);
 }
 
 std::string ASTVariableAssignmentNode::getVariableName() {
     return variable_name;
+}
+
+ASTFunctionCallNode::ASTFunctionCallNode(std::string function_name) {
+    this->function_name = function_name;
+}
+
+ASTNodeType ASTFunctionCallNode::getNodeType() {
+    return FUNCTION_CALL_NODE;
+}
+
+std::string ASTFunctionCallNode::getHumanReadable() {
+    return fmt::format("Call function `{}`.", function_name);
+}
+
+std::string ASTFunctionCallNode::getFunctionName() {
+    return function_name;
+}
+
+ASTWhileLoopNode::ASTWhileLoopNode(ASTConditionNode *condition, ASTBeginEndBlockNode *begin_end_block) {
+    this->condition = condition;
+    this->begin_end_block = begin_end_block;
+}
+
+ASTNodeType ASTWhileLoopNode::getNodeType() {
+    return WHILE_LOOP_NODE;
+}
+
+std::string ASTWhileLoopNode::getHumanReadable() {
+    return "While Loop";
+}
+
+ASTConditionNode *ASTWhileLoopNode::getCondition() {
+    return condition;
+}
+
+ASTBeginEndBlockNode *ASTWhileLoopNode::getBeginEndBlock() {
+    return begin_end_block;
 }

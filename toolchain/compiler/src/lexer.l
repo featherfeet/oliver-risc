@@ -39,6 +39,10 @@
     return TOKEN_VAR;
 }
 
+"CALL" {
+    return TOKEN_CALL;
+}
+
 "+" {
     return TOKEN_PLUS;
 }
@@ -55,20 +59,28 @@
     return TOKEN_COLON_EQUALS;
 }
 
-"if" {
+"IF" {
     return TOKEN_IF;
 }
 
-"then" {
+"THEN" {
     return TOKEN_THEN;
 }
 
-"begin" {
+"BEGIN" {
     return TOKEN_BEGIN;
 }
 
-"end" {
+"END" {
     return TOKEN_END;
+}
+
+"WHILE" {
+    return TOKEN_WHILE;
+}
+
+"DO" {
+    return TOKEN_DO;
 }
 
 "#" {
