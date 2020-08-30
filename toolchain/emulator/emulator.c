@@ -51,6 +51,7 @@ int main(int argc, char *argv[]) {
             case (OPERATION_LOAD):
                 printf("LOAD\n");
                 memcpy(&registers[operand2], raw_binary + operand1, OPERAND_SIZE);
+                printf("Loaded value %d from address %d in RAM to register %d.\n", registers[operand2], operand1, operand2);
                 REGISTER_IP += INSTRUCTION_SIZE;
                 break;
             case (OPERATION_STORE):
@@ -69,12 +70,10 @@ int main(int argc, char *argv[]) {
                 REGISTER_IP += INSTRUCTION_SIZE;
                 break;
             case (OPERATION_OUT):
-                printf("OUT\n");
-                printf("\033[1;32mOUTPUT TO ADDRESS %d WITH VALUE %d (CHARACTER '%c').\033[0m\n", registers[operand1], registers[operand2], registers[operand2]);
+                printf("OUT [address %d, character '%c' (integer value %d)]\n", registers[operand1], registers[operand2], registers[operand2]);
                 REGISTER_IP += INSTRUCTION_SIZE;
                 break;
             case (OPERATION_IN):
-                printf("IN\n");
                 printf("\033[1;31mOPERATION `IN` NOT SUPPORTED BY EMULATOR.\033[0m\n");
                 REGISTER_IP += INSTRUCTION_SIZE;
                 break;
@@ -84,7 +83,7 @@ int main(int argc, char *argv[]) {
                 REGISTER_IP += INSTRUCTION_SIZE;
                 break;
             case (OPERATION_CMP):
-                printf("CMP\n");
+                printf("CMP register %d (value %d), register %d (value %d)\n", operand1, registers[operand1], operand2, registers[operand2]);
                 if (registers[operand1] < registers[operand2])
                     REGISTER_A = 0;
                 else if (registers[operand1] == registers[operand2])
@@ -123,23 +122,21 @@ int main(int argc, char *argv[]) {
                 exit(0);
                 break;
             case (OPERATION_ISR):
-                printf("ISR\n");
                 printf("\033[1;31mOPERATION `ISR` NOT SUPPORTED BY EMULATOR.\033[0m\n");
                 REGISTER_IP += INSTRUCTION_SIZE;
                 break;
             case (OPERATION_INT):
-                printf("INT\n");
                 printf("\033[1;31mOPERATION `INT` NOT SUPPORTED BY EMULATOR.\033[0m\n");
                 REGISTER_IP += INSTRUCTION_SIZE;
                 break;
             case (OPERATION_ENDINT):
-                printf("ENDINT\n");
                 printf("\033[1;31mOPERATION `ENDINT` NOT SUPPORTED BY EMULATOR.\033[0m\n");
                 REGISTER_IP += INSTRUCTION_SIZE;
                 break;
             case (OPERATION_RLOAD):
                 printf("RLOAD\n");
                 memcpy(&registers[operand2], raw_binary + registers[operand1], OPERAND_SIZE);
+                printf("Loaded value %d from address %d in RAM to register %d.\n", registers[operand2], operand1, operand2);
                 REGISTER_IP += INSTRUCTION_SIZE;
                 break;
             case (OPERATION_RSTORE):

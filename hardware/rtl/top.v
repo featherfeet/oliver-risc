@@ -438,8 +438,14 @@ begin
                     // Load value from RAM address to register.
                     `OPERATION_LOAD:
                     begin
-                        //$display("LOAD");
-                        if (ram_read_complete)
+                        if (operand_byte_index == `OPERAND_SIZE_BYTES)
+                        begin
+                            $display("LOAD");
+                            $display("Loaded value %0d from address %0d in RAM to register %0d.", registers[operand2], operand1, operand2);
+                            operand_byte_index <= 'b0;
+                            next_instruction();
+                        end
+                        else if (ram_read_complete)
                         begin
                             registers[operand2] <= {ram_read_data[7:0], registers[operand2][31:8]};
                             operand_byte_index <= operand_byte_index + 8'd1;
@@ -447,17 +453,10 @@ begin
                         end
                         else
                             read_from_ram(operand1 + operand_byte_index);
-                        if (operand_byte_index == `OPERAND_SIZE_BYTES)
-                        begin
-                            $display("Loaded value %d from address %d in RAM to register %d.", registers[operand2], operand1, operand2);
-                            operand_byte_index <= 'b0;
-                            next_instruction();
-                        end
                     end
                     // Load value from RAM address (stored in a register) to a register.
                     `OPERATION_RLOAD:
                     begin
-                        $display("RLOAD");
                         if (ram_read_complete)
                         begin
                             registers[operand2] <= {ram_read_data[7:0], registers[operand2][31:8]};
@@ -468,7 +467,8 @@ begin
                             read_from_ram(registers[operand1] + operand_byte_index);
                         if (operand_byte_index == `OPERAND_SIZE_BYTES)
                         begin
-                            $display("Loaded value %d from address %d in RAM to register %d.", registers[operand2], operand1, operand2);
+                            $display("RLOAD");
+                            $display("Loaded value %0d from address %0d in RAM to register %0d.", registers[operand2], operand1, operand2);
                             operand_byte_index <= 'b0;
                             next_instruction();
                         end
@@ -483,9 +483,9 @@ begin
                     // Store value into RAM from register.
                     `OPERATION_STORE:
                     begin
-                        $display("STORE");
                         if (operand_byte_index == `OPERAND_SIZE_BYTES)
                         begin
+                            $display("STORE");
                             sdram_controller_wr_n_i <= 'b1;
                             operand_byte_index <= 'b0;
                             next_instruction();
@@ -504,8 +504,14 @@ begin
                     // Store value into RAM (at address specified by a register) from a register. registers[operand1] is the value being stored. registers[operand2] is the address in RAM to store at.
                     `OPERATION_RSTORE:
                     begin
-                        $display("RSTORE");
-                        if (ram_write_complete)
+                        if (operand_byte_index == `OPERAND_SIZE_BYTES)
+                        begin
+                            $display("RSTORE");
+                            sdram_controller_wr_n_i <= 'b1;
+                            operand_byte_index <= 'b0;
+                            next_instruction();
+                        end
+                        else if (ram_write_complete)
                         begin
                             operand_byte_index <= operand_byte_index + 8'd1;
                             registers[operand1] <= {registers[operand1][7:0], registers[operand1][`OPERAND_SIZE_BITS - 1:8]};
@@ -514,12 +520,6 @@ begin
                         else
                         begin
                             write_to_ram(registers[operand2] + operand_byte_index, registers[operand1][7:0]);
-                        end
-                        if (operand_byte_index == `OPERAND_SIZE_BYTES)
-                        begin
-                            sdram_controller_wr_n_i <= 'b1;
-                            operand_byte_index <= 'b0;
-                            next_instruction();
                         end
                     end
                     // Add two registers and store the result in register A.
@@ -541,7 +541,7 @@ begin
                     begin
                         if (gpu_access_state == `GPU_ACCESS_STATE_SETUP && registers[operand1] < `GPU_TEXT_BUFFER_LENGTH)
                         begin
-                            $display("OUT [address %d, character '%c' (integer value %d)]", registers[operand1], registers[operand2], registers[operand2]);
+                            $display("OUT [address %0d, character '%c' (integer value %0d)]", registers[operand1], registers[operand2], registers[operand2]);
                             gpu_write_enable <= 'b1;
                             gpu_cell_to_access <= registers[operand1];
                             gpu_character_to_write <= registers[operand2];
@@ -592,7 +592,7 @@ begin
                     end
                     `OPERATION_CMP:
                     begin
-                        $display("CMP register %d (value %d), register %d (value %d)", operand1, registers[operand1], operand2, registers[operand2]);
+                        $display("CMP register %0d (value %0d), register %0d (value %0d)", operand1, registers[operand1], operand2, registers[operand2]);
                         if (registers[operand1] < registers[operand2])
                             `REGISTER_A <= 'd0;
                         else if (registers[operand1] == registers[operand2])

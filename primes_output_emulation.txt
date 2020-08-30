@@ -1,0 +1,1437 @@
+CLOAD
+LOAD
+Loaded value 0 from address 12 in RAM to register 2.
+ADD
+MOV
+CLOAD
+LOAD
+Loaded value 4 from address 8 in RAM to register 2.
+ADD
+CMP register 3 (value 0), register 1 (value 4)
+JMPE
+JMPG
+CLOAD
+CLOAD
+ADD
+STORE
+CLOAD
+CLOAD
+ADD
+STORE
+CLOAD
+LOAD
+Loaded value 2 from address 20 in RAM to register 2.
+ADD
+MOV
+CLOAD
+LOAD
+Loaded value 2 from address 16 in RAM to register 2.
+ADD
+CMP register 3 (value 2), register 1 (value 2)
+JMPE
+CLOAD
+LOAD
+Loaded value 1 from address 28 in RAM to register 2.
+ADD
+MOV
+CLOAD
+CLOAD
+ADD
+CMP register 3 (value 1), register 1 (value 1)
+JMPL
+JMPG
+CLOAD
+CLOAD
+ADD
+STORE
+CLOAD
+LOAD
+Loaded value 2 from address 16 in RAM to register 2.
+ADD
+CLOAD
+ADD
+STORE
+LOAD
+Loaded value 0 from address 0 in RAM to register 1.
+LOAD
+Loaded value 50 from address 4 in RAM to register 2.
+OUT [address 0, character '2' (integer value 50)]
+CLOAD
+LOAD
+Loaded value 0 from address 12 in RAM to register 2.
+ADD
+CLOAD
+ADD
+STORE
+CLOAD
+LOAD
+Loaded value 2 from address 16 in RAM to register 2.
+ADD
+CLOAD
+ADD
+STORE
+CMP register 1 (value 3), register 1 (value 3)
+JMPE
+CLOAD
+LOAD
+Loaded value 1 from address 12 in RAM to register 2.
+ADD
+MOV
+CLOAD
+LOAD
+Loaded value 4 from address 8 in RAM to register 2.
+ADD
+CMP register 3 (value 1), register 1 (value 4)
+JMPE
+JMPG
+CLOAD
+CLOAD
+ADD
+STORE
+CLOAD
+CLOAD
+ADD
+STORE
+CLOAD
+LOAD
+Loaded value 2 from address 20 in RAM to register 2.
+ADD
+MOV
+CLOAD
+LOAD
+Loaded value 3 from address 16 in RAM to register 2.
+ADD
+CMP register 3 (value 2), register 1 (value 3)
+JMPE
+JMPG
+CLOAD
+LOAD
+Loaded value 3 from address 16 in RAM to register 2.
+ADD
+STORE
+CLOAD
+LOAD
+Loaded value 3 from address 24 in RAM to register 2.
+ADD
+MOV
+CLOAD
+LOAD
+Loaded value 2 from address 20 in RAM to register 2.
+ADD
+CMP register 3 (value 3), register 1 (value 2)
+JMPL
+CLOAD
+LOAD
+Loaded value 3 from address 24 in RAM to register 2.
+ADD
+LOAD
+Loaded value 2 from address 20 in RAM to register 2.
+SUB
+STORE
+CMP register 1 (value 1), register 1 (value 1)
+JMPE
+CLOAD
+LOAD
+Loaded value 1 from address 24 in RAM to register 2.
+ADD
+MOV
+CLOAD
+LOAD
+Loaded value 2 from address 20 in RAM to register 2.
+ADD
+CMP register 3 (value 1), register 1 (value 2)
+JMPL
+CLOAD
+LOAD
+Loaded value 1 from address 24 in RAM to register 2.
+ADD
+MOV
+CLOAD
+CLOAD
+ADD
+CMP register 3 (value 1), register 1 (value 0)
+JMPL
+JMPG
+CLOAD
+LOAD
+Loaded value 1 from address 24 in RAM to register 2.
+ADD
+MOV
+CLOAD
+CLOAD
+ADD
+CMP register 3 (value 1), register 1 (value 0)
+JMPE
+JMPL
+CLOAD
+LOAD
+Loaded value 2 from address 20 in RAM to register 2.
+ADD
+CLOAD
+ADD
+STORE
+CMP register 1 (value 3), register 1 (value 3)
+JMPE
+CLOAD
+LOAD
+Loaded value 3 from address 20 in RAM to register 2.
+ADD
+MOV
+CLOAD
+LOAD
+Loaded value 3 from address 16 in RAM to register 2.
+ADD
+CMP register 3 (value 3), register 1 (value 3)
+JMPE
+CLOAD
+LOAD
+Loaded value 1 from address 28 in RAM to register 2.
+ADD
+MOV
+CLOAD
+CLOAD
+ADD
+CMP register 3 (value 1), register 1 (value 1)
+JMPL
+JMPG
+CLOAD
+CLOAD
+ADD
+STORE
+CLOAD
+LOAD
+Loaded value 3 from address 16 in RAM to register 2.
+ADD
+CLOAD
+ADD
+STORE
+LOAD
+Loaded value 0 from address 0 in RAM to register 1.
+LOAD
+Loaded value 51 from address 4 in RAM to register 2.
+OUT [address 0, character '3' (integer value 51)]
+CLOAD
+LOAD
+Loaded value 1 from address 12 in RAM to register 2.
+ADD
+CLOAD
+ADD
+STORE
+CLOAD
+LOAD
+Loaded value 3 from address 16 in RAM to register 2.
+ADD
+CLOAD
+ADD
+STORE
+CMP register 1 (value 4), register 1 (value 4)
+JMPE
+CLOAD
+LOAD
+Loaded value 2 from address 12 in RAM to register 2.
+ADD
+MOV
+CLOAD
+LOAD
+Loaded value 4 from address 8 in RAM to register 2.
+ADD
+CMP register 3 (value 2), register 1 (value 4)
+JMPE
+JMPG
+CLOAD
+CLOAD
+ADD
+STORE
+CLOAD
+CLOAD
+ADD
+STORE
+CLOAD
+LOAD
+Loaded value 2 from address 20 in RAM to register 2.
+ADD
+MOV
+CLOAD
+LOAD
+Loaded value 4 from address 16 in RAM to register 2.
+ADD
+CMP register 3 (value 2), register 1 (value 4)
+JMPE
+JMPG
+CLOAD
+LOAD
+Loaded value 4 from address 16 in RAM to register 2.
+ADD
+STORE
+CLOAD
+LOAD
+Loaded value 4 from address 24 in RAM to register 2.
+ADD
+MOV
+CLOAD
+LOAD
+Loaded value 2 from address 20 in RAM to register 2.
+ADD
+CMP register 3 (value 4), register 1 (value 2)
+JMPL
+CLOAD
+LOAD
+Loaded value 4 from address 24 in RAM to register 2.
+ADD
+LOAD
+Loaded value 2 from address 20 in RAM to register 2.
+SUB
+STORE
+CMP register 1 (value 2), register 1 (value 2)
+JMPE
+CLOAD
+LOAD
+Loaded value 2 from address 24 in RAM to register 2.
+ADD
+MOV
+CLOAD
+LOAD
+Loaded value 2 from address 20 in RAM to register 2.
+ADD
+CMP register 3 (value 2), register 1 (value 2)
+JMPL
+CLOAD
+LOAD
+Loaded value 2 from address 24 in RAM to register 2.
+ADD
+LOAD
+Loaded value 2 from address 20 in RAM to register 2.
+SUB
+STORE
+CMP register 1 (value 0), register 1 (value 0)
+JMPE
+CLOAD
+LOAD
+Loaded value 0 from address 24 in RAM to register 2.
+ADD
+MOV
+CLOAD
+LOAD
+Loaded value 2 from address 20 in RAM to register 2.
+ADD
+CMP register 3 (value 0), register 1 (value 2)
+JMPL
+CLOAD
+LOAD
+Loaded value 0 from address 24 in RAM to register 2.
+ADD
+MOV
+CLOAD
+CLOAD
+ADD
+CMP register 3 (value 0), register 1 (value 0)
+JMPL
+JMPG
+CLOAD
+LOAD
+Loaded value 4 from address 16 in RAM to register 2.
+ADD
+STORE
+CLOAD
+CLOAD
+ADD
+STORE
+CLOAD
+LOAD
+Loaded value 0 from address 24 in RAM to register 2.
+ADD
+MOV
+CLOAD
+CLOAD
+ADD
+CMP register 3 (value 0), register 1 (value 0)
+JMPE
+CMP register 1 (value 1), register 1 (value 1)
+JMPE
+CLOAD
+LOAD
+Loaded value 4 from address 20 in RAM to register 2.
+ADD
+MOV
+CLOAD
+LOAD
+Loaded value 4 from address 16 in RAM to register 2.
+ADD
+CMP register 3 (value 4), register 1 (value 4)
+JMPE
+CLOAD
+LOAD
+Loaded value 0 from address 28 in RAM to register 2.
+ADD
+MOV
+CLOAD
+CLOAD
+ADD
+CMP register 3 (value 0), register 1 (value 1)
+JMPL
+CLOAD
+LOAD
+Loaded value 4 from address 16 in RAM to register 2.
+ADD
+CLOAD
+ADD
+STORE
+CMP register 1 (value 5), register 1 (value 5)
+JMPE
+CLOAD
+LOAD
+Loaded value 2 from address 12 in RAM to register 2.
+ADD
+MOV
+CLOAD
+LOAD
+Loaded value 4 from address 8 in RAM to register 2.
+ADD
+CMP register 3 (value 2), register 1 (value 4)
+JMPE
+JMPG
+CLOAD
+CLOAD
+ADD
+STORE
+CLOAD
+CLOAD
+ADD
+STORE
+CLOAD
+LOAD
+Loaded value 2 from address 20 in RAM to register 2.
+ADD
+MOV
+CLOAD
+LOAD
+Loaded value 5 from address 16 in RAM to register 2.
+ADD
+CMP register 3 (value 2), register 1 (value 5)
+JMPE
+JMPG
+CLOAD
+LOAD
+Loaded value 5 from address 16 in RAM to register 2.
+ADD
+STORE
+CLOAD
+LOAD
+Loaded value 5 from address 24 in RAM to register 2.
+ADD
+MOV
+CLOAD
+LOAD
+Loaded value 2 from address 20 in RAM to register 2.
+ADD
+CMP register 3 (value 5), register 1 (value 2)
+JMPL
+CLOAD
+LOAD
+Loaded value 5 from address 24 in RAM to register 2.
+ADD
+LOAD
+Loaded value 2 from address 20 in RAM to register 2.
+SUB
+STORE
+CMP register 1 (value 3), register 1 (value 3)
+JMPE
+CLOAD
+LOAD
+Loaded value 3 from address 24 in RAM to register 2.
+ADD
+MOV
+CLOAD
+LOAD
+Loaded value 2 from address 20 in RAM to register 2.
+ADD
+CMP register 3 (value 3), register 1 (value 2)
+JMPL
+CLOAD
+LOAD
+Loaded value 3 from address 24 in RAM to register 2.
+ADD
+LOAD
+Loaded value 2 from address 20 in RAM to register 2.
+SUB
+STORE
+CMP register 1 (value 1), register 1 (value 1)
+JMPE
+CLOAD
+LOAD
+Loaded value 1 from address 24 in RAM to register 2.
+ADD
+MOV
+CLOAD
+LOAD
+Loaded value 2 from address 20 in RAM to register 2.
+ADD
+CMP register 3 (value 1), register 1 (value 2)
+JMPL
+CLOAD
+LOAD
+Loaded value 1 from address 24 in RAM to register 2.
+ADD
+MOV
+CLOAD
+CLOAD
+ADD
+CMP register 3 (value 1), register 1 (value 0)
+JMPL
+JMPG
+CLOAD
+LOAD
+Loaded value 1 from address 24 in RAM to register 2.
+ADD
+MOV
+CLOAD
+CLOAD
+ADD
+CMP register 3 (value 1), register 1 (value 0)
+JMPE
+JMPL
+CLOAD
+LOAD
+Loaded value 2 from address 20 in RAM to register 2.
+ADD
+CLOAD
+ADD
+STORE
+CMP register 1 (value 3), register 1 (value 3)
+JMPE
+CLOAD
+LOAD
+Loaded value 3 from address 20 in RAM to register 2.
+ADD
+MOV
+CLOAD
+LOAD
+Loaded value 5 from address 16 in RAM to register 2.
+ADD
+CMP register 3 (value 3), register 1 (value 5)
+JMPE
+JMPG
+CLOAD
+LOAD
+Loaded value 5 from address 16 in RAM to register 2.
+ADD
+STORE
+CLOAD
+LOAD
+Loaded value 5 from address 24 in RAM to register 2.
+ADD
+MOV
+CLOAD
+LOAD
+Loaded value 3 from address 20 in RAM to register 2.
+ADD
+CMP register 3 (value 5), register 1 (value 3)
+JMPL
+CLOAD
+LOAD
+Loaded value 5 from address 24 in RAM to register 2.
+ADD
+LOAD
+Loaded value 3 from address 20 in RAM to register 2.
+SUB
+STORE
+CMP register 1 (value 2), register 1 (value 2)
+JMPE
+CLOAD
+LOAD
+Loaded value 2 from address 24 in RAM to register 2.
+ADD
+MOV
+CLOAD
+LOAD
+Loaded value 3 from address 20 in RAM to register 2.
+ADD
+CMP register 3 (value 2), register 1 (value 3)
+JMPL
+CLOAD
+LOAD
+Loaded value 2 from address 24 in RAM to register 2.
+ADD
+MOV
+CLOAD
+CLOAD
+ADD
+CMP register 3 (value 2), register 1 (value 0)
+JMPL
+JMPG
+CLOAD
+LOAD
+Loaded value 2 from address 24 in RAM to register 2.
+ADD
+MOV
+CLOAD
+CLOAD
+ADD
+CMP register 3 (value 2), register 1 (value 0)
+JMPE
+JMPL
+CLOAD
+LOAD
+Loaded value 3 from address 20 in RAM to register 2.
+ADD
+CLOAD
+ADD
+STORE
+CMP register 1 (value 4), register 1 (value 4)
+JMPE
+CLOAD
+LOAD
+Loaded value 4 from address 20 in RAM to register 2.
+ADD
+MOV
+CLOAD
+LOAD
+Loaded value 5 from address 16 in RAM to register 2.
+ADD
+CMP register 3 (value 4), register 1 (value 5)
+JMPE
+JMPG
+CLOAD
+LOAD
+Loaded value 5 from address 16 in RAM to register 2.
+ADD
+STORE
+CLOAD
+LOAD
+Loaded value 5 from address 24 in RAM to register 2.
+ADD
+MOV
+CLOAD
+LOAD
+Loaded value 4 from address 20 in RAM to register 2.
+ADD
+CMP register 3 (value 5), register 1 (value 4)
+JMPL
+CLOAD
+LOAD
+Loaded value 5 from address 24 in RAM to register 2.
+ADD
+LOAD
+Loaded value 4 from address 20 in RAM to register 2.
+SUB
+STORE
+CMP register 1 (value 1), register 1 (value 1)
+JMPE
+CLOAD
+LOAD
+Loaded value 1 from address 24 in RAM to register 2.
+ADD
+MOV
+CLOAD
+LOAD
+Loaded value 4 from address 20 in RAM to register 2.
+ADD
+CMP register 3 (value 1), register 1 (value 4)
+JMPL
+CLOAD
+LOAD
+Loaded value 1 from address 24 in RAM to register 2.
+ADD
+MOV
+CLOAD
+CLOAD
+ADD
+CMP register 3 (value 1), register 1 (value 0)
+JMPL
+JMPG
+CLOAD
+LOAD
+Loaded value 1 from address 24 in RAM to register 2.
+ADD
+MOV
+CLOAD
+CLOAD
+ADD
+CMP register 3 (value 1), register 1 (value 0)
+JMPE
+JMPL
+CLOAD
+LOAD
+Loaded value 4 from address 20 in RAM to register 2.
+ADD
+CLOAD
+ADD
+STORE
+CMP register 1 (value 5), register 1 (value 5)
+JMPE
+CLOAD
+LOAD
+Loaded value 5 from address 20 in RAM to register 2.
+ADD
+MOV
+CLOAD
+LOAD
+Loaded value 5 from address 16 in RAM to register 2.
+ADD
+CMP register 3 (value 5), register 1 (value 5)
+JMPE
+CLOAD
+LOAD
+Loaded value 1 from address 28 in RAM to register 2.
+ADD
+MOV
+CLOAD
+CLOAD
+ADD
+CMP register 3 (value 1), register 1 (value 1)
+JMPL
+JMPG
+CLOAD
+CLOAD
+ADD
+STORE
+CLOAD
+LOAD
+Loaded value 5 from address 16 in RAM to register 2.
+ADD
+CLOAD
+ADD
+STORE
+LOAD
+Loaded value 0 from address 0 in RAM to register 1.
+LOAD
+Loaded value 53 from address 4 in RAM to register 2.
+OUT [address 0, character '5' (integer value 53)]
+CLOAD
+LOAD
+Loaded value 2 from address 12 in RAM to register 2.
+ADD
+CLOAD
+ADD
+STORE
+CLOAD
+LOAD
+Loaded value 5 from address 16 in RAM to register 2.
+ADD
+CLOAD
+ADD
+STORE
+CMP register 1 (value 6), register 1 (value 6)
+JMPE
+CLOAD
+LOAD
+Loaded value 3 from address 12 in RAM to register 2.
+ADD
+MOV
+CLOAD
+LOAD
+Loaded value 4 from address 8 in RAM to register 2.
+ADD
+CMP register 3 (value 3), register 1 (value 4)
+JMPE
+JMPG
+CLOAD
+CLOAD
+ADD
+STORE
+CLOAD
+CLOAD
+ADD
+STORE
+CLOAD
+LOAD
+Loaded value 2 from address 20 in RAM to register 2.
+ADD
+MOV
+CLOAD
+LOAD
+Loaded value 6 from address 16 in RAM to register 2.
+ADD
+CMP register 3 (value 2), register 1 (value 6)
+JMPE
+JMPG
+CLOAD
+LOAD
+Loaded value 6 from address 16 in RAM to register 2.
+ADD
+STORE
+CLOAD
+LOAD
+Loaded value 6 from address 24 in RAM to register 2.
+ADD
+MOV
+CLOAD
+LOAD
+Loaded value 2 from address 20 in RAM to register 2.
+ADD
+CMP register 3 (value 6), register 1 (value 2)
+JMPL
+CLOAD
+LOAD
+Loaded value 6 from address 24 in RAM to register 2.
+ADD
+LOAD
+Loaded value 2 from address 20 in RAM to register 2.
+SUB
+STORE
+CMP register 1 (value 4), register 1 (value 4)
+JMPE
+CLOAD
+LOAD
+Loaded value 4 from address 24 in RAM to register 2.
+ADD
+MOV
+CLOAD
+LOAD
+Loaded value 2 from address 20 in RAM to register 2.
+ADD
+CMP register 3 (value 4), register 1 (value 2)
+JMPL
+CLOAD
+LOAD
+Loaded value 4 from address 24 in RAM to register 2.
+ADD
+LOAD
+Loaded value 2 from address 20 in RAM to register 2.
+SUB
+STORE
+CMP register 1 (value 2), register 1 (value 2)
+JMPE
+CLOAD
+LOAD
+Loaded value 2 from address 24 in RAM to register 2.
+ADD
+MOV
+CLOAD
+LOAD
+Loaded value 2 from address 20 in RAM to register 2.
+ADD
+CMP register 3 (value 2), register 1 (value 2)
+JMPL
+CLOAD
+LOAD
+Loaded value 2 from address 24 in RAM to register 2.
+ADD
+LOAD
+Loaded value 2 from address 20 in RAM to register 2.
+SUB
+STORE
+CMP register 1 (value 0), register 1 (value 0)
+JMPE
+CLOAD
+LOAD
+Loaded value 0 from address 24 in RAM to register 2.
+ADD
+MOV
+CLOAD
+LOAD
+Loaded value 2 from address 20 in RAM to register 2.
+ADD
+CMP register 3 (value 0), register 1 (value 2)
+JMPL
+CLOAD
+LOAD
+Loaded value 0 from address 24 in RAM to register 2.
+ADD
+MOV
+CLOAD
+CLOAD
+ADD
+CMP register 3 (value 0), register 1 (value 0)
+JMPL
+JMPG
+CLOAD
+LOAD
+Loaded value 6 from address 16 in RAM to register 2.
+ADD
+STORE
+CLOAD
+CLOAD
+ADD
+STORE
+CLOAD
+LOAD
+Loaded value 0 from address 24 in RAM to register 2.
+ADD
+MOV
+CLOAD
+CLOAD
+ADD
+CMP register 3 (value 0), register 1 (value 0)
+JMPE
+CMP register 1 (value 1), register 1 (value 1)
+JMPE
+CLOAD
+LOAD
+Loaded value 6 from address 20 in RAM to register 2.
+ADD
+MOV
+CLOAD
+LOAD
+Loaded value 6 from address 16 in RAM to register 2.
+ADD
+CMP register 3 (value 6), register 1 (value 6)
+JMPE
+CLOAD
+LOAD
+Loaded value 0 from address 28 in RAM to register 2.
+ADD
+MOV
+CLOAD
+CLOAD
+ADD
+CMP register 3 (value 0), register 1 (value 1)
+JMPL
+CLOAD
+LOAD
+Loaded value 6 from address 16 in RAM to register 2.
+ADD
+CLOAD
+ADD
+STORE
+CMP register 1 (value 7), register 1 (value 7)
+JMPE
+CLOAD
+LOAD
+Loaded value 3 from address 12 in RAM to register 2.
+ADD
+MOV
+CLOAD
+LOAD
+Loaded value 4 from address 8 in RAM to register 2.
+ADD
+CMP register 3 (value 3), register 1 (value 4)
+JMPE
+JMPG
+CLOAD
+CLOAD
+ADD
+STORE
+CLOAD
+CLOAD
+ADD
+STORE
+CLOAD
+LOAD
+Loaded value 2 from address 20 in RAM to register 2.
+ADD
+MOV
+CLOAD
+LOAD
+Loaded value 7 from address 16 in RAM to register 2.
+ADD
+CMP register 3 (value 2), register 1 (value 7)
+JMPE
+JMPG
+CLOAD
+LOAD
+Loaded value 7 from address 16 in RAM to register 2.
+ADD
+STORE
+CLOAD
+LOAD
+Loaded value 7 from address 24 in RAM to register 2.
+ADD
+MOV
+CLOAD
+LOAD
+Loaded value 2 from address 20 in RAM to register 2.
+ADD
+CMP register 3 (value 7), register 1 (value 2)
+JMPL
+CLOAD
+LOAD
+Loaded value 7 from address 24 in RAM to register 2.
+ADD
+LOAD
+Loaded value 2 from address 20 in RAM to register 2.
+SUB
+STORE
+CMP register 1 (value 5), register 1 (value 5)
+JMPE
+CLOAD
+LOAD
+Loaded value 5 from address 24 in RAM to register 2.
+ADD
+MOV
+CLOAD
+LOAD
+Loaded value 2 from address 20 in RAM to register 2.
+ADD
+CMP register 3 (value 5), register 1 (value 2)
+JMPL
+CLOAD
+LOAD
+Loaded value 5 from address 24 in RAM to register 2.
+ADD
+LOAD
+Loaded value 2 from address 20 in RAM to register 2.
+SUB
+STORE
+CMP register 1 (value 3), register 1 (value 3)
+JMPE
+CLOAD
+LOAD
+Loaded value 3 from address 24 in RAM to register 2.
+ADD
+MOV
+CLOAD
+LOAD
+Loaded value 2 from address 20 in RAM to register 2.
+ADD
+CMP register 3 (value 3), register 1 (value 2)
+JMPL
+CLOAD
+LOAD
+Loaded value 3 from address 24 in RAM to register 2.
+ADD
+LOAD
+Loaded value 2 from address 20 in RAM to register 2.
+SUB
+STORE
+CMP register 1 (value 1), register 1 (value 1)
+JMPE
+CLOAD
+LOAD
+Loaded value 1 from address 24 in RAM to register 2.
+ADD
+MOV
+CLOAD
+LOAD
+Loaded value 2 from address 20 in RAM to register 2.
+ADD
+CMP register 3 (value 1), register 1 (value 2)
+JMPL
+CLOAD
+LOAD
+Loaded value 1 from address 24 in RAM to register 2.
+ADD
+MOV
+CLOAD
+CLOAD
+ADD
+CMP register 3 (value 1), register 1 (value 0)
+JMPL
+JMPG
+CLOAD
+LOAD
+Loaded value 1 from address 24 in RAM to register 2.
+ADD
+MOV
+CLOAD
+CLOAD
+ADD
+CMP register 3 (value 1), register 1 (value 0)
+JMPE
+JMPL
+CLOAD
+LOAD
+Loaded value 2 from address 20 in RAM to register 2.
+ADD
+CLOAD
+ADD
+STORE
+CMP register 1 (value 3), register 1 (value 3)
+JMPE
+CLOAD
+LOAD
+Loaded value 3 from address 20 in RAM to register 2.
+ADD
+MOV
+CLOAD
+LOAD
+Loaded value 7 from address 16 in RAM to register 2.
+ADD
+CMP register 3 (value 3), register 1 (value 7)
+JMPE
+JMPG
+CLOAD
+LOAD
+Loaded value 7 from address 16 in RAM to register 2.
+ADD
+STORE
+CLOAD
+LOAD
+Loaded value 7 from address 24 in RAM to register 2.
+ADD
+MOV
+CLOAD
+LOAD
+Loaded value 3 from address 20 in RAM to register 2.
+ADD
+CMP register 3 (value 7), register 1 (value 3)
+JMPL
+CLOAD
+LOAD
+Loaded value 7 from address 24 in RAM to register 2.
+ADD
+LOAD
+Loaded value 3 from address 20 in RAM to register 2.
+SUB
+STORE
+CMP register 1 (value 4), register 1 (value 4)
+JMPE
+CLOAD
+LOAD
+Loaded value 4 from address 24 in RAM to register 2.
+ADD
+MOV
+CLOAD
+LOAD
+Loaded value 3 from address 20 in RAM to register 2.
+ADD
+CMP register 3 (value 4), register 1 (value 3)
+JMPL
+CLOAD
+LOAD
+Loaded value 4 from address 24 in RAM to register 2.
+ADD
+LOAD
+Loaded value 3 from address 20 in RAM to register 2.
+SUB
+STORE
+CMP register 1 (value 1), register 1 (value 1)
+JMPE
+CLOAD
+LOAD
+Loaded value 1 from address 24 in RAM to register 2.
+ADD
+MOV
+CLOAD
+LOAD
+Loaded value 3 from address 20 in RAM to register 2.
+ADD
+CMP register 3 (value 1), register 1 (value 3)
+JMPL
+CLOAD
+LOAD
+Loaded value 1 from address 24 in RAM to register 2.
+ADD
+MOV
+CLOAD
+CLOAD
+ADD
+CMP register 3 (value 1), register 1 (value 0)
+JMPL
+JMPG
+CLOAD
+LOAD
+Loaded value 1 from address 24 in RAM to register 2.
+ADD
+MOV
+CLOAD
+CLOAD
+ADD
+CMP register 3 (value 1), register 1 (value 0)
+JMPE
+JMPL
+CLOAD
+LOAD
+Loaded value 3 from address 20 in RAM to register 2.
+ADD
+CLOAD
+ADD
+STORE
+CMP register 1 (value 4), register 1 (value 4)
+JMPE
+CLOAD
+LOAD
+Loaded value 4 from address 20 in RAM to register 2.
+ADD
+MOV
+CLOAD
+LOAD
+Loaded value 7 from address 16 in RAM to register 2.
+ADD
+CMP register 3 (value 4), register 1 (value 7)
+JMPE
+JMPG
+CLOAD
+LOAD
+Loaded value 7 from address 16 in RAM to register 2.
+ADD
+STORE
+CLOAD
+LOAD
+Loaded value 7 from address 24 in RAM to register 2.
+ADD
+MOV
+CLOAD
+LOAD
+Loaded value 4 from address 20 in RAM to register 2.
+ADD
+CMP register 3 (value 7), register 1 (value 4)
+JMPL
+CLOAD
+LOAD
+Loaded value 7 from address 24 in RAM to register 2.
+ADD
+LOAD
+Loaded value 4 from address 20 in RAM to register 2.
+SUB
+STORE
+CMP register 1 (value 3), register 1 (value 3)
+JMPE
+CLOAD
+LOAD
+Loaded value 3 from address 24 in RAM to register 2.
+ADD
+MOV
+CLOAD
+LOAD
+Loaded value 4 from address 20 in RAM to register 2.
+ADD
+CMP register 3 (value 3), register 1 (value 4)
+JMPL
+CLOAD
+LOAD
+Loaded value 3 from address 24 in RAM to register 2.
+ADD
+MOV
+CLOAD
+CLOAD
+ADD
+CMP register 3 (value 3), register 1 (value 0)
+JMPL
+JMPG
+CLOAD
+LOAD
+Loaded value 3 from address 24 in RAM to register 2.
+ADD
+MOV
+CLOAD
+CLOAD
+ADD
+CMP register 3 (value 3), register 1 (value 0)
+JMPE
+JMPL
+CLOAD
+LOAD
+Loaded value 4 from address 20 in RAM to register 2.
+ADD
+CLOAD
+ADD
+STORE
+CMP register 1 (value 5), register 1 (value 5)
+JMPE
+CLOAD
+LOAD
+Loaded value 5 from address 20 in RAM to register 2.
+ADD
+MOV
+CLOAD
+LOAD
+Loaded value 7 from address 16 in RAM to register 2.
+ADD
+CMP register 3 (value 5), register 1 (value 7)
+JMPE
+JMPG
+CLOAD
+LOAD
+Loaded value 7 from address 16 in RAM to register 2.
+ADD
+STORE
+CLOAD
+LOAD
+Loaded value 7 from address 24 in RAM to register 2.
+ADD
+MOV
+CLOAD
+LOAD
+Loaded value 5 from address 20 in RAM to register 2.
+ADD
+CMP register 3 (value 7), register 1 (value 5)
+JMPL
+CLOAD
+LOAD
+Loaded value 7 from address 24 in RAM to register 2.
+ADD
+LOAD
+Loaded value 5 from address 20 in RAM to register 2.
+SUB
+STORE
+CMP register 1 (value 2), register 1 (value 2)
+JMPE
+CLOAD
+LOAD
+Loaded value 2 from address 24 in RAM to register 2.
+ADD
+MOV
+CLOAD
+LOAD
+Loaded value 5 from address 20 in RAM to register 2.
+ADD
+CMP register 3 (value 2), register 1 (value 5)
+JMPL
+CLOAD
+LOAD
+Loaded value 2 from address 24 in RAM to register 2.
+ADD
+MOV
+CLOAD
+CLOAD
+ADD
+CMP register 3 (value 2), register 1 (value 0)
+JMPL
+JMPG
+CLOAD
+LOAD
+Loaded value 2 from address 24 in RAM to register 2.
+ADD
+MOV
+CLOAD
+CLOAD
+ADD
+CMP register 3 (value 2), register 1 (value 0)
+JMPE
+JMPL
+CLOAD
+LOAD
+Loaded value 5 from address 20 in RAM to register 2.
+ADD
+CLOAD
+ADD
+STORE
+CMP register 1 (value 6), register 1 (value 6)
+JMPE
+CLOAD
+LOAD
+Loaded value 6 from address 20 in RAM to register 2.
+ADD
+MOV
+CLOAD
+LOAD
+Loaded value 7 from address 16 in RAM to register 2.
+ADD
+CMP register 3 (value 6), register 1 (value 7)
+JMPE
+JMPG
+CLOAD
+LOAD
+Loaded value 7 from address 16 in RAM to register 2.
+ADD
+STORE
+CLOAD
+LOAD
+Loaded value 7 from address 24 in RAM to register 2.
+ADD
+MOV
+CLOAD
+LOAD
+Loaded value 6 from address 20 in RAM to register 2.
+ADD
+CMP register 3 (value 7), register 1 (value 6)
+JMPL
+CLOAD
+LOAD
+Loaded value 7 from address 24 in RAM to register 2.
+ADD
+LOAD
+Loaded value 6 from address 20 in RAM to register 2.
+SUB
+STORE
+CMP register 1 (value 1), register 1 (value 1)
+JMPE
+CLOAD
+LOAD
+Loaded value 1 from address 24 in RAM to register 2.
+ADD
+MOV
+CLOAD
+LOAD
+Loaded value 6 from address 20 in RAM to register 2.
+ADD
+CMP register 3 (value 1), register 1 (value 6)
+JMPL
+CLOAD
+LOAD
+Loaded value 1 from address 24 in RAM to register 2.
+ADD
+MOV
+CLOAD
+CLOAD
+ADD
+CMP register 3 (value 1), register 1 (value 0)
+JMPL
+JMPG
+CLOAD
+LOAD
+Loaded value 1 from address 24 in RAM to register 2.
+ADD
+MOV
+CLOAD
+CLOAD
+ADD
+CMP register 3 (value 1), register 1 (value 0)
+JMPE
+JMPL
+CLOAD
+LOAD
+Loaded value 6 from address 20 in RAM to register 2.
+ADD
+CLOAD
+ADD
+STORE
+CMP register 1 (value 7), register 1 (value 7)
+JMPE
+CLOAD
+LOAD
+Loaded value 7 from address 20 in RAM to register 2.
+ADD
+MOV
+CLOAD
+LOAD
+Loaded value 7 from address 16 in RAM to register 2.
+ADD
+CMP register 3 (value 7), register 1 (value 7)
+JMPE
+CLOAD
+LOAD
+Loaded value 1 from address 28 in RAM to register 2.
+ADD
+MOV
+CLOAD
+CLOAD
+ADD
+CMP register 3 (value 1), register 1 (value 1)
+JMPL
+JMPG
+CLOAD
+CLOAD
+ADD
+STORE
+CLOAD
+LOAD
+Loaded value 7 from address 16 in RAM to register 2.
+ADD
+CLOAD
+ADD
+STORE
+LOAD
+Loaded value 0 from address 0 in RAM to register 1.
+LOAD
+Loaded value 55 from address 4 in RAM to register 2.
+OUT [address 0, character '7' (integer value 55)]
+CLOAD
+LOAD
+Loaded value 3 from address 12 in RAM to register 2.
+ADD
+CLOAD
+ADD
+STORE
+CLOAD
+LOAD
+Loaded value 7 from address 16 in RAM to register 2.
+ADD
+CLOAD
+ADD
+STORE
+CMP register 1 (value 8), register 1 (value 8)
+JMPE
+CLOAD
+LOAD
+Loaded value 4 from address 12 in RAM to register 2.
+ADD
+MOV
+CLOAD
+LOAD
+Loaded value 4 from address 8 in RAM to register 2.
+ADD
+CMP register 3 (value 4), register 1 (value 4)
+JMPE
+HALT
