@@ -158,12 +158,11 @@ void AssemblyGenerator::generateAsm(ASTNode *node) {
         code_section << "    // Start while loop node." << std::endl;
         ASTWhileLoopNode *while_loop = (ASTWhileLoopNode *) node;
 
-        generateAsm(while_loop->getCondition());
-
         std::string start_label = fmt::format("label{}", label_counter);
         label_counter++;
-
         code_section << fmt::format("    {}:", start_label) << std::endl;
+
+        generateAsm(while_loop->getCondition());
 
         std::string skip_label = fmt::format("label{}", label_counter);
         label_counter++;

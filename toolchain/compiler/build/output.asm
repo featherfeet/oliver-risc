@@ -2,11 +2,12 @@
     output_address = 0
     output_value = 0
     // Start variable declaration node.
-    i = 0
+    i = 1
     // End variable declaration node.
 .code:
     // Start root node.
     // Start while loop node.
+    label0:
     // Start condition node.
     // Start expression node.
     CLOAD 0,A
@@ -21,7 +22,6 @@
     // End expression node.
     CMP C,A
     // End condition node.
-    label0:
     JMPG label1
     // Start begin . . . end block node.
     // Start variable assignment node.
@@ -37,7 +37,7 @@
     CLOAD 0,A
     LOAD i,B
     ADD A,B
-    CLOAD 49,B
+    CLOAD 48,B
     ADD A,B
     // End expression node.
     STORE A,output_value

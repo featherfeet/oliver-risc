@@ -14,12 +14,12 @@ B := 97;
 A := 0;
 CALL OUT;
 */
-VAR i = 0;
+VAR i = 1;
 
 WHILE i <= 5 DO
 BEGIN
     output_address := 0;
-    output_value := i + 49;
+    output_value := i + 48;
     CALL OUT;
     i := i + 1;
 END;
