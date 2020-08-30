@@ -432,7 +432,7 @@ begin
                     // No operation.
                     `OPERATION_NOP:
                     begin
-                        //$display("NOP");
+                        $display("NOP");
                         next_instruction();
                     end
                     // Load value from RAM address to register.
@@ -449,7 +449,7 @@ begin
                             read_from_ram(operand1 + operand_byte_index);
                         if (operand_byte_index == `OPERAND_SIZE_BYTES)
                         begin
-                            //$display("Loaded value %d from address %d in RAM to register %d.", registers[operand2], operand1, operand2);
+                            $display("Loaded value %d from address %d in RAM to register %d.", registers[operand2], operand1, operand2);
                             operand_byte_index <= 'b0;
                             next_instruction();
                         end
@@ -457,7 +457,7 @@ begin
                     // Load value from RAM address (stored in a register) to a register.
                     `OPERATION_RLOAD:
                     begin
-                        //$display("RLOAD");
+                        $display("RLOAD");
                         if (ram_read_complete)
                         begin
                             registers[operand2] <= {ram_read_data[7:0], registers[operand2][31:8]};
@@ -468,7 +468,7 @@ begin
                             read_from_ram(registers[operand1] + operand_byte_index);
                         if (operand_byte_index == `OPERAND_SIZE_BYTES)
                         begin
-                            //$display("Loaded value %d from address %d in RAM to register %d.", registers[operand2], operand1, operand2);
+                            $display("Loaded value %d from address %d in RAM to register %d.", registers[operand2], operand1, operand2);
                             operand_byte_index <= 'b0;
                             next_instruction();
                         end
@@ -476,14 +476,14 @@ begin
                     // Load value from constant operand into a register.
                     `OPERATION_CLOAD:
                     begin
-                        //$display("CLOAD");
+                        $display("CLOAD");
                         registers[operand2] <= operand1;
                         next_instruction();
                     end
                     // Store value into RAM from register.
                     `OPERATION_STORE:
                     begin
-                        //$display("STORE");
+                        $display("STORE");
                         if (operand_byte_index == `OPERAND_SIZE_BYTES)
                         begin
                             sdram_controller_wr_n_i <= 'b1;
@@ -504,7 +504,7 @@ begin
                     // Store value into RAM (at address specified by a register) from a register. registers[operand1] is the value being stored. registers[operand2] is the address in RAM to store at.
                     `OPERATION_RSTORE:
                     begin
-                        //$display("RSTORE");
+                        $display("RSTORE");
                         if (ram_write_complete)
                         begin
                             operand_byte_index <= operand_byte_index + 8'd1;
@@ -525,14 +525,14 @@ begin
                     // Add two registers and store the result in register A.
                     `OPERATION_ADD:
                     begin
-                        //$display("ADD");
+                        $display("ADD");
                         `REGISTER_A <= registers[operand1] + registers[operand2];
                         next_instruction();
                     end
                     // Subtract two registers and store the result in register A.
                     `OPERATION_SUB:
                     begin
-                        //$display("SUB");
+                        $display("SUB");
                         `REGISTER_A <= registers[operand1] - registers[operand2];
                         next_instruction();
                     end
@@ -565,7 +565,7 @@ begin
                     // register to read into.
                     `OPERATION_IN:
                     begin
-                        //$display("IN");
+                        $display("IN");
                         if (gpu_access_state == `GPU_ACCESS_STATE_SETUP && registers[operand1] < `GPU_TEXT_BUFFER_LENGTH)
                         begin
                             gpu_cell_to_access <= registers[operand1];
@@ -586,13 +586,13 @@ begin
                     // Copy register 1 to register 2.
                     `OPERATION_MOV:
                     begin
-                        //$display("MOV");
+                        $display("MOV");
                         registers[operand2] <= registers[operand1];
                         next_instruction();
                     end
                     `OPERATION_CMP:
                     begin
-                        //$display("CMP register %d (value %d), register %d (value %d)", operand1, registers[operand1], operand2, registers[operand2]);
+                        $display("CMP register %d (value %d), register %d (value %d)", operand1, registers[operand1], operand2, registers[operand2]);
                         if (registers[operand1] < registers[operand2])
                             `REGISTER_A <= 'd0;
                         else if (registers[operand1] == registers[operand2])
@@ -603,7 +603,7 @@ begin
                     end
                     `OPERATION_JMPL:
                     begin
-                        //$display("JMPL");
+                        $display("JMPL");
                         if (`REGISTER_A == 0)
                             `REGISTER_IP <= code_section_start_address + operand1;
                         else
@@ -612,7 +612,7 @@ begin
                     end
                     `OPERATION_JMPE:
                     begin
-                        //$display("JMPE");
+                        $display("JMPE");
                         if (`REGISTER_A == 1)
                             `REGISTER_IP <= code_section_start_address + operand1;
                         else
@@ -621,7 +621,7 @@ begin
                     end
                     `OPERATION_JMPG:
                     begin
-                        //$display("JMPG");
+                        $display("JMPG");
                         if (`REGISTER_A == 2)
                             `REGISTER_IP <= code_section_start_address + operand1;
                         else
@@ -630,13 +630,13 @@ begin
                     end
                     `OPERATION_ISR:
                     begin
-                        //$display("ISR");
+                        $display("ISR");
                         interrupt_vector_table[registers[operand1]] <= operand2;
                         next_instruction();
                     end
                     `OPERATION_INT:
                     begin
-                        //$display("INT");
+                        $display("INT");
                         if (interrupt_fifo_access_state == `INTERRUPT_FIFO_ACCESS_STATE_SETUP)
                         begin
                             interrupt_fifo_data_in <= registers[operand1];
@@ -655,7 +655,7 @@ begin
                     end
                     `OPERATION_RST:
                     begin
-                        //$display("RST");
+                        $display("RST");
                         `REGISTER_IP <= code_section_start_address;
                         `REGISTER_A <= 'b0;
                         `REGISTER_B <= 'b0;
@@ -669,7 +669,7 @@ begin
                     end
                     `OPERATION_ENDINT:
                     begin
-                        //$display("ENDINT");
+                        $display("ENDINT");
                         for (i = 0; i < `NUM_REGISTERS; i = i + 1)
                             registers[i] <= shadow_registers[i];
                         state <= `STATE_RUN_INTERRUPT;
@@ -677,7 +677,7 @@ begin
                     end
                     `OPERATION_HALT:
                     begin
-                        //$display("HALT");
+                        $display("HALT");
                         state <= `STATE_EXECUTE_INSTRUCTION;
                         $finish;
                     end
