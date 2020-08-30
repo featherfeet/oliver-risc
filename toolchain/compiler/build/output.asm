@@ -1,4 +1,6 @@
 .data:
+    output_address = 0
+    output_value = 0
     // Start variable declaration node.
     i = 0
     // End variable declaration node.
@@ -25,21 +27,24 @@
     // Start variable assignment node.
     // Start expression node.
     CLOAD 0,A
+    CLOAD 0,B
+    ADD A,B
+    // End expression node.
+    STORE A,output_address
+    // End variable assignment node.
+    // Start variable assignment node.
+    // Start expression node.
+    CLOAD 0,A
     LOAD i,B
     ADD A,B
     CLOAD 49,B
     ADD A,B
     // End expression node.
-    MOV A,B
-    // End variable assignment node.
-    // Start variable assignment node.
-    // Start expression node.
-    CLOAD 0,A
-    CLOAD 0,B
-    ADD A,B
-    // End expression node.
+    STORE A,output_value
     // End variable assignment node.
     // Start function call node.
+    LOAD output_address,A
+    LOAD output_value,B
     OUT A,B
     // End function call node.
     // Start variable assignment node.
@@ -56,4 +61,7 @@
     CMP A,A
     JMPE label0
     label1:
+    // Start function call node.
+    HALT
+    // End function call node.
     // End root node.

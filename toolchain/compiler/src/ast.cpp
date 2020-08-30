@@ -1,6 +1,5 @@
 #include "ast.h"
 #include "processor.h"
-#include "util.h"
 #include <sstream>
 #include <fstream>
 
@@ -307,9 +306,6 @@ ASTExpressionNode *ASTVariableAssignmentNode::getExpressionNode() {
 }
 
 std::string ASTVariableAssignmentNode::getHumanReadable() {
-    if (isRegister(variable_name)) {
-        return fmt::format("Assign register {}.", variable_name);
-    }
     return fmt::format("Assign variable `{}`.", variable_name);
 }
 

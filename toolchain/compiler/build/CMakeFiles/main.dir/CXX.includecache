@@ -91,8 +91,6 @@ iostream
 -
 string
 -
-util.h
-/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/src/util.h
 asmgenerator.h
 /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/src/asmgenerator.h
 fmt/format.h
@@ -106,6 +104,24 @@ string
 sstream
 -
 
+/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/src/ast.cpp
+ast.h
+/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/src/ast.h
+processor.h
+/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/src/processor.h
+sstream
+-
+fstream
+-
+fmt/format.h
+-
+string
+-
+memory
+-
+cstdlib
+-
+
 /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/src/ast.h
 string
 -
@@ -115,8 +131,4 @@ ostream
 -
 processor.h
 /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/src/processor.h
-
-/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/src/util.h
-string
--
 

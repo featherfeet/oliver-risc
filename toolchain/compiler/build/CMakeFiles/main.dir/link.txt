@@ -1,1 +1,1 @@
-/usr/bin/c++  -g  -rdynamic CMakeFiles/main.dir/src/ast.cpp.o CMakeFiles/main.dir/src/asmgenerator.cpp.o CMakeFiles/main.dir/src/util.cpp.o CMakeFiles/main.dir/parser.cpp.o CMakeFiles/main.dir/lexer.cpp.o  -o main -lfl 
+/usr/bin/c++  -g  -rdynamic CMakeFiles/main.dir/src/ast.cpp.o CMakeFiles/main.dir/src/asmgenerator.cpp.o CMakeFiles/main.dir/parser.cpp.o CMakeFiles/main.dir/lexer.cpp.o  -o main -lfl 

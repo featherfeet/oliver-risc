@@ -18,8 +18,10 @@ VAR i = 0;
 
 WHILE i <= 5 DO
 BEGIN
-    B := i + 49;
-    A := 0;
+    output_address := 0;
+    output_value := i + 49;
     CALL OUT;
     i := i + 1;
 END;
+
+CALL HALT;

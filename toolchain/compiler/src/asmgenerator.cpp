@@ -1,6 +1,5 @@
 #include <iostream>
 #include <string>
-#include "util.h"
 #include "asmgenerator.h"
 
 #define FMT_HEADER_ONLY
@@ -19,6 +18,9 @@ void AssemblyGenerator::generateAsm(ASTNode *node) {
     if (node->getNodeType() == ROOT_NODE) {
         ASTRootNode *rootNode = (ASTRootNode *) node;
         std::vector<ASTStatementNode*> children = rootNode->getChildren();
+
+        data_section << "    output_address = 0" << std::endl;
+        data_section << "    output_value = 0" << std::endl;
 
         code_section << "    // Start root node." << std::endl;
         for (int i = 0; i < children.size(); i++) {
@@ -41,14 +43,7 @@ void AssemblyGenerator::generateAsm(ASTNode *node) {
         generateAsm(assignment->getExpressionNode());
 
         std::string variable_name = assignment->getVariableName();
-        if (isRegister(variable_name)) {
-            if (variable_name != "A") {
-                code_section << fmt::format("    MOV A,{}", variable_name) << std::endl;
-            }
-        }
-        else {
-            code_section << fmt::format("    STORE A,{}", assignment->getVariableName()) << std::endl;
-        }
+        code_section << fmt::format("    STORE A,{}", assignment->getVariableName()) << std::endl;
 
         code_section << "    // End variable assignment node." << std::endl;
     }
@@ -145,7 +140,12 @@ void AssemblyGenerator::generateAsm(ASTNode *node) {
         ASTFunctionCallNode *function_call = (ASTFunctionCallNode *) node;
 
         if (function_call->getFunctionName() == "OUT") {
+            code_section << "    LOAD output_address,A" << std::endl;
+            code_section << "    LOAD output_value,B" << std::endl;
             code_section << "    OUT A,B" << std::endl;
+        }
+        else if (function_call->getFunctionName() == "HALT") {
+            code_section << "    HALT" << std::endl;
         }
         else {
             std::cout << "\033[1;31mERROR: Custom functions are currently not supported.\033[0m" << std::endl;

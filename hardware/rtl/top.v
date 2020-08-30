@@ -40,6 +40,7 @@ reg [`OPERAND_SIZE_BITS - 1:0] operand2;
 reg [`OPERAND_SIZE_BITS - 1:0] registers [`NUM_REGISTERS - 1:0]; // IP, A, B, C, D, E, F, and G: eight 32-bit registers.
 reg [`OPERAND_SIZE_BITS - 1:0] shadow_registers [`NUM_REGISTERS - 1:0]; // "registers" is copied to here while an interrupt is running.
 reg [`OPERAND_SIZE_BITS - 1:0] code_section_start_address; // Where (in RAM) the instructions are located.
+reg code_section_start_found; // Whether "code_section_start_address" has been found yet. 0 for not-found-yet, 1 for found.
 reg [`OPERAND_SIZE_BITS - 1:0] program_end_address; // Where (in RAM) the binary ends.
 
 // Interrupt vector table -- sets the memory addresses of the interrupt service routines.
@@ -320,6 +321,7 @@ begin
         interrupt_value_fifo_write <= 'b0;
         interrupt_value_fifo_read <= 'b0;
         code_section_start_address <= 'b0;
+        code_section_start_found <= 'b0;
         program_end_address <= 'b0;
     end
     else
@@ -362,9 +364,10 @@ begin
                     begin
                         state <= `STATE_LOAD_TO_RAM;
                     end
-                    if (program_rom_byte == `OPERATION_CODE)
+                    if (~code_section_start_found && program_rom_byte == `OPERATION_CODE)
                     begin
                         code_section_start_address <= program_rom_address + 1;
+                        code_section_start_found <= 'b1;
                         `REGISTER_IP <= program_rom_address + 1;
                     end
                     else
@@ -391,7 +394,13 @@ begin
             end
             `STATE_FETCH_OPERAND1:
             begin
-                if (ram_read_complete)
+                if (operand_byte_index == `OPERAND_SIZE_BYTES)
+                begin
+                    operand_byte_index <= 'b0;
+                    state <= `STATE_FETCH_OPERAND2;
+                    //$display("Fetched operand1 %d.", operand1);
+                end
+                else if (ram_read_complete)
                 begin
                     operand1 <= {ram_read_data[7:0], operand1[31:8]};
                     operand_byte_index <= operand_byte_index + 8'd1;
@@ -399,18 +408,16 @@ begin
                 end
                 else
                     read_from_ram(`REGISTER_IP + `OPERATION_SIZE_BYTES + operand_byte_index);
-                if (operand_byte_index == `OPERAND_SIZE_BYTES)
-                begin
-                    operand_byte_index <= 'b0;
-                    state <= `STATE_FETCH_OPERAND2;
-                    //$display("Fetched operand1 %d.", operand1);
-                end
-                else
-                    state <= `STATE_FETCH_OPERAND1;
             end
             `STATE_FETCH_OPERAND2:
             begin
-                if (ram_read_complete)
+                if (operand_byte_index == `OPERAND_SIZE_BYTES)
+                begin
+                    operand_byte_index <= 'b0;
+                    state <= `STATE_EXECUTE_INSTRUCTION;
+                    //$display("Fetched operand2 %d.", operand2);
+                end
+                else if (ram_read_complete)
                 begin
                     operand2 <= {ram_read_data[7:0], operand2[31:8]};
                     operand_byte_index <= operand_byte_index + 8'd1;
@@ -418,14 +425,6 @@ begin
                 end
                 else
                     read_from_ram(`REGISTER_IP + `OPERATION_SIZE_BYTES + `OPERAND_SIZE_BYTES + operand_byte_index);
-                if (operand_byte_index == `OPERAND_SIZE_BYTES)
-                begin
-                    operand_byte_index <= 'b0;
-                    state <= `STATE_EXECUTE_INSTRUCTION;
-                    //$display("Fetched operand2 %d.", operand2);
-                end
-                else
-                    state <= `STATE_FETCH_OPERAND2;
             end
             `STATE_EXECUTE_INSTRUCTION:
             begin
@@ -678,9 +677,9 @@ begin
                     end
                     `OPERATION_HALT:
                     begin
-                        //$display("HALT");
+                        $display("HALT");
                         state <= `STATE_EXECUTE_INSTRUCTION;
-                        //$finish;
+                        $finish;
                     end
                 endcase
             end
