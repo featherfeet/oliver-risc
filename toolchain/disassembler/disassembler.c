@@ -71,6 +71,10 @@ const char *operationToString(Operation operation) {
             return "RSTORE";
         case OPERATION_CLOAD:
             return "CLOAD";
+        case OPERATION_MULT:
+            return "MULT";
+        case OPERATION_DIV:
+            return "DIV";
     }
 }
 
@@ -123,6 +127,12 @@ int main(int argc, char *argv[]) {
                 printf(" %s, %s\n", registerToString(operand1), registerToString(operand2));
                 break;
             case OPERATION_SUB:
+                printf(" %s, %s\n", registerToString(operand1), registerToString(operand2));
+                break;
+            case OPERATION_MULT:
+                printf(" %s, %s\n", registerToString(operand1), registerToString(operand2));
+                break;
+            case OPERATION_DIV:
                 printf(" %s, %s\n", registerToString(operand1), registerToString(operand2));
                 break;
             case OPERATION_OUT:

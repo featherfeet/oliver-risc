@@ -132,6 +132,14 @@
     return TOKEN_CLOAD;
 }
 
+"MULT" {
+    return TOKEN_MULT;
+}
+
+"DIV" {
+    return TOKEN_DIV;
+}
+
 (IP|A|B|C|D|E|F|G) {
     yylval.strval = g_strdup(yytext);
     return TOKEN_REGISTER;

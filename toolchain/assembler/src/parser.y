@@ -103,6 +103,8 @@
 %token TOKEN_RLOAD
 %token TOKEN_RSTORE
 %token TOKEN_CLOAD
+%token TOKEN_MULT
+%token TOKEN_DIV
 
 %start line
 
@@ -271,6 +273,30 @@ instruction: TOKEN_NOP {
 
         Instruction *instruction = g_new(Instruction, 1);
         instruction->operation = OPERATION_SUB;
+        instruction->operand1.operand_register = stringToRegister($<strval>2);
+        instruction->operand2.operand_register = stringToRegister($<strval>3);
+        instructions_table = g_slist_append(instructions_table, instruction);
+
+        g_free($<strval>2);
+        g_free($<strval>3);
+    }
+    | TOKEN_MULT TOKEN_REGISTER TOKEN_REGISTER {
+        printf("Instruction: MULT %s,%s\n", $<strval>2, $<strval>3);
+
+        Instruction *instruction = g_new(Instruction, 1);
+        instruction->operation = OPERATION_MULT;
+        instruction->operand1.operand_register = stringToRegister($<strval>2);
+        instruction->operand2.operand_register = stringToRegister($<strval>3);
+        instructions_table = g_slist_append(instructions_table, instruction);
+
+        g_free($<strval>2);
+        g_free($<strval>3);
+    }
+    | TOKEN_DIV TOKEN_REGISTER TOKEN_REGISTER {
+        printf("Instruction: DIV %s,%s\n", $<strval>2, $<strval>3);
+
+        Instruction *instruction = g_new(Instruction, 1);
+        instruction->operation = OPERATION_DIV;
         instruction->operand1.operand_register = stringToRegister($<strval>2);
         instruction->operand2.operand_register = stringToRegister($<strval>3);
         instructions_table = g_slist_append(instructions_table, instruction);
@@ -548,6 +574,15 @@ int main(int argc, char *argv[]) {
             case OPERATION_CLOAD:
                 operand1_is_constant = TRUE;
                 operand2_is_register = TRUE;
+                break;
+            case OPERATION_MULT:
+                operand1_is_register = TRUE;
+                operand2_is_register = TRUE;
+                break;
+            case OPERATION_DIV:
+                operand1_is_register = TRUE;
+                operand2_is_register = TRUE;
+                break;
             default:
                 break;
         }

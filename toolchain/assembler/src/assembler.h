@@ -39,7 +39,9 @@ typedef enum {
     OPERATION_ENDINT,
     OPERATION_RLOAD,
     OPERATION_RSTORE,
-    OPERATION_CLOAD
+    OPERATION_CLOAD,
+    OPERATION_MULT,
+    OPERATION_DIV
 } Operation;
 
 typedef enum {

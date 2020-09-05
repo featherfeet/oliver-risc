@@ -28,6 +28,8 @@ Instructions:
 
 * ADD <register1>,<register2>                     - Add <register1> to <register2> and store the result in register A.
 * SUB <register1>,<register2>                     - Subtract <register2> from <register1> and store the result in register A.
+* MULT <register1>,<register2>                    - Multiply <register1> by <register2> and store the result in register A.
+* DIV <register1>,<register2>                     - Divide <register1> by <register2> and store the quotient in register A. Store the remainder in register B.
 
 * OUT <register1>,<register2>                     - Write the contents of <register2> to the port number stored in <register1>.
 * IN <register1>,<register2>                      - Read from the port specified in <register1> into the register specified in <register2>.

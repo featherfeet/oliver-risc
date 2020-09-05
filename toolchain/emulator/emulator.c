@@ -7,6 +7,7 @@
 #define NUM_REGISTERS 8
 #define REGISTER_IP registers[0]
 #define REGISTER_A registers[1]
+#define REGISTER_B registers[2]
 
 int main(int argc, char *argv[]) {
     if (argc != 2) {
@@ -67,6 +68,19 @@ int main(int argc, char *argv[]) {
             case (OPERATION_SUB):
                 printf("SUB\n");
                 REGISTER_A = registers[operand1] - registers[operand2];
+                REGISTER_IP += INSTRUCTION_SIZE;
+                break;
+            case OPERATION_MULT:
+                printf("MULT\n");
+                REGISTER_A = registers[operand1] * registers[operand2];
+                REGISTER_IP += INSTRUCTION_SIZE;
+                break;
+            case OPERATION_DIV:
+                printf("DIV\n");
+                OPERAND_C_TYPE reg1 = registers[operand1];
+                OPERAND_C_TYPE reg2 = registers[operand2];
+                REGISTER_A = reg1 / reg2;
+                REGISTER_B = reg1 % reg2;
                 REGISTER_IP += INSTRUCTION_SIZE;
                 break;
             case (OPERATION_OUT):
