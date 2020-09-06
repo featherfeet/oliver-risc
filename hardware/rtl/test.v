@@ -77,14 +77,14 @@ module test();
         $dumpvars(0, test);
         for (i = 0; i < `NUM_REGISTERS; i = i + 1)
             $dumpvars(0, top_instantiation.registers[i]);
-/*        $vgasimInit(
+        $vgasimInit(
             dots_per_line,
             lines_per_frame,
             VGA_R, VGA_G, VGA_B,
             VGA_HS,
             VGA_VS,
             VGA_PIXEL_CLOCK
-        );*/
+        );
         reset = 'b0;
         //#80000 reset = 'hF;
         #80 reset = 'hF;
