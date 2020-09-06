@@ -1,4 +1,4 @@
-VAR PRIMES_TO_FIND = 4;
+VAR PRIMES_TO_FIND = 24;
 VAR primes_found;
 VAR number_to_check = 2;
 VAR SCREEN_WIDTH = 80;

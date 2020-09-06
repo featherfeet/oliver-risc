@@ -34,7 +34,7 @@
 .code:
     // Start root node.
     // Start variable declaration node.
-    CLOAD 4,A
+    CLOAD 24,A
     STORE A,PRIMES_TO_FIND
     // End variable declaration node.
     // Start variable declaration node.
