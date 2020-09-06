@@ -450,7 +450,7 @@ begin
             end
             `STATE_EXECUTE_INSTRUCTION:
             begin
-                `include "alu.v"
+                `include "alu/alu.v"
             end
             // Every cycle, check for interrupts and run the topmost one on the FIFO.
             `STATE_RUN_INTERRUPT:
