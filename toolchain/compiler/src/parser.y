@@ -42,6 +42,9 @@
 %token TOKEN_CALL
 %token TOKEN_WHILE
 %token TOKEN_DO
+%token TOKEN_ASTERISK
+%token TOKEN_FORWARD_SLASH
+%token TOKEN_PERCENT
 
 %start program
 
@@ -134,22 +137,40 @@ statement_sequence: statement {
 ;
 
 term: TOKEN_IDENTIFIER {
-    $$ = new ASTTermNode(POSITIVE, $1);
+    $$ = new ASTTermNode(ADDITION, $1);
 }
     | TOKEN_CONSTANT {
-        $$ = new ASTTermNode(POSITIVE, $1);
+        $$ = new ASTTermNode(ADDITION, $1);
     }
     | TOKEN_PLUS TOKEN_IDENTIFIER {
-        $$ = new ASTTermNode(POSITIVE, $2);
+        $$ = new ASTTermNode(ADDITION, $2);
     }
     | TOKEN_MINUS TOKEN_IDENTIFIER {
-        $$ = new ASTTermNode(NEGATIVE, $2);
+        $$ = new ASTTermNode(SUBTRACTION, $2);
     }
     | TOKEN_PLUS TOKEN_CONSTANT {
-        $$ = new ASTTermNode(POSITIVE, $2);
+        $$ = new ASTTermNode(ADDITION, $2);
     }
     | TOKEN_MINUS TOKEN_CONSTANT {
-        $$ = new ASTTermNode(NEGATIVE, $2);
+        $$ = new ASTTermNode(SUBTRACTION, $2);
+    }
+    | TOKEN_ASTERISK TOKEN_IDENTIFIER {
+        $$ = new ASTTermNode(MULTIPLICATION, $2);
+    }
+    | TOKEN_ASTERISK TOKEN_CONSTANT {
+        $$ = new ASTTermNode(MULTIPLICATION, $2);
+    }
+    | TOKEN_FORWARD_SLASH TOKEN_IDENTIFIER {
+        $$ = new ASTTermNode(DIVISION, $2);
+    }
+    | TOKEN_FORWARD_SLASH TOKEN_CONSTANT {
+        $$ = new ASTTermNode(DIVISION, $2);
+    }
+    | TOKEN_PERCENT TOKEN_IDENTIFIER {
+        $$ = new ASTTermNode(MODULUS, $2);
+    }
+    | TOKEN_PERCENT TOKEN_CONSTANT {
+        $$ = new ASTTermNode(MODULUS, $2);
     }
 ;
 
@@ -222,7 +243,7 @@ int main(int argc, char *argv[]) {
     endParseString();
 
     // Uncomment to display Graphviz-based AST visualization.
-//    ast->showGraph();
+    // ast->showGraph();
 
     AssemblyGenerator asmGenerator;
     asmGenerator.generateAsm(ast);

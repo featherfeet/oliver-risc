@@ -227,14 +227,14 @@ ASTBeginEndBlockNode *ASTConditionalNode::getBeginEndBlock() {
     return begin_end_block;
 }
 
-ASTTermNode::ASTTermNode(TermNodeSign sign, OPERAND_C_TYPE constant_value) {
-    this->sign = sign;
+ASTTermNode::ASTTermNode(TermNodeOperation operation, OPERAND_C_TYPE constant_value) {
+    this->operation = operation;
     this->constant_value = constant_value;
     this->type = CONSTANT;
 }
 
-ASTTermNode::ASTTermNode(TermNodeSign sign, std::string variable_name) {
-    this->sign = sign;
+ASTTermNode::ASTTermNode(TermNodeOperation operation, std::string variable_name) {
+    this->operation = operation;
     this->variable_name = variable_name;
     this->type = VARIABLE;
 }
@@ -245,11 +245,20 @@ ASTNodeType ASTTermNode::getNodeType() {
 
 std::string ASTTermNode::getHumanReadable() {
     std::stringstream human_readable;
-    if (sign == POSITIVE) {
+    if (operation == ADDITION) {
         human_readable << "+ ";
     }
-    else {
+    else if (operation == SUBTRACTION) {
         human_readable << "- ";
+    }
+    else if (operation == MULTIPLICATION) {
+        human_readable << "* ";
+    }
+    else if (operation == DIVISION) {
+        human_readable << "/ ";
+    }
+    else if (operation == MODULUS) {
+        human_readable << "% ";
     }
     if (type == VARIABLE) {
         human_readable << variable_name;
@@ -260,8 +269,8 @@ std::string ASTTermNode::getHumanReadable() {
     return human_readable.str();
 }
 
-TermNodeSign ASTTermNode::getSign() {
-    return sign;
+TermNodeOperation ASTTermNode::getOperation() {
+    return operation;
 }
 
 TermNodeType ASTTermNode::getType() {

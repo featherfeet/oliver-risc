@@ -30,10 +30,15 @@ void AssemblyGenerator::generateAsm(ASTNode *node) {
     }
 
     else if (node->getNodeType() == VARIABLE_DECLARATION_NODE) {
-        data_section << "    // Start variable declaration node." << std::endl;
         ASTVariableDeclarationNode *declaration = (ASTVariableDeclarationNode *) node;
-        data_section << fmt::format("    {} = {}", declaration->getVariableName(), declaration->getValue()) << std::endl;
+        data_section << "    // Start variable declaration node." << std::endl;
+        data_section << fmt::format("    {} = 0", declaration->getVariableName()) << std::endl;
         data_section << "    // End variable declaration node." << std::endl;
+        code_section << "    // Start variable declaration node." << std::endl;
+        // Variable may need to be re-initialized if this declaration is inside a loop, so we have to CLOAD it every time.
+        code_section << fmt::format("    CLOAD {},A", declaration->getValue()) << std::endl;
+        code_section << fmt::format("    STORE A,{}", declaration->getVariableName()) << std::endl;
+        code_section << "    // End variable declaration node." << std::endl;
     }
 
     else if (node->getNodeType() == VARIABLE_ASSIGNMENT_NODE) {
@@ -64,11 +69,21 @@ void AssemblyGenerator::generateAsm(ASTNode *node) {
             else if (term->getType() == VARIABLE) {
                 code_section << fmt::format("    LOAD {},B", term->getVariableName()) << std::endl;
             }
-            if (term->getSign() == POSITIVE) {
+            if (term->getOperation() == ADDITION) {
                 code_section << "    ADD A,B" << std::endl;
             }
-            else if (term->getSign() == NEGATIVE) {
+            else if (term->getOperation() == SUBTRACTION) {
                 code_section << "    SUB A,B" << std::endl;
+            }
+            else if (term->getOperation() == MULTIPLICATION) {
+                code_section << "    MULT A,B" << std::endl;
+            }
+            else if (term->getOperation() == DIVISION) {
+                code_section << "    DIV A,B" << std::endl;
+            }
+            else if (term->getOperation() == MODULUS) {
+                code_section << "    DIV A,B" << std::endl;
+                code_section << "    MOV B,A" << std::endl;
             }
         }
         code_section << "    // End expression node." << std::endl;
@@ -81,6 +96,7 @@ void AssemblyGenerator::generateAsm(ASTNode *node) {
         generateAsm(conditional->getCondition());
 
         std::string skip_label = fmt::format("label{}", label_counter);
+        label_counter++;
         ConditionNodeComparison comparison = conditional->getCondition()->getComparison();
         if (comparison == NOT_EQUALS) {
             code_section << fmt::format("    JMPE {}", skip_label) << std::endl;
@@ -107,7 +123,6 @@ void AssemblyGenerator::generateAsm(ASTNode *node) {
         generateAsm(conditional->getBeginEndBlock());
 
         code_section << fmt::format("    {}:", skip_label) << std::endl;
-        label_counter++;
         code_section << "    // End conditional node." << std::endl;
     }
 

@@ -149,7 +149,10 @@ extern int yydebug;
     TOKEN_GREATER_THAN_OR_EQUAL_TO = 274,
     TOKEN_CALL = 275,
     TOKEN_WHILE = 276,
-    TOKEN_DO = 277
+    TOKEN_DO = 277,
+    TOKEN_ASTERISK = 278,
+    TOKEN_FORWARD_SLASH = 279,
+    TOKEN_PERCENT = 280
   };
 #endif
 
@@ -158,7 +161,7 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 48 "src/parser.y" /* yacc.c:352  */
+#line 51 "src/parser.y" /* yacc.c:352  */
 
     int intval;
     char *strval;
@@ -173,7 +176,7 @@ union YYSTYPE
     ASTFunctionCallNode *function_call_node;
     ASTWhileLoopNode *while_loop_node;
 
-#line 177 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:352  */
+#line 180 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:352  */
 };
 
 typedef union YYSTYPE YYSTYPE;
@@ -421,19 +424,19 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  2
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   58
+#define YYLAST   70
 
 /* YYNTOKENS -- Number of terminals.  */
-#define YYNTOKENS  23
+#define YYNTOKENS  26
 /* YYNNTS -- Number of nonterminals.  */
 #define YYNNTS  13
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  31
+#define YYNRULES  37
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  58
+#define YYNSTATES  67
 
 #define YYUNDEFTOK  2
-#define YYMAXUTOK   277
+#define YYMAXUTOK   280
 
 /* YYTRANSLATE(TOKEN-NUM) -- Symbol number corresponding to TOKEN-NUM
    as returned by yylex, with out-of-bounds checking.  */
@@ -471,17 +474,18 @@ static const yytype_uint8 yytranslate[] =
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     1,     2,     3,     4,
        5,     6,     7,     8,     9,    10,    11,    12,    13,    14,
-      15,    16,    17,    18,    19,    20,    21,    22
+      15,    16,    17,    18,    19,    20,    21,    22,    23,    24,
+      25
 };
 
 #if YYDEBUG
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    79,    79,    82,    87,    90,    93,    96,    99,   104,
-     107,   112,   117,   122,   127,   131,   136,   139,   142,   145,
-     148,   151,   156,   159,   164,   167,   170,   173,   176,   179,
-     184,   189
+       0,    82,    82,    85,    90,    93,    96,    99,   102,   107,
+     110,   115,   120,   125,   130,   134,   139,   142,   145,   148,
+     151,   154,   157,   160,   163,   166,   169,   172,   177,   180,
+     185,   188,   191,   194,   197,   200,   205,   210
 };
 #endif
 
@@ -496,7 +500,8 @@ static const char *const yytname[] =
   "TOKEN_THEN", "TOKEN_BEGIN", "TOKEN_END", "TOKEN_NOT_EQUALS",
   "TOKEN_LESS_THAN", "TOKEN_LESS_THAN_OR_EQUAL_TO", "TOKEN_GREATER_THAN",
   "TOKEN_GREATER_THAN_OR_EQUAL_TO", "TOKEN_CALL", "TOKEN_WHILE",
-  "TOKEN_DO", "$accept", "program", "statement", "variable_declaration",
+  "TOKEN_DO", "TOKEN_ASTERISK", "TOKEN_FORWARD_SLASH", "TOKEN_PERCENT",
+  "$accept", "program", "statement", "variable_declaration",
   "variable_assignment", "conditional", "begin_end_block",
   "statement_sequence", "term", "expression", "condition", "function_call",
   "while_loop", YY_NULLPTR
@@ -510,14 +515,14 @@ static const yytype_uint16 yytoknum[] =
 {
        0,   256,   257,   258,   259,   260,   261,   262,   263,   264,
      265,   266,   267,   268,   269,   270,   271,   272,   273,   274,
-     275,   276,   277
+     275,   276,   277,   278,   279,   280
 };
 # endif
 
-#define YYPACT_NINF -48
+#define YYPACT_NINF -58
 
 #define yypact_value_is_default(Yystate) \
-  (!!((Yystate) == (-48)))
+  (!!((Yystate) == (-58)))
 
 #define YYTABLE_NINF -1
 
@@ -528,12 +533,13 @@ static const yytype_uint16 yytoknum[] =
      STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-     -48,     2,   -48,    -4,    -5,   -48,     1,   -48,   -48,     9,
-      18,    20,    22,    24,    33,   -48,    34,    -3,   -48,    32,
-     -48,   -48,   -48,   -48,   -48,    49,     5,   -48,   -48,   -48,
-      28,    42,   -48,   -48,   -48,   -48,   -48,   -48,    43,    43,
-     -48,     5,   -48,   -48,   -48,   -48,     5,     5,     5,     5,
-       5,    25,   -48,   -48,   -48,    21,   -48,   -48
+     -58,    32,   -58,    -1,     9,   -58,    18,   -58,   -58,    29,
+      40,    54,    55,    58,    38,   -58,    -4,    39,   -58,    45,
+     -58,   -58,   -58,   -58,   -58,    60,    35,   -58,   -58,   -58,
+       3,    20,   -58,   -58,   -58,   -58,   -58,    33,    44,    50,
+     -58,    56,    56,   -58,    35,   -58,   -58,   -58,   -58,    35,
+      35,    35,    35,    35,   -58,   -58,   -58,   -58,   -58,   -58,
+      13,   -58,   -58,   -58,    43,   -58,   -58
 };
 
   /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -541,25 +547,26 @@ static const yytype_int8 yypact[] =
      means the default is an error.  */
 static const yytype_uint8 yydefact[] =
 {
-       2,     0,     1,     0,     0,    22,     0,    22,     3,     0,
-       0,     0,     0,     0,     9,    22,     0,     0,    30,     0,
-       4,     5,     6,     7,     8,     0,    11,    22,    16,    17,
-       0,     0,    22,    22,    22,    22,    22,    23,     0,     0,
-      10,    25,    18,    20,    19,    21,    24,    26,    27,    28,
-      29,     0,    12,    31,    14,     0,    13,    15
+       2,     0,     1,     0,     0,    28,     0,    28,     3,     0,
+       0,     0,     0,     0,     9,    28,     0,     0,    36,     0,
+       4,     5,     6,     7,     8,     0,    11,    28,    16,    17,
+       0,     0,    28,    28,    28,    28,    28,     0,     0,     0,
+      29,     0,     0,    10,    31,    18,    20,    19,    21,    30,
+      32,    33,    34,    35,    22,    23,    24,    25,    26,    27,
+       0,    12,    37,    14,     0,    13,    15
 };
 
   /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-     -48,   -48,   -47,   -48,   -48,   -48,    19,   -48,   -48,   -15,
-      50,   -48,   -48
+     -58,   -58,   -57,   -58,   -58,   -58,    26,   -58,   -58,    -5,
+      63,   -58,   -58
 };
 
   /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-      -1,     1,     8,     9,    10,    11,    52,    55,    37,    16,
+      -1,     1,     8,     9,    10,    11,    61,    64,    40,    16,
       17,    12,    13
 };
 
@@ -568,43 +575,48 @@ static const yytype_int8 yydefgoto[] =
      number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_uint8 yytable[] =
 {
-      26,    14,     2,    15,    54,     3,    18,     4,    57,    38,
-      28,    29,    41,     5,    30,    31,    20,    46,    47,    48,
-      49,    50,     6,     7,     3,    21,     4,    22,     3,    23,
-       4,    24,     5,    42,    43,    56,     5,    25,    27,    28,
-      29,     6,     7,    30,    31,     6,     7,    44,    45,    32,
-      33,    34,    35,    36,    39,    40,    51,    19,    53
+      27,    28,    29,    63,    14,    30,    31,    66,    45,    46,
+      26,    32,    33,    34,    35,    36,     3,    15,     4,    37,
+      38,    39,    44,    18,     5,    47,    48,    49,    50,    51,
+      52,    53,     2,     6,     7,     3,    20,     4,    54,    55,
+      28,    29,    25,     5,    30,    31,     3,    21,     4,    56,
+      57,    41,     6,     7,     5,    58,    59,    65,    37,    38,
+      39,    22,    23,     6,     7,    24,    43,    42,    62,    60,
+      19
 };
 
 static const yytype_uint8 yycheck[] =
 {
-      15,     5,     0,     8,    51,     3,     5,     5,    55,    12,
-       5,     6,    27,    11,     9,    10,     7,    32,    33,    34,
-      35,    36,    20,    21,     3,     7,     5,     7,     3,     7,
-       5,     7,    11,     5,     6,    14,    11,     4,     4,     5,
-       6,    20,    21,     9,    10,    20,    21,     5,     6,    15,
-      16,    17,    18,    19,    22,     6,    13,     7,    39
+       4,     5,     6,    60,     5,     9,    10,    64,     5,     6,
+      15,    15,    16,    17,    18,    19,     3,     8,     5,    23,
+      24,    25,    27,     5,    11,     5,     6,    32,    33,    34,
+      35,    36,     0,    20,    21,     3,     7,     5,     5,     6,
+       5,     6,     4,    11,     9,    10,     3,     7,     5,     5,
+       6,    12,    20,    21,    11,     5,     6,    14,    23,    24,
+      25,     7,     7,    20,    21,     7,     6,    22,    42,    13,
+       7
 };
 
   /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
      symbol of state STATE-NUM.  */
 static const yytype_uint8 yystos[] =
 {
-       0,    24,     0,     3,     5,    11,    20,    21,    25,    26,
-      27,    28,    34,    35,     5,     8,    32,    33,     5,    33,
-       7,     7,     7,     7,     7,     4,    32,     4,     5,     6,
-       9,    10,    15,    16,    17,    18,    19,    31,    12,    22,
-       6,    32,     5,     6,     5,     6,    32,    32,    32,    32,
-      32,    13,    29,    29,    25,    30,    14,    25
+       0,    27,     0,     3,     5,    11,    20,    21,    28,    29,
+      30,    31,    37,    38,     5,     8,    35,    36,     5,    36,
+       7,     7,     7,     7,     7,     4,    35,     4,     5,     6,
+       9,    10,    15,    16,    17,    18,    19,    23,    24,    25,
+      34,    12,    22,     6,    35,     5,     6,     5,     6,    35,
+      35,    35,    35,    35,     5,     6,     5,     6,     5,     6,
+      13,    32,    32,    28,    33,    14,    28
 };
 
   /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
 static const yytype_uint8 yyr1[] =
 {
-       0,    23,    24,    24,    25,    25,    25,    25,    25,    26,
-      26,    27,    28,    29,    30,    30,    31,    31,    31,    31,
-      31,    31,    32,    32,    33,    33,    33,    33,    33,    33,
-      34,    35
+       0,    26,    27,    27,    28,    28,    28,    28,    28,    29,
+      29,    30,    31,    32,    33,    33,    34,    34,    34,    34,
+      34,    34,    34,    34,    34,    34,    34,    34,    35,    35,
+      36,    36,    36,    36,    36,    36,    37,    38
 };
 
   /* YYR2[YYN] -- Number of symbols on the right hand side of rule YYN.  */
@@ -612,8 +624,8 @@ static const yytype_uint8 yyr2[] =
 {
        0,     2,     0,     2,     2,     2,     2,     2,     2,     2,
        4,     3,     4,     3,     1,     2,     1,     1,     2,     2,
-       2,     2,     0,     2,     3,     3,     3,     3,     3,     3,
-       2,     4
+       2,     2,     2,     2,     2,     2,     2,     2,     0,     2,
+       3,     3,     3,     3,     3,     3,     2,     4
 };
 
 
@@ -1299,248 +1311,296 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 79 "src/parser.y" /* yacc.c:1652  */
+#line 82 "src/parser.y" /* yacc.c:1652  */
     {
     ast = new ASTRootNode();
 }
-#line 1307 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:1652  */
+#line 1319 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 3:
-#line 82 "src/parser.y" /* yacc.c:1652  */
+#line 85 "src/parser.y" /* yacc.c:1652  */
     {
            ast->addStatement((yyvsp[0].statement_node));
        }
-#line 1315 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:1652  */
+#line 1327 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 4:
-#line 87 "src/parser.y" /* yacc.c:1652  */
+#line 90 "src/parser.y" /* yacc.c:1652  */
     {
             (yyval.statement_node) = (yyvsp[-1].variable_declaration_node);
          }
-#line 1323 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:1652  */
+#line 1335 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 5:
-#line 90 "src/parser.y" /* yacc.c:1652  */
+#line 93 "src/parser.y" /* yacc.c:1652  */
     {
             (yyval.statement_node) = (yyvsp[-1].variable_assignment_node);
          }
-#line 1331 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:1652  */
+#line 1343 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 6:
-#line 93 "src/parser.y" /* yacc.c:1652  */
+#line 96 "src/parser.y" /* yacc.c:1652  */
     {
             (yyval.statement_node) = (yyvsp[-1].conditional_node);
          }
-#line 1339 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:1652  */
+#line 1351 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 7:
-#line 96 "src/parser.y" /* yacc.c:1652  */
+#line 99 "src/parser.y" /* yacc.c:1652  */
     {
             (yyval.statement_node) = (yyvsp[-1].function_call_node);
          }
-#line 1347 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:1652  */
+#line 1359 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 8:
-#line 99 "src/parser.y" /* yacc.c:1652  */
+#line 102 "src/parser.y" /* yacc.c:1652  */
     {
             (yyval.statement_node) = (yyvsp[-1].while_loop_node);
          }
-#line 1355 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:1652  */
+#line 1367 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 9:
-#line 104 "src/parser.y" /* yacc.c:1652  */
+#line 107 "src/parser.y" /* yacc.c:1652  */
     {
                         (yyval.variable_declaration_node) = new ASTVariableDeclarationNode((yyvsp[0].strval));
                     }
-#line 1363 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:1652  */
+#line 1375 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 10:
-#line 107 "src/parser.y" /* yacc.c:1652  */
+#line 110 "src/parser.y" /* yacc.c:1652  */
     {
                         (yyval.variable_declaration_node) = new ASTVariableDeclarationNode((yyvsp[-2].strval), (yyvsp[0].intval));
                     }
-#line 1371 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:1652  */
+#line 1383 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 11:
-#line 112 "src/parser.y" /* yacc.c:1652  */
+#line 115 "src/parser.y" /* yacc.c:1652  */
     {
                    (yyval.variable_assignment_node) = new ASTVariableAssignmentNode((yyvsp[-2].strval), (yyvsp[0].expression_node));
 }
-#line 1379 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:1652  */
+#line 1391 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 12:
-#line 117 "src/parser.y" /* yacc.c:1652  */
+#line 120 "src/parser.y" /* yacc.c:1652  */
     {
     (yyval.conditional_node) = new ASTConditionalNode((yyvsp[-2].condition_node), (yyvsp[0].begin_end_block_node));
 }
-#line 1387 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:1652  */
+#line 1399 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 13:
-#line 122 "src/parser.y" /* yacc.c:1652  */
+#line 125 "src/parser.y" /* yacc.c:1652  */
     {
     (yyval.begin_end_block_node) = (yyvsp[-1].begin_end_block_node);
 }
-#line 1395 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:1652  */
+#line 1407 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 14:
-#line 127 "src/parser.y" /* yacc.c:1652  */
+#line 130 "src/parser.y" /* yacc.c:1652  */
     {
     (yyval.begin_end_block_node) = new ASTBeginEndBlockNode();
     (yyval.begin_end_block_node)->addStatement((yyvsp[0].statement_node));
 }
-#line 1404 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:1652  */
+#line 1416 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 15:
-#line 131 "src/parser.y" /* yacc.c:1652  */
+#line 134 "src/parser.y" /* yacc.c:1652  */
     {
                       (yyvsp[-1].begin_end_block_node)->addStatement((yyvsp[0].statement_node));
                   }
-#line 1412 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:1652  */
+#line 1424 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 16:
-#line 136 "src/parser.y" /* yacc.c:1652  */
+#line 139 "src/parser.y" /* yacc.c:1652  */
     {
-    (yyval.term_node) = new ASTTermNode(POSITIVE, (yyvsp[0].strval));
+    (yyval.term_node) = new ASTTermNode(ADDITION, (yyvsp[0].strval));
 }
-#line 1420 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:1652  */
+#line 1432 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 17:
-#line 139 "src/parser.y" /* yacc.c:1652  */
+#line 142 "src/parser.y" /* yacc.c:1652  */
     {
-        (yyval.term_node) = new ASTTermNode(POSITIVE, (yyvsp[0].intval));
+        (yyval.term_node) = new ASTTermNode(ADDITION, (yyvsp[0].intval));
     }
-#line 1428 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:1652  */
+#line 1440 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 18:
-#line 142 "src/parser.y" /* yacc.c:1652  */
+#line 145 "src/parser.y" /* yacc.c:1652  */
     {
-        (yyval.term_node) = new ASTTermNode(POSITIVE, (yyvsp[0].strval));
+        (yyval.term_node) = new ASTTermNode(ADDITION, (yyvsp[0].strval));
     }
-#line 1436 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:1652  */
+#line 1448 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 19:
-#line 145 "src/parser.y" /* yacc.c:1652  */
+#line 148 "src/parser.y" /* yacc.c:1652  */
     {
-        (yyval.term_node) = new ASTTermNode(NEGATIVE, (yyvsp[0].strval));
+        (yyval.term_node) = new ASTTermNode(SUBTRACTION, (yyvsp[0].strval));
     }
-#line 1444 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:1652  */
+#line 1456 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 20:
-#line 148 "src/parser.y" /* yacc.c:1652  */
+#line 151 "src/parser.y" /* yacc.c:1652  */
     {
-        (yyval.term_node) = new ASTTermNode(POSITIVE, (yyvsp[0].intval));
+        (yyval.term_node) = new ASTTermNode(ADDITION, (yyvsp[0].intval));
     }
-#line 1452 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:1652  */
+#line 1464 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 21:
-#line 151 "src/parser.y" /* yacc.c:1652  */
+#line 154 "src/parser.y" /* yacc.c:1652  */
     {
-        (yyval.term_node) = new ASTTermNode(NEGATIVE, (yyvsp[0].intval));
+        (yyval.term_node) = new ASTTermNode(SUBTRACTION, (yyvsp[0].intval));
     }
-#line 1460 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:1652  */
+#line 1472 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 22:
-#line 156 "src/parser.y" /* yacc.c:1652  */
+#line 157 "src/parser.y" /* yacc.c:1652  */
     {
-    (yyval.expression_node) = new ASTExpressionNode();
-}
-#line 1468 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:1652  */
+        (yyval.term_node) = new ASTTermNode(MULTIPLICATION, (yyvsp[0].strval));
+    }
+#line 1480 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 23:
-#line 159 "src/parser.y" /* yacc.c:1652  */
+#line 160 "src/parser.y" /* yacc.c:1652  */
     {
-              (yyvsp[-1].expression_node)->addTerm((yyvsp[0].term_node));
-          }
-#line 1476 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:1652  */
+        (yyval.term_node) = new ASTTermNode(MULTIPLICATION, (yyvsp[0].intval));
+    }
+#line 1488 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 24:
-#line 164 "src/parser.y" /* yacc.c:1652  */
+#line 163 "src/parser.y" /* yacc.c:1652  */
     {
-    (yyval.condition_node) = new ASTConditionNode(NOT_EQUALS, (yyvsp[-2].expression_node), (yyvsp[0].expression_node));
-}
-#line 1484 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:1652  */
+        (yyval.term_node) = new ASTTermNode(DIVISION, (yyvsp[0].strval));
+    }
+#line 1496 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 25:
-#line 167 "src/parser.y" /* yacc.c:1652  */
+#line 166 "src/parser.y" /* yacc.c:1652  */
     {
-             (yyval.condition_node) = new ASTConditionNode(EQUALS, (yyvsp[-2].expression_node), (yyvsp[0].expression_node));
-         }
-#line 1492 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:1652  */
+        (yyval.term_node) = new ASTTermNode(DIVISION, (yyvsp[0].intval));
+    }
+#line 1504 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 26:
-#line 170 "src/parser.y" /* yacc.c:1652  */
+#line 169 "src/parser.y" /* yacc.c:1652  */
     {
-             (yyval.condition_node) = new ASTConditionNode(LESS_THAN, (yyvsp[-2].expression_node), (yyvsp[0].expression_node));
-         }
-#line 1500 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:1652  */
+        (yyval.term_node) = new ASTTermNode(MODULUS, (yyvsp[0].strval));
+    }
+#line 1512 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 27:
-#line 173 "src/parser.y" /* yacc.c:1652  */
+#line 172 "src/parser.y" /* yacc.c:1652  */
     {
-             (yyval.condition_node) = new ASTConditionNode(LESS_THAN_OR_EQUAL_TO, (yyvsp[-2].expression_node), (yyvsp[0].expression_node));
-         }
-#line 1508 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:1652  */
+        (yyval.term_node) = new ASTTermNode(MODULUS, (yyvsp[0].intval));
+    }
+#line 1520 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 28:
-#line 176 "src/parser.y" /* yacc.c:1652  */
+#line 177 "src/parser.y" /* yacc.c:1652  */
     {
-             (yyval.condition_node) = new ASTConditionNode(GREATER_THAN, (yyvsp[-2].expression_node), (yyvsp[0].expression_node));
-         }
-#line 1516 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:1652  */
+    (yyval.expression_node) = new ASTExpressionNode();
+}
+#line 1528 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 29:
-#line 179 "src/parser.y" /* yacc.c:1652  */
+#line 180 "src/parser.y" /* yacc.c:1652  */
     {
-             (yyval.condition_node) = new ASTConditionNode(GREATER_THAN_OR_EQUAL_TO, (yyvsp[-2].expression_node), (yyvsp[0].expression_node));
-         }
-#line 1524 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:1652  */
+              (yyvsp[-1].expression_node)->addTerm((yyvsp[0].term_node));
+          }
+#line 1536 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 30:
-#line 184 "src/parser.y" /* yacc.c:1652  */
+#line 185 "src/parser.y" /* yacc.c:1652  */
     {
-    (yyval.function_call_node) = new ASTFunctionCallNode((yyvsp[0].strval));
+    (yyval.condition_node) = new ASTConditionNode(NOT_EQUALS, (yyvsp[-2].expression_node), (yyvsp[0].expression_node));
 }
-#line 1532 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:1652  */
+#line 1544 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:1652  */
     break;
 
   case 31:
-#line 189 "src/parser.y" /* yacc.c:1652  */
+#line 188 "src/parser.y" /* yacc.c:1652  */
+    {
+             (yyval.condition_node) = new ASTConditionNode(EQUALS, (yyvsp[-2].expression_node), (yyvsp[0].expression_node));
+         }
+#line 1552 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:1652  */
+    break;
+
+  case 32:
+#line 191 "src/parser.y" /* yacc.c:1652  */
+    {
+             (yyval.condition_node) = new ASTConditionNode(LESS_THAN, (yyvsp[-2].expression_node), (yyvsp[0].expression_node));
+         }
+#line 1560 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:1652  */
+    break;
+
+  case 33:
+#line 194 "src/parser.y" /* yacc.c:1652  */
+    {
+             (yyval.condition_node) = new ASTConditionNode(LESS_THAN_OR_EQUAL_TO, (yyvsp[-2].expression_node), (yyvsp[0].expression_node));
+         }
+#line 1568 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:1652  */
+    break;
+
+  case 34:
+#line 197 "src/parser.y" /* yacc.c:1652  */
+    {
+             (yyval.condition_node) = new ASTConditionNode(GREATER_THAN, (yyvsp[-2].expression_node), (yyvsp[0].expression_node));
+         }
+#line 1576 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:1652  */
+    break;
+
+  case 35:
+#line 200 "src/parser.y" /* yacc.c:1652  */
+    {
+             (yyval.condition_node) = new ASTConditionNode(GREATER_THAN_OR_EQUAL_TO, (yyvsp[-2].expression_node), (yyvsp[0].expression_node));
+         }
+#line 1584 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:1652  */
+    break;
+
+  case 36:
+#line 205 "src/parser.y" /* yacc.c:1652  */
+    {
+    (yyval.function_call_node) = new ASTFunctionCallNode((yyvsp[0].strval));
+}
+#line 1592 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:1652  */
+    break;
+
+  case 37:
+#line 210 "src/parser.y" /* yacc.c:1652  */
     {
     (yyval.while_loop_node) = new ASTWhileLoopNode((yyvsp[-2].condition_node), (yyvsp[0].begin_end_block_node));
 }
-#line 1540 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:1652  */
+#line 1600 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:1652  */
     break;
 
 
-#line 1544 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:1652  */
+#line 1604 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:1652  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1771,7 +1831,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 194 "src/parser.y" /* yacc.c:1918  */
+#line 215 "src/parser.y" /* yacc.c:1918  */
 
 
 // Forward declarations of functions in lexer.l that allow Flex to parse an in-memory buffer instead of a file handle.
@@ -1803,7 +1863,7 @@ int main(int argc, char *argv[]) {
     endParseString();
 
     // Uncomment to display Graphviz-based AST visualization.
-//    ast->showGraph();
+    // ast->showGraph();
 
     AssemblyGenerator asmGenerator;
     asmGenerator.generateAsm(ast);

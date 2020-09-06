@@ -66,7 +66,7 @@ parser.hpp: parser.cpp
 
 lexer.cpp: ../src/lexer.l
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "[FLEX][MyScanner] Building scanner with flex 2.6.4"
-	cd /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler && /usr/bin/flex -o/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/lexer.cpp src/lexer.l
+	cd /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler && /usr/bin/flex --debug -o/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/lexer.cpp src/lexer.l
 
 CMakeFiles/main.dir/src/ast.cpp.o: CMakeFiles/main.dir/flags.make
 CMakeFiles/main.dir/src/ast.cpp.o: ../src/ast.cpp

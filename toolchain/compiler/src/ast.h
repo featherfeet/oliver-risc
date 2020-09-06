@@ -62,9 +62,12 @@ class ASTVariableDeclarationNode : public ASTStatementNode {
         OPERAND_C_TYPE getValue();
 };
 
-enum TermNodeSign {
-    POSITIVE,
-    NEGATIVE
+enum TermNodeOperation {
+    ADDITION,
+    SUBTRACTION,
+    MULTIPLICATION,
+    DIVISION,
+    MODULUS
 };
 
 enum TermNodeType {
@@ -73,17 +76,17 @@ enum TermNodeType {
 };
 
 class ASTTermNode : public ASTNode {
-    TermNodeSign sign;
+    TermNodeOperation operation;
     TermNodeType type;
     OPERAND_C_TYPE constant_value;
     std::string variable_name;
 
     public:
-        ASTTermNode(TermNodeSign sign, OPERAND_C_TYPE constant_value);
-        ASTTermNode(TermNodeSign sign, std::string variable_name);
+        ASTTermNode(TermNodeOperation operation, OPERAND_C_TYPE constant_value);
+        ASTTermNode(TermNodeOperation operation, std::string variable_name);
         ASTNodeType getNodeType();
         std::string getHumanReadable();
-        TermNodeSign getSign();
+        TermNodeOperation getOperation();
         TermNodeType getType();
         OPERAND_C_TYPE getConstantValue();
         std::string getVariableName();

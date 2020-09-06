@@ -7,7 +7,7 @@ set(CMAKE_BUILD_TYPE Debug)
 find_package(FLEX REQUIRED)
 find_package(BISON REQUIRED)
 
-FLEX_TARGET(MyScanner src/lexer.l ${CMAKE_CURRENT_BINARY_DIR}/lexer.cpp)
+FLEX_TARGET(MyScanner src/lexer.l ${CMAKE_CURRENT_BINARY_DIR}/lexer.cpp COMPILE_FLAGS "--debug")
 BISON_TARGET(MyParser src/parser.y ${CMAKE_CURRENT_BINARY_DIR}/parser.cpp)
 ADD_FLEX_BISON_DEPENDENCY(MyScanner MyParser)
 

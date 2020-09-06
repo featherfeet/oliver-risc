@@ -1,6 +1,7 @@
 VAR PRIMES_TO_FIND = 4;
 VAR primes_found;
 VAR number_to_check = 2;
+VAR SCREEN_WIDTH = 80;
 
 VAR divisor = 2;
 VAR remainder;
@@ -15,29 +16,45 @@ BEGIN
     prime := 1;
     WHILE divisor < number_to_check DO
     BEGIN
-        remainder := number_to_check;
-        // Division loop.
-        WHILE remainder >= divisor DO
-        BEGIN
-            remainder := remainder - divisor;
-        END;
+        remainder := number_to_check % divisor;
         // If evenly divisible...
         IF remainder = 0 THEN
         BEGIN
             divisor := number_to_check; // Exit the loop.
             prime := 0; // 0 means false or not-prime.
         END;
+        // If not evenly divisible...
         IF remainder > 0 THEN
         BEGIN
             divisor := divisor + 1;
         END;
     END;
-    // The variable "prime" should now indicate whether the number is prime or not.
+    // The variable "prime" should now indicate whether number_to_check is prime or not. If it is, then output it and count 1 prime as found.
     IF prime = 1 THEN
     BEGIN
-        output_address := 0;
-        output_value := number_to_check + 48;
-        CALL OUT;
+        // Count how many digits are in the number.
+        VAR num_digits = 0;
+        VAR number_shifter;
+        number_shifter := number_to_check;
+        WHILE number_shifter > 0 DO
+        BEGIN
+            number_shifter := number_shifter / 10;
+            num_digits := num_digits + 1;
+        END;
+        // Output the number one digit at a time, placing each digit at the correct position on-screen.
+        number_shifter := number_to_check;
+        WHILE number_shifter > 0 DO
+        BEGIN
+            VAR digit;
+            digit := number_shifter % 10;
+            output_address := primes_found * SCREEN_WIDTH;
+            output_address := output_address + num_digits - 1;
+            output_value := digit + 48;
+            CALL OUT;
+            num_digits := num_digits - 1;
+            number_shifter := number_shifter / 10;
+        END;
+        // Count one prime as found.
         primes_found := primes_found + 1;
     END;
     // Check the next number.

@@ -51,6 +51,18 @@
     return TOKEN_MINUS;
 }
 
+"*" {
+    return TOKEN_ASTERISK;
+}
+
+"/" {
+    return TOKEN_FORWARD_SLASH;
+}
+
+"%" {
+    return TOKEN_PERCENT;
+}
+
 "=" {
     return TOKEN_EQUALS;
 }

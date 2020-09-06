@@ -74,7 +74,10 @@ extern int yydebug;
     TOKEN_GREATER_THAN_OR_EQUAL_TO = 274,
     TOKEN_CALL = 275,
     TOKEN_WHILE = 276,
-    TOKEN_DO = 277
+    TOKEN_DO = 277,
+    TOKEN_ASTERISK = 278,
+    TOKEN_FORWARD_SLASH = 279,
+    TOKEN_PERCENT = 280
   };
 #endif
 
@@ -83,7 +86,7 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 48 "src/parser.y" /* yacc.c:1921  */
+#line 51 "src/parser.y" /* yacc.c:1921  */
 
     int intval;
     char *strval;
@@ -98,7 +101,7 @@ union YYSTYPE
     ASTFunctionCallNode *function_call_node;
     ASTWhileLoopNode *while_loop_node;
 
-#line 102 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.hpp" /* yacc.c:1921  */
+#line 105 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.hpp" /* yacc.c:1921  */
 };
 
 typedef union YYSTYPE YYSTYPE;

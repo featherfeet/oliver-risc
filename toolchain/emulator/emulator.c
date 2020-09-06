@@ -52,12 +52,13 @@ int main(int argc, char *argv[]) {
             case (OPERATION_LOAD):
                 printf("LOAD\n");
                 memcpy(&registers[operand2], raw_binary + operand1, OPERAND_SIZE);
-                printf("Loaded value %d from address %d in RAM to register %d.\n", registers[operand2], operand1, operand2);
+                printf("Loaded value %u from address %u in RAM to register %u.\n", registers[operand2], operand1, operand2);
                 REGISTER_IP += INSTRUCTION_SIZE;
                 break;
             case (OPERATION_STORE):
                 printf("STORE\n");
                 memcpy(raw_binary + operand2, &registers[operand1], OPERAND_SIZE);
+                printf("Stored value %u into address %u in RAM from register %u.\n", registers[operand1], operand2, operand1);
                 REGISTER_IP += INSTRUCTION_SIZE;
                 break;
             case (OPERATION_ADD):
@@ -81,10 +82,11 @@ int main(int argc, char *argv[]) {
                 OPERAND_C_TYPE reg2 = registers[operand2];
                 REGISTER_A = reg1 / reg2;
                 REGISTER_B = reg1 % reg2;
+                // printf("%u / %u = %u R %u\n", reg1, reg2, REGISTER_A, REGISTER_B);
                 REGISTER_IP += INSTRUCTION_SIZE;
                 break;
             case (OPERATION_OUT):
-                printf("OUT [address %d, character '%c' (integer value %d)]\n", registers[operand1], registers[operand2], registers[operand2]);
+                printf("OUT [address %u, character '%c' (integer value %u)]\n", registers[operand1], registers[operand2], registers[operand2]);
                 REGISTER_IP += INSTRUCTION_SIZE;
                 break;
             case (OPERATION_IN):
@@ -97,7 +99,7 @@ int main(int argc, char *argv[]) {
                 REGISTER_IP += INSTRUCTION_SIZE;
                 break;
             case (OPERATION_CMP):
-                printf("CMP register %d (value %d), register %d (value %d)\n", operand1, registers[operand1], operand2, registers[operand2]);
+                printf("CMP register %u (value %u), register %u (value %u)\n", operand1, registers[operand1], operand2, registers[operand2]);
                 if (registers[operand1] < registers[operand2])
                     REGISTER_A = 0;
                 else if (registers[operand1] == registers[operand2])
@@ -150,7 +152,7 @@ int main(int argc, char *argv[]) {
             case (OPERATION_RLOAD):
                 printf("RLOAD\n");
                 memcpy(&registers[operand2], raw_binary + registers[operand1], OPERAND_SIZE);
-                printf("Loaded value %d from address %d in RAM to register %d.\n", registers[operand2], operand1, operand2);
+                printf("Loaded value %u from address %u in RAM to register %u.\n", registers[operand2], operand1, operand2);
                 REGISTER_IP += INSTRUCTION_SIZE;
                 break;
             case (OPERATION_RSTORE):

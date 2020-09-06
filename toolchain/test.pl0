@@ -1,0 +1,13 @@
+VAR number_to_check = 2;
+
+// Count how many digits are in the number.
+VAR num_digits = 0;
+VAR number_shifter;
+number_shifter := number_to_check;
+WHILE number_shifter > 0 DO
+BEGIN
+    number_shifter := number_shifter / 10;
+    num_digits := num_digits + 1;
+END;
+
+CALL HALT;
