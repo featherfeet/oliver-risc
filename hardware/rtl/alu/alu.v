@@ -121,19 +121,23 @@ case (operation)
     // Divide the first register by the second register. Store the quotient in A and the remainder in B.
     `OPERATION_DIV:
     begin
-        if (division_state == `DIVISION_STATE_LATCH)
+        if (division_delay_counter == 'b0)
         begin
             divider_numerator <= registers[operand1];
             divider_denominator <= registers[operand2];
-            division_state <= `DIVISION_STATE_FINISH;
+            division_delay_counter <= division_delay_counter + 'b1;
         end
-        else
+        else if (division_delay_counter == `DIVISION_CYCLES + 'b1)
         begin
             $display("DIV");
             `REGISTER_A <= divider_quotient;
             `REGISTER_B <= divider_remainder;
-            division_state <= `DIVISION_STATE_LATCH;
+            division_delay_counter <= 'b0;
             next_instruction();
+        end
+        else
+        begin
+            division_delay_counter <= division_delay_counter + 'b1;
         end
     end
     // Write to the I/O "memory" space (currently just the GPU's text buffer and the interrupt value). operand1 is the register number of the register containing the address to write to. operand2 is the register number of the register containing the value to write.

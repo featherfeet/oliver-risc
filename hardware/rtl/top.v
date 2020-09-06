@@ -280,17 +280,17 @@ end
 endtask
 
 // Divider used for the DIV instruction (see alu/alu.v).
-reg division_state;
+reg[$clog2(`DIVISION_CYCLES + 1):0] division_delay_counter;
 reg [`OPERAND_SIZE_BITS - 1:0] divider_numerator;
 reg [`OPERAND_SIZE_BITS - 1:0] divider_denominator;
 wire [`OPERAND_SIZE_BITS - 1:0] divider_quotient;
 wire [`OPERAND_SIZE_BITS - 1:0] divider_remainder;
-lpm_divide #(.lpm_widthn(`OPERAND_SIZE_BITS), .lpm_widthd(`OPERAND_SIZE_BITS)) divider (
+lpm_divide #(.lpm_widthn(`OPERAND_SIZE_BITS), .lpm_widthd(`OPERAND_SIZE_BITS), .lpm_pipeline(`DIVISION_CYCLES)) divider (
     .numer(divider_numerator),
     .denom(divider_denominator),
-    //.clock(),
-    //.aclr('b0),
-    //.clken('b1),
+    .clock(CLOCK_50),
+    .aclr(1'b0),
+    .clken(1'b1),
     .quotient(divider_quotient),
     .remain(divider_remainder)
 );
@@ -344,7 +344,7 @@ begin
         program_end_address <= 'b0;
         divider_numerator <= 'b0;
         divider_denominator <= 'b0;
-        division_state <= `DIVISION_STATE_LATCH;
+        division_delay_counter <= 'b0;
     end
     else
     begin
