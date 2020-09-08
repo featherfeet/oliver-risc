@@ -1,0 +1,16 @@
+VAR i = 1;
+VAR j;
+
+WHILE i < 5 DO
+BEGIN
+    i := i + 1;
+    output_value := i + 48;
+    output_address := 0;
+    CALL OUT;
+    j := i * i;
+    output_value := j + 48;
+    output_address := 80;
+    CALL OUT;
+END;
+
+CALL HALT;

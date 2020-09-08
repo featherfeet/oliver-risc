@@ -1,0 +1,6 @@
+Icarus Simulation Times For quick_cpu_test.pl0:
+
+olivers-desktop:
+real	1m45.695s
+user	1m57.569s
+sys	0m0.732s
