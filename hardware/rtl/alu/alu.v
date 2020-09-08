@@ -281,8 +281,8 @@ case (operation)
     end
     `OPERATION_HALT:
     begin
-        $display("HALT");
+        //$display("HALT");
         state <= `STATE_EXECUTE_INSTRUCTION;
-        $finish;
+        //$finish;
     end
 endcase
