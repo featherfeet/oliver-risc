@@ -4,3 +4,8 @@ olivers-desktop:
 real	1m45.695s
 user	1m57.569s
 sys	0m0.732s
+
+DO server (1 core):
+real	2m1.549s
+user	1m59.805s
+sys	0m0.548s
