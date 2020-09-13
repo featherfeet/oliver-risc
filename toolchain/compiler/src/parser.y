@@ -60,7 +60,7 @@
     ASTConditionalNode *conditional_node;
     ASTConditionNode *condition_node;
     ASTBeginEndBlockNode *begin_end_block_node;
-    ASTFunctionCallNode *function_call_node;
+    ASTProcedureCallNode *procedure_call_node;
     ASTWhileLoopNode *while_loop_node;
     ASTProcedureNode *procedure_node;
 }
@@ -76,7 +76,7 @@
 %type <condition_node> condition;
 %type <begin_end_block_node> begin_end_block;
 %type <begin_end_block_node> statement_sequence;
-%type <function_call_node> function_call;
+%type <procedure_call_node> procedure_call;
 %type <while_loop_node> while_loop;
 %type <procedure_node> procedure;
 
@@ -99,7 +99,7 @@ statement: variable_declaration TOKEN_SEMICOLON {
          | conditional TOKEN_SEMICOLON {
             $$ = $1;
          }
-         | function_call TOKEN_SEMICOLON {
+         | procedure_call TOKEN_SEMICOLON {
             $$ = $1;
          }
          | while_loop TOKEN_SEMICOLON {
@@ -208,8 +208,8 @@ condition: expression TOKEN_NOT_EQUALS expression {
          }
 ;
 
-function_call: TOKEN_CALL TOKEN_IDENTIFIER {
-    $$ = new ASTFunctionCallNode($2);
+procedure_call: TOKEN_CALL TOKEN_IDENTIFIER {
+    $$ = new ASTProcedureCallNode($2);
 }
 ;
 

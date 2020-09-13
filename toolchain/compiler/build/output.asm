@@ -52,11 +52,11 @@
     // End expression node.
     STORE A,output_value
     // End variable assignment node.
-    // Start function call node.
+    // Start procedure call node.
     LOAD output_address,A
     LOAD output_value,B
     OUT A,B
-    // End function call node.
+    // End procedure call node.
     // Start variable assignment node.
     // Start expression node.
     CLOAD 0,A
@@ -115,12 +115,12 @@
     // End expression node.
     STORE A,output_value
     // End variable assignment node.
-    // Start function call node.
+    // Start procedure call node.
     LOAD output_address,A
     LOAD output_value,B
     OUT A,B
-    // End function call node.
-    // Start function call node.
+    // End procedure call node.
+    // Start procedure call node.
     HALT
-    // End function call node.
+    // End procedure call node.
     // End root node.

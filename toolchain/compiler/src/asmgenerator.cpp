@@ -150,23 +150,23 @@ void AssemblyGenerator::generateAsm(ASTNode *node) {
         code_section << "    // End begin . . . end block node." << std::endl;
     }
 
-    else if (node->getNodeType() == FUNCTION_CALL_NODE) {
-        code_section << "    // Start function call node." << std::endl;
-        ASTFunctionCallNode *function_call = (ASTFunctionCallNode *) node;
+    else if (node->getNodeType() == PROCEDURE_CALL_NODE) {
+        code_section << "    // Start procedure call node." << std::endl;
+        ASTProcedureCallNode *procedure_call = (ASTProcedureCallNode *) node;
 
-        if (function_call->getFunctionName() == "OUT") {
+        if (procedure_call->getProcedureName() == "OUT") {
             code_section << "    LOAD output_address,A" << std::endl;
             code_section << "    LOAD output_value,B" << std::endl;
             code_section << "    OUT A,B" << std::endl;
         }
-        else if (function_call->getFunctionName() == "HALT") {
+        else if (procedure_call->getProcedureName() == "HALT") {
             code_section << "    HALT" << std::endl;
         }
         else {
-            std::cout << "\033[1;31mERROR: Custom functions are currently not supported.\033[0m" << std::endl;
+            std::cout << "\033[1;31mERROR: Custom procedures are currently not supported.\033[0m" << std::endl;
         }
 
-        code_section << "    // End function call node." << std::endl;
+        code_section << "    // End procedure call node." << std::endl;
     }
 
     else if (node->getNodeType() == WHILE_LOOP_NODE) {

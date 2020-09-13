@@ -99,7 +99,7 @@ union YYSTYPE
     ASTConditionalNode *conditional_node;
     ASTConditionNode *condition_node;
     ASTBeginEndBlockNode *begin_end_block_node;
-    ASTFunctionCallNode *function_call_node;
+    ASTProcedureCallNode *procedure_call_node;
     ASTWhileLoopNode *while_loop_node;
     ASTProcedureNode *procedure_node;
 

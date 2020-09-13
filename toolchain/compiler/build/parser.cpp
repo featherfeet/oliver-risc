@@ -174,7 +174,7 @@ union YYSTYPE
     ASTConditionalNode *conditional_node;
     ASTConditionNode *condition_node;
     ASTBeginEndBlockNode *begin_end_block_node;
-    ASTFunctionCallNode *function_call_node;
+    ASTProcedureCallNode *procedure_call_node;
     ASTWhileLoopNode *while_loop_node;
     ASTProcedureNode *procedure_node;
 
@@ -506,7 +506,7 @@ static const char *const yytname[] =
   "TOKEN_PROCEDURE", "$accept", "program", "statement",
   "variable_declaration", "variable_assignment", "conditional",
   "begin_end_block", "statement_sequence", "term", "expression",
-  "condition", "function_call", "while_loop", "procedure", YY_NULLPTR
+  "condition", "procedure_call", "while_loop", "procedure", YY_NULLPTR
 };
 #endif
 
@@ -1362,7 +1362,7 @@ yyreduce:
   case 7:
 #line 102 "src/parser.y" /* yacc.c:1652  */
     {
-            (yyval.statement_node) = (yyvsp[-1].function_call_node);
+            (yyval.statement_node) = (yyvsp[-1].procedure_call_node);
          }
 #line 1368 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:1652  */
     break;
@@ -1603,7 +1603,7 @@ yyreduce:
   case 37:
 #line 211 "src/parser.y" /* yacc.c:1652  */
     {
-    (yyval.function_call_node) = new ASTFunctionCallNode((yyvsp[0].strval));
+    (yyval.procedure_call_node) = new ASTProcedureCallNode((yyvsp[0].strval));
 }
 #line 1609 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp" /* yacc.c:1652  */
     break;

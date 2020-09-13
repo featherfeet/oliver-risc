@@ -82,7 +82,7 @@ std::string ASTRootNode::generateGraphvizCode(std::string node_id, ASTNode *stat
             output << fmt::format("    \"{}\" -> \"{}_{}\";", node_id, node_id, i) << std::endl;
         }
     }
-    else if (statement->getNodeType() == FUNCTION_CALL_NODE) {
+    else if (statement->getNodeType() == PROCEDURE_CALL_NODE) {
         output << fmt::format("    \"{}\" [label=\"{}\", shape=box];", node_id, statement->getHumanReadable()) << std::endl;
     }
     else if (statement->getNodeType() == WHILE_LOOP_NODE) {
@@ -330,20 +330,20 @@ std::string ASTVariableAssignmentNode::getVariableName() {
     return variable_name;
 }
 
-ASTFunctionCallNode::ASTFunctionCallNode(std::string function_name) {
-    this->function_name = function_name;
+ASTProcedureCallNode::ASTProcedureCallNode(std::string procedure_name) {
+    this->procedure_name = procedure_name;
 }
 
-ASTNodeType ASTFunctionCallNode::getNodeType() {
-    return FUNCTION_CALL_NODE;
+ASTNodeType ASTProcedureCallNode::getNodeType() {
+    return PROCEDURE_CALL_NODE;
 }
 
-std::string ASTFunctionCallNode::getHumanReadable() {
-    return fmt::format("Call function `{}`.", function_name);
+std::string ASTProcedureCallNode::getHumanReadable() {
+    return fmt::format("Call procedure `{}`.", procedure_name);
 }
 
-std::string ASTFunctionCallNode::getFunctionName() {
-    return function_name;
+std::string ASTProcedureCallNode::getProcedureName() {
+    return procedure_name;
 }
 
 ASTWhileLoopNode::ASTWhileLoopNode(ASTConditionNode *condition, ASTBeginEndBlockNode *begin_end_block) {
