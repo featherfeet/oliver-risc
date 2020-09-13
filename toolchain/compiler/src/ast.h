@@ -16,7 +16,8 @@ enum ASTNodeType {
     CONDITIONAL_NODE,
     BEGIN_END_BLOCK_NODE,
     FUNCTION_CALL_NODE,
-    WHILE_LOOP_NODE
+    WHILE_LOOP_NODE,
+    PROCEDURE_NODE
 };
 
 class ASTNode {
@@ -168,6 +169,18 @@ class ASTWhileLoopNode : public ASTStatementNode {
         ASTNodeType getNodeType();
         std::string getHumanReadable();
         ASTConditionNode *getCondition();
+        ASTBeginEndBlockNode *getBeginEndBlock();
+};
+
+class ASTProcedureNode : public ASTStatementNode {
+    std::string procedure_name;
+    ASTBeginEndBlockNode *begin_end_block;
+
+    public:
+        ASTProcedureNode(std::string procedure_name, ASTBeginEndBlockNode *begin_end_block);
+        ASTNodeType getNodeType();
+        std::string getHumanReadable();
+        std::string getProcedureName();
         ASTBeginEndBlockNode *getBeginEndBlock();
 };
 

@@ -95,6 +95,14 @@ std::string ASTRootNode::generateGraphvizCode(std::string node_id, ASTNode *stat
         output << generateGraphvizCode(node_id + "_1", while_loop->getBeginEndBlock());
         output << fmt::format("    \"{}\" -> \"{}_1\";", node_id, node_id) << std::endl;
     }
+    else if (statement->getNodeType() == PROCEDURE_NODE) {
+        output << fmt::format("    \"{}\" [label=\"{}\", shape=box];", node_id, statement->getHumanReadable()) << std::endl;
+
+        ASTProcedureNode *procedure = (ASTProcedureNode *) statement;
+
+        output << generateGraphvizCode(node_id + "_0", procedure->getBeginEndBlock());
+        output << fmt::format("    \"{}\" -> \"{}_0\";", node_id, node_id) << std::endl;
+    }
 
     return output.str();
 }
@@ -356,5 +364,26 @@ ASTConditionNode *ASTWhileLoopNode::getCondition() {
 }
 
 ASTBeginEndBlockNode *ASTWhileLoopNode::getBeginEndBlock() {
+    return begin_end_block;
+}
+
+ASTProcedureNode::ASTProcedureNode(std::string procedure_name, ASTBeginEndBlockNode *begin_end_block) {
+    this->procedure_name = procedure_name;
+    this->begin_end_block = begin_end_block;
+}
+
+ASTNodeType ASTProcedureNode::getNodeType() {
+    return PROCEDURE_NODE;
+}
+
+std::string ASTProcedureNode::getHumanReadable() {
+    return fmt::format("Procedure `{}`.", procedure_name);
+}
+
+std::string ASTProcedureNode::getProcedureName() {
+    return procedure_name;
+}
+
+ASTBeginEndBlockNode *ASTProcedureNode::getBeginEndBlock() {
     return begin_end_block;
 }

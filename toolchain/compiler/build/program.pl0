@@ -16,4 +16,14 @@ output_address := 1;
 output_value := k + 48;
 CALL OUT;
 
+PROCEDURE someprocedure;
+BEGIN
+    VAR x = 3;
+    VAR y;
+    y := x * x;
+    output_address := 80;
+    output_value := y + 48;
+    CALL OUT;
+END;
+
 CALL HALT;

@@ -95,6 +95,10 @@
     return TOKEN_DO;
 }
 
+"PROCEDURE" {
+    return TOKEN_PROCEDURE;
+}
+
 "#" {
     return TOKEN_NOT_EQUALS;
 }

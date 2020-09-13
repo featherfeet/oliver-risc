@@ -45,6 +45,7 @@
 %token TOKEN_ASTERISK
 %token TOKEN_FORWARD_SLASH
 %token TOKEN_PERCENT
+%token TOKEN_PROCEDURE
 
 %start program
 
@@ -61,6 +62,7 @@
     ASTBeginEndBlockNode *begin_end_block_node;
     ASTFunctionCallNode *function_call_node;
     ASTWhileLoopNode *while_loop_node;
+    ASTProcedureNode *procedure_node;
 }
 
 %type <strval> TOKEN_IDENTIFIER;
@@ -76,6 +78,7 @@
 %type <begin_end_block_node> statement_sequence;
 %type <function_call_node> function_call;
 %type <while_loop_node> while_loop;
+%type <procedure_node> procedure;
 
 %%
 
@@ -100,6 +103,9 @@ statement: variable_declaration TOKEN_SEMICOLON {
             $$ = $1;
          }
          | while_loop TOKEN_SEMICOLON {
+            $$ = $1;
+         }
+         | procedure TOKEN_SEMICOLON {
             $$ = $1;
          }
 ;
@@ -212,6 +218,11 @@ while_loop: TOKEN_WHILE condition TOKEN_DO begin_end_block {
 }
 ;
 
+procedure: TOKEN_PROCEDURE TOKEN_IDENTIFIER TOKEN_SEMICOLON begin_end_block {
+    $$ = new ASTProcedureNode($2, $4);
+}
+;
+
 %%
 
 // Forward declarations of functions in lexer.l that allow Flex to parse an in-memory buffer instead of a file handle.
@@ -243,7 +254,7 @@ int main(int argc, char *argv[]) {
     endParseString();
 
     // Uncomment to display Graphviz-based AST visualization.
-    // ast->showGraph();
+    ast->showGraph();
 
     AssemblyGenerator asmGenerator;
     asmGenerator.generateAsm(ast);
