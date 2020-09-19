@@ -1,0 +1,23 @@
+PROCEDURE print_variable_x;
+BEGIN
+    VAR x = 5;
+    output_address := 0;
+    output_value := x + 48;
+    CALL OUT;
+END;
+
+PROCEDURE square_seven;
+BEGIN
+    VAR seven = 7;
+    output_value := seven * seven;
+    output_address := 80;
+    CALL OUT;
+
+    CALL print_variable_x;
+END;
+
+CALL print_variable_x;
+
+CALL square_seven;
+
+CALL HALT;

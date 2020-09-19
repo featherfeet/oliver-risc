@@ -3,6 +3,8 @@
 
 #include <stdint.h>
 
+#define TOTAL_RAM_SIZE_BYTES 8000000 // bytes
+
 #define OPERATION_SIZE 1 // bytes
 #define OPERAND_SIZE   4 // bytes
 #define OPERAND_C_TYPE uint32_t // The C type used to represent a single operand. uint32_t for a 4-byte (32-bit) operand CPU.

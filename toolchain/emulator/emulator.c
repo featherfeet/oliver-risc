@@ -19,7 +19,11 @@ int main(int argc, char *argv[]) {
 	FILE *file = fopen(argv[1], "rb");
 	fseek(file, 0L, SEEK_END);
 	int raw_binary_length = ftell(file);
-	uint8_t *raw_binary = malloc(raw_binary_length);
+    if (raw_binary_length > TOTAL_RAM_SIZE_BYTES) {
+        printf("\033[1;31mERROR: Program is too large to fit in RAM.\033[0m\n");
+        return 1;
+    }
+	uint8_t *raw_binary = malloc(TOTAL_RAM_SIZE_BYTES);
 	rewind(file);
 	fread(raw_binary, raw_binary_length, 1, file);
 
@@ -37,6 +41,7 @@ int main(int argc, char *argv[]) {
     REGISTER_IP = start_of_code_section_offset;
     // Execution loop.
     while (1) {
+        printf("IP = %u\n", REGISTER_IP);
         // Fetch operation and operands.
         uint8_t operation = raw_binary[REGISTER_IP];
         OPERAND_C_TYPE operand1;
@@ -86,7 +91,7 @@ int main(int argc, char *argv[]) {
                 REGISTER_IP += INSTRUCTION_SIZE;
                 break;
             case (OPERATION_OUT):
-                printf("OUT [address %u, character '%c' (integer value %u)]\n", registers[operand1], registers[operand2], registers[operand2]);
+                printf("\033[1;32mOUT [address %u, character '%c' (integer value %u)]\033[0m\n", registers[operand1], registers[operand2], registers[operand2]);
                 REGISTER_IP += INSTRUCTION_SIZE;
                 break;
             case (OPERATION_IN):

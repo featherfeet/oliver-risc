@@ -2193,6 +2193,10 @@ int main(int argc, char *argv[]) {
         // If the operation is a jump instruction, then look up the label being jumped to using the labels_table hash table. Retrieve the buffer storing the instruction address that the label should jump to.
         else if (instruction->operation == OPERATION_JMPL || instruction->operation == OPERATION_JMPE || instruction->operation == OPERATION_JMPG) {
             uint8_t *binary_instruction_index = g_hash_table_lookup(labels_table, instruction->operand1.operand_address);
+            if (binary_instruction_index == NULL) {
+                printf("\033[1;31mERROR: Unknown label `%s`.\033[0m\n", instruction->operand1.operand_address);
+                return 1;
+            }
             memcpy(instructions_binary + INSTRUCTION_SIZE * i + OPERATION_SIZE, binary_instruction_index, OPERAND_SIZE);
         }
         else if (operand1_is_address) {

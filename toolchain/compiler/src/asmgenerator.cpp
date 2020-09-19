@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include "processor.h"
 #include "asmgenerator.h"
 
 #define FMT_HEADER_ONLY
@@ -23,6 +24,7 @@ void AssemblyGenerator::generateAsm(ASTNode *node) {
         data_section << "    output_value = 0" << std::endl;
 
         code_section << "    // Start root node." << std::endl;
+        code_section << "    CLOAD 4000000,G // Start stack pointer at 4 MB, grows downwards (towards address 0)." << std::endl;
         for (int i = 0; i < children.size(); i++) {
             generateAsm(children[i]);
         }
@@ -163,7 +165,18 @@ void AssemblyGenerator::generateAsm(ASTNode *node) {
             code_section << "    HALT" << std::endl;
         }
         else {
-            std::cout << "\033[1;31mERROR: Custom procedures are currently not supported.\033[0m" << std::endl;
+            // Code to call a custom procedure (see how the stack works at http://faculty.cooper.edu/smyth/cs225/ch6/fncs.htm). G is used as the stack pointer register.
+            // Add 2 to G (the stack pointer).
+            code_section << "    CLOAD 2,A" << std::endl;
+            code_section << "    SUB G,A" << std::endl;
+            code_section << "    MOV A,G" << std::endl;
+            // Store IP (plus 2 instructions to avoid repeating the CMP/JMPE instructions on return) in the stack pointer register.
+            code_section << fmt::format("    CLOAD {},A", 2 * INSTRUCTION_SIZE) << std::endl;
+            code_section << "    ADD IP,A" << std::endl;
+            code_section << "    RSTORE A,G" << std::endl; // Store A (which now has the value IP + 2 * INSTRUCTION_SIZE) into memory at the location specified by the stack pointer (G).
+            // Start the procedure.
+            code_section << "    CMP A,A" << std::endl;
+            code_section << fmt::format("    JMPE start_procedure_{}", procedure_call->getProcedureName()) << std::endl;
         }
 
         code_section << "    // End procedure call node." << std::endl;
@@ -209,5 +222,26 @@ void AssemblyGenerator::generateAsm(ASTNode *node) {
         code_section << "    CMP A,A" << std::endl;
         code_section << fmt::format("    JMPE {}", start_label) << std::endl;
         code_section << fmt::format("    {}:", skip_label) << std::endl;
+    }
+
+    else if (node->getNodeType() == PROCEDURE_NODE) {
+        ASTProcedureNode *procedure = (ASTProcedureNode*) node;
+
+        code_section << "    // Start procedure node." << std::endl;
+        // Generate instructions that cause the CPU to skip executing the procedure when IP passes through here.
+        code_section << fmt::format("    CMP A,A") << std::endl;
+        code_section << fmt::format("    JMPE end_procedure_{}", procedure->getProcedureName()) << std::endl;
+        code_section << fmt::format("    start_procedure_{}:", procedure->getProcedureName()) << std::endl;
+        // Generate instructions for the body of the procedure.
+        generateAsm(procedure->getBeginEndBlock());
+        // Generate instructions to exit the procedure and return to the calling stack frame.
+        code_section << fmt::format("    MOV G,B") << std::endl; // Save stack pointer value before incrementing it.
+        code_section << fmt::format("    CLOAD 2,A") << std::endl; // Add 2 to the stack pointer.
+        code_section << fmt::format("    ADD A,G") << std::endl;
+        code_section << fmt::format("    MOV A,G") << std::endl;
+        code_section << fmt::format("    RLOAD B,IP") << std::endl; // Return from the procedure by jumping IP back to where the stack pointer was before incrementing it.
+        // End label.
+        code_section << fmt::format("    end_procedure_{}:", procedure->getProcedureName()) << std::endl;
+        code_section << "    // End procedure node." << std::endl;
     }
 }
