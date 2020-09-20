@@ -44,7 +44,7 @@
     // End procedure call node.
     // End begin . . . end block node.
     MOV G,B
-    CLOAD 2,A
+    CLOAD 4,A
     ADD A,G
     MOV A,G
     RLOAD B,IP
@@ -83,7 +83,7 @@
     OUT A,B
     // End procedure call node.
     // Start procedure call node.
-    CLOAD 2,A
+    CLOAD 4,A
     SUB G,A
     MOV A,G
     CLOAD 18,A
@@ -94,14 +94,14 @@
     // End procedure call node.
     // End begin . . . end block node.
     MOV G,B
-    CLOAD 2,A
+    CLOAD 4,A
     ADD A,G
     MOV A,G
     RLOAD B,IP
     end_procedure_square_seven:
     // End procedure node.
     // Start procedure call node.
-    CLOAD 2,A
+    CLOAD 4,A
     SUB G,A
     MOV A,G
     CLOAD 18,A
@@ -111,7 +111,7 @@
     JMPE start_procedure_print_variable_x
     // End procedure call node.
     // Start procedure call node.
-    CLOAD 2,A
+    CLOAD 4,A
     SUB G,A
     MOV A,G
     CLOAD 18,A

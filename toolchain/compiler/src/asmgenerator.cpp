@@ -166,8 +166,8 @@ void AssemblyGenerator::generateAsm(ASTNode *node) {
         }
         else {
             // Code to call a custom procedure (see how the stack works at http://faculty.cooper.edu/smyth/cs225/ch6/fncs.htm). G is used as the stack pointer register.
-            // Add 2 to G (the stack pointer).
-            code_section << "    CLOAD 2,A" << std::endl;
+            // Add OPERAND_SIZE bytes to G (the stack pointer).
+            code_section << fmt::format("    CLOAD {},A", OPERAND_SIZE) << std::endl;
             code_section << "    SUB G,A" << std::endl;
             code_section << "    MOV A,G" << std::endl;
             // Store IP (plus 2 instructions to avoid repeating the CMP/JMPE instructions on return) in the stack pointer register.
@@ -236,7 +236,7 @@ void AssemblyGenerator::generateAsm(ASTNode *node) {
         generateAsm(procedure->getBeginEndBlock());
         // Generate instructions to exit the procedure and return to the calling stack frame.
         code_section << fmt::format("    MOV G,B") << std::endl; // Save stack pointer value before incrementing it.
-        code_section << fmt::format("    CLOAD 2,A") << std::endl; // Add 2 to the stack pointer.
+        code_section << fmt::format("    CLOAD {},A", OPERAND_SIZE) << std::endl; // Add OPERAND_SIZE bytes to the stack pointer.
         code_section << fmt::format("    ADD A,G") << std::endl;
         code_section << fmt::format("    MOV A,G") << std::endl;
         code_section << fmt::format("    RLOAD B,IP") << std::endl; // Return from the procedure by jumping IP back to where the stack pointer was before incrementing it.
