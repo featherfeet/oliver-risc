@@ -166,7 +166,7 @@ void AssemblyGenerator::generateAsm(ASTNode *node) {
         }
         else {
             // Code to call a custom procedure (see how the stack works at http://faculty.cooper.edu/smyth/cs225/ch6/fncs.htm). G is used as the stack pointer register.
-            // Add OPERAND_SIZE bytes to G (the stack pointer).
+            // Subtract OPERAND_SIZE bytes from G (the stack pointer).
             code_section << fmt::format("    CLOAD {},A", OPERAND_SIZE) << std::endl;
             code_section << "    SUB G,A" << std::endl;
             code_section << "    MOV A,G" << std::endl;
