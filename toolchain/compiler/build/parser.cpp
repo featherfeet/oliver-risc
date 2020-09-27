@@ -1891,10 +1891,9 @@ int main(int argc, char *argv[]) {
     // ast->showGraph();
 
     AssemblyGenerator asmGenerator;
-    asmGenerator.generateAsm(ast);
 
     std::ofstream output_file(output_filename, std::ofstream::out);
-    output_file << asmGenerator.getGeneratedAssembly();
+    output_file << asmGenerator.getGeneratedAssembly(ast);
     output_file.close();
 
     return 0;

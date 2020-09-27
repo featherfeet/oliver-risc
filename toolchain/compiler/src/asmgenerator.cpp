@@ -1,5 +1,7 @@
 #include <iostream>
+#include <sstream>
 #include <string>
+#include <tuple>
 #include "processor.h"
 #include "asmgenerator.h"
 
@@ -7,28 +9,35 @@
 #include <fmt/format.h>
 
 AssemblyGenerator::AssemblyGenerator() {
-    data_section << ".data:" << std::endl;
-    code_section << ".code:" << std::endl;
 }
 
-std::string AssemblyGenerator::getGeneratedAssembly() {
-    return data_section.str() + code_section.str();
+std::string AssemblyGenerator::getGeneratedAssembly(ASTNode *node) {
+    auto generated_assembly = generateAsm(node);
+    return std::get<0>(generated_assembly) + std::get<1>(generated_assembly);
 }
 
-void AssemblyGenerator::generateAsm(ASTNode *node) {
+std::tuple<std::string, std::string> AssemblyGenerator::generateAsm(ASTNode *node) {
+    std::stringstream data_section;
+    std::stringstream code_section;
+
     if (node->getNodeType() == ROOT_NODE) {
         ASTRootNode *rootNode = (ASTRootNode *) node;
         std::vector<ASTStatementNode*> children = rootNode->getChildren();
 
         current_stackframe = new Stackframe();
 
+        data_section << ".data:" << std::endl;
         data_section << "    output_address = 0" << std::endl;
         data_section << "    output_value = 0" << std::endl;
 
+        code_section << ".code:" << std::endl;
         code_section << "    // Start root node." << std::endl;
         code_section << "    CLOAD 4000000,G // Start stack pointer at 4 MB, grows downwards (towards address 0)." << std::endl;
+
         for (int i = 0; i < children.size(); i++) {
-            generateAsm(children[i]);
+            auto generated_assembly = generateAsm(children[i]);
+            data_section << std::get<0>(generated_assembly);
+            code_section << std::get<1>(generated_assembly);
         }
 
         delete current_stackframe;
@@ -51,7 +60,9 @@ void AssemblyGenerator::generateAsm(ASTNode *node) {
         code_section << "    // Start variable assignment node." << std::endl;
         ASTVariableAssignmentNode *assignment = (ASTVariableAssignmentNode *) node;
 
-        generateAsm(assignment->getExpressionNode());
+        auto generated_expression_assembly = generateAsm(assignment->getExpressionNode());
+        data_section << std::get<0>(generated_expression_assembly);
+        code_section << std::get<1>(generated_expression_assembly);
 
         std::string variable_name = assignment->getVariableName();
         code_section << fmt::format("    STORE A,{}", assignment->getVariableName()) << std::endl;
@@ -99,7 +110,9 @@ void AssemblyGenerator::generateAsm(ASTNode *node) {
         code_section << "    // Start conditional node." << std::endl;
         ASTConditionalNode *conditional = (ASTConditionalNode *) node;
 
-        generateAsm(conditional->getCondition());
+        auto generated_condition_assembly = generateAsm(conditional->getCondition());
+        data_section << std::get<0>(generated_condition_assembly);
+        code_section << std::get<1>(generated_condition_assembly);
 
         std::string skip_label = fmt::format("label{}", label_counter);
         label_counter++;
@@ -126,7 +139,9 @@ void AssemblyGenerator::generateAsm(ASTNode *node) {
             code_section << fmt::format("    JMPL {}", skip_label) << std::endl;
         }
 
-        generateAsm(conditional->getBeginEndBlock());
+        auto generated_block_assembly = generateAsm(conditional->getBeginEndBlock());
+        data_section << std::get<0>(generated_block_assembly);
+        code_section << std::get<1>(generated_block_assembly);
 
         code_section << fmt::format("    {}:", skip_label) << std::endl;
         code_section << "    // End conditional node." << std::endl;
@@ -136,10 +151,14 @@ void AssemblyGenerator::generateAsm(ASTNode *node) {
         code_section << "    // Start condition node." << std::endl;
         ASTConditionNode *condition = (ASTConditionNode *) node;
 
-        generateAsm(condition->getExpression1());
+        auto generated_expression1_assembly = generateAsm(condition->getExpression1());
+        data_section << std::get<0>(generated_expression1_assembly);
+        code_section << std::get<1>(generated_expression1_assembly);
         code_section << "    MOV A,C" << std::endl;
 
-        generateAsm(condition->getExpression2());
+        auto generated_expression2_assembly = generateAsm(condition->getExpression2());
+        data_section << std::get<0>(generated_expression2_assembly);
+        code_section << std::get<1>(generated_expression2_assembly);
 
         code_section << "    CMP C,A" << std::endl;
         code_section << "    // End condition node." << std::endl;
@@ -151,7 +170,9 @@ void AssemblyGenerator::generateAsm(ASTNode *node) {
         std::vector<ASTStatementNode*> children = begin_end_block->getChildren();
 
         for (int i = 0; i < children.size(); i++) {
-            generateAsm(children[i]);
+            auto generated_statement_assembly = generateAsm(children[i]);
+            data_section << std::get<0>(generated_statement_assembly);
+            code_section << std::get<1>(generated_statement_assembly);
         }
         code_section << "    // End begin . . . end block node." << std::endl;
     }
@@ -194,7 +215,9 @@ void AssemblyGenerator::generateAsm(ASTNode *node) {
         label_counter++;
         code_section << fmt::format("    {}:", start_label) << std::endl;
 
-        generateAsm(while_loop->getCondition());
+        auto generated_condition_assembly = generateAsm(while_loop->getCondition());
+        data_section << std::get<0>(generated_condition_assembly);
+        code_section << std::get<1>(generated_condition_assembly);
 
         std::string skip_label = fmt::format("label{}", label_counter);
         label_counter++;
@@ -221,7 +244,9 @@ void AssemblyGenerator::generateAsm(ASTNode *node) {
             code_section << fmt::format("    JMPL {}", skip_label) << std::endl;
         }
 
-        generateAsm(while_loop->getBeginEndBlock());
+        auto generated_block_assembly = generateAsm(while_loop->getBeginEndBlock());
+        data_section << std::get<0>(generated_block_assembly);
+        code_section << std::get<1>(generated_block_assembly);
 
         code_section << "    CMP A,A" << std::endl;
         code_section << fmt::format("    JMPE {}", start_label) << std::endl;
@@ -235,12 +260,14 @@ void AssemblyGenerator::generateAsm(ASTNode *node) {
         current_stackframe = new Stackframe();
         // Generate code for the procedure.
         code_section << "    // Start procedure node." << std::endl;
-        // Generate instructions that cause the CPU to skip executing the procedure when IP passes through here.
+        // Generate instructions that cause the CPU to skip executing the procedure when IP passes through here. This way, the procedure only gets executed if the program jumps directly to the start_procedure_{procedurename} label.
         code_section << fmt::format("    CMP A,A") << std::endl;
         code_section << fmt::format("    JMPE end_procedure_{}", procedure->getProcedureName()) << std::endl;
         code_section << fmt::format("    start_procedure_{}:", procedure->getProcedureName()) << std::endl;
         // Generate instructions for the body of the procedure.
-        generateAsm(procedure->getBeginEndBlock());
+        auto generated_block_assembly = generateAsm(procedure->getBeginEndBlock());
+        data_section << std::get<0>(generated_block_assembly);
+        code_section << std::get<1>(generated_block_assembly);
         // Generate instructions to exit the procedure and return to the calling stack frame.
         code_section << fmt::format("    MOV G,B") << std::endl; // Save stack pointer value before incrementing it.
         code_section << fmt::format("    CLOAD {},A", OPERAND_SIZE) << std::endl; // Add OPERAND_SIZE bytes to the stack pointer.
@@ -253,4 +280,6 @@ void AssemblyGenerator::generateAsm(ASTNode *node) {
         delete current_stackframe;
         current_stackframe = previous_stackframe;
     }
+
+    return std::make_tuple(data_section.str(), code_section.str());
 }
