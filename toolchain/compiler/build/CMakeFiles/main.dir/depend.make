@@ -9,6 +9,7 @@ CMakeFiles/main.dir/lexer.cpp.o: parser.hpp
 CMakeFiles/main.dir/parser.cpp.o: ../../processor.h
 CMakeFiles/main.dir/parser.cpp.o: ../src/asmgenerator.h
 CMakeFiles/main.dir/parser.cpp.o: ../src/ast.h
+CMakeFiles/main.dir/parser.cpp.o: ../src/stackframe.h
 CMakeFiles/main.dir/parser.cpp.o: parser.cpp
 
 CMakeFiles/main.dir/src/asmgenerator.cpp.o: ../../processor.h
@@ -18,6 +19,7 @@ CMakeFiles/main.dir/src/asmgenerator.cpp.o: ../include/fmt/format.h
 CMakeFiles/main.dir/src/asmgenerator.cpp.o: ../src/asmgenerator.cpp
 CMakeFiles/main.dir/src/asmgenerator.cpp.o: ../src/asmgenerator.h
 CMakeFiles/main.dir/src/asmgenerator.cpp.o: ../src/ast.h
+CMakeFiles/main.dir/src/asmgenerator.cpp.o: ../src/stackframe.h
 
 CMakeFiles/main.dir/src/ast.cpp.o: ../../processor.h
 CMakeFiles/main.dir/src/ast.cpp.o: ../include/fmt/core.h
@@ -25,4 +27,11 @@ CMakeFiles/main.dir/src/ast.cpp.o: ../include/fmt/format-inl.h
 CMakeFiles/main.dir/src/ast.cpp.o: ../include/fmt/format.h
 CMakeFiles/main.dir/src/ast.cpp.o: ../src/ast.cpp
 CMakeFiles/main.dir/src/ast.cpp.o: ../src/ast.h
+
+CMakeFiles/main.dir/src/stackframe.cpp.o: ../../processor.h
+CMakeFiles/main.dir/src/stackframe.cpp.o: ../include/fmt/core.h
+CMakeFiles/main.dir/src/stackframe.cpp.o: ../include/fmt/format-inl.h
+CMakeFiles/main.dir/src/stackframe.cpp.o: ../include/fmt/format.h
+CMakeFiles/main.dir/src/stackframe.cpp.o: ../src/stackframe.cpp
+CMakeFiles/main.dir/src/stackframe.cpp.o: ../src/stackframe.h
 

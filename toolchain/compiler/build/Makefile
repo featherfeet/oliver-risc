@@ -231,6 +231,33 @@ src/ast.cpp.s:
 	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/ast.cpp.s
 .PHONY : src/ast.cpp.s
 
+src/stackframe.o: src/stackframe.cpp.o
+
+.PHONY : src/stackframe.o
+
+# target to build an object file
+src/stackframe.cpp.o:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/stackframe.cpp.o
+.PHONY : src/stackframe.cpp.o
+
+src/stackframe.i: src/stackframe.cpp.i
+
+.PHONY : src/stackframe.i
+
+# target to preprocess a source file
+src/stackframe.cpp.i:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/stackframe.cpp.i
+.PHONY : src/stackframe.cpp.i
+
+src/stackframe.s: src/stackframe.cpp.s
+
+.PHONY : src/stackframe.s
+
+# target to generate assembly for a file
+src/stackframe.cpp.s:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/stackframe.cpp.s
+.PHONY : src/stackframe.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -252,6 +279,9 @@ help:
 	@echo "... src/ast.o"
 	@echo "... src/ast.i"
 	@echo "... src/ast.s"
+	@echo "... src/stackframe.o"
+	@echo "... src/stackframe.i"
+	@echo "... src/stackframe.s"
 .PHONY : help
 
 

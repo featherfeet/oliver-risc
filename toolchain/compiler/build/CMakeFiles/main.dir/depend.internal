@@ -10,6 +10,7 @@ CMakeFiles/main.dir/parser.cpp.o
  ../../processor.h
  ../src/asmgenerator.h
  ../src/ast.h
+ ../src/stackframe.h
  /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/parser.cpp
 CMakeFiles/main.dir/src/asmgenerator.cpp.o
  ../../processor.h
@@ -19,6 +20,7 @@ CMakeFiles/main.dir/src/asmgenerator.cpp.o
  /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/src/asmgenerator.cpp
  /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/src/asmgenerator.h
  /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/src/ast.h
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/src/stackframe.h
 CMakeFiles/main.dir/src/ast.cpp.o
  ../../processor.h
  ../include/fmt/core.h
@@ -26,3 +28,10 @@ CMakeFiles/main.dir/src/ast.cpp.o
  ../include/fmt/format.h
  /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/src/ast.cpp
  /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/src/ast.h
+CMakeFiles/main.dir/src/stackframe.cpp.o
+ ../../processor.h
+ ../include/fmt/core.h
+ ../include/fmt/format-inl.h
+ ../include/fmt/format.h
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/src/stackframe.cpp
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/src/stackframe.h

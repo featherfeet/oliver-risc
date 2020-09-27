@@ -20,6 +20,8 @@ void AssemblyGenerator::generateAsm(ASTNode *node) {
         ASTRootNode *rootNode = (ASTRootNode *) node;
         std::vector<ASTStatementNode*> children = rootNode->getChildren();
 
+        current_stackframe = new Stackframe();
+
         data_section << "    output_address = 0" << std::endl;
         data_section << "    output_value = 0" << std::endl;
 
@@ -28,6 +30,8 @@ void AssemblyGenerator::generateAsm(ASTNode *node) {
         for (int i = 0; i < children.size(); i++) {
             generateAsm(children[i]);
         }
+
+        delete current_stackframe;
         code_section << "    // End root node." << std::endl;
     }
 
@@ -226,7 +230,10 @@ void AssemblyGenerator::generateAsm(ASTNode *node) {
 
     else if (node->getNodeType() == PROCEDURE_NODE) {
         ASTProcedureNode *procedure = (ASTProcedureNode*) node;
-
+        // Initialize a Stackframe object to track variables in the procedure.
+        Stackframe *previous_stackframe = current_stackframe;
+        current_stackframe = new Stackframe();
+        // Generate code for the procedure.
         code_section << "    // Start procedure node." << std::endl;
         // Generate instructions that cause the CPU to skip executing the procedure when IP passes through here.
         code_section << fmt::format("    CMP A,A") << std::endl;
@@ -243,5 +250,7 @@ void AssemblyGenerator::generateAsm(ASTNode *node) {
         // End label.
         code_section << fmt::format("    end_procedure_{}:", procedure->getProcedureName()) << std::endl;
         code_section << "    // End procedure node." << std::endl;
+        delete current_stackframe;
+        current_stackframe = previous_stackframe;
     }
 }
