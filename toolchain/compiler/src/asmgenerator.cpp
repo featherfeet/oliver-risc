@@ -11,6 +11,50 @@
 AssemblyGenerator::AssemblyGenerator() {
 }
 
+std::string AssemblyGenerator::generateStackVariableRead(std::string variable_name, std::string destination_register) {
+    std::stringstream code;
+    if (variable_name == "output_address" || variable_name == "output_value") {
+        code << fmt::format("    LOAD {},{}", variable_name, destination_register) << std::endl;
+    }
+    else {
+        // Generate code to load from address (G + variable_offset) in RAM to the specified destination register. Remember that G is the register that stores the stack pointer.
+        code << fmt::format("    CLOAD {},A", current_stackframe->getVariableOffset(variable_name)) << std::endl;
+        code << "    ADD G,A" << std::endl;
+        code << fmt::format("    RLOAD A,{}", destination_register) << std::endl;
+    }
+    return code.str();
+}
+
+std::string AssemblyGenerator::generateStackVariableWrite(std::string source_register, std::string variable_name) {
+    std::stringstream code;
+    if (variable_name == "output_address" || variable_name == "output_value") {
+        code << fmt::format("    STORE {},{}", source_register, variable_name) << std::endl;
+    }
+    else {
+        // Generate code to store a value from the source register to address (G + variable_offset) in RAM. Remember that G is the register that stores the stack pointer.
+        code << fmt::format("    CLOAD {},A", current_stackframe->getVariableOffset(variable_name)) << std::endl;
+        code << "    ADD G,A" << std::endl;
+        code << fmt::format("    RSTORE {},A", source_register) << std::endl;
+    }
+    return code.str();
+}
+
+std::string AssemblyGenerator::generateStackVariableWrite(OPERAND_C_TYPE constant_value, std::string variable_name) {
+    std::stringstream code;
+    if (variable_name == "output_address" || variable_name == "output_value") {
+        code << fmt::format("    CLOAD {},A", constant_value) << std::endl;
+        code << fmt::format("    STORE A,{}", variable_name) << std::endl;
+    }
+    else {
+        // Generate code to store a value from the source register to address (G + variable_offset) in RAM. Remember that G is the register that stores the stack pointer.
+        code << fmt::format("    CLOAD {},A", current_stackframe->getVariableOffset(variable_name)) << std::endl;
+        code << "    ADD G,A" << std::endl;
+        code << fmt::format("    CLOAD {},B", constant_value) << std::endl;
+        code << "    RSTORE B,A" << std::endl;
+    }
+    return code.str();
+}
+
 std::string AssemblyGenerator::getGeneratedAssembly(ASTNode *node) {
     auto generated_assembly = generateAsm(node);
     return std::get<0>(generated_assembly) + std::get<1>(generated_assembly);
@@ -46,6 +90,7 @@ std::tuple<std::string, std::string> AssemblyGenerator::generateAsm(ASTNode *nod
 
     else if (node->getNodeType() == VARIABLE_DECLARATION_NODE) {
         ASTVariableDeclarationNode *declaration = (ASTVariableDeclarationNode *) node;
+        /*
         data_section << "    // Start variable declaration node." << std::endl;
         data_section << fmt::format("    {} = 0", declaration->getVariableName()) << std::endl;
         data_section << "    // End variable declaration node." << std::endl;
@@ -54,18 +99,21 @@ std::tuple<std::string, std::string> AssemblyGenerator::generateAsm(ASTNode *nod
         code_section << fmt::format("    CLOAD {},A", declaration->getValue()) << std::endl;
         code_section << fmt::format("    STORE A,{}", declaration->getVariableName()) << std::endl;
         code_section << "    // End variable declaration node." << std::endl;
+        */
+        current_stackframe->addVariable(declaration->getVariableName(), OPERAND_SIZE);
+        code_section << generateStackVariableWrite(declaration->getValue(), declaration->getVariableName());
     }
 
     else if (node->getNodeType() == VARIABLE_ASSIGNMENT_NODE) {
         code_section << "    // Start variable assignment node." << std::endl;
         ASTVariableAssignmentNode *assignment = (ASTVariableAssignmentNode *) node;
 
+        // Generate assembly code that evaluates the expression and stores the result in register C.
         auto generated_expression_assembly = generateAsm(assignment->getExpressionNode());
         data_section << std::get<0>(generated_expression_assembly);
         code_section << std::get<1>(generated_expression_assembly);
 
-        std::string variable_name = assignment->getVariableName();
-        code_section << fmt::format("    STORE A,{}", assignment->getVariableName()) << std::endl;
+        code_section << generateStackVariableWrite("C", assignment->getVariableName()) << std::endl;
 
         code_section << "    // End variable assignment node." << std::endl;
     }
@@ -75,32 +123,37 @@ std::tuple<std::string, std::string> AssemblyGenerator::generateAsm(ASTNode *nod
         ASTExpressionNode *expression = (ASTExpressionNode *) node;
         std::vector<ASTTermNode*> terms = expression->getTerms();
 
-        code_section << "    CLOAD 0,A" << std::endl;
+        // Generate assembly that evaluates the expression. Register C is used as the accumulator.
+        code_section << "    CLOAD 0,C" << std::endl;
 
         for (int i = 0; i < terms.size(); i++) {
             ASTTermNode *term = terms[i];
 
             if (term->getType() == CONSTANT) {
-                code_section << fmt::format("    CLOAD {},B", term->getConstantValue()) << std::endl;
+                code_section << fmt::format("    CLOAD {},D", term->getConstantValue()) << std::endl;
             }
             else if (term->getType() == VARIABLE) {
-                code_section << fmt::format("    LOAD {},B", term->getVariableName()) << std::endl;
+                code_section << generateStackVariableRead(term->getVariableName(), "D") << std::endl;
             }
             if (term->getOperation() == ADDITION) {
-                code_section << "    ADD A,B" << std::endl;
+                code_section << "    ADD C,D" << std::endl;
+                code_section << "    MOV A,C" << std::endl;
             }
             else if (term->getOperation() == SUBTRACTION) {
-                code_section << "    SUB A,B" << std::endl;
+                code_section << "    SUB C,D" << std::endl;
+                code_section << "    MOV A,C" << std::endl;
             }
             else if (term->getOperation() == MULTIPLICATION) {
-                code_section << "    MULT A,B" << std::endl;
+                code_section << "    MULT C,D" << std::endl;
+                code_section << "    MOV A,C" << std::endl;
             }
             else if (term->getOperation() == DIVISION) {
-                code_section << "    DIV A,B" << std::endl;
+                code_section << "    DIV C,D" << std::endl;
+                code_section << "    MOV A,C" << std::endl;
             }
             else if (term->getOperation() == MODULUS) {
-                code_section << "    DIV A,B" << std::endl;
-                code_section << "    MOV B,A" << std::endl;
+                code_section << "    DIV C,D" << std::endl;
+                code_section << "    MOV A,C" << std::endl;
             }
         }
         code_section << "    // End expression node." << std::endl;
@@ -151,16 +204,18 @@ std::tuple<std::string, std::string> AssemblyGenerator::generateAsm(ASTNode *nod
         code_section << "    // Start condition node." << std::endl;
         ASTConditionNode *condition = (ASTConditionNode *) node;
 
+        // Generate assembly that evaluates the first expression in the condition into register C, then store C in E.
         auto generated_expression1_assembly = generateAsm(condition->getExpression1());
         data_section << std::get<0>(generated_expression1_assembly);
         code_section << std::get<1>(generated_expression1_assembly);
-        code_section << "    MOV A,C" << std::endl;
+        code_section << "    MOV C,E" << std::endl;
 
+        // Generate assembly that evaluates the second expression in the condition into register C.
         auto generated_expression2_assembly = generateAsm(condition->getExpression2());
         data_section << std::get<0>(generated_expression2_assembly);
         code_section << std::get<1>(generated_expression2_assembly);
 
-        code_section << "    CMP C,A" << std::endl;
+        code_section << "    CMP E,C" << std::endl;
         code_section << "    // End condition node." << std::endl;
     }
 
@@ -191,8 +246,8 @@ std::tuple<std::string, std::string> AssemblyGenerator::generateAsm(ASTNode *nod
         }
         else {
             // Code to call a custom procedure (see how the stack works at http://faculty.cooper.edu/smyth/cs225/ch6/fncs.htm). G is used as the stack pointer register.
-            // Subtract OPERAND_SIZE bytes from G (the stack pointer).
-            code_section << fmt::format("    CLOAD {},A", OPERAND_SIZE) << std::endl;
+            // Subtract the number of bytes that the function's stack will take from G (the stack pointer). This has the effect of allocating space on the stack for the function's variables.
+            code_section << fmt::format("    CLOAD {},A", stack_allocations[procedure_call->getProcedureName()]) << std::endl;
             code_section << "    SUB G,A" << std::endl;
             code_section << "    MOV A,G" << std::endl;
             // Store IP (plus 2 instructions to avoid repeating the CMP/JMPE instructions on return) in the stack pointer register.
@@ -270,13 +325,14 @@ std::tuple<std::string, std::string> AssemblyGenerator::generateAsm(ASTNode *nod
         code_section << std::get<1>(generated_block_assembly);
         // Generate instructions to exit the procedure and return to the calling stack frame.
         code_section << fmt::format("    MOV G,B") << std::endl; // Save stack pointer value before incrementing it.
-        code_section << fmt::format("    CLOAD {},A", OPERAND_SIZE) << std::endl; // Add OPERAND_SIZE bytes to the stack pointer.
+        code_section << fmt::format("    CLOAD {},A", current_stackframe->getTotalSize()) << std::endl; // Add the number of bytes that the function's stack took to the stack pointer. This has the effect of de-allocating the stack memory used by the function.
         code_section << fmt::format("    ADD A,G") << std::endl;
         code_section << fmt::format("    MOV A,G") << std::endl;
         code_section << fmt::format("    RLOAD B,IP") << std::endl; // Return from the procedure by jumping IP back to where the stack pointer was before incrementing it.
         // End label.
         code_section << fmt::format("    end_procedure_{}:", procedure->getProcedureName()) << std::endl;
         code_section << "    // End procedure node." << std::endl;
+        stack_allocations[procedure->getProcedureName()] = current_stackframe->getTotalSize(); // Store the amount of RAM that the function's stack takes up in a global table. This will be used to allocate memory for the function when it is called.
         delete current_stackframe;
         current_stackframe = previous_stackframe;
     }

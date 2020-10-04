@@ -8,6 +8,7 @@
 #define REGISTER_IP registers[0]
 #define REGISTER_A registers[1]
 #define REGISTER_B registers[2]
+#define REGISTER_G registers[7]
 
 int main(int argc, char *argv[]) {
     if (argc != 2) {
@@ -41,7 +42,11 @@ int main(int argc, char *argv[]) {
     REGISTER_IP = start_of_code_section_offset;
     // Execution loop.
     while (1) {
-        printf("IP = %u\n", REGISTER_IP);
+        printf("    IP = %u\n", REGISTER_IP);
+        printf("    G = %u\n", REGISTER_G);
+        OPERAND_C_TYPE gval = 0;
+        memcpy(&gval, raw_binary + REGISTER_G, OPERAND_SIZE);
+        printf("    MEM[G] = %u\n", gval);
         // Fetch operation and operands.
         uint8_t operation = raw_binary[REGISTER_IP];
         OPERAND_C_TYPE operand1;
@@ -156,8 +161,12 @@ int main(int argc, char *argv[]) {
                 break;
             case (OPERATION_RLOAD):
                 printf("RLOAD\n");
+                /*
                 memcpy(&registers[operand2], raw_binary + registers[operand1], OPERAND_SIZE);
                 printf("Loaded value %u from address %u in RAM to register %u.\n", registers[operand2], operand1, operand2);
+                */
+                memcpy(&registers[operand2], raw_binary + registers[operand1], OPERAND_SIZE);
+                printf("Loaded value %u from address %u in RAM to register %u.\n", registers[operand2], registers[operand1], operand2);
                 REGISTER_IP += INSTRUCTION_SIZE;
                 break;
             case (OPERATION_RSTORE):

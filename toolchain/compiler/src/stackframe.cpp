@@ -4,8 +4,14 @@
 #define FMT_HEADER_ONLY
 #include <fmt/format.h>
 
+Stackframe::Stackframe() {
+    variable_offsets["_"] = address_counter; // Reserve space on the stack for where the return-jump address is stored.
+    address_counter += OPERAND_SIZE;
+}
+
 void Stackframe::addVariable(std::string name, size_t size) {
-    variable_offsets[name] = size;
+    variable_offsets[name] = address_counter;
+    address_counter += size;
 }
 
 OPERAND_C_TYPE Stackframe::getVariableOffset(std::string name) {
@@ -17,9 +23,5 @@ OPERAND_C_TYPE Stackframe::getVariableOffset(std::string name) {
 }
 
 OPERAND_C_TYPE Stackframe::getTotalSize() {
-    OPERAND_C_TYPE total_size = 0;
-    for (auto variable_offset : variable_offsets) {
-        total_size += variable_offset.second;
-    }
-    return total_size;
+    return address_counter;
 }

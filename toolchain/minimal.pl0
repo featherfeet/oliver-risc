@@ -1,0 +1,14 @@
+PROCEDURE a;
+BEGIN
+    VAR x = 5;
+END;
+
+PROCEDURE b;
+BEGIN
+    VAR y = 7;
+    CALL a;
+END;
+
+CALL b;
+
+CALL HALT;
