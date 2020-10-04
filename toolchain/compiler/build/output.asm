@@ -7,6 +7,7 @@
     CLOAD 12,A
     SUB G,A
     MOV A,G
+    MOV G,F
     CLOAD 4,A
     ADD G,A
     CLOAD 0,B
@@ -24,7 +25,7 @@
     // Start expression node.
     CLOAD 0,C
     CLOAD 8,A
-    ADD G,A
+    ADD F,A
     RLOAD A,D
 
     ADD C,D

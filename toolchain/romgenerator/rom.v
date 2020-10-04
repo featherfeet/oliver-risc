@@ -1,5 +1,5 @@
 module rom(input[31:0] address, output reg [7:0] output_byte, output done);
-	assign done = (address == 32'd422) ? 1'b1 : 1'b0;
+	assign done = (address == 32'd431) ? 1'b1 : 1'b0;
 	always @(address)
 	begin
 		case (address)
@@ -94,9 +94,9 @@ module rom(input[31:0] address, output reg [7:0] output_byte, output done);
 			32'd44:
 				output_byte = 8'd0;
 			32'd45:
-				output_byte = 8'd20;
+				output_byte = 8'd7;
 			32'd46:
-				output_byte = 8'd4;
+				output_byte = 8'd7;
 			32'd47:
 				output_byte = 8'd0;
 			32'd48:
@@ -104,7 +104,7 @@ module rom(input[31:0] address, output reg [7:0] output_byte, output done);
 			32'd49:
 				output_byte = 8'd0;
 			32'd50:
-				output_byte = 8'd1;
+				output_byte = 8'd6;
 			32'd51:
 				output_byte = 8'd0;
 			32'd52:
@@ -112,9 +112,9 @@ module rom(input[31:0] address, output reg [7:0] output_byte, output done);
 			32'd53:
 				output_byte = 8'd0;
 			32'd54:
-				output_byte = 8'd3;
+				output_byte = 8'd20;
 			32'd55:
-				output_byte = 8'd7;
+				output_byte = 8'd4;
 			32'd56:
 				output_byte = 8'd0;
 			32'd57:
@@ -130,9 +130,9 @@ module rom(input[31:0] address, output reg [7:0] output_byte, output done);
 			32'd62:
 				output_byte = 8'd0;
 			32'd63:
-				output_byte = 8'd20;
+				output_byte = 8'd3;
 			32'd64:
-				output_byte = 8'd0;
+				output_byte = 8'd7;
 			32'd65:
 				output_byte = 8'd0;
 			32'd66:
@@ -140,7 +140,7 @@ module rom(input[31:0] address, output reg [7:0] output_byte, output done);
 			32'd67:
 				output_byte = 8'd0;
 			32'd68:
-				output_byte = 8'd2;
+				output_byte = 8'd1;
 			32'd69:
 				output_byte = 8'd0;
 			32'd70:
@@ -148,9 +148,9 @@ module rom(input[31:0] address, output reg [7:0] output_byte, output done);
 			32'd71:
 				output_byte = 8'd0;
 			32'd72:
-				output_byte = 8'd19;
+				output_byte = 8'd20;
 			32'd73:
-				output_byte = 8'd2;
+				output_byte = 8'd0;
 			32'd74:
 				output_byte = 8'd0;
 			32'd75:
@@ -158,7 +158,7 @@ module rom(input[31:0] address, output reg [7:0] output_byte, output done);
 			32'd76:
 				output_byte = 8'd0;
 			32'd77:
-				output_byte = 8'd1;
+				output_byte = 8'd2;
 			32'd78:
 				output_byte = 8'd0;
 			32'd79:
@@ -166,9 +166,9 @@ module rom(input[31:0] address, output reg [7:0] output_byte, output done);
 			32'd80:
 				output_byte = 8'd0;
 			32'd81:
-				output_byte = 8'd20;
+				output_byte = 8'd19;
 			32'd82:
-				output_byte = 8'd8;
+				output_byte = 8'd2;
 			32'd83:
 				output_byte = 8'd0;
 			32'd84:
@@ -184,9 +184,9 @@ module rom(input[31:0] address, output reg [7:0] output_byte, output done);
 			32'd89:
 				output_byte = 8'd0;
 			32'd90:
-				output_byte = 8'd3;
+				output_byte = 8'd20;
 			32'd91:
-				output_byte = 8'd7;
+				output_byte = 8'd8;
 			32'd92:
 				output_byte = 8'd0;
 			32'd93:
@@ -202,9 +202,9 @@ module rom(input[31:0] address, output reg [7:0] output_byte, output done);
 			32'd98:
 				output_byte = 8'd0;
 			32'd99:
-				output_byte = 8'd20;
+				output_byte = 8'd3;
 			32'd100:
-				output_byte = 8'd10;
+				output_byte = 8'd7;
 			32'd101:
 				output_byte = 8'd0;
 			32'd102:
@@ -212,7 +212,7 @@ module rom(input[31:0] address, output reg [7:0] output_byte, output done);
 			32'd103:
 				output_byte = 8'd0;
 			32'd104:
-				output_byte = 8'd2;
+				output_byte = 8'd1;
 			32'd105:
 				output_byte = 8'd0;
 			32'd106:
@@ -220,9 +220,9 @@ module rom(input[31:0] address, output reg [7:0] output_byte, output done);
 			32'd107:
 				output_byte = 8'd0;
 			32'd108:
-				output_byte = 8'd19;
+				output_byte = 8'd20;
 			32'd109:
-				output_byte = 8'd2;
+				output_byte = 8'd10;
 			32'd110:
 				output_byte = 8'd0;
 			32'd111:
@@ -230,7 +230,7 @@ module rom(input[31:0] address, output reg [7:0] output_byte, output done);
 			32'd112:
 				output_byte = 8'd0;
 			32'd113:
-				output_byte = 8'd1;
+				output_byte = 8'd2;
 			32'd114:
 				output_byte = 8'd0;
 			32'd115:
@@ -238,9 +238,9 @@ module rom(input[31:0] address, output reg [7:0] output_byte, output done);
 			32'd116:
 				output_byte = 8'd0;
 			32'd117:
-				output_byte = 8'd8;
+				output_byte = 8'd19;
 			32'd118:
-				output_byte = 8'd1;
+				output_byte = 8'd2;
 			32'd119:
 				output_byte = 8'd0;
 			32'd120:
@@ -256,17 +256,17 @@ module rom(input[31:0] address, output reg [7:0] output_byte, output done);
 			32'd125:
 				output_byte = 8'd0;
 			32'd126:
-				output_byte = 8'd10;
+				output_byte = 8'd8;
 			32'd127:
-				output_byte = 8'd77;
-			32'd128:
 				output_byte = 8'd1;
+			32'd128:
+				output_byte = 8'd0;
 			32'd129:
 				output_byte = 8'd0;
 			32'd130:
 				output_byte = 8'd0;
 			32'd131:
-				output_byte = 8'd0;
+				output_byte = 8'd1;
 			32'd132:
 				output_byte = 8'd0;
 			32'd133:
@@ -274,17 +274,17 @@ module rom(input[31:0] address, output reg [7:0] output_byte, output done);
 			32'd134:
 				output_byte = 8'd0;
 			32'd135:
-				output_byte = 8'd20;
+				output_byte = 8'd10;
 			32'd136:
-				output_byte = 8'd0;
+				output_byte = 8'd86;
 			32'd137:
-				output_byte = 8'd0;
+				output_byte = 8'd1;
 			32'd138:
 				output_byte = 8'd0;
 			32'd139:
 				output_byte = 8'd0;
 			32'd140:
-				output_byte = 8'd3;
+				output_byte = 8'd0;
 			32'd141:
 				output_byte = 8'd0;
 			32'd142:
@@ -294,7 +294,7 @@ module rom(input[31:0] address, output reg [7:0] output_byte, output done);
 			32'd144:
 				output_byte = 8'd20;
 			32'd145:
-				output_byte = 8'd8;
+				output_byte = 8'd0;
 			32'd146:
 				output_byte = 8'd0;
 			32'd147:
@@ -302,7 +302,7 @@ module rom(input[31:0] address, output reg [7:0] output_byte, output done);
 			32'd148:
 				output_byte = 8'd0;
 			32'd149:
-				output_byte = 8'd1;
+				output_byte = 8'd3;
 			32'd150:
 				output_byte = 8'd0;
 			32'd151:
@@ -310,9 +310,9 @@ module rom(input[31:0] address, output reg [7:0] output_byte, output done);
 			32'd152:
 				output_byte = 8'd0;
 			32'd153:
-				output_byte = 8'd3;
+				output_byte = 8'd20;
 			32'd154:
-				output_byte = 8'd7;
+				output_byte = 8'd8;
 			32'd155:
 				output_byte = 8'd0;
 			32'd156:
@@ -328,9 +328,9 @@ module rom(input[31:0] address, output reg [7:0] output_byte, output done);
 			32'd161:
 				output_byte = 8'd0;
 			32'd162:
-				output_byte = 8'd18;
+				output_byte = 8'd3;
 			32'd163:
-				output_byte = 8'd1;
+				output_byte = 8'd6;
 			32'd164:
 				output_byte = 8'd0;
 			32'd165:
@@ -338,7 +338,7 @@ module rom(input[31:0] address, output reg [7:0] output_byte, output done);
 			32'd166:
 				output_byte = 8'd0;
 			32'd167:
-				output_byte = 8'd4;
+				output_byte = 8'd1;
 			32'd168:
 				output_byte = 8'd0;
 			32'd169:
@@ -346,9 +346,9 @@ module rom(input[31:0] address, output reg [7:0] output_byte, output done);
 			32'd170:
 				output_byte = 8'd0;
 			32'd171:
-				output_byte = 8'd3;
+				output_byte = 8'd18;
 			32'd172:
-				output_byte = 8'd3;
+				output_byte = 8'd1;
 			32'd173:
 				output_byte = 8'd0;
 			32'd174:
@@ -364,9 +364,9 @@ module rom(input[31:0] address, output reg [7:0] output_byte, output done);
 			32'd179:
 				output_byte = 8'd0;
 			32'd180:
-				output_byte = 8'd7;
+				output_byte = 8'd3;
 			32'd181:
-				output_byte = 8'd1;
+				output_byte = 8'd3;
 			32'd182:
 				output_byte = 8'd0;
 			32'd183:
@@ -374,7 +374,7 @@ module rom(input[31:0] address, output reg [7:0] output_byte, output done);
 			32'd184:
 				output_byte = 8'd0;
 			32'd185:
-				output_byte = 8'd3;
+				output_byte = 8'd4;
 			32'd186:
 				output_byte = 8'd0;
 			32'd187:
@@ -382,9 +382,9 @@ module rom(input[31:0] address, output reg [7:0] output_byte, output done);
 			32'd188:
 				output_byte = 8'd0;
 			32'd189:
-				output_byte = 8'd20;
+				output_byte = 8'd7;
 			32'd190:
-				output_byte = 8'd48;
+				output_byte = 8'd1;
 			32'd191:
 				output_byte = 8'd0;
 			32'd192:
@@ -392,7 +392,7 @@ module rom(input[31:0] address, output reg [7:0] output_byte, output done);
 			32'd193:
 				output_byte = 8'd0;
 			32'd194:
-				output_byte = 8'd4;
+				output_byte = 8'd3;
 			32'd195:
 				output_byte = 8'd0;
 			32'd196:
@@ -400,9 +400,9 @@ module rom(input[31:0] address, output reg [7:0] output_byte, output done);
 			32'd197:
 				output_byte = 8'd0;
 			32'd198:
-				output_byte = 8'd3;
+				output_byte = 8'd20;
 			32'd199:
-				output_byte = 8'd3;
+				output_byte = 8'd48;
 			32'd200:
 				output_byte = 8'd0;
 			32'd201:
@@ -418,9 +418,9 @@ module rom(input[31:0] address, output reg [7:0] output_byte, output done);
 			32'd206:
 				output_byte = 8'd0;
 			32'd207:
-				output_byte = 8'd7;
+				output_byte = 8'd3;
 			32'd208:
-				output_byte = 8'd1;
+				output_byte = 8'd3;
 			32'd209:
 				output_byte = 8'd0;
 			32'd210:
@@ -428,7 +428,7 @@ module rom(input[31:0] address, output reg [7:0] output_byte, output done);
 			32'd211:
 				output_byte = 8'd0;
 			32'd212:
-				output_byte = 8'd3;
+				output_byte = 8'd4;
 			32'd213:
 				output_byte = 8'd0;
 			32'd214:
@@ -436,9 +436,9 @@ module rom(input[31:0] address, output reg [7:0] output_byte, output done);
 			32'd215:
 				output_byte = 8'd0;
 			32'd216:
-				output_byte = 8'd2;
+				output_byte = 8'd7;
 			32'd217:
-				output_byte = 8'd3;
+				output_byte = 8'd1;
 			32'd218:
 				output_byte = 8'd0;
 			32'd219:
@@ -446,7 +446,7 @@ module rom(input[31:0] address, output reg [7:0] output_byte, output done);
 			32'd220:
 				output_byte = 8'd0;
 			32'd221:
-				output_byte = 8'd4;
+				output_byte = 8'd3;
 			32'd222:
 				output_byte = 8'd0;
 			32'd223:
@@ -454,9 +454,9 @@ module rom(input[31:0] address, output reg [7:0] output_byte, output done);
 			32'd224:
 				output_byte = 8'd0;
 			32'd225:
-				output_byte = 8'd20;
+				output_byte = 8'd2;
 			32'd226:
-				output_byte = 8'd0;
+				output_byte = 8'd3;
 			32'd227:
 				output_byte = 8'd0;
 			32'd228:
@@ -464,7 +464,7 @@ module rom(input[31:0] address, output reg [7:0] output_byte, output done);
 			32'd229:
 				output_byte = 8'd0;
 			32'd230:
-				output_byte = 8'd3;
+				output_byte = 8'd4;
 			32'd231:
 				output_byte = 8'd0;
 			32'd232:
@@ -474,7 +474,7 @@ module rom(input[31:0] address, output reg [7:0] output_byte, output done);
 			32'd234:
 				output_byte = 8'd20;
 			32'd235:
-				output_byte = 8'd80;
+				output_byte = 8'd0;
 			32'd236:
 				output_byte = 8'd0;
 			32'd237:
@@ -482,7 +482,7 @@ module rom(input[31:0] address, output reg [7:0] output_byte, output done);
 			32'd238:
 				output_byte = 8'd0;
 			32'd239:
-				output_byte = 8'd4;
+				output_byte = 8'd3;
 			32'd240:
 				output_byte = 8'd0;
 			32'd241:
@@ -490,9 +490,9 @@ module rom(input[31:0] address, output reg [7:0] output_byte, output done);
 			32'd242:
 				output_byte = 8'd0;
 			32'd243:
-				output_byte = 8'd3;
+				output_byte = 8'd20;
 			32'd244:
-				output_byte = 8'd3;
+				output_byte = 8'd80;
 			32'd245:
 				output_byte = 8'd0;
 			32'd246:
@@ -508,9 +508,9 @@ module rom(input[31:0] address, output reg [7:0] output_byte, output done);
 			32'd251:
 				output_byte = 8'd0;
 			32'd252:
-				output_byte = 8'd7;
+				output_byte = 8'd3;
 			32'd253:
-				output_byte = 8'd1;
+				output_byte = 8'd3;
 			32'd254:
 				output_byte = 8'd0;
 			32'd255:
@@ -518,7 +518,7 @@ module rom(input[31:0] address, output reg [7:0] output_byte, output done);
 			32'd256:
 				output_byte = 8'd0;
 			32'd257:
-				output_byte = 8'd3;
+				output_byte = 8'd4;
 			32'd258:
 				output_byte = 8'd0;
 			32'd259:
@@ -526,9 +526,9 @@ module rom(input[31:0] address, output reg [7:0] output_byte, output done);
 			32'd260:
 				output_byte = 8'd0;
 			32'd261:
-				output_byte = 8'd2;
+				output_byte = 8'd7;
 			32'd262:
-				output_byte = 8'd3;
+				output_byte = 8'd1;
 			32'd263:
 				output_byte = 8'd0;
 			32'd264:
@@ -536,7 +536,7 @@ module rom(input[31:0] address, output reg [7:0] output_byte, output done);
 			32'd265:
 				output_byte = 8'd0;
 			32'd266:
-				output_byte = 8'd0;
+				output_byte = 8'd3;
 			32'd267:
 				output_byte = 8'd0;
 			32'd268:
@@ -544,9 +544,9 @@ module rom(input[31:0] address, output reg [7:0] output_byte, output done);
 			32'd269:
 				output_byte = 8'd0;
 			32'd270:
-				output_byte = 8'd1;
+				output_byte = 8'd2;
 			32'd271:
-				output_byte = 8'd0;
+				output_byte = 8'd3;
 			32'd272:
 				output_byte = 8'd0;
 			32'd273:
@@ -554,7 +554,7 @@ module rom(input[31:0] address, output reg [7:0] output_byte, output done);
 			32'd274:
 				output_byte = 8'd0;
 			32'd275:
-				output_byte = 8'd1;
+				output_byte = 8'd0;
 			32'd276:
 				output_byte = 8'd0;
 			32'd277:
@@ -564,7 +564,7 @@ module rom(input[31:0] address, output reg [7:0] output_byte, output done);
 			32'd279:
 				output_byte = 8'd1;
 			32'd280:
-				output_byte = 8'd4;
+				output_byte = 8'd0;
 			32'd281:
 				output_byte = 8'd0;
 			32'd282:
@@ -572,7 +572,7 @@ module rom(input[31:0] address, output reg [7:0] output_byte, output done);
 			32'd283:
 				output_byte = 8'd0;
 			32'd284:
-				output_byte = 8'd2;
+				output_byte = 8'd1;
 			32'd285:
 				output_byte = 8'd0;
 			32'd286:
@@ -580,9 +580,9 @@ module rom(input[31:0] address, output reg [7:0] output_byte, output done);
 			32'd287:
 				output_byte = 8'd0;
 			32'd288:
-				output_byte = 8'd5;
-			32'd289:
 				output_byte = 8'd1;
+			32'd289:
+				output_byte = 8'd4;
 			32'd290:
 				output_byte = 8'd0;
 			32'd291:
@@ -598,9 +598,9 @@ module rom(input[31:0] address, output reg [7:0] output_byte, output done);
 			32'd296:
 				output_byte = 8'd0;
 			32'd297:
-				output_byte = 8'd7;
+				output_byte = 8'd5;
 			32'd298:
-				output_byte = 8'd7;
+				output_byte = 8'd1;
 			32'd299:
 				output_byte = 8'd0;
 			32'd300:
@@ -616,9 +616,9 @@ module rom(input[31:0] address, output reg [7:0] output_byte, output done);
 			32'd305:
 				output_byte = 8'd0;
 			32'd306:
-				output_byte = 8'd20;
+				output_byte = 8'd7;
 			32'd307:
-				output_byte = 8'd4;
+				output_byte = 8'd7;
 			32'd308:
 				output_byte = 8'd0;
 			32'd309:
@@ -626,7 +626,7 @@ module rom(input[31:0] address, output reg [7:0] output_byte, output done);
 			32'd310:
 				output_byte = 8'd0;
 			32'd311:
-				output_byte = 8'd1;
+				output_byte = 8'd2;
 			32'd312:
 				output_byte = 8'd0;
 			32'd313:
@@ -634,9 +634,9 @@ module rom(input[31:0] address, output reg [7:0] output_byte, output done);
 			32'd314:
 				output_byte = 8'd0;
 			32'd315:
-				output_byte = 8'd3;
+				output_byte = 8'd20;
 			32'd316:
-				output_byte = 8'd1;
+				output_byte = 8'd4;
 			32'd317:
 				output_byte = 8'd0;
 			32'd318:
@@ -644,7 +644,7 @@ module rom(input[31:0] address, output reg [7:0] output_byte, output done);
 			32'd319:
 				output_byte = 8'd0;
 			32'd320:
-				output_byte = 8'd7;
+				output_byte = 8'd1;
 			32'd321:
 				output_byte = 8'd0;
 			32'd322:
@@ -652,7 +652,7 @@ module rom(input[31:0] address, output reg [7:0] output_byte, output done);
 			32'd323:
 				output_byte = 8'd0;
 			32'd324:
-				output_byte = 8'd7;
+				output_byte = 8'd3;
 			32'd325:
 				output_byte = 8'd1;
 			32'd326:
@@ -670,9 +670,9 @@ module rom(input[31:0] address, output reg [7:0] output_byte, output done);
 			32'd332:
 				output_byte = 8'd0;
 			32'd333:
-				output_byte = 8'd18;
+				output_byte = 8'd7;
 			32'd334:
-				output_byte = 8'd2;
+				output_byte = 8'd1;
 			32'd335:
 				output_byte = 8'd0;
 			32'd336:
@@ -680,7 +680,7 @@ module rom(input[31:0] address, output reg [7:0] output_byte, output done);
 			32'd337:
 				output_byte = 8'd0;
 			32'd338:
-				output_byte = 8'd0;
+				output_byte = 8'd7;
 			32'd339:
 				output_byte = 8'd0;
 			32'd340:
@@ -688,9 +688,9 @@ module rom(input[31:0] address, output reg [7:0] output_byte, output done);
 			32'd341:
 				output_byte = 8'd0;
 			32'd342:
-				output_byte = 8'd20;
+				output_byte = 8'd18;
 			32'd343:
-				output_byte = 8'd4;
+				output_byte = 8'd2;
 			32'd344:
 				output_byte = 8'd0;
 			32'd345:
@@ -698,7 +698,7 @@ module rom(input[31:0] address, output reg [7:0] output_byte, output done);
 			32'd346:
 				output_byte = 8'd0;
 			32'd347:
-				output_byte = 8'd1;
+				output_byte = 8'd0;
 			32'd348:
 				output_byte = 8'd0;
 			32'd349:
@@ -706,9 +706,9 @@ module rom(input[31:0] address, output reg [7:0] output_byte, output done);
 			32'd350:
 				output_byte = 8'd0;
 			32'd351:
-				output_byte = 8'd4;
+				output_byte = 8'd20;
 			32'd352:
-				output_byte = 8'd7;
+				output_byte = 8'd4;
 			32'd353:
 				output_byte = 8'd0;
 			32'd354:
@@ -724,9 +724,9 @@ module rom(input[31:0] address, output reg [7:0] output_byte, output done);
 			32'd359:
 				output_byte = 8'd0;
 			32'd360:
-				output_byte = 8'd7;
+				output_byte = 8'd4;
 			32'd361:
-				output_byte = 8'd1;
+				output_byte = 8'd7;
 			32'd362:
 				output_byte = 8'd0;
 			32'd363:
@@ -734,7 +734,7 @@ module rom(input[31:0] address, output reg [7:0] output_byte, output done);
 			32'd364:
 				output_byte = 8'd0;
 			32'd365:
-				output_byte = 8'd7;
+				output_byte = 8'd1;
 			32'd366:
 				output_byte = 8'd0;
 			32'd367:
@@ -742,9 +742,9 @@ module rom(input[31:0] address, output reg [7:0] output_byte, output done);
 			32'd368:
 				output_byte = 8'd0;
 			32'd369:
-				output_byte = 8'd20;
+				output_byte = 8'd7;
 			32'd370:
-				output_byte = 8'd18;
+				output_byte = 8'd1;
 			32'd371:
 				output_byte = 8'd0;
 			32'd372:
@@ -752,7 +752,7 @@ module rom(input[31:0] address, output reg [7:0] output_byte, output done);
 			32'd373:
 				output_byte = 8'd0;
 			32'd374:
-				output_byte = 8'd1;
+				output_byte = 8'd7;
 			32'd375:
 				output_byte = 8'd0;
 			32'd376:
@@ -760,9 +760,9 @@ module rom(input[31:0] address, output reg [7:0] output_byte, output done);
 			32'd377:
 				output_byte = 8'd0;
 			32'd378:
-				output_byte = 8'd3;
+				output_byte = 8'd20;
 			32'd379:
-				output_byte = 8'd0;
+				output_byte = 8'd18;
 			32'd380:
 				output_byte = 8'd0;
 			32'd381:
@@ -778,9 +778,9 @@ module rom(input[31:0] address, output reg [7:0] output_byte, output done);
 			32'd386:
 				output_byte = 8'd0;
 			32'd387:
-				output_byte = 8'd19;
+				output_byte = 8'd3;
 			32'd388:
-				output_byte = 8'd1;
+				output_byte = 8'd0;
 			32'd389:
 				output_byte = 8'd0;
 			32'd390:
@@ -788,7 +788,7 @@ module rom(input[31:0] address, output reg [7:0] output_byte, output done);
 			32'd391:
 				output_byte = 8'd0;
 			32'd392:
-				output_byte = 8'd7;
+				output_byte = 8'd1;
 			32'd393:
 				output_byte = 8'd0;
 			32'd394:
@@ -796,7 +796,7 @@ module rom(input[31:0] address, output reg [7:0] output_byte, output done);
 			32'd395:
 				output_byte = 8'd0;
 			32'd396:
-				output_byte = 8'd8;
+				output_byte = 8'd19;
 			32'd397:
 				output_byte = 8'd1;
 			32'd398:
@@ -806,7 +806,7 @@ module rom(input[31:0] address, output reg [7:0] output_byte, output done);
 			32'd400:
 				output_byte = 8'd0;
 			32'd401:
-				output_byte = 8'd1;
+				output_byte = 8'd7;
 			32'd402:
 				output_byte = 8'd0;
 			32'd403:
@@ -814,9 +814,9 @@ module rom(input[31:0] address, output reg [7:0] output_byte, output done);
 			32'd404:
 				output_byte = 8'd0;
 			32'd405:
-				output_byte = 8'd10;
+				output_byte = 8'd8;
 			32'd406:
-				output_byte = 8'd126;
+				output_byte = 8'd1;
 			32'd407:
 				output_byte = 8'd0;
 			32'd408:
@@ -824,7 +824,7 @@ module rom(input[31:0] address, output reg [7:0] output_byte, output done);
 			32'd409:
 				output_byte = 8'd0;
 			32'd410:
-				output_byte = 8'd0;
+				output_byte = 8'd1;
 			32'd411:
 				output_byte = 8'd0;
 			32'd412:
@@ -832,9 +832,9 @@ module rom(input[31:0] address, output reg [7:0] output_byte, output done);
 			32'd413:
 				output_byte = 8'd0;
 			32'd414:
-				output_byte = 8'd13;
+				output_byte = 8'd10;
 			32'd415:
-				output_byte = 8'd0;
+				output_byte = 8'd135;
 			32'd416:
 				output_byte = 8'd0;
 			32'd417:
@@ -848,6 +848,24 @@ module rom(input[31:0] address, output reg [7:0] output_byte, output done);
 			32'd421:
 				output_byte = 8'd0;
 			32'd422:
+				output_byte = 8'd0;
+			32'd423:
+				output_byte = 8'd13;
+			32'd424:
+				output_byte = 8'd0;
+			32'd425:
+				output_byte = 8'd0;
+			32'd426:
+				output_byte = 8'd0;
+			32'd427:
+				output_byte = 8'd0;
+			32'd428:
+				output_byte = 8'd0;
+			32'd429:
+				output_byte = 8'd0;
+			32'd430:
+				output_byte = 8'd0;
+			32'd431:
 				output_byte = 8'd0;
 			default:
 				output_byte = 8'd0;

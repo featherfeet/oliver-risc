@@ -17,12 +17,15 @@ std::string AssemblyGenerator::generateStackVariableRead(std::string variable_na
         return fmt::format("    LOAD {},{}\n", variable_name, destination_register);
     }
 
+    std::string stack_pointer_register;
     Stackframe *stackframe = nullptr;
     if (current_stackframe->containsVariable(variable_name)) {
         stackframe = current_stackframe;
+        stack_pointer_register = "G";
     }
     else if (global_stackframe->containsVariable(variable_name)) {
         stackframe = global_stackframe;
+        stack_pointer_register = "F";
     }
     else {
         std::cout << fmt::format("\033[1;31mERROR:\033[0m Attempt to access undeclared variable `{}`.", variable_name) << std::endl;
@@ -32,7 +35,7 @@ std::string AssemblyGenerator::generateStackVariableRead(std::string variable_na
     // Generate code to load from address (G + variable_offset) in RAM to the specified destination register. Remember that G is the register that stores the stack pointer.
     std::stringstream code;
     code << fmt::format("    CLOAD {},A", stackframe->getVariableOffset(variable_name)) << std::endl;
-    code << "    ADD G,A" << std::endl;
+    code << fmt::format("    ADD {},A", stack_pointer_register) << std::endl;
     code << fmt::format("    RLOAD A,{}", destination_register) << std::endl;
 
     return code.str();
@@ -43,12 +46,15 @@ std::string AssemblyGenerator::generateStackVariableWrite(std::string source_reg
         return fmt::format("    STORE {},{}\n", source_register, variable_name);
     }
 
+    std::string stack_pointer_register;
     Stackframe *stackframe = nullptr;
     if (current_stackframe->containsVariable(variable_name)) {
         stackframe = current_stackframe;
+        stack_pointer_register = "G";
     }
     else if (global_stackframe->containsVariable(variable_name)) {
         stackframe = global_stackframe;
+        stack_pointer_register = "F";
     }
     else {
         std::cout << fmt::format("\033[1;31mERROR:\033[0m Attempt to access undeclared variable `{}`.", variable_name) << std::endl;
@@ -58,7 +64,7 @@ std::string AssemblyGenerator::generateStackVariableWrite(std::string source_reg
     // Generate code to store a value from the source register to address (G + variable_offset) in RAM. Remember that G is the register that stores the stack pointer.
     std::stringstream code;
     code << fmt::format("    CLOAD {},A", stackframe->getVariableOffset(variable_name)) << std::endl;
-    code << "    ADD G,A" << std::endl;
+    code << fmt::format("    ADD {},A", stack_pointer_register) << std::endl;
     code << fmt::format("    RSTORE {},A", source_register) << std::endl;
 
     return code.str();
@@ -69,12 +75,15 @@ std::string AssemblyGenerator::generateStackVariableWrite(OPERAND_C_TYPE constan
         return fmt::format("    CLOAD {},A\n    STORE A,{}", constant_value, variable_name);
     }
 
+    std::string stack_pointer_register;
     Stackframe *stackframe = nullptr;
     if (current_stackframe->containsVariable(variable_name)) {
         stackframe = current_stackframe;
+        stack_pointer_register = "G";
     }
     else if (global_stackframe->containsVariable(variable_name)) {
         stackframe = global_stackframe;
+        stack_pointer_register = "F";
     }
     else {
         std::cout << fmt::format("\033[1;31mERROR:\033[0m Attempt to access undeclared variable `{}`.", variable_name) << std::endl;
@@ -84,7 +93,7 @@ std::string AssemblyGenerator::generateStackVariableWrite(OPERAND_C_TYPE constan
     // Generate code to store a value from the source register to address (G + variable_offset) in RAM. Remember that G is the register that stores the stack pointer.
     std::stringstream code;
     code << fmt::format("    CLOAD {},A", stackframe->getVariableOffset(variable_name)) << std::endl;
-    code << "    ADD G,A" << std::endl;
+    code << fmt::format("    ADD {},A", stack_pointer_register) << std::endl;
     code << fmt::format("    CLOAD {},B", constant_value) << std::endl;
     code << "    RSTORE B,A" << std::endl;
 
@@ -128,6 +137,7 @@ std::tuple<std::string, std::string> AssemblyGenerator::generateAsm(ASTNode *nod
         code_section << fmt::format("    CLOAD {},A", global_stackframe->getTotalSize()) << std::endl;
         code_section << "    SUB G,A" << std::endl;
         code_section << "    MOV A,G" << std::endl;
+        code_section << "    MOV G,F" << std::endl; // Keep a copy of the stack pointer for the global scope in register F; this speeds up accessing global variables.
 
         data_section << program_data_section.str();
         code_section << program_code_section.str();
