@@ -14,6 +14,7 @@ class Stackframe {
         void addVariable(std::string name, size_t size);
         OPERAND_C_TYPE getVariableOffset(std::string name);
         OPERAND_C_TYPE getTotalSize();
+        bool containsVariable(std::string name);
 };
 
 #endif // STACKFRAME_H

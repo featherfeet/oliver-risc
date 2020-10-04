@@ -4,6 +4,7 @@
 #include <tuple>
 #include "processor.h"
 #include "asmgenerator.h"
+#include "stackframe.h"
 
 #define FMT_HEADER_ONLY
 #include <fmt/format.h>
@@ -12,46 +13,81 @@ AssemblyGenerator::AssemblyGenerator() {
 }
 
 std::string AssemblyGenerator::generateStackVariableRead(std::string variable_name, std::string destination_register) {
-    std::stringstream code;
     if (variable_name == "output_address" || variable_name == "output_value") {
-        code << fmt::format("    LOAD {},{}", variable_name, destination_register) << std::endl;
+        return fmt::format("    LOAD {},{}\n", variable_name, destination_register);
+    }
+
+    Stackframe *stackframe = nullptr;
+    if (current_stackframe->containsVariable(variable_name)) {
+        stackframe = current_stackframe;
+    }
+    else if (global_stackframe->containsVariable(variable_name)) {
+        stackframe = global_stackframe;
     }
     else {
-        // Generate code to load from address (G + variable_offset) in RAM to the specified destination register. Remember that G is the register that stores the stack pointer.
-        code << fmt::format("    CLOAD {},A", current_stackframe->getVariableOffset(variable_name)) << std::endl;
-        code << "    ADD G,A" << std::endl;
-        code << fmt::format("    RLOAD A,{}", destination_register) << std::endl;
+        std::cout << fmt::format("\033[1;31mERROR:\033[0m Attempt to access undeclared variable `{}`.", variable_name) << std::endl;
+        std::exit(1);
     }
+
+    // Generate code to load from address (G + variable_offset) in RAM to the specified destination register. Remember that G is the register that stores the stack pointer.
+    std::stringstream code;
+    code << fmt::format("    CLOAD {},A", stackframe->getVariableOffset(variable_name)) << std::endl;
+    code << "    ADD G,A" << std::endl;
+    code << fmt::format("    RLOAD A,{}", destination_register) << std::endl;
+
     return code.str();
 }
 
 std::string AssemblyGenerator::generateStackVariableWrite(std::string source_register, std::string variable_name) {
-    std::stringstream code;
     if (variable_name == "output_address" || variable_name == "output_value") {
-        code << fmt::format("    STORE {},{}", source_register, variable_name) << std::endl;
+        return fmt::format("    STORE {},{}\n", source_register, variable_name);
+    }
+
+    Stackframe *stackframe = nullptr;
+    if (current_stackframe->containsVariable(variable_name)) {
+        stackframe = current_stackframe;
+    }
+    else if (global_stackframe->containsVariable(variable_name)) {
+        stackframe = global_stackframe;
     }
     else {
-        // Generate code to store a value from the source register to address (G + variable_offset) in RAM. Remember that G is the register that stores the stack pointer.
-        code << fmt::format("    CLOAD {},A", current_stackframe->getVariableOffset(variable_name)) << std::endl;
-        code << "    ADD G,A" << std::endl;
-        code << fmt::format("    RSTORE {},A", source_register) << std::endl;
+        std::cout << fmt::format("\033[1;31mERROR:\033[0m Attempt to access undeclared variable `{}`.", variable_name) << std::endl;
+        std::exit(1);
     }
+
+    // Generate code to store a value from the source register to address (G + variable_offset) in RAM. Remember that G is the register that stores the stack pointer.
+    std::stringstream code;
+    code << fmt::format("    CLOAD {},A", stackframe->getVariableOffset(variable_name)) << std::endl;
+    code << "    ADD G,A" << std::endl;
+    code << fmt::format("    RSTORE {},A", source_register) << std::endl;
+
     return code.str();
 }
 
 std::string AssemblyGenerator::generateStackVariableWrite(OPERAND_C_TYPE constant_value, std::string variable_name) {
-    std::stringstream code;
     if (variable_name == "output_address" || variable_name == "output_value") {
-        code << fmt::format("    CLOAD {},A", constant_value) << std::endl;
-        code << fmt::format("    STORE A,{}", variable_name) << std::endl;
+        return fmt::format("    CLOAD {},A\n    STORE A,{}", constant_value, variable_name);
+    }
+
+    Stackframe *stackframe = nullptr;
+    if (current_stackframe->containsVariable(variable_name)) {
+        stackframe = current_stackframe;
+    }
+    else if (global_stackframe->containsVariable(variable_name)) {
+        stackframe = global_stackframe;
     }
     else {
-        // Generate code to store a value from the source register to address (G + variable_offset) in RAM. Remember that G is the register that stores the stack pointer.
-        code << fmt::format("    CLOAD {},A", current_stackframe->getVariableOffset(variable_name)) << std::endl;
-        code << "    ADD G,A" << std::endl;
-        code << fmt::format("    CLOAD {},B", constant_value) << std::endl;
-        code << "    RSTORE B,A" << std::endl;
+        std::cout << fmt::format("\033[1;31mERROR:\033[0m Attempt to access undeclared variable `{}`.", variable_name) << std::endl;
+        std::exit(1);
     }
+
+    // Generate code to store a value from the source register to address (G + variable_offset) in RAM. Remember that G is the register that stores the stack pointer.
+    std::stringstream code;
+    code << fmt::format("    CLOAD {},A", stackframe->getVariableOffset(variable_name)) << std::endl;
+    code << "    ADD G,A" << std::endl;
+    code << fmt::format("    CLOAD {},B", constant_value) << std::endl;
+    code << "    RSTORE B,A" << std::endl;
+
     return code.str();
 }
 
@@ -68,7 +104,8 @@ std::tuple<std::string, std::string> AssemblyGenerator::generateAsm(ASTNode *nod
         ASTRootNode *rootNode = (ASTRootNode *) node;
         std::vector<ASTStatementNode*> children = rootNode->getChildren();
 
-        current_stackframe = new Stackframe();
+        global_stackframe = new Stackframe();
+        current_stackframe = global_stackframe;
 
         data_section << ".data:" << std::endl;
         data_section << "    output_address = 0" << std::endl;
@@ -78,28 +115,29 @@ std::tuple<std::string, std::string> AssemblyGenerator::generateAsm(ASTNode *nod
         code_section << "    // Start root node." << std::endl;
         code_section << "    CLOAD 4000000,G // Start stack pointer at 4 MB, grows downwards (towards address 0)." << std::endl;
 
+        // Generate assembly for the body of the program. current_stackframe/global_stackframe track how much memory global variables will take on the stack.
+        std::stringstream program_data_section;
+        std::stringstream program_code_section;
         for (int i = 0; i < children.size(); i++) {
             auto generated_assembly = generateAsm(children[i]);
-            data_section << std::get<0>(generated_assembly);
-            code_section << std::get<1>(generated_assembly);
+            program_data_section << std::get<0>(generated_assembly);
+            program_code_section << std::get<1>(generated_assembly);
         }
 
-        delete current_stackframe;
+        // Allocate memory on the stack for global variables.
+        code_section << fmt::format("    CLOAD {},A", global_stackframe->getTotalSize()) << std::endl;
+        code_section << "    SUB G,A" << std::endl;
+        code_section << "    MOV A,G" << std::endl;
+
+        data_section << program_data_section.str();
+        code_section << program_code_section.str();
+
+        delete global_stackframe;
         code_section << "    // End root node." << std::endl;
     }
 
     else if (node->getNodeType() == VARIABLE_DECLARATION_NODE) {
         ASTVariableDeclarationNode *declaration = (ASTVariableDeclarationNode *) node;
-        /*
-        data_section << "    // Start variable declaration node." << std::endl;
-        data_section << fmt::format("    {} = 0", declaration->getVariableName()) << std::endl;
-        data_section << "    // End variable declaration node." << std::endl;
-        code_section << "    // Start variable declaration node." << std::endl;
-        // Variable may need to be re-initialized if this declaration is inside a loop, so we have to CLOAD it every time.
-        code_section << fmt::format("    CLOAD {},A", declaration->getValue()) << std::endl;
-        code_section << fmt::format("    STORE A,{}", declaration->getVariableName()) << std::endl;
-        code_section << "    // End variable declaration node." << std::endl;
-        */
         current_stackframe->addVariable(declaration->getVariableName(), OPERAND_SIZE);
         code_section << generateStackVariableWrite(declaration->getValue(), declaration->getVariableName());
     }
@@ -153,7 +191,7 @@ std::tuple<std::string, std::string> AssemblyGenerator::generateAsm(ASTNode *nod
             }
             else if (term->getOperation() == MODULUS) {
                 code_section << "    DIV C,D" << std::endl;
-                code_section << "    MOV A,C" << std::endl;
+                code_section << "    MOV B,C" << std::endl;
             }
         }
         code_section << "    // End expression node." << std::endl;
@@ -311,7 +349,6 @@ std::tuple<std::string, std::string> AssemblyGenerator::generateAsm(ASTNode *nod
     else if (node->getNodeType() == PROCEDURE_NODE) {
         ASTProcedureNode *procedure = (ASTProcedureNode*) node;
         // Initialize a Stackframe object to track variables in the procedure.
-        Stackframe *previous_stackframe = current_stackframe;
         current_stackframe = new Stackframe();
         // Generate code for the procedure.
         code_section << "    // Start procedure node." << std::endl;
@@ -334,7 +371,7 @@ std::tuple<std::string, std::string> AssemblyGenerator::generateAsm(ASTNode *nod
         code_section << "    // End procedure node." << std::endl;
         stack_allocations[procedure->getProcedureName()] = current_stackframe->getTotalSize(); // Store the amount of RAM that the function's stack takes up in a global table. This will be used to allocate memory for the function when it is called.
         delete current_stackframe;
-        current_stackframe = previous_stackframe;
+        current_stackframe = global_stackframe;
     }
 
     return std::make_tuple(data_section.str(), code_section.str());

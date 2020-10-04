@@ -1,0 +1,13 @@
+VAR a = 0;
+VAR b = 10;
+
+PROCEDURE prodc;
+BEGIN
+    output_value := b + 48;
+    output_address := 80;
+    CALL OUT;
+END;
+
+CALL prodc;
+
+CALL HALT;

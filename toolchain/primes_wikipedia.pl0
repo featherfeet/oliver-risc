@@ -1,0 +1,40 @@
+VAR max = 100;
+VAR arg;
+VAR ret;
+
+PROCEDURE isprime;
+BEGIN
+    VAR i;
+	ret := 1;
+	i := 2;
+	WHILE i < arg DO
+	BEGIN
+		//IF arg / i * i = arg THEN
+		IF arg % i = 0 THEN
+		BEGIN
+			ret := 0;
+			i := arg;
+		END;
+		i := i + 1;
+	END;
+END;
+
+PROCEDURE primes;
+BEGIN
+	arg := 2;
+	WHILE arg < max DO
+	BEGIN
+		CALL isprime;
+		IF ret = 1 THEN
+        BEGIN
+            output_address := 0;
+            output_value := arg;
+            CALL OUT;
+        END;
+		arg := arg + 1;
+	END;
+END;
+
+CALL primes;
+
+CALL HALT;

@@ -25,3 +25,7 @@ OPERAND_C_TYPE Stackframe::getVariableOffset(std::string name) {
 OPERAND_C_TYPE Stackframe::getTotalSize() {
     return address_counter;
 }
+
+bool Stackframe::containsVariable(std::string name) {
+    return variable_offsets.count(name);
+}

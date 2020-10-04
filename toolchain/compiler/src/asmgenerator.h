@@ -6,6 +6,7 @@
 
 class AssemblyGenerator {
     int label_counter = 0;
+    Stackframe *global_stackframe = nullptr;
     Stackframe *current_stackframe = nullptr;
     std::map<std::string, OPERAND_C_TYPE> stack_allocations; // Table that relates procedure names to how much stack space they take up.
     std::string generateStackVariableRead(std::string variable_name, std::string destination_register);

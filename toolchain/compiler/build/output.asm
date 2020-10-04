@@ -4,29 +4,26 @@
 .code:
     // Start root node.
     CLOAD 4000000,G // Start stack pointer at 4 MB, grows downwards (towards address 0).
-    // Start procedure node.
-    CMP A,A
-    JMPE end_procedure_print_variable_x
-    start_procedure_print_variable_x:
-    // Start begin . . . end block node.
+    CLOAD 12,A
+    SUB G,A
+    MOV A,G
     CLOAD 4,A
     ADD G,A
-    CLOAD 5,B
+    CLOAD 0,B
     RSTORE B,A
+    CLOAD 8,A
+    ADD G,A
+    CLOAD 10,B
+    RSTORE B,A
+    // Start procedure node.
+    CMP A,A
+    JMPE end_procedure_prodc
+    start_procedure_prodc:
+    // Start begin . . . end block node.
     // Start variable assignment node.
     // Start expression node.
     CLOAD 0,C
-    CLOAD 0,D
-    ADD C,D
-    MOV A,C
-    // End expression node.
-    STORE C,output_address
-
-    // End variable assignment node.
-    // Start variable assignment node.
-    // Start expression node.
-    CLOAD 0,C
-    CLOAD 4,A
+    CLOAD 8,A
     ADD G,A
     RLOAD A,D
 
@@ -34,47 +31,6 @@
     MOV A,C
     CLOAD 48,D
     ADD C,D
-    MOV A,C
-    // End expression node.
-    STORE C,output_value
-
-    // End variable assignment node.
-    // Start procedure call node.
-    LOAD output_address,A
-    LOAD output_value,B
-    OUT A,B
-    // End procedure call node.
-    // End begin . . . end block node.
-    MOV G,B
-    CLOAD 8,A
-    ADD A,G
-    MOV A,G
-    RLOAD B,IP
-    end_procedure_print_variable_x:
-    // End procedure node.
-    // Start procedure node.
-    CMP A,A
-    JMPE end_procedure_square_seven
-    start_procedure_square_seven:
-    // Start begin . . . end block node.
-    CLOAD 4,A
-    ADD G,A
-    CLOAD 7,B
-    RSTORE B,A
-    // Start variable assignment node.
-    // Start expression node.
-    CLOAD 0,C
-    CLOAD 4,A
-    ADD G,A
-    RLOAD A,D
-
-    ADD C,D
-    MOV A,C
-    CLOAD 4,A
-    ADD G,A
-    RLOAD A,D
-
-    MULT C,D
     MOV A,C
     // End expression node.
     STORE C,output_value
@@ -95,43 +51,23 @@
     LOAD output_value,B
     OUT A,B
     // End procedure call node.
-    // Start procedure call node.
-    CLOAD 8,A
-    SUB G,A
-    MOV A,G
-    CLOAD 18,A
-    ADD IP,A
-    RSTORE A,G
-    CMP A,A
-    JMPE start_procedure_print_variable_x
-    // End procedure call node.
     // End begin . . . end block node.
     MOV G,B
-    CLOAD 8,A
+    CLOAD 4,A
     ADD A,G
     MOV A,G
     RLOAD B,IP
-    end_procedure_square_seven:
+    end_procedure_prodc:
     // End procedure node.
     // Start procedure call node.
-    CLOAD 8,A
+    CLOAD 4,A
     SUB G,A
     MOV A,G
     CLOAD 18,A
     ADD IP,A
     RSTORE A,G
     CMP A,A
-    JMPE start_procedure_print_variable_x
-    // End procedure call node.
-    // Start procedure call node.
-    CLOAD 8,A
-    SUB G,A
-    MOV A,G
-    CLOAD 18,A
-    ADD IP,A
-    RSTORE A,G
-    CMP A,A
-    JMPE start_procedure_square_seven
+    JMPE start_procedure_prodc
     // End procedure call node.
     // Start procedure call node.
     HALT
