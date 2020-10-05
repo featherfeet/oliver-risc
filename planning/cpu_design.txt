@@ -1,9 +1,5 @@
 # Oliver-RISC: The Ultimate RISC Processor
 
-## TODO
-
-Fix problem where doing an RLOAD/RSTORE with the same register for both operands causes it to corrupt the address register as it reads/writes the bytes to/from RAM.
-
 The CPU has 8MB of SDRAM.
 On bootup, the FPGA loads a binary from the ROM to the SDRAM (at address 32'd0). The FPGA detects the magic byte (the CODE instruction), which it uses to know where the .data section ends and the .code section begins. The FPGA then starts executing instructions from the start of the .code section. The .data and .code sections are addressed separately.
 

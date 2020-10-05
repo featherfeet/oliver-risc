@@ -38,14 +38,22 @@ case (operation)
             operand_byte_index <= operand_byte_index + 8'd1;
             ram_read_complete <= 'b0;
         end
-        else
-            read_from_ram(registers[operand1] + operand_byte_index);
-        if (operand_byte_index == `OPERAND_SIZE_BYTES)
+        else if (operand_byte_index == `OPERAND_SIZE_BYTES)
         begin
             $display("RLOAD");
-            $display("Loaded value %0d from address %0d in RAM to register %0d.", registers[operand2], operand1, operand2);
+            $display("Loaded value %0d from address %0d in RAM to register %0d.", registers[operand2], temp_address, operand2);
             operand_byte_index <= 'b0;
             next_instruction();
+        end
+        else
+        begin
+            if (operand_byte_index == 'd0)
+            begin
+                temp_address <= registers[operand1]; // In the event that RLOAD is called with the same register for both operands, copying the address to a separate temporary register stops the instruction from corrupting its own address register.
+                read_from_ram(registers[operand1] + operand_byte_index);
+            end
+            else
+                read_from_ram(temp_address + operand_byte_index);
         end
     end
     // Load value from constant operand into a register.
@@ -94,7 +102,13 @@ case (operation)
         end
         else
         begin
-            write_to_ram(registers[operand2] + operand_byte_index, registers[operand1][7:0]);
+            if (operand_byte_index == 'b0)
+            begin
+                temp_address <= registers[operand2]; // In the event that RSTORE is called with the same register for both arguments, storing the address in a separate temporary register prevents the instruction corrupting its own address register.
+                write_to_ram(registers[operand2] + operand_byte_index, registers[operand1][7:0]);
+            end
+            else
+                write_to_ram(temp_address + operand_byte_index, registers[operand1][7:0]);
         end
     end
     // Add two registers and store the result in register A.

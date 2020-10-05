@@ -43,6 +43,8 @@ reg [`OPERAND_SIZE_BITS - 1:0] code_section_start_address; // Where (in RAM) the
 reg code_section_start_found; // Whether "code_section_start_address" has been found yet. 0 for not-found-yet, 1 for found.
 reg [`OPERAND_SIZE_BITS - 1:0] program_end_address; // Where (in RAM) the binary ends.
 
+reg [`OPERAND_SIZE_BITS - 1:0] temp_address; // For the RLOAD and RSTORE instructions, this register is used to store a copy of the address specified so that the instruction doesn't corrupt its own address register while executing.
+
 // Interrupt vector table -- sets the memory addresses of the interrupt service routines.
 reg [`OPERAND_SIZE_BITS - 1:0] interrupt_vector_table [`NUM_INTERRUPTS - 1:0]; // interrupt_vector_table[0] is the address of ISR number 0.
 
@@ -345,6 +347,7 @@ begin
         divider_numerator <= 'b0;
         divider_denominator <= 'b0;
         division_delay_counter <= 'b0;
+        temp_address <= 'b0;
     end
     else
     begin
