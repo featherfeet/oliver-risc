@@ -7,6 +7,9 @@ parser.tab.h parser.tab.c: ../src/parser.y
 lex.yy.c: ../src/lexer.l parser.tab.h parser.tab.c
 	flex ../src/lexer.l
 
+asan_debug: lex.yy.c parser.tab.h parser.tab.c ../src/assembler.h ../../processor.h
+	gcc -g -Wall -fsanitize=address -o main `pkg-config --cflags glib-2.0` -I../src -I../.. parser.tab.c lex.yy.c -lfl `pkg-config --libs glib-2.0`
+
 debug: lex.yy.c parser.tab.h parser.tab.c ../src/assembler.h ../../processor.h
 	gcc -g -Wall -o main `pkg-config --cflags glib-2.0` -I../src -I../.. parser.tab.c lex.yy.c -lfl `pkg-config --libs glib-2.0`
 

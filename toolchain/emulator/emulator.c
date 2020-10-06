@@ -28,16 +28,13 @@ int main(int argc, char *argv[]) {
 	rewind(file);
 	fread(raw_binary, raw_binary_length, 1, file);
 
-    // Find the start of the .code section.
-    int start_of_code_section_offset = 0; // The address in the raw binary where the .code section starts.
-	for (int i = 0; i < raw_binary_length; i += OPERAND_SIZE) {
-		if (raw_binary[i] == OPERATION_CODE) {
-            start_of_code_section_offset = i + 1;
-			break;
-		}
-	}
-
+    // Define registers.
     OPERAND_C_TYPE registers[NUM_REGISTERS] = {0};
+
+    // Find the start of the .code section.
+    OPERAND_C_TYPE start_of_code_section_offset = 0; // The address in the raw binary where the .code section starts.
+    memcpy(&start_of_code_section_offset, raw_binary, OPERAND_SIZE); // The first OPERAND_SIZE bytes of the binary file specify the length of the .data section (which is also the offset at which the .code section begins).
+    start_of_code_section_offset += OPERAND_SIZE; // Compensate for the first OPERAND_SIZE bytes of the binary file being used for the length of the .data section.
 
     REGISTER_IP = start_of_code_section_offset;
     // Execution loop.

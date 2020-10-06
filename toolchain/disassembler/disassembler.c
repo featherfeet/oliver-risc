@@ -57,8 +57,6 @@ const char *operationToString(Operation operation) {
             return "RST";
         case OPERATION_HALT:
             return "HALT";
-        case OPERATION_CODE:
-            return "CODE";
         case OPERATION_ISR:
             return "ISR";
         case OPERATION_INT:
@@ -91,15 +89,13 @@ int main(int argc, char *argv[]) {
 	uint8_t *raw_binary = malloc(raw_binary_length);
 	rewind(file);
 	fread(raw_binary, raw_binary_length, 1, file);
-    int start_of_code_section_offset = 0; // The address in the raw binary where the .code section starts.
+    OPERAND_C_TYPE start_of_code_section_offset = 0; // The address in the raw binary where the .code section starts.
+    memcpy(&start_of_code_section_offset, raw_binary, OPERAND_SIZE); // The first OPERAND_SIZE bytes of the binary file specify the length of the .data section (which is also the offset at which the .code section begins).
+    start_of_code_section_offset += OPERAND_SIZE; // Compensate for the first OPERAND_SIZE bytes of the binary file being used for the length of the .data section.
 	// Loop through and disassemble the .data section of the binary.
 	int i;
 	printf(".data:\n");
-	for (i = 0; i < raw_binary_length; i += OPERAND_SIZE) {
-		if (raw_binary[i] == OPERATION_CODE) {
-            start_of_code_section_offset = i + 1;
-			break;
-		}
+	for (i = OPERAND_SIZE; i < start_of_code_section_offset; i += OPERAND_SIZE) {
         uint32_t value = 0;
         memcpy(&value, raw_binary + i, OPERAND_SIZE);
 		printf("\t[%#08x]\t%d\n", i, value);
@@ -160,9 +156,6 @@ int main(int argc, char *argv[]) {
                 printf("\n");
                 break;
             case OPERATION_HALT:
-                printf("\n");
-                break;
-            case OPERATION_CODE:
                 printf("\n");
                 break;
             case OPERATION_ISR:

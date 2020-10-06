@@ -35,15 +35,14 @@
 `define OPERATION_JMPG            11
 `define OPERATION_RST             12
 `define OPERATION_HALT            13
-`define OPERATION_CODE            14
-`define OPERATION_ISR             15
-`define OPERATION_INT             16
-`define OPERATION_ENDINT          17
-`define OPERATION_RLOAD           18
-`define OPERATION_RSTORE          19
-`define OPERATION_CLOAD           20
-`define OPERATION_MULT            21
-`define OPERATION_DIV             22
+`define OPERATION_ISR             14
+`define OPERATION_INT             15
+`define OPERATION_ENDINT          16
+`define OPERATION_RLOAD           17
+`define OPERATION_RSTORE          18
+`define OPERATION_CLOAD           19
+`define OPERATION_MULT            20
+`define OPERATION_DIV             21
 
 `define NUM_REGISTERS             10
 `define REGISTER_IP               registers[0]

@@ -161,6 +161,9 @@ variable_declaration: TOKEN_IDENTIFIER TOKEN_EQUALS TOKEN_CONSTANT {
     // Create a Variable structure representing the variable declaration.
     Variable *variable = g_new(Variable, 1);
     OPERAND_C_TYPE variable_address = g_hash_table_size(variables_table) * OPERAND_SIZE;
+    // Offset the addresses by OPERAND_SIZE because the first OPERAND_SIZE bytes of the binary are used to specify the length of the .data section.
+    variable_address += OPERAND_SIZE;
+    // Create the Variable structure.
     memcpy(variable->value, &variable_value, OPERAND_SIZE);
     memcpy(variable->address, &variable_address, OPERAND_SIZE);
 
@@ -481,7 +484,8 @@ int main(int argc, char *argv[]) {
     // Take the variables_table hash table and convert it into the final binary format.
     ///////////////////////////////////////////////////////////////////////////////////////
     // Allocate memory to store the final binary format of the variables (.data) section of the output binary.
-    void *variables_binary = g_malloc0(g_hash_table_size(variables_table) * OPERAND_SIZE);
+    size_t variables_binary_size = g_hash_table_size(variables_table) * OPERAND_SIZE;
+    void *variables_binary = g_malloc0(variables_binary_size);
     // Iterate over the variables_table hash table.
     GHashTableIter iter;
     g_hash_table_iter_init(&iter, variables_table);
@@ -490,15 +494,25 @@ int main(int argc, char *argv[]) {
         // Convert the variable->address buffer in the Variable structure back into an integer.
         OPERAND_C_TYPE variable_address;
         memcpy(&variable_address, variable->address, OPERAND_SIZE);
+        variable_address -= OPERAND_SIZE; // Compensate for the first OPERAND_SIZE bytes of the file being used to store the length of the .data section.
         // Copy the variable's value into the final binary format at the location specified by variable_address.
         memcpy(variables_binary + variable_address, variable->value, OPERAND_SIZE);
     }
+
+    for (int i = 0; i < variables_binary_size; i++) {
+        printf("%u ", ((uint8_t *) variables_binary)[i]);
+        if ((i + 1) % OPERAND_SIZE == 0) {
+            printf(" ");
+        }
+    }
+    printf("\n");
 
     ///////////////////////////////////////////////////////////////////////////////////////
     // Take the instructions_table hash table and convert it into the final binary format.
     ///////////////////////////////////////////////////////////////////////////////////////
     // Allocate memory to store the final binary format of the instructions (.code) section of the output binary.
-    void *instructions_binary = g_malloc0(g_slist_length(instructions_table) * INSTRUCTION_SIZE);
+    size_t instructions_binary_size = g_slist_length(instructions_table) * INSTRUCTION_SIZE;
+    void *instructions_binary = g_malloc0(instructions_binary_size);
     // Iterate over the instructions_table singly-linked list.
     Instruction *instruction;
     // i counts how many instructions have already been processed by the loop. It is used to calculate where in instructions_binary to place the next instruction.
@@ -643,19 +657,16 @@ int main(int argc, char *argv[]) {
         i++;
     }
 
+    // Write the length of the .data (variables) section to the first OPERAND_SIZE bytes of the output binary file.
+    if (fwrite(&variables_binary_size, OPERAND_SIZE, 1, output_file) != 1) {
+        printf("\033[1;31mERROR:\033[0m Could not write %d bytes of data to the file.\n", OPERAND_SIZE);
+    }
     // Write the final binary format of the .data (variables) section to the output binary file.
-    if (fwrite(variables_binary, 1, g_hash_table_size(variables_table) * OPERAND_SIZE, output_file) != g_hash_table_size(variables_table) * OPERAND_SIZE) {
+    if (fwrite(variables_binary, OPERAND_SIZE, g_hash_table_size(variables_table), output_file) != g_hash_table_size(variables_table)) {
         printf("\033[1;31mERROR:\033[0m Could not write %d bytes of data to the file.\n", g_hash_table_size(variables_table) * OPERAND_SIZE);
     }
-    // Write the magic section separator to the output file.
-    uint8_t section_separator[OPERAND_SIZE];
-    int operation_code = OPERATION_CODE;
-    memcpy(section_separator, &operation_code, sizeof(Operation));
-    if (fwrite(&section_separator, sizeof(uint8_t), OPERATION_SIZE, output_file) != OPERATION_SIZE) {
-        printf("\033[1;31mERROR:\033[0m Could not write %d bytes of data to the file.\n", OPERATION_SIZE);
-    }
     // Write the final binary format of the .code (instructions) section to the output binary file.
-    if (fwrite(instructions_binary, sizeof(uint8_t), g_slist_length(instructions_table) * INSTRUCTION_SIZE, output_file) != g_slist_length(instructions_table) * INSTRUCTION_SIZE) {
+    if (fwrite(instructions_binary, INSTRUCTION_SIZE, g_slist_length(instructions_table), output_file) != g_slist_length(instructions_table)) {
         printf("\033[1;31mERROR:\033[0m Could not write %d bytes of data to the file.\n", g_slist_length(instructions_table) * INSTRUCTION_SIZE);
     }
 

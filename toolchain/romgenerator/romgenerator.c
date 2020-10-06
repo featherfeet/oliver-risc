@@ -19,14 +19,14 @@ int main(int argc, char *argv[]) {
     FILE *verilog = fopen(argv[2], "w");
     // Write the Verilog module header.
     fprintf(verilog, "module rom(input[31:0] address, output reg [7:0] output_byte, output done);\n");
-    fprintf(verilog, "\tassign done = (address == 32'd%d) ? 1'b1 : 1'b0;\n", binary_size - 1);
+    fprintf(verilog, "\tassign done = (address == 32'd%u) ? 1'b1 : 1'b0;\n", binary_size - 1);
     fprintf(verilog, "\talways @(address)\n");
     fprintf(verilog, "\tbegin\n");
     // Write the body of the Verilog model.
     fprintf(verilog, "\t\tcase (address)\n");
     for (int i = 0; i < binary_size; i++) {
         fprintf(verilog, "\t\t\t32'd%d:\n", i);
-        fprintf(verilog, "\t\t\t\toutput_byte = 8'd%d;\n", binary_data[i]);
+        fprintf(verilog, "\t\t\t\toutput_byte = 8'd%u;\n", binary_data[i]);
     }
     fprintf(verilog, "\t\t\tdefault:\n");
     fprintf(verilog, "\t\t\t\toutput_byte = 8'd0;\n");

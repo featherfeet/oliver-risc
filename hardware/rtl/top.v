@@ -40,7 +40,6 @@ reg [`OPERAND_SIZE_BITS - 1:0] operand2;
 reg [`OPERAND_SIZE_BITS - 1:0] registers [`NUM_REGISTERS - 1:0]; // IP, A, B, C, D, E, F, and G: eight 32-bit registers.
 reg [`OPERAND_SIZE_BITS - 1:0] shadow_registers [`NUM_REGISTERS - 1:0]; // "registers" is copied to here while an interrupt is running.
 reg [`OPERAND_SIZE_BITS - 1:0] code_section_start_address; // Where (in RAM) the instructions are located.
-reg code_section_start_found; // Whether "code_section_start_address" has been found yet. 0 for not-found-yet, 1 for found.
 reg [`OPERAND_SIZE_BITS - 1:0] program_end_address; // Where (in RAM) the binary ends.
 
 reg [`OPERAND_SIZE_BITS - 1:0] temp_address; // For the RLOAD and RSTORE instructions, this register is used to store a copy of the address specified so that the instruction doesn't corrupt its own address register while executing.
@@ -342,7 +341,6 @@ begin
         interrupt_value_fifo_write <= 'b0;
         interrupt_value_fifo_read <= 'b0;
         code_section_start_address <= 'b0;
-        code_section_start_found <= 'b0;
         program_end_address <= 'b0;
         divider_numerator <= 'b0;
         divider_denominator <= 'b0;
@@ -376,24 +374,31 @@ begin
                     $display("%t: Changing state to STATE_FETCH_OPERATION", $time);
                     sdram_controller_wr_n_i <= 'b1;
                     program_end_address <= program_rom_address;
+                    // Add an offset OPERAND_SIZE_BYTES to the start of the
+                    // code section because of the space taken up OPERAND_SIZE_BYTES bytes at
+                    // the start of the file used to store the length.
+                    code_section_start_address <= code_section_start_address + `OPERAND_SIZE_BYTES;
+                    `REGISTER_IP <= code_section_start_address + `OPERAND_SIZE_BYTES;
+                    // Next state.
                     state <= `STATE_FETCH_OPERATION;
                 end
                 else
                 begin
+                    // Load the program from the ROM to RAM.
                     write_to_ram(program_rom_address, program_rom_byte);
                     if (ram_write_complete)
                     begin
+                        // Read the next address.
                         program_rom_address <= program_rom_address + 1;
-                    end
-                    else
-                    begin
-                        state <= `STATE_LOAD_TO_RAM;
-                    end
-                    if (~code_section_start_found && program_rom_byte == `OPERATION_CODE)
-                    begin
-                        code_section_start_address <= program_rom_address + 1;
-                        code_section_start_found <= 'b1;
-                        `REGISTER_IP <= program_rom_address + 1;
+                        // The first OPERAND_SIZE_BYTES bytes of the binary
+                        // contain the length of the .data section (which is also
+                        // the offset to the beginning of the .code section). We
+                        // store this value into code_section_start_address.
+                        if (program_rom_address < `OPERAND_SIZE_BYTES)
+                        begin
+                            $display("program_rom_byte: %d", program_rom_byte);
+                            code_section_start_address <= {program_rom_byte, code_section_start_address[31:8]};
+                        end
                     end
                     else
                     begin

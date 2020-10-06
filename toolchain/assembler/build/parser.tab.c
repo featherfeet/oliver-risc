@@ -531,9 +531,9 @@ static const yytype_uint8 yytranslate[] =
 static const yytype_uint16 yyrline[] =
 {
        0,   119,   119,   121,   123,   129,   135,   149,   151,   155,
-     173,   180,   191,   202,   214,   225,   236,   248,   259,   271,
-     283,   295,   307,   319,   331,   343,   355,   363,   371,   379,
-     386,   393,   404,   414
+     176,   183,   194,   205,   217,   228,   239,   251,   262,   274,
+     286,   298,   310,   322,   334,   346,   358,   366,   374,   382,
+     389,   396,   407,   417
 };
 #endif
 
@@ -1407,17 +1407,20 @@ yyreduce:
     // Create a Variable structure representing the variable declaration.
     Variable *variable = g_new(Variable, 1);
     OPERAND_C_TYPE variable_address = g_hash_table_size(variables_table) * OPERAND_SIZE;
+    // Offset the addresses by OPERAND_SIZE because the first OPERAND_SIZE bytes of the binary are used to specify the length of the .data section.
+    variable_address += OPERAND_SIZE;
+    // Create the Variable structure.
     memcpy(variable->value, &variable_value, OPERAND_SIZE);
     memcpy(variable->address, &variable_address, OPERAND_SIZE);
 
     // Save the Variable structure in the variables_table hash table.
     g_hash_table_insert(variables_table, variable_name, variable);
 }
-#line 1417 "parser.tab.c" /* yacc.c:1652  */
+#line 1420 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 10:
-#line 173 "../src/parser.y" /* yacc.c:1652  */
+#line 176 "../src/parser.y" /* yacc.c:1652  */
     {
         printf("Instruction: NOP\n");
 
@@ -1425,11 +1428,11 @@ yyreduce:
         instruction->operation = OPERATION_NOP;
         instructions_table = g_slist_append(instructions_table, instruction);
     }
-#line 1429 "parser.tab.c" /* yacc.c:1652  */
+#line 1432 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 11:
-#line 180 "../src/parser.y" /* yacc.c:1652  */
+#line 183 "../src/parser.y" /* yacc.c:1652  */
     {
         printf("Instruction: LOAD (variable) %s,%s\n", (yyvsp[-1].strval), (yyvsp[0].strval));
 
@@ -1441,11 +1444,11 @@ yyreduce:
 
         g_free((yyvsp[0].strval));
     }
-#line 1445 "parser.tab.c" /* yacc.c:1652  */
+#line 1448 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 12:
-#line 191 "../src/parser.y" /* yacc.c:1652  */
+#line 194 "../src/parser.y" /* yacc.c:1652  */
     {
         printf("Instruction: LOAD (address) %s,%s\n", (yyvsp[-1].strval), (yyvsp[0].strval));
 
@@ -1457,11 +1460,11 @@ yyreduce:
 
         g_free((yyvsp[0].strval));
     }
-#line 1461 "parser.tab.c" /* yacc.c:1652  */
+#line 1464 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 13:
-#line 202 "../src/parser.y" /* yacc.c:1652  */
+#line 205 "../src/parser.y" /* yacc.c:1652  */
     {
         printf("Instruction: RLOAD %s,%s\n", (yyvsp[-1].strval), (yyvsp[0].strval));
 
@@ -1474,11 +1477,11 @@ yyreduce:
         g_free((yyvsp[-1].strval));
         g_free((yyvsp[0].strval));
     }
-#line 1478 "parser.tab.c" /* yacc.c:1652  */
+#line 1481 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 14:
-#line 214 "../src/parser.y" /* yacc.c:1652  */
+#line 217 "../src/parser.y" /* yacc.c:1652  */
     {
         printf("Instruction: STORE (variable) %s,%s\n", (yyvsp[-1].strval), (yyvsp[0].strval));
 
@@ -1490,11 +1493,11 @@ yyreduce:
 
         g_free((yyvsp[-1].strval));
     }
-#line 1494 "parser.tab.c" /* yacc.c:1652  */
+#line 1497 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 15:
-#line 225 "../src/parser.y" /* yacc.c:1652  */
+#line 228 "../src/parser.y" /* yacc.c:1652  */
     {
         printf("Instruction: STORE (address) %s,%s\n", (yyvsp[-1].strval), (yyvsp[0].strval));
 
@@ -1506,11 +1509,11 @@ yyreduce:
 
         g_free((yyvsp[-1].strval));
     }
-#line 1510 "parser.tab.c" /* yacc.c:1652  */
+#line 1513 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 16:
-#line 236 "../src/parser.y" /* yacc.c:1652  */
+#line 239 "../src/parser.y" /* yacc.c:1652  */
     {
         printf("Instruction: RSTORE %s,%s\n", (yyvsp[-1].strval), (yyvsp[0].strval));
 
@@ -1523,11 +1526,11 @@ yyreduce:
         g_free((yyvsp[-1].strval));
         g_free((yyvsp[0].strval));
     }
-#line 1527 "parser.tab.c" /* yacc.c:1652  */
+#line 1530 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 17:
-#line 248 "../src/parser.y" /* yacc.c:1652  */
+#line 251 "../src/parser.y" /* yacc.c:1652  */
     {
         printf("Instruction: CLOAD %d,%s\n", (yyvsp[-1].intval), (yyvsp[0].strval));
 
@@ -1539,11 +1542,11 @@ yyreduce:
 
         g_free((yyvsp[0].strval));
     }
-#line 1543 "parser.tab.c" /* yacc.c:1652  */
+#line 1546 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 18:
-#line 259 "../src/parser.y" /* yacc.c:1652  */
+#line 262 "../src/parser.y" /* yacc.c:1652  */
     {
         printf("Instruction: ADD %s,%s\n", (yyvsp[-1].strval), (yyvsp[0].strval));
 
@@ -1556,11 +1559,11 @@ yyreduce:
         g_free((yyvsp[-1].strval));
         g_free((yyvsp[0].strval));
     }
-#line 1560 "parser.tab.c" /* yacc.c:1652  */
+#line 1563 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 19:
-#line 271 "../src/parser.y" /* yacc.c:1652  */
+#line 274 "../src/parser.y" /* yacc.c:1652  */
     {
         printf("Instruction: SUB %s,%s\n", (yyvsp[-1].strval), (yyvsp[0].strval));
 
@@ -1573,11 +1576,11 @@ yyreduce:
         g_free((yyvsp[-1].strval));
         g_free((yyvsp[0].strval));
     }
-#line 1577 "parser.tab.c" /* yacc.c:1652  */
+#line 1580 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 20:
-#line 283 "../src/parser.y" /* yacc.c:1652  */
+#line 286 "../src/parser.y" /* yacc.c:1652  */
     {
         printf("Instruction: MULT %s,%s\n", (yyvsp[-1].strval), (yyvsp[0].strval));
 
@@ -1590,11 +1593,11 @@ yyreduce:
         g_free((yyvsp[-1].strval));
         g_free((yyvsp[0].strval));
     }
-#line 1594 "parser.tab.c" /* yacc.c:1652  */
+#line 1597 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 21:
-#line 295 "../src/parser.y" /* yacc.c:1652  */
+#line 298 "../src/parser.y" /* yacc.c:1652  */
     {
         printf("Instruction: DIV %s,%s\n", (yyvsp[-1].strval), (yyvsp[0].strval));
 
@@ -1607,11 +1610,11 @@ yyreduce:
         g_free((yyvsp[-1].strval));
         g_free((yyvsp[0].strval));
     }
-#line 1611 "parser.tab.c" /* yacc.c:1652  */
+#line 1614 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 22:
-#line 307 "../src/parser.y" /* yacc.c:1652  */
+#line 310 "../src/parser.y" /* yacc.c:1652  */
     {
         printf("Instruction: OUT %s,%s\n", (yyvsp[-1].strval), (yyvsp[0].strval));
 
@@ -1624,11 +1627,11 @@ yyreduce:
         g_free((yyvsp[-1].strval));
         g_free((yyvsp[0].strval));
     }
-#line 1628 "parser.tab.c" /* yacc.c:1652  */
+#line 1631 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 23:
-#line 319 "../src/parser.y" /* yacc.c:1652  */
+#line 322 "../src/parser.y" /* yacc.c:1652  */
     {
         printf("Instruction: MOV %s,%s\n", (yyvsp[-1].strval), (yyvsp[0].strval));
 
@@ -1641,11 +1644,11 @@ yyreduce:
         g_free((yyvsp[-1].strval));
         g_free((yyvsp[0].strval));
     }
-#line 1645 "parser.tab.c" /* yacc.c:1652  */
+#line 1648 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 24:
-#line 331 "../src/parser.y" /* yacc.c:1652  */
+#line 334 "../src/parser.y" /* yacc.c:1652  */
     {
         printf("Instruction: IN %s,%s\n", (yyvsp[-1].strval), (yyvsp[0].strval));
 
@@ -1658,11 +1661,11 @@ yyreduce:
         g_free((yyvsp[-1].strval));
         g_free((yyvsp[0].strval));
     }
-#line 1662 "parser.tab.c" /* yacc.c:1652  */
+#line 1665 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 25:
-#line 343 "../src/parser.y" /* yacc.c:1652  */
+#line 346 "../src/parser.y" /* yacc.c:1652  */
     {
         printf("Instruction: CMP %s,%s\n", (yyvsp[-1].strval), (yyvsp[0].strval));
 
@@ -1675,11 +1678,11 @@ yyreduce:
         g_free((yyvsp[-1].strval));
         g_free((yyvsp[0].strval));
     }
-#line 1679 "parser.tab.c" /* yacc.c:1652  */
+#line 1682 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 26:
-#line 355 "../src/parser.y" /* yacc.c:1652  */
+#line 358 "../src/parser.y" /* yacc.c:1652  */
     {
         printf("Instruction: JMPL %s\n", (yyvsp[0].strval));
 
@@ -1688,11 +1691,11 @@ yyreduce:
         instruction->operand1.operand_address = (yyvsp[0].strval);
         instructions_table = g_slist_append(instructions_table, instruction);
     }
-#line 1692 "parser.tab.c" /* yacc.c:1652  */
+#line 1695 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 27:
-#line 363 "../src/parser.y" /* yacc.c:1652  */
+#line 366 "../src/parser.y" /* yacc.c:1652  */
     {
         printf("Instruction: JMPE %s\n", (yyvsp[0].strval));
 
@@ -1701,11 +1704,11 @@ yyreduce:
         instruction->operand1.operand_address = (yyvsp[0].strval);
         instructions_table = g_slist_append(instructions_table, instruction);
     }
-#line 1705 "parser.tab.c" /* yacc.c:1652  */
+#line 1708 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 28:
-#line 371 "../src/parser.y" /* yacc.c:1652  */
+#line 374 "../src/parser.y" /* yacc.c:1652  */
     {
         printf("Instruction: JMPG %s\n", (yyvsp[0].strval));
 
@@ -1714,11 +1717,11 @@ yyreduce:
         instruction->operand1.operand_address = (yyvsp[0].strval);
         instructions_table = g_slist_append(instructions_table, instruction);
     }
-#line 1718 "parser.tab.c" /* yacc.c:1652  */
+#line 1721 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 29:
-#line 379 "../src/parser.y" /* yacc.c:1652  */
+#line 382 "../src/parser.y" /* yacc.c:1652  */
     {
         printf("Instruction: RST\n");
 
@@ -1726,11 +1729,11 @@ yyreduce:
         instruction->operation = OPERATION_RST;
         instructions_table = g_slist_append(instructions_table, instruction);
     }
-#line 1730 "parser.tab.c" /* yacc.c:1652  */
+#line 1733 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 30:
-#line 386 "../src/parser.y" /* yacc.c:1652  */
+#line 389 "../src/parser.y" /* yacc.c:1652  */
     {
         printf("Instruction: HALT\n");
 
@@ -1738,11 +1741,11 @@ yyreduce:
         instruction->operation = OPERATION_HALT;
         instructions_table = g_slist_append(instructions_table, instruction);
     }
-#line 1742 "parser.tab.c" /* yacc.c:1652  */
+#line 1745 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 31:
-#line 393 "../src/parser.y" /* yacc.c:1652  */
+#line 396 "../src/parser.y" /* yacc.c:1652  */
     {
         printf("Instruction: ISR %s,%s\n", (yyvsp[-1].strval), (yyvsp[0].strval));
 
@@ -1754,11 +1757,11 @@ yyreduce:
 
         g_free((yyvsp[-1].strval));
     }
-#line 1758 "parser.tab.c" /* yacc.c:1652  */
+#line 1761 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 32:
-#line 404 "../src/parser.y" /* yacc.c:1652  */
+#line 407 "../src/parser.y" /* yacc.c:1652  */
     {
         printf("Instruction: INT %s\n", (yyvsp[0].strval));
 
@@ -1769,11 +1772,11 @@ yyreduce:
 
         g_free((yyvsp[0].strval));
     }
-#line 1773 "parser.tab.c" /* yacc.c:1652  */
+#line 1776 "parser.tab.c" /* yacc.c:1652  */
     break;
 
   case 33:
-#line 414 "../src/parser.y" /* yacc.c:1652  */
+#line 417 "../src/parser.y" /* yacc.c:1652  */
     {
         printf("Instruction: ENDINT\n");
 
@@ -1781,11 +1784,11 @@ yyreduce:
         instruction->operation = OPERATION_ENDINT;
         instructions_table = g_slist_append(instructions_table, instruction);
     }
-#line 1785 "parser.tab.c" /* yacc.c:1652  */
+#line 1788 "parser.tab.c" /* yacc.c:1652  */
     break;
 
 
-#line 1789 "parser.tab.c" /* yacc.c:1652  */
+#line 1792 "parser.tab.c" /* yacc.c:1652  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -2016,7 +2019,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 423 "../src/parser.y" /* yacc.c:1918  */
+#line 426 "../src/parser.y" /* yacc.c:1918  */
 
 
 // Forward declarations of functions in lexer.l that allow Flex to parse an in-memory buffer instead of a file handle.
@@ -2078,7 +2081,8 @@ int main(int argc, char *argv[]) {
     // Take the variables_table hash table and convert it into the final binary format.
     ///////////////////////////////////////////////////////////////////////////////////////
     // Allocate memory to store the final binary format of the variables (.data) section of the output binary.
-    void *variables_binary = g_malloc0(g_hash_table_size(variables_table) * OPERAND_SIZE);
+    size_t variables_binary_size = g_hash_table_size(variables_table) * OPERAND_SIZE;
+    void *variables_binary = g_malloc0(variables_binary_size);
     // Iterate over the variables_table hash table.
     GHashTableIter iter;
     g_hash_table_iter_init(&iter, variables_table);
@@ -2087,15 +2091,25 @@ int main(int argc, char *argv[]) {
         // Convert the variable->address buffer in the Variable structure back into an integer.
         OPERAND_C_TYPE variable_address;
         memcpy(&variable_address, variable->address, OPERAND_SIZE);
+        variable_address -= OPERAND_SIZE; // Compensate for the first OPERAND_SIZE bytes of the file being used to store the length of the .data section.
         // Copy the variable's value into the final binary format at the location specified by variable_address.
         memcpy(variables_binary + variable_address, variable->value, OPERAND_SIZE);
     }
+
+    for (int i = 0; i < variables_binary_size; i++) {
+        printf("%u ", ((uint8_t *) variables_binary)[i]);
+        if ((i + 1) % OPERAND_SIZE == 0) {
+            printf(" ");
+        }
+    }
+    printf("\n");
 
     ///////////////////////////////////////////////////////////////////////////////////////
     // Take the instructions_table hash table and convert it into the final binary format.
     ///////////////////////////////////////////////////////////////////////////////////////
     // Allocate memory to store the final binary format of the instructions (.code) section of the output binary.
-    void *instructions_binary = g_malloc0(g_slist_length(instructions_table) * INSTRUCTION_SIZE);
+    size_t instructions_binary_size = g_slist_length(instructions_table) * INSTRUCTION_SIZE;
+    void *instructions_binary = g_malloc0(instructions_binary_size);
     // Iterate over the instructions_table singly-linked list.
     Instruction *instruction;
     // i counts how many instructions have already been processed by the loop. It is used to calculate where in instructions_binary to place the next instruction.
@@ -2240,19 +2254,16 @@ int main(int argc, char *argv[]) {
         i++;
     }
 
+    // Write the length of the .data (variables) section to the first OPERAND_SIZE bytes of the output binary file.
+    if (fwrite(&variables_binary_size, OPERAND_SIZE, 1, output_file) != 1) {
+        printf("\033[1;31mERROR:\033[0m Could not write %d bytes of data to the file.\n", OPERAND_SIZE);
+    }
     // Write the final binary format of the .data (variables) section to the output binary file.
-    if (fwrite(variables_binary, 1, g_hash_table_size(variables_table) * OPERAND_SIZE, output_file) != g_hash_table_size(variables_table) * OPERAND_SIZE) {
+    if (fwrite(variables_binary, OPERAND_SIZE, g_hash_table_size(variables_table), output_file) != g_hash_table_size(variables_table)) {
         printf("\033[1;31mERROR:\033[0m Could not write %d bytes of data to the file.\n", g_hash_table_size(variables_table) * OPERAND_SIZE);
     }
-    // Write the magic section separator to the output file.
-    uint8_t section_separator[OPERAND_SIZE];
-    int operation_code = OPERATION_CODE;
-    memcpy(section_separator, &operation_code, sizeof(Operation));
-    if (fwrite(&section_separator, sizeof(uint8_t), OPERATION_SIZE, output_file) != OPERATION_SIZE) {
-        printf("\033[1;31mERROR:\033[0m Could not write %d bytes of data to the file.\n", OPERATION_SIZE);
-    }
     // Write the final binary format of the .code (instructions) section to the output binary file.
-    if (fwrite(instructions_binary, sizeof(uint8_t), g_slist_length(instructions_table) * INSTRUCTION_SIZE, output_file) != g_slist_length(instructions_table) * INSTRUCTION_SIZE) {
+    if (fwrite(instructions_binary, INSTRUCTION_SIZE, g_slist_length(instructions_table), output_file) != g_slist_length(instructions_table)) {
         printf("\033[1;31mERROR:\033[0m Could not write %d bytes of data to the file.\n", g_slist_length(instructions_table) * INSTRUCTION_SIZE);
     }
 
