@@ -1,0 +1,84 @@
+/*******************************
+Program for calculating and displaying prime numbers that uses procedures. Based on an example from the Wikipedia article on PL/0.
+********************************/
+
+VAR integer_to_measure = 0;
+VAR integer_length = 0;
+PROCEDURE get_integer_length;
+BEGIN
+    // Count how many digits are in the number.
+    integer_length := 0;
+    VAR number_shifter;
+    number_shifter := integer_to_measure;
+    WHILE number_shifter > 0 DO
+    BEGIN
+        number_shifter := number_shifter / 10;
+        integer_length := integer_length + 1;
+    END;
+END;
+
+VAR SCREEN_WIDTH = 80;
+VAR integer = 0;
+VAR line = 0;
+PROCEDURE print_integer;
+BEGIN
+    // Get the number of digits in the integer.
+    integer_to_measure := integer;
+    CALL get_integer_length; // Stores return value in `integer_length`.
+    // Output the number one digit at a time, placing each digit at the correct position on-screen.
+    VAR number_shifter;
+    number_shifter := integer;
+    WHILE number_shifter > 0 DO
+    BEGIN
+        VAR digit;
+        digit := number_shifter % 10;
+        output_address := line * SCREEN_WIDTH;
+        output_address := output_address + integer_length - 1;
+        output_value := digit + 48;
+        CALL OUT;
+        integer_length := integer_length - 1;
+        number_shifter := number_shifter / 10;
+    END;
+END;
+
+VAR arg;
+VAR ret;
+PROCEDURE is_prime;
+BEGIN
+    VAR i;
+	ret := 1;
+	i := 2;
+	WHILE i < arg DO
+	BEGIN
+		IF arg % i = 0 THEN
+		BEGIN
+			ret := 0;
+			i := arg;
+		END;
+		i := i + 1;
+	END;
+END;
+
+VAR max = 90;
+VAR line_counter = 0;
+PROCEDURE primes;
+BEGIN
+	arg := 2;
+	WHILE arg < max DO
+	BEGIN
+		CALL is_prime;
+		IF ret = 1 THEN
+        BEGIN
+            integer := arg;
+            line := line_counter;
+            CALL print_integer;
+
+            line_counter := line_counter + 1;
+        END;
+		arg := arg + 1;
+	END;
+END;
+
+CALL primes;
+
+CALL HALT;

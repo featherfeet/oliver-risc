@@ -2096,14 +2096,6 @@ int main(int argc, char *argv[]) {
         memcpy(variables_binary + variable_address, variable->value, OPERAND_SIZE);
     }
 
-    for (int i = 0; i < variables_binary_size; i++) {
-        printf("%u ", ((uint8_t *) variables_binary)[i]);
-        if ((i + 1) % OPERAND_SIZE == 0) {
-            printf(" ");
-        }
-    }
-    printf("\n");
-
     ///////////////////////////////////////////////////////////////////////////////////////
     // Take the instructions_table hash table and convert it into the final binary format.
     ///////////////////////////////////////////////////////////////////////////////////////
