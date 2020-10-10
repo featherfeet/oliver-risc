@@ -1,3 +1,0 @@
-/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/CMakeFiles/rebuild_cache.dir
-/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/CMakeFiles/main.dir
-/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/build/CMakeFiles/edit_cache.dir

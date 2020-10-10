@@ -1,0 +1,1 @@
+/usr/bin/c++  -g  -rdynamic CMakeFiles/compiler.dir/compiler/ast.cpp.o CMakeFiles/compiler.dir/compiler/asmgenerator.cpp.o CMakeFiles/compiler.dir/compiler/stackframe.cpp.o CMakeFiles/compiler.dir/compiler_parser.cpp.o CMakeFiles/compiler.dir/compiler_lexer.cpp.o  -o compiler -lfl 

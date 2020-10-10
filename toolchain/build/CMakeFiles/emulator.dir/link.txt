@@ -1,0 +1,1 @@
+/usr/bin/cc -g  -rdynamic CMakeFiles/emulator.dir/emulator/emulator.c.o  -o emulator 

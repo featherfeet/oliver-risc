@@ -1,7 +1,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
-#include "assembler.h"
 #include "processor.h"
 
 #define NUM_REGISTERS 8

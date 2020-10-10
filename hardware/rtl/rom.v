@@ -1,1 +1,1 @@
-../../toolchain/romgenerator/rom.v
+../../roms/romgenerator/rom.v

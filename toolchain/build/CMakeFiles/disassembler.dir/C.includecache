@@ -1,0 +1,22 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+.././processor.h
+stdint.h
+-
+
+/home/oliver/Projects/FPGA_Projects/CPU/toolchain/disassembler/disassembler.c
+stdio.h
+-
+stdlib.h
+-
+string.h
+-
+processor.h
+/home/oliver/Projects/FPGA_Projects/CPU/toolchain/disassembler/processor.h
+

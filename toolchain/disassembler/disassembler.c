@@ -1,8 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "assembler.h" // Symlinked from the assembler's source code.
-#include "../processor.h"
+#include "processor.h"
 
 const char *registerToString(Register reg) {
 	switch (reg) {

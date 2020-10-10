@@ -1,10 +1,7 @@
 #!/bin/bash
 
-FILENAME=$1
+build/compiler "$1" output.asm
+build/assembler output.asm out.bin
+../roms/romgenerator/romgenerator out.bin ../roms/romgenerator/rom.v
 
-cd compiler/build
-./main "../../$1" output.asm
-cd ../../assembler/build
-./main ../../compiler/build/output.asm out.bin
-cd ../../romgenerator
-make run
+rm output.asm out.bin

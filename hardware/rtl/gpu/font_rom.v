@@ -1,1 +1,1 @@
-../../../toolchain/font_rom_generator/build/font_rom.v
+../../../roms/font_rom_generator/build/font_rom.v
