@@ -10,6 +10,12 @@
 #include <memory>
 #include <cstdlib>
 
+#include <iostream> // TODO: REMOVE
+
+ASTNode::~ASTNode() {
+    // Even though the destructor for the base ASTNode class is a pure virtual destructor, we have to define it as an empty function here to prevent a linker error.
+}
+
 void ASTRootNode::addStatement(ASTStatementNode *node) {
     children.push_back(node);
 }
@@ -128,8 +134,20 @@ void ASTRootNode::showGraph() {
     std::system("xdg-open graph_temp.pdf");
 }
 
+ASTRootNode::~ASTRootNode() {
+    for (auto statement_node : children) {
+        delete statement_node;
+    }
+}
+
 void ASTBeginEndBlockNode::addStatement(ASTStatementNode *statement) {
     children.push_back(statement);
+}
+
+ASTBeginEndBlockNode::~ASTBeginEndBlockNode() {
+    for (auto statement_node : children) {
+        delete statement_node;
+    }
 }
 
 ASTNodeType ASTBeginEndBlockNode::getNodeType() {
@@ -206,6 +224,11 @@ ConditionNodeComparison ASTConditionNode::getComparison() {
     return comparison;
 }
 
+ASTConditionNode::~ASTConditionNode() {
+    delete expression1;
+    delete expression2;
+}
+
 ASTExpressionNode *ASTConditionNode::getExpression1() {
     return expression1;
 }
@@ -229,6 +252,11 @@ std::string ASTConditionalNode::getHumanReadable() {
 
 ASTConditionNode *ASTConditionalNode::getCondition() {
     return condition;
+}
+
+ASTConditionalNode::~ASTConditionalNode() {
+    delete condition;
+    delete begin_end_block;
 }
 
 ASTBeginEndBlockNode *ASTConditionalNode::getBeginEndBlock() {
@@ -309,6 +337,13 @@ std::vector<ASTTermNode*> ASTExpressionNode::getTerms() {
     return terms;
 }
 
+ASTExpressionNode::~ASTExpressionNode() {
+    for (auto term : terms) {
+        std::cout << "DELETING TERM" << std::endl;
+        delete term;
+    }
+}
+
 ASTVariableAssignmentNode::ASTVariableAssignmentNode(std::string variable_name, ASTExpressionNode *value) {
     this->variable_name = variable_name;
     this->value = value;
@@ -367,6 +402,11 @@ ASTBeginEndBlockNode *ASTWhileLoopNode::getBeginEndBlock() {
     return begin_end_block;
 }
 
+ASTWhileLoopNode::~ASTWhileLoopNode() {
+    delete condition;
+    delete begin_end_block;
+}
+
 ASTProcedureNode::ASTProcedureNode(std::string procedure_name, ASTBeginEndBlockNode *begin_end_block) {
     this->procedure_name = procedure_name;
     this->begin_end_block = begin_end_block;
@@ -386,4 +426,8 @@ std::string ASTProcedureNode::getProcedureName() {
 
 ASTBeginEndBlockNode *ASTProcedureNode::getBeginEndBlock() {
     return begin_end_block;
+}
+
+ASTProcedureNode::~ASTProcedureNode() {
+    delete begin_end_block;
 }

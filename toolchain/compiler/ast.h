@@ -24,6 +24,7 @@ class ASTNode {
     public:
         virtual ASTNodeType getNodeType() = 0;
         virtual std::string getHumanReadable() = 0;
+        virtual ~ASTNode() = 0;
 };
 
 class ASTStatementNode : public ASTNode {
@@ -39,6 +40,7 @@ class ASTRootNode : public ASTNode {
         ASTNodeType getNodeType();
         std::string getHumanReadable();
         std::vector<ASTStatementNode*> getChildren();
+        ~ASTRootNode();
 };
 
 class ASTBeginEndBlockNode : public ASTStatementNode {
@@ -48,6 +50,7 @@ class ASTBeginEndBlockNode : public ASTStatementNode {
         void addStatement(ASTStatementNode *node);
         std::string getHumanReadable();
         std::vector<ASTStatementNode*> getChildren();
+        ~ASTBeginEndBlockNode();
 };
 
 class ASTVariableDeclarationNode : public ASTStatementNode {
@@ -101,6 +104,7 @@ class ASTExpressionNode : public ASTNode {
         ASTNodeType getNodeType();
         std::vector<ASTTermNode*> getTerms();
         std::string getHumanReadable();
+        ~ASTExpressionNode();
 };
 
 enum ConditionNodeComparison {
@@ -124,6 +128,7 @@ class ASTConditionNode : public ASTNode {
         ConditionNodeComparison getComparison();
         ASTExpressionNode *getExpression1();
         ASTExpressionNode *getExpression2();
+        ~ASTConditionNode();
 };
 
 class ASTConditionalNode : public ASTStatementNode {
@@ -136,6 +141,7 @@ class ASTConditionalNode : public ASTStatementNode {
         std::string getHumanReadable();
         ASTConditionNode *getCondition();
         ASTBeginEndBlockNode *getBeginEndBlock();
+        ~ASTConditionalNode();
 };
 
 class ASTVariableAssignmentNode : public ASTStatementNode {
@@ -170,6 +176,7 @@ class ASTWhileLoopNode : public ASTStatementNode {
         std::string getHumanReadable();
         ASTConditionNode *getCondition();
         ASTBeginEndBlockNode *getBeginEndBlock();
+        ~ASTWhileLoopNode();
 };
 
 class ASTProcedureNode : public ASTStatementNode {
@@ -182,6 +189,7 @@ class ASTProcedureNode : public ASTStatementNode {
         std::string getHumanReadable();
         std::string getProcedureName();
         ASTBeginEndBlockNode *getBeginEndBlock();
+        ~ASTProcedureNode();
 };
 
 #endif // AST_H

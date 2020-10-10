@@ -148,4 +148,5 @@ void startParseString(const char *str) {
 
 void endParseString() {
     yy_delete_buffer(YY_CURRENT_BUFFER);
+    yylex_destroy();
 }

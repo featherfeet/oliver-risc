@@ -6,7 +6,7 @@
     #include "ast.h"
     #include "asmgenerator.h"
 
-    #define YYDEBUG 1
+    // #define YYDEBUG 1
 
     // Forward declarations for functions provided by the Flex-generated lexer (or defined later in this program).
     extern "C" {
@@ -112,14 +112,17 @@ statement: variable_declaration TOKEN_SEMICOLON {
 
 variable_declaration: TOKEN_VAR TOKEN_IDENTIFIER {
                         $$ = new ASTVariableDeclarationNode($2);
+                        free($2);
                     }
                     | TOKEN_VAR TOKEN_IDENTIFIER TOKEN_EQUALS TOKEN_CONSTANT {
                         $$ = new ASTVariableDeclarationNode($2, $4);
+                        free($2);
                     }
 ;
 
 variable_assignment: TOKEN_IDENTIFIER TOKEN_COLON_EQUALS expression {
                    $$ = new ASTVariableAssignmentNode($1, $3);
+                   free($1);
 }
 ;
 
@@ -144,15 +147,18 @@ statement_sequence: statement {
 
 term: TOKEN_IDENTIFIER {
     $$ = new ASTTermNode(ADDITION, $1);
+    free($1);
 }
     | TOKEN_CONSTANT {
         $$ = new ASTTermNode(ADDITION, $1);
     }
     | TOKEN_PLUS TOKEN_IDENTIFIER {
         $$ = new ASTTermNode(ADDITION, $2);
+        free($2);
     }
     | TOKEN_MINUS TOKEN_IDENTIFIER {
         $$ = new ASTTermNode(SUBTRACTION, $2);
+        free($2);
     }
     | TOKEN_PLUS TOKEN_CONSTANT {
         $$ = new ASTTermNode(ADDITION, $2);
@@ -162,18 +168,21 @@ term: TOKEN_IDENTIFIER {
     }
     | TOKEN_ASTERISK TOKEN_IDENTIFIER {
         $$ = new ASTTermNode(MULTIPLICATION, $2);
+        free($2);
     }
     | TOKEN_ASTERISK TOKEN_CONSTANT {
         $$ = new ASTTermNode(MULTIPLICATION, $2);
     }
     | TOKEN_FORWARD_SLASH TOKEN_IDENTIFIER {
         $$ = new ASTTermNode(DIVISION, $2);
+        free($2);
     }
     | TOKEN_FORWARD_SLASH TOKEN_CONSTANT {
         $$ = new ASTTermNode(DIVISION, $2);
     }
     | TOKEN_PERCENT TOKEN_IDENTIFIER {
         $$ = new ASTTermNode(MODULUS, $2);
+        free($2);
     }
     | TOKEN_PERCENT TOKEN_CONSTANT {
         $$ = new ASTTermNode(MODULUS, $2);
@@ -210,6 +219,7 @@ condition: expression TOKEN_NOT_EQUALS expression {
 
 procedure_call: TOKEN_CALL TOKEN_IDENTIFIER {
     $$ = new ASTProcedureCallNode($2);
+    free($2);
 }
 ;
 
@@ -220,6 +230,7 @@ while_loop: TOKEN_WHILE condition TOKEN_DO begin_end_block {
 
 procedure: TOKEN_PROCEDURE TOKEN_IDENTIFIER TOKEN_SEMICOLON begin_end_block {
     $$ = new ASTProcedureNode($2, $4);
+    free($2);
 }
 ;
 
@@ -230,7 +241,7 @@ void startParseString(const char *);
 void endParseString(void);
 
 int main(int argc, char *argv[]) {
-    yydebug = 1;
+    // yydebug = 1;
 
     if (argc < 2) {
         std::cout << "Usage: ./main program.pl0 [output.asm]" << std::endl;
@@ -261,6 +272,8 @@ int main(int argc, char *argv[]) {
     std::ofstream output_file(output_filename, std::ofstream::out);
     output_file << asmGenerator.getGeneratedAssembly(ast);
     output_file.close();
+
+    delete ast;
 
     return 0;
 }
