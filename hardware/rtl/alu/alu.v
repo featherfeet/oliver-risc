@@ -246,6 +246,30 @@ case (operation)
             `REGISTER_IP <= `REGISTER_IP + `INSTRUCTION_SIZE_BYTES;
         state <= `STATE_RUN_INTERRUPT;
     end
+    // Bitwise OR two registers and store the result into A.
+    `OPERATION_OR:
+    begin
+        `REGISTER_A <= registers[operand1] | registers[operand2];
+        next_instruction();
+    end
+    // Bitwise AND two registers and store the result into A.
+    `OPERATION_AND:
+    begin
+        `REGISTER_A <= registers[operand1] & registers[operand2];
+        next_instruction();
+    end
+    // Bitwise XOR two registers and store the result into A.
+    `OPERATION_XOR:
+    begin
+        `REGISTER_A <= registers[operand1] ^ registers[operand2];
+        next_instruction();
+    end
+    // Flip all the bits in a register.
+    `OPERATION_NOT:
+    begin
+        registers[operand1] <= ~registers[operand1];
+        next_instruction();
+    end
     `OPERATION_ISR:
     begin
         $display("ISR");

@@ -79,7 +79,11 @@ extern int yydebug;
     TOKEN_RSTORE = 285,
     TOKEN_CLOAD = 286,
     TOKEN_MULT = 287,
-    TOKEN_DIV = 288
+    TOKEN_DIV = 288,
+    TOKEN_OR = 289,
+    TOKEN_AND = 290,
+    TOKEN_XOR = 291,
+    TOKEN_NOT = 292
   };
 #endif
 
@@ -88,12 +92,12 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 111 "assembler/parser.y" /* yacc.c:1921  */
+#line 115 "assembler/parser.y" /* yacc.c:1921  */
 
     int intval;
     char *strval;
 
-#line 97 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/assembler_parser.h" /* yacc.c:1921  */
+#line 101 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/assembler_parser.h" /* yacc.c:1921  */
 };
 
 typedef union YYSTYPE YYSTYPE;

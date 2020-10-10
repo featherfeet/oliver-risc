@@ -140,6 +140,22 @@
     return TOKEN_DIV;
 }
 
+"OR" {
+    return TOKEN_OR;
+}
+
+"AND" {
+    return TOKEN_AND;
+}
+
+"XOR" {
+    return TOKEN_XOR;
+}
+
+"NOT" {
+    return TOKEN_NOT;
+}
+
 (IP|A|B|C|D|E|F|G) {
     yylval.strval = g_strdup(yytext);
     return TOKEN_REGISTER;

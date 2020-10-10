@@ -105,6 +105,10 @@
 %token TOKEN_CLOAD
 %token TOKEN_MULT
 %token TOKEN_DIV
+%token TOKEN_OR
+%token TOKEN_AND
+%token TOKEN_XOR
+%token TOKEN_NOT
 
 %start line
 
@@ -354,6 +358,52 @@ instruction: TOKEN_NOP {
 
         g_free($<strval>2);
         g_free($<strval>3);
+    }
+    | TOKEN_OR TOKEN_REGISTER TOKEN_REGISTER {
+        printf("Instruction: OR %s,%s\n", $<strval>2, $<strval>3);
+
+        Instruction *instruction = g_new(Instruction, 1);
+        instruction->operation = OPERATION_OR;
+        instruction->operand1.operand_register = stringToRegister($<strval>2);
+        instruction->operand2.operand_register = stringToRegister($<strval>3);
+        instructions_table = g_slist_append(instructions_table, instruction);
+
+        g_free($<strval>2);
+        g_free($<strval>3);
+    }
+    | TOKEN_AND TOKEN_REGISTER TOKEN_REGISTER {
+        printf("Instruction: AND %s,%s\n", $<strval>2, $<strval>3);
+
+        Instruction *instruction = g_new(Instruction, 1);
+        instruction->operation = OPERATION_AND;
+        instruction->operand1.operand_register = stringToRegister($<strval>2);
+        instruction->operand2.operand_register = stringToRegister($<strval>3);
+        instructions_table = g_slist_append(instructions_table, instruction);
+
+        g_free($<strval>2);
+        g_free($<strval>3);
+    }
+    | TOKEN_XOR TOKEN_REGISTER TOKEN_REGISTER {
+        printf("Instruction: XOR %s,%s\n", $<strval>2, $<strval>3);
+
+        Instruction *instruction = g_new(Instruction, 1);
+        instruction->operation = OPERATION_XOR;
+        instruction->operand1.operand_register = stringToRegister($<strval>2);
+        instruction->operand2.operand_register = stringToRegister($<strval>3);
+        instructions_table = g_slist_append(instructions_table, instruction);
+
+        g_free($<strval>2);
+        g_free($<strval>3);
+    }
+    | TOKEN_NOT TOKEN_REGISTER {
+        printf("Instruction: NOT %s\n", $<strval>2);
+
+        Instruction *instruction = g_new(Instruction, 1);
+        instruction->operation = OPERATION_NOT;
+        instruction->operand1.operand_register = stringToRegister($<strval>2);
+        instructions_table = g_slist_append(instructions_table, instruction);
+
+        g_free($<strval>2);
     }
     | TOKEN_JMPL TOKEN_IDENTIFIER {
         printf("Instruction: JMPL %s\n", $<strval>2);

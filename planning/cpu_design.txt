@@ -1,7 +1,7 @@
 # Oliver-RISC: The Ultimate RISC Processor
 
 The CPU has 8MB of SDRAM.
-On bootup, the FPGA loads a binary from the ROM to the SDRAM (at address 32'd0). The FPGA detects the magic byte (the CODE instruction), which it uses to know where the .data section ends and the .code section begins. The FPGA then starts executing instructions from the start of the .code section. The .data and .code sections are addressed separately.
+On bootup, the FPGA loads a binary from the ROM to the SDRAM (at address 32'd0). The first 4 bytes of the binary hold an unsigned 32-bit integer storing the length of the .data section. The FPGA then starts executing instructions from the start of the .code section.
 
 Registers (32 bits each, addressed using a 32-bit code):
 IP - 32'd0 - Instruction pointer. SDRAM address of the instruction to execute.
@@ -10,8 +10,8 @@ B - 32'b2  - Generic register.
 C - 32'b3  - Generic register.
 D - 32'b4  - Generic register.
 E - 32'b5  - Generic register.
-F - 32'b6  - Generic register.
-G - 32'b7  - Generic register.
+F - 32'b6  - Generic register (used to store the stack pointer for the global scope).
+G - 32'b7  - Generic register (used to store the stack pointer for the currently-executing procedure).
 IE - 32'b8 - Interrupt-enable register. Allows interrupts only when IE == 'b1.
 IR - 32'b9 - Interrupt-running register. Is set to 1 while an interrupt in is progress.
 
@@ -44,11 +44,14 @@ Instructions:
 * RST                                             - Clear all registers to 0 (including the instruction pointer).
 * HALT                                            - Stop the CPU.
 
-* ISR <register1>,<register2>                   - Sets up an interrupt service routine. <register1> is the register containing the interrupt number (8 interrupts are available). <register2> is a register containing the address of the first instruction in the ISR.
+* ISR <register1>,<register2>                     - Sets up an interrupt service routine. <register1> is the register containing the interrupt number (8 interrupts are available). <register2> is a register containing the address of the first instruction in the ISR.
 * INT <register>,                                 - Triggers an interrupt from software. <register> is the register containing the interrupt number (8 interrupts exist).
 * ENDINT                                          - Ends an interrupt routine. MUST be placed as the last instruction in an interrupt routine. Restores all registers (including the instruction pointer) to their states before the interrupt was executed.
 
-* CODE                                            - Switch from the .data section of the program to the .code section.
+* OR <register1>,<register2>                      - Bitwise OR the two operand registers' contents and store the result into reg A.
+* AND <register1>,<register2>                     - Bitwise AND the two operand registers' contents and store the result into reg A.
+* XOR <register1>,<register2>                     - Bitwise XOR the two operand registers' contents and store the result into reg A.
+* NOT <register1>                                 - Flip the bits in register1.
 
 Example program to print out numbers 1-5:
 .data:

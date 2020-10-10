@@ -43,6 +43,10 @@
 `define OPERATION_CLOAD           19
 `define OPERATION_MULT            20
 `define OPERATION_DIV             21
+`define OPERATION_OR              22
+`define OPERATION_AND             23
+`define OPERATION_XOR             24
+`define OPERATION_NOT             25
 
 `define NUM_REGISTERS             10
 `define REGISTER_IP               registers[0]

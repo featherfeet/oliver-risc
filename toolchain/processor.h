@@ -46,7 +46,11 @@ typedef enum {
     OPERATION_RSTORE,
     OPERATION_CLOAD,
     OPERATION_MULT,
-    OPERATION_DIV
+    OPERATION_DIV,
+    OPERATION_OR,
+    OPERATION_AND,
+    OPERATION_XOR,
+    OPERATION_NOT
 } Operation;
 
 typedef enum {
