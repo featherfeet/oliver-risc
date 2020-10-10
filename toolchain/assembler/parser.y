@@ -714,12 +714,17 @@ int main(int argc, char *argv[]) {
 
     // Clean up resources.
     g_hash_table_destroy(variables_table);
+    variables_table = NULL;
     g_slist_free_full(instructions_table, (GDestroyNotify) freeInstruction);
+    instructions_table = NULL;
     g_hash_table_destroy(labels_table);
+    labels_table = NULL;
     g_free(input_buffer);
     g_free(variables_binary);
     g_free(instructions_binary);
     fclose(output_file);
+
+    return 0;
 }
 
 // Function to print out parser errors from Bison.

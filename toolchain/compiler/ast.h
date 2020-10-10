@@ -154,6 +154,7 @@ class ASTVariableAssignmentNode : public ASTStatementNode {
         ASTNodeType getNodeType();
         std::string getHumanReadable();
         std::string getVariableName();
+        ~ASTVariableAssignmentNode();
 };
 
 class ASTProcedureCallNode : public ASTStatementNode {

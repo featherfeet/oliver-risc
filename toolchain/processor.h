@@ -89,10 +89,4 @@ typedef struct {
     Operand operand2;                        // Store the second operand of the instruction.
 } Instruction;
 
-// Represent a label (a place the code can jump to) like "label_name:" or whatever.
-struct Label {
-	char *name;                    // The label's name.
-	int instruction_index;         // The index of the instruction that comes after the label (i. e. the index of the instruction that this label is used to jump to).
-};
-
 #endif // PROCESSOR_H

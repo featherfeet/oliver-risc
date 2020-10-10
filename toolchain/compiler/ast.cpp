@@ -339,7 +339,6 @@ std::vector<ASTTermNode*> ASTExpressionNode::getTerms() {
 
 ASTExpressionNode::~ASTExpressionNode() {
     for (auto term : terms) {
-        std::cout << "DELETING TERM" << std::endl;
         delete term;
     }
 }
@@ -363,6 +362,10 @@ std::string ASTVariableAssignmentNode::getHumanReadable() {
 
 std::string ASTVariableAssignmentNode::getVariableName() {
     return variable_name;
+}
+
+ASTVariableAssignmentNode::~ASTVariableAssignmentNode() {
+    delete value;
 }
 
 ASTProcedureCallNode::ASTProcedureCallNode(std::string procedure_name) {
