@@ -15,6 +15,7 @@
 
     // GLib hash table associating variable names to pointers to Variable structures (see assembler.h).
     GHashTable *variables_table;
+    OPERAND_C_TYPE variables_address_counter = OPERAND_SIZE; // Track the current size of the .data section so that we know the memory offset to the variable declaration currently being parsed. Offset the addresses by OPERAND_SIZE because the first OPERAND_SIZE bytes of the binary are used to specify the length of the .data section.
 
     // GLib singly-linked list of pointers to Instruction structures (see assembler.h).
     GSList *instructions_table = NULL;
@@ -72,6 +73,14 @@
 
         g_free(instruction);
     }
+
+    // Free all dynamically allocated memory in a Variable structure.
+    void freeVariable(Variable *variable) {
+        if (variable->variable_type == STRING_VARIABLE) {
+            g_free(variable->variable_value.string);
+        }
+        g_free(variable);
+    }
 %}
 
 %token TOKEN_NOP
@@ -109,6 +118,7 @@
 %token TOKEN_AND
 %token TOKEN_XOR
 %token TOKEN_NOT
+%token TOKEN_STRING_LITERAL
 
 %start line
 
@@ -160,20 +170,38 @@ variable_declaration: TOKEN_IDENTIFIER TOKEN_EQUALS TOKEN_CONSTANT {
     char *variable_name = $<strval>1;
     OPERAND_C_TYPE variable_value = $<intval>3;
 
-    printf("Declaring variable \"%s\" as %d.\n", variable_name, variable_value);
+    printf("Declaring integer variable \"%s\" as %d.\n", variable_name, variable_value);
 
     // Create a Variable structure representing the variable declaration.
     Variable *variable = g_new(Variable, 1);
-    OPERAND_C_TYPE variable_address = g_hash_table_size(variables_table) * OPERAND_SIZE;
-    // Offset the addresses by OPERAND_SIZE because the first OPERAND_SIZE bytes of the binary are used to specify the length of the .data section.
-    variable_address += OPERAND_SIZE;
+    variable->variable_type = INTEGER_VARIABLE;
+    OPERAND_C_TYPE variable_address = variables_address_counter;
+    variables_address_counter += OPERAND_SIZE;
     // Create the Variable structure.
-    memcpy(variable->value, &variable_value, OPERAND_SIZE);
+    memcpy(variable->variable_value.integer, &variable_value, OPERAND_SIZE);
     memcpy(variable->address, &variable_address, OPERAND_SIZE);
 
     // Save the Variable structure in the variables_table hash table.
     g_hash_table_insert(variables_table, variable_name, variable);
 }
+                    | TOKEN_IDENTIFIER TOKEN_EQUALS TOKEN_STRING_LITERAL {
+                        char *variable_name = $<strval>1;
+                        char *variable_value = $<strval>3;
+
+                        printf("Declaring string variable \"%s\" as \"%s\".\n", variable_name, variable_value);
+
+                        // Create a Variable structure representing the variable declaration.
+                        Variable *variable = g_new(Variable, 1);
+                        variable->variable_type = STRING_VARIABLE;
+                        OPERAND_C_TYPE variable_address = variables_address_counter;
+                        variables_address_counter += strlen(variable_value);
+                        // Create the Variable structure.
+                        variable->variable_value.string = variable_value;
+                        memcpy(variable->address, &variable_address, OPERAND_SIZE);
+
+                        // Save the Variable structure in the variables_table hash table.
+                        g_hash_table_insert(variables_table, variable_name, variable);
+                    }
 ;
 
 // Parse lines with actual assembly instructions. Each branch here parses an instruction line into an Instruction structure and saves it in the instructions_table hash table.
@@ -481,7 +509,7 @@ void endParseString(void);
 
 int main(int argc, char *argv[]) {
     // Initialize the hash tables with strings as keys. Use g_free to automatically free the memory used by keys and values.
-    variables_table = g_hash_table_new_full(g_str_hash, g_str_equal, (GDestroyNotify) g_free, (GDestroyNotify) g_free);
+    variables_table = g_hash_table_new_full(g_str_hash, g_str_equal, (GDestroyNotify) g_free, (GDestroyNotify) freeVariable);
     labels_table = g_hash_table_new_full(g_str_hash, g_str_equal, (GDestroyNotify) g_free, (GDestroyNotify) g_free);
 
     // Buffer to store the input assembly code.
@@ -534,19 +562,29 @@ int main(int argc, char *argv[]) {
     // Take the variables_table hash table and convert it into the final binary format.
     ///////////////////////////////////////////////////////////////////////////////////////
     // Allocate memory to store the final binary format of the variables (.data) section of the output binary.
-    size_t variables_binary_size = g_hash_table_size(variables_table) * OPERAND_SIZE;
+    size_t variables_binary_size = variables_address_counter - OPERAND_SIZE; // Subtract OPERAND_SIZE to compensate for the first OPERAND_SIZE bytes of the file being used to store the length of the .data section.
     void *variables_binary = g_malloc0(variables_binary_size);
     // Iterate over the variables_table hash table.
     GHashTableIter iter;
     g_hash_table_iter_init(&iter, variables_table);
     Variable *variable;
     while (g_hash_table_iter_next(&iter, NULL, (gpointer) &variable)) {
-        // Convert the variable->address buffer in the Variable structure back into an integer.
-        OPERAND_C_TYPE variable_address;
-        memcpy(&variable_address, variable->address, OPERAND_SIZE);
-        variable_address -= OPERAND_SIZE; // Compensate for the first OPERAND_SIZE bytes of the file being used to store the length of the .data section.
-        // Copy the variable's value into the final binary format at the location specified by variable_address.
-        memcpy(variables_binary + variable_address, variable->value, OPERAND_SIZE);
+        if (variable->variable_type == INTEGER_VARIABLE) {
+            // Convert the variable->address buffer in the Variable structure back into an integer.
+            OPERAND_C_TYPE variable_address;
+            memcpy(&variable_address, variable->address, OPERAND_SIZE);
+            variable_address -= OPERAND_SIZE; // Compensate for the first OPERAND_SIZE bytes of the file being used to store the length of the .data section.
+            // Copy the variable's value into the final binary format at the location specified by variable_address.
+            memcpy(variables_binary + variable_address, variable->variable_value.integer, OPERAND_SIZE);
+        }
+        else if (variable->variable_type == STRING_VARIABLE) {
+            // Convert the variable->address buffer in the Variable structure back into an integer.
+            OPERAND_C_TYPE variable_address;
+            memcpy(&variable_address, variable->address, OPERAND_SIZE);
+            variable_address -= OPERAND_SIZE; // Compensate for the first OPERAND_SIZE bytes of the file being used to store the length of the .data section.
+            // Copy the variable's value into the final binary format at the location specified by variable_address.
+            memcpy(variables_binary + variable_address, variable->variable_value.string, strlen(variable->variable_value.string) + 1);
+        }
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////
@@ -704,8 +742,8 @@ int main(int argc, char *argv[]) {
         printf("\033[1;31mERROR:\033[0m Could not write %d bytes of data to the file.\n", OPERAND_SIZE);
     }
     // Write the final binary format of the .data (variables) section to the output binary file.
-    if (fwrite(variables_binary, OPERAND_SIZE, g_hash_table_size(variables_table), output_file) != g_hash_table_size(variables_table)) {
-        printf("\033[1;31mERROR:\033[0m Could not write %d bytes of data to the file.\n", g_hash_table_size(variables_table) * OPERAND_SIZE);
+    if (fwrite(variables_binary, 1, variables_binary_size, output_file) != variables_binary_size) {
+        printf("\033[1;31mERROR:\033[0m Could not write %d bytes of data to the file.\n", variables_binary_size);
     }
     // Write the final binary format of the .code (instructions) section to the output binary file.
     if (fwrite(instructions_binary, INSTRUCTION_SIZE, g_slist_length(instructions_table), output_file) != g_slist_length(instructions_table)) {

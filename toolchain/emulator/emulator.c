@@ -9,6 +9,14 @@
 #define REGISTER_B registers[2]
 #define REGISTER_G registers[7]
 
+FILE *file = NULL;
+uint8_t *raw_binary = NULL;
+
+void cleanup() {
+    fclose(file);
+    free(raw_binary);
+}
+
 int main(int argc, char *argv[]) {
     if (argc != 2) {
         printf("Usage: ./emulator out.bin\n");
@@ -16,14 +24,14 @@ int main(int argc, char *argv[]) {
     }
 
 	// Read in binary file.
-	FILE *file = fopen(argv[1], "rb");
+	file = fopen(argv[1], "rb");
 	fseek(file, 0L, SEEK_END);
 	int raw_binary_length = ftell(file);
     if (raw_binary_length > TOTAL_RAM_SIZE_BYTES) {
         printf("\033[1;31mERROR: Program is too large to fit in RAM.\033[0m\n");
         return 1;
     }
-	uint8_t *raw_binary = malloc(TOTAL_RAM_SIZE_BYTES);
+	raw_binary = malloc(TOTAL_RAM_SIZE_BYTES);
 	rewind(file);
 	fread(raw_binary, raw_binary_length, 1, file);
 
@@ -141,6 +149,7 @@ int main(int argc, char *argv[]) {
                 break;
             case (OPERATION_HALT):
                 printf("HALT\n");
+                cleanup();
                 exit(0);
                 break;
             case (OPERATION_ISR):
@@ -177,6 +186,7 @@ int main(int argc, char *argv[]) {
                 break;
         }
     }
-
+    
+    cleanup();
     return 0;
 }

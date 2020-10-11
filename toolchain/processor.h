@@ -69,10 +69,23 @@ typedef enum {
     CODE_SECTION
 } AssemblySection;
 
+// Represents whether a variable is an integer or a string.
+typedef enum {
+    INTEGER_VARIABLE,
+    STRING_VARIABLE
+} VariableType;
+
+// Represents the value of a variable.
+typedef union {
+    uint8_t integer[OPERAND_SIZE];
+    char *string;
+} VariableValue;
+
 // Represent a variable like "varname3 = 9" or whatever.
 typedef struct {
     uint8_t address[OPERAND_SIZE];
-	uint8_t value[OPERAND_SIZE];
+    VariableType variable_type;
+    VariableValue variable_value;
 } Variable;
 
 // Represent an operand to an instruction. Operands can be either registers or memory addresses.

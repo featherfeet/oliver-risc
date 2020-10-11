@@ -52,6 +52,17 @@
     // Ignore whitespace characters (spaces and tabs), as well as commas.
 }
 
+\"[^"\n]*["\n] {
+    yylval.strval = g_strdup(yytext + 1);
+    if (yylval.strval[yyleng - 2] != '"') {
+        printf("\033[1;31mERROR:\033[0m String not terminated with quotes.\n");
+    }
+    else {
+        yylval.strval[yyleng - 2] = '\0';
+    }
+    return TOKEN_STRING_LITERAL;
+}
+
 "NOP" {
     return TOKEN_NOP;
 }

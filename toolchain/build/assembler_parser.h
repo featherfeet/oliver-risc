@@ -83,7 +83,8 @@ extern int yydebug;
     TOKEN_OR = 289,
     TOKEN_AND = 290,
     TOKEN_XOR = 291,
-    TOKEN_NOT = 292
+    TOKEN_NOT = 292,
+    TOKEN_STRING_LITERAL = 293
   };
 #endif
 
@@ -92,12 +93,12 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 115 "assembler/parser.y" /* yacc.c:1921  */
+#line 125 "assembler/parser.y" /* yacc.c:1921  */
 
     int intval;
     char *strval;
 
-#line 101 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/assembler_parser.h" /* yacc.c:1921  */
+#line 102 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/assembler_parser.h" /* yacc.c:1921  */
 };
 
 typedef union YYSTYPE YYSTYPE;
