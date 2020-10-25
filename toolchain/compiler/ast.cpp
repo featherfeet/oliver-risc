@@ -163,29 +163,50 @@ std::vector<ASTStatementNode*> ASTBeginEndBlockNode::getChildren() {
 }
 
 ASTVariableDeclarationNode::ASTVariableDeclarationNode(std::string variable_name) {
+    this->node_type = INTEGER_DECLARATION;
     this->variable_name = variable_name;
-    this->value = 0;
+    this->integer_value = 0;
 }
 
 ASTVariableDeclarationNode::ASTVariableDeclarationNode(std::string variable_name, OPERAND_C_TYPE value) {
+    this->node_type = INTEGER_DECLARATION;
     this->variable_name = variable_name;
-    this->value = value;
+    this->integer_value = value;
+}
+
+ASTVariableDeclarationNode::ASTVariableDeclarationNode(std::string variable_name, std::string value) {
+    this->node_type = STRING_DECLARATION;
+    this->variable_name = variable_name;
+    this->string_value = value;
 }
 
 ASTNodeType ASTVariableDeclarationNode::getNodeType() {
     return VARIABLE_DECLARATION_NODE;
 }
 
+ASTVariableDeclarationNodeType ASTVariableDeclarationNode::getVariableDeclarationNodeType() {
+    return node_type;
+}
+
 std::string ASTVariableDeclarationNode::getHumanReadable() {
-    return fmt::format("Declare `{}` as {}.", variable_name, value);
+    if (node_type == INTEGER_DECLARATION) {
+        return fmt::format("Declare `{}` as {}.", variable_name, integer_value);
+    }
+    else if (node_type == STRING_DECLARATION) {
+        return fmt::format("Declare `{}` as `{}`.", variable_name, string_value);
+    }
 }
 
 std::string ASTVariableDeclarationNode::getVariableName() {
     return variable_name;
 }
 
-OPERAND_C_TYPE ASTVariableDeclarationNode::getValue() {
-    return value;
+OPERAND_C_TYPE ASTVariableDeclarationNode::getIntegerValue() {
+    return integer_value;
+}
+
+std::string ASTVariableDeclarationNode::getStringValue() {
+    return string_value;
 }
 
 ASTConditionNode::ASTConditionNode(ConditionNodeComparison comparison, ASTExpressionNode *expression1, ASTExpressionNode *expression2) {

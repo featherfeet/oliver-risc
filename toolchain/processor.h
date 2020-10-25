@@ -95,9 +95,16 @@ typedef union {
     OPERAND_C_TYPE operand_constant;
 } Operand;
 
+// Some operations have multiple variants that have the opcode but are assembled differently.
+typedef enum {
+    CLOAD_CONSTANT,
+    CLOAD_ADDRESS
+} OperationVariant;
+
 // Represent an instruction like "MOV A,B" or whatever.
 typedef struct {
 	Operation operation;                     // Store the operation (MOV, JMPL, etc.) of the instruction.
+    OperationVariant operation_variant;                // Some operations have multiple variants that have the same opcode but are assembled differently.
     Operand operand1;                        // Store the first operand of the instruction.
     Operand operand2;                        // Store the second operand of the instruction.
 } Instruction;

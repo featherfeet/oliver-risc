@@ -35,6 +35,17 @@
     BEGIN(INITIAL);
 }
 
+\"[^"\n]*["\n] {
+    yylval.strval = strdup(yytext + 1);
+    if (yylval.strval[yyleng - 2] != '"') {
+        printf("\033[1;31mERROR:\033[0m String not terminated with quotes.\n");
+    }
+    else {
+        yylval.strval[yyleng - 2] = '\0';
+    }
+    return TOKEN_STRING_LITERAL;
+}
+
 "VAR" {
     return TOKEN_VAR;
 }

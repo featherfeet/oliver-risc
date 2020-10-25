@@ -55,6 +55,11 @@
             case OPERATION_LOAD:
                 g_free(instruction->operand1.operand_address);
                 break;
+            case OPERATION_CLOAD:
+                if (instruction->operation_variant == CLOAD_ADDRESS) {
+                    g_free(instruction->operand1.operand_address);
+                }
+                break;
             case OPERATION_STORE:
                 g_free(instruction->operand2.operand_address);
                 break;
@@ -119,6 +124,8 @@
 %token TOKEN_XOR
 %token TOKEN_NOT
 %token TOKEN_STRING_LITERAL
+%token TOKEN_LEFT_SQUARE_BRACKET
+%token TOKEN_RIGHT_SQUARE_BRACKET
 
 %start line
 
@@ -281,15 +288,28 @@ instruction: TOKEN_NOP {
         g_free($<strval>3);
     }
     | TOKEN_CLOAD TOKEN_CONSTANT TOKEN_REGISTER {
-        printf("Instruction: CLOAD %d,%s\n", $<intval>2, $<strval>3);
+        printf("Instruction: CLOAD (constant) %d,%s\n", $<intval>2, $<strval>3);
 
         Instruction *instruction = g_new(Instruction, 1);
         instruction->operation = OPERATION_CLOAD;
+        instruction->operation_variant = CLOAD_CONSTANT;
         instruction->operand1.operand_constant = $<intval>2;
         instruction->operand2.operand_register = stringToRegister($<strval>3);
         instructions_table = g_slist_append(instructions_table, instruction);
 
         g_free($<strval>3);
+    }
+    | TOKEN_CLOAD TOKEN_LEFT_SQUARE_BRACKET TOKEN_IDENTIFIER TOKEN_RIGHT_SQUARE_BRACKET TOKEN_REGISTER {
+        printf("Instruction: CLOAD (address) [%d],%s\n", $<strval>3, $<strval>5);
+
+        Instruction *instruction = g_new(Instruction, 1);
+        instruction->operation = OPERATION_CLOAD;
+        instruction->operation_variant = CLOAD_ADDRESS;
+        instruction->operand1.operand_address = $<strval>3;
+        instruction->operand2.operand_register = stringToRegister($<strval>5);
+        instructions_table = g_slist_append(instructions_table, instruction);
+
+        g_free($<strval>5);
     }
     | TOKEN_ADD TOKEN_REGISTER TOKEN_REGISTER {
         printf("Instruction: ADD %s,%s\n", $<strval>2, $<strval>3);
@@ -666,7 +686,15 @@ int main(int argc, char *argv[]) {
                 operand2_is_register = TRUE;
                 break;
             case OPERATION_CLOAD:
-                operand1_is_constant = TRUE;
+                if (instruction->operation_variant == CLOAD_CONSTANT) {
+                    operand1_is_constant = TRUE;
+                }
+                else if (instruction->operation_variant == CLOAD_ADDRESS) {
+                    operand1_is_address = TRUE;
+                }
+                else {
+                    printf("\033[1;31mERROR:\033[0m Invalid variant for CLOAD.\n");
+                }
                 operand2_is_register = TRUE;
                 break;
             case OPERATION_MULT:

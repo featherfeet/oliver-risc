@@ -182,6 +182,14 @@
     return TOKEN_MEMORY_ADDRESS;
 }
 
+"[" {
+    return TOKEN_LEFT_SQUARE_BRACKET;
+}
+
+"]" {
+    return TOKEN_RIGHT_SQUARE_BRACKET;
+}
+
 ":" {
     return TOKEN_COLON;
 }

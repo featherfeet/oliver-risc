@@ -124,6 +124,11 @@
             case OPERATION_LOAD:
                 g_free(instruction->operand1.operand_address);
                 break;
+            case OPERATION_CLOAD:
+                if (instruction->operation_variant == CLOAD_ADDRESS) {
+                    g_free(instruction->operand1.operand_address);
+                }
+                break;
             case OPERATION_STORE:
                 g_free(instruction->operand2.operand_address);
                 break;
@@ -151,7 +156,7 @@
         g_free(variable);
     }
 
-#line 155 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/assembler_parser.c" /* yacc.c:337  */
+#line 160 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/assembler_parser.c" /* yacc.c:337  */
 # ifndef YY_NULLPTR
 #  if defined __cplusplus
 #   if 201103L <= __cplusplus
@@ -224,7 +229,9 @@ extern int yydebug;
     TOKEN_AND = 290,
     TOKEN_XOR = 291,
     TOKEN_NOT = 292,
-    TOKEN_STRING_LITERAL = 293
+    TOKEN_STRING_LITERAL = 293,
+    TOKEN_LEFT_SQUARE_BRACKET = 294,
+    TOKEN_RIGHT_SQUARE_BRACKET = 295
   };
 #endif
 
@@ -233,12 +240,12 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 125 "assembler/parser.y" /* yacc.c:352  */
+#line 132 "assembler/parser.y" /* yacc.c:352  */
 
     int intval;
     char *strval;
 
-#line 242 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/assembler_parser.c" /* yacc.c:352  */
+#line 249 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/assembler_parser.c" /* yacc.c:352  */
 };
 
 typedef union YYSTYPE YYSTYPE;
@@ -486,19 +493,19 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  2
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   85
+#define YYLAST   98
 
 /* YYNTOKENS -- Number of terminals.  */
-#define YYNTOKENS  39
+#define YYNTOKENS  41
 /* YYNNTS -- Number of nonterminals.  */
 #define YYNNTS  4
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  38
+#define YYNRULES  39
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  86
+#define YYNSTATES  90
 
 #define YYUNDEFTOK  2
-#define YYMAXUTOK   293
+#define YYMAXUTOK   295
 
 /* YYTRANSLATE(TOKEN-NUM) -- Symbol number corresponding to TOKEN-NUM
    as returned by yylex, with out-of-bounds checking.  */
@@ -538,17 +545,17 @@ static const yytype_uint8 yytranslate[] =
        5,     6,     7,     8,     9,    10,    11,    12,    13,    14,
       15,    16,    17,    18,    19,    20,    21,    22,    23,    24,
       25,    26,    27,    28,    29,    30,    31,    32,    33,    34,
-      35,    36,    37,    38
+      35,    36,    37,    38,    39,    40
 };
 
 #if YYDEBUG
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,   133,   133,   135,   137,   143,   149,   163,   165,   169,
-     187,   208,   215,   226,   237,   249,   260,   271,   283,   294,
-     306,   318,   330,   342,   354,   366,   378,   390,   402,   414,
-     426,   436,   444,   452,   460,   467,   474,   485,   495
+       0,   140,   140,   142,   144,   150,   156,   170,   172,   176,
+     194,   215,   222,   233,   244,   256,   267,   278,   290,   302,
+     314,   326,   338,   350,   362,   374,   386,   398,   410,   422,
+     434,   446,   456,   464,   472,   480,   487,   494,   505,   515
 };
 #endif
 
@@ -565,8 +572,9 @@ static const char *const yytname[] =
   "TOKEN_COLON", "TOKEN_ISR", "TOKEN_INT", "TOKEN_ENDINT",
   "TOKEN_MEMORY_ADDRESS", "TOKEN_RLOAD", "TOKEN_RSTORE", "TOKEN_CLOAD",
   "TOKEN_MULT", "TOKEN_DIV", "TOKEN_OR", "TOKEN_AND", "TOKEN_XOR",
-  "TOKEN_NOT", "TOKEN_STRING_LITERAL", "$accept", "line",
-  "variable_declaration", "instruction", YY_NULLPTR
+  "TOKEN_NOT", "TOKEN_STRING_LITERAL", "TOKEN_LEFT_SQUARE_BRACKET",
+  "TOKEN_RIGHT_SQUARE_BRACKET", "$accept", "line", "variable_declaration",
+  "instruction", YY_NULLPTR
 };
 #endif
 
@@ -578,7 +586,8 @@ static const yytype_uint16 yytoknum[] =
        0,   256,   257,   258,   259,   260,   261,   262,   263,   264,
      265,   266,   267,   268,   269,   270,   271,   272,   273,   274,
      275,   276,   277,   278,   279,   280,   281,   282,   283,   284,
-     285,   286,   287,   288,   289,   290,   291,   292,   293
+     285,   286,   287,   288,   289,   290,   291,   292,   293,   294,
+     295
 };
 # endif
 
@@ -596,15 +605,15 @@ static const yytype_uint16 yytoknum[] =
      STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-     -20,     0,   -20,   -20,    19,   -19,   -18,     1,     8,    23,
-      24,    26,     3,    22,    30,   -20,   -20,    -3,    27,    21,
-     -20,    31,    32,   -20,    33,    34,    35,    36,    38,    39,
-      40,    41,    42,    43,    44,    45,    48,    20,    49,    50,
+     -20,     0,   -20,   -20,    20,   -19,   -18,     8,    23,    24,
+      26,    27,     1,     3,    30,   -20,   -20,    28,    29,    21,
+     -20,    33,    34,   -20,    35,    36,    -1,    37,    38,    39,
+      40,    41,    42,    43,    44,    45,    48,    22,    49,    50,
       51,    52,    53,    54,   -20,   -20,   -20,   -20,   -20,     2,
-      55,    56,   -20,    57,    59,    60,    61,    62,    63,    64,
-      65,   -20,   -20,   -20,   -20,   -20,   -20,   -20,   -20,   -20,
+      55,    56,   -20,    57,    59,    60,    62,    63,    64,    65,
+      66,    67,   -20,   -20,   -20,   -20,   -20,   -20,   -20,   -20,
      -20,   -20,   -20,   -20,   -20,   -20,   -20,   -20,   -20,   -20,
-     -20,   -20,   -20,   -20,   -20,   -20
+     -20,   -20,    58,   -20,   -20,   -20,   -20,   -20,    68,   -20
 };
 
   /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -613,14 +622,14 @@ static const yytype_int8 yypact[] =
 static const yytype_uint8 yydefact[] =
 {
        2,     0,     1,    11,     0,     0,     0,     0,     0,     0,
-       0,     0,     0,     0,     0,    34,    35,     0,     0,     0,
-       3,     0,     0,    38,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,     0,     0,    35,    36,     0,     0,     0,
+       3,     0,     0,    39,     0,     0,     0,     0,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,     0,     0,     0,    31,    32,    33,     4,     5,     0,
-       0,     0,    37,     0,     0,     0,     0,     0,     0,     0,
-       0,    30,     7,     8,    12,    13,    15,    16,    19,    20,
-      23,    25,    24,    26,     9,    10,     6,    36,    14,    17,
-      18,    21,    22,    27,    28,    29
+       0,     0,     0,     0,    32,    33,    34,     4,     5,     0,
+       0,     0,    38,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,    31,     7,     8,    12,    13,    15,    16,    20,
+      21,    24,    26,    25,    27,     9,    10,     6,    37,    14,
+      17,    18,     0,    22,    23,    28,    29,    30,     0,    19
 };
 
   /* YYPGOTO[NTERM-NUM].  */
@@ -642,59 +651,61 @@ static const yytype_uint8 yytable[] =
 {
        2,    37,    38,     3,     4,     5,     6,     7,     8,     9,
       10,    11,    12,    13,    14,    15,    16,    17,    18,    19,
-      47,    39,    44,    20,    74,    21,    22,    23,    40,    24,
-      25,    26,    27,    28,    29,    30,    31,    32,    35,    66,
-      75,    45,    49,    41,    42,    50,    43,    36,    67,    46,
-      48,    51,    52,    53,    54,     0,    56,    55,    57,    58,
-      59,    60,    61,     0,     0,    64,    62,    63,    65,    68,
-      69,    70,    71,    72,    73,    77,     0,    78,    76,    79,
-      80,    81,    82,    83,    84,    85
+      44,    55,    45,    20,    75,    21,    22,    23,    39,    24,
+      25,    26,    27,    28,    29,    30,    31,    32,    56,    35,
+      76,    67,    49,    40,    41,    50,    42,    43,    36,    46,
+      68,    47,    48,    51,    52,    53,    54,    57,    58,    59,
+      60,    61,    62,     0,     0,    65,    63,    64,    66,    69,
+      70,    71,    72,    73,    74,    78,     0,    79,    77,    80,
+      81,    82,     0,    83,    84,    85,    86,    87,    89,     0,
+       0,     0,     0,     0,     0,     0,     0,     0,    88
 };
 
 static const yytype_int8 yycheck[] =
 {
        0,    20,    20,     3,     4,     5,     6,     7,     8,     9,
       10,    11,    12,    13,    14,    15,    16,    17,    18,    19,
-      23,    20,    19,    23,    22,    25,    26,    27,    20,    29,
-      30,    31,    32,    33,    34,    35,    36,    37,    19,    19,
-      38,    19,    21,    20,    20,    24,    20,    28,    28,    19,
-      23,    20,    20,    20,    20,    -1,    20,    22,    20,    20,
+      19,    22,    19,    23,    22,    25,    26,    27,    20,    29,
+      30,    31,    32,    33,    34,    35,    36,    37,    39,    19,
+      38,    19,    21,    20,    20,    24,    20,    20,    28,    19,
+      28,    23,    23,    20,    20,    20,    20,    20,    20,    20,
       20,    20,    20,    -1,    -1,    20,    23,    23,    20,    20,
       20,    20,    20,    20,    20,    19,    -1,    20,    23,    20,
-      20,    20,    20,    20,    20,    20
+      20,    19,    -1,    20,    20,    20,    20,    20,    20,    -1,
+      -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    40
 };
 
   /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
      symbol of state STATE-NUM.  */
 static const yytype_uint8 yystos[] =
 {
-       0,    40,     0,     3,     4,     5,     6,     7,     8,     9,
+       0,    42,     0,     3,     4,     5,     6,     7,     8,     9,
       10,    11,    12,    13,    14,    15,    16,    17,    18,    19,
       23,    25,    26,    27,    29,    30,    31,    32,    33,    34,
-      35,    36,    37,    41,    42,    19,    28,    20,    20,    20,
+      35,    36,    37,    43,    44,    19,    28,    20,    20,    20,
       20,    20,    20,    20,    19,    19,    19,    23,    23,    21,
-      24,    20,    20,    20,    20,    22,    20,    20,    20,    20,
-      20,    20,    23,    23,    20,    20,    19,    28,    20,    20,
-      20,    20,    20,    20,    22,    38,    23,    19,    20,    20,
-      20,    20,    20,    20,    20,    20
+      24,    20,    20,    20,    20,    22,    39,    20,    20,    20,
+      20,    20,    20,    23,    23,    20,    20,    19,    28,    20,
+      20,    20,    20,    20,    20,    22,    38,    23,    19,    20,
+      20,    20,    19,    20,    20,    20,    20,    20,    40,    20
 };
 
   /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
 static const yytype_uint8 yyr1[] =
 {
-       0,    39,    40,    40,    40,    40,    40,    40,    40,    41,
-      41,    42,    42,    42,    42,    42,    42,    42,    42,    42,
-      42,    42,    42,    42,    42,    42,    42,    42,    42,    42,
-      42,    42,    42,    42,    42,    42,    42,    42,    42
+       0,    41,    42,    42,    42,    42,    42,    42,    42,    43,
+      43,    44,    44,    44,    44,    44,    44,    44,    44,    44,
+      44,    44,    44,    44,    44,    44,    44,    44,    44,    44,
+      44,    44,    44,    44,    44,    44,    44,    44,    44,    44
 };
 
   /* YYR2[YYN] -- Number of symbols on the right hand side of rule YYN.  */
 static const yytype_uint8 yyr2[] =
 {
        0,     2,     0,     2,     3,     3,     4,     3,     3,     3,
-       3,     1,     3,     3,     3,     3,     3,     3,     3,     3,
+       3,     1,     3,     3,     3,     3,     3,     3,     3,     5,
        3,     3,     3,     3,     3,     3,     3,     3,     3,     3,
-       2,     2,     2,     2,     1,     1,     3,     2,     1
+       3,     2,     2,     2,     2,     1,     1,     3,     2,     1
 };
 
 
@@ -1380,27 +1391,27 @@ yyreduce:
   switch (yyn)
     {
         case 4:
-#line 137 "assembler/parser.y" /* yacc.c:1652  */
+#line 144 "assembler/parser.y" /* yacc.c:1652  */
     {
         printf("Start .data section.\n");
 
         current_section = DATA_SECTION;
     }
-#line 1390 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/assembler_parser.c" /* yacc.c:1652  */
+#line 1401 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/assembler_parser.c" /* yacc.c:1652  */
     break;
 
   case 5:
-#line 143 "assembler/parser.y" /* yacc.c:1652  */
+#line 150 "assembler/parser.y" /* yacc.c:1652  */
     {
         printf("Start .code section.\n");
 
         current_section = CODE_SECTION;
     }
-#line 1400 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/assembler_parser.c" /* yacc.c:1652  */
+#line 1411 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/assembler_parser.c" /* yacc.c:1652  */
     break;
 
   case 6:
-#line 149 "assembler/parser.y" /* yacc.c:1652  */
+#line 156 "assembler/parser.y" /* yacc.c:1652  */
     {
         char *label = (yyvsp[-2].strval);
 
@@ -1414,11 +1425,11 @@ yyreduce:
         // Store the address buffer in the labels_table hash table with the label name as the key.
         g_hash_table_insert(labels_table, label, label_address_buffer);
     }
-#line 1418 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/assembler_parser.c" /* yacc.c:1652  */
+#line 1429 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/assembler_parser.c" /* yacc.c:1652  */
     break;
 
   case 9:
-#line 169 "assembler/parser.y" /* yacc.c:1652  */
+#line 176 "assembler/parser.y" /* yacc.c:1652  */
     {
     char *variable_name = (yyvsp[-2].strval);
     OPERAND_C_TYPE variable_value = (yyvsp[0].intval);
@@ -1437,11 +1448,11 @@ yyreduce:
     // Save the Variable structure in the variables_table hash table.
     g_hash_table_insert(variables_table, variable_name, variable);
 }
-#line 1441 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/assembler_parser.c" /* yacc.c:1652  */
+#line 1452 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/assembler_parser.c" /* yacc.c:1652  */
     break;
 
   case 10:
-#line 187 "assembler/parser.y" /* yacc.c:1652  */
+#line 194 "assembler/parser.y" /* yacc.c:1652  */
     {
                         char *variable_name = (yyvsp[-2].strval);
                         char *variable_value = (yyvsp[0].strval);
@@ -1460,11 +1471,11 @@ yyreduce:
                         // Save the Variable structure in the variables_table hash table.
                         g_hash_table_insert(variables_table, variable_name, variable);
                     }
-#line 1464 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/assembler_parser.c" /* yacc.c:1652  */
+#line 1475 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/assembler_parser.c" /* yacc.c:1652  */
     break;
 
   case 11:
-#line 208 "assembler/parser.y" /* yacc.c:1652  */
+#line 215 "assembler/parser.y" /* yacc.c:1652  */
     {
         printf("Instruction: NOP\n");
 
@@ -1472,11 +1483,11 @@ yyreduce:
         instruction->operation = OPERATION_NOP;
         instructions_table = g_slist_append(instructions_table, instruction);
     }
-#line 1476 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/assembler_parser.c" /* yacc.c:1652  */
+#line 1487 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/assembler_parser.c" /* yacc.c:1652  */
     break;
 
   case 12:
-#line 215 "assembler/parser.y" /* yacc.c:1652  */
+#line 222 "assembler/parser.y" /* yacc.c:1652  */
     {
         printf("Instruction: LOAD (variable) %s,%s\n", (yyvsp[-1].strval), (yyvsp[0].strval));
 
@@ -1488,11 +1499,11 @@ yyreduce:
 
         g_free((yyvsp[0].strval));
     }
-#line 1492 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/assembler_parser.c" /* yacc.c:1652  */
+#line 1503 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/assembler_parser.c" /* yacc.c:1652  */
     break;
 
   case 13:
-#line 226 "assembler/parser.y" /* yacc.c:1652  */
+#line 233 "assembler/parser.y" /* yacc.c:1652  */
     {
         printf("Instruction: LOAD (address) %s,%s\n", (yyvsp[-1].strval), (yyvsp[0].strval));
 
@@ -1504,11 +1515,11 @@ yyreduce:
 
         g_free((yyvsp[0].strval));
     }
-#line 1508 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/assembler_parser.c" /* yacc.c:1652  */
+#line 1519 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/assembler_parser.c" /* yacc.c:1652  */
     break;
 
   case 14:
-#line 237 "assembler/parser.y" /* yacc.c:1652  */
+#line 244 "assembler/parser.y" /* yacc.c:1652  */
     {
         printf("Instruction: RLOAD %s,%s\n", (yyvsp[-1].strval), (yyvsp[0].strval));
 
@@ -1521,11 +1532,11 @@ yyreduce:
         g_free((yyvsp[-1].strval));
         g_free((yyvsp[0].strval));
     }
-#line 1525 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/assembler_parser.c" /* yacc.c:1652  */
+#line 1536 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/assembler_parser.c" /* yacc.c:1652  */
     break;
 
   case 15:
-#line 249 "assembler/parser.y" /* yacc.c:1652  */
+#line 256 "assembler/parser.y" /* yacc.c:1652  */
     {
         printf("Instruction: STORE (variable) %s,%s\n", (yyvsp[-1].strval), (yyvsp[0].strval));
 
@@ -1537,11 +1548,11 @@ yyreduce:
 
         g_free((yyvsp[-1].strval));
     }
-#line 1541 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/assembler_parser.c" /* yacc.c:1652  */
+#line 1552 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/assembler_parser.c" /* yacc.c:1652  */
     break;
 
   case 16:
-#line 260 "assembler/parser.y" /* yacc.c:1652  */
+#line 267 "assembler/parser.y" /* yacc.c:1652  */
     {
         printf("Instruction: STORE (address) %s,%s\n", (yyvsp[-1].strval), (yyvsp[0].strval));
 
@@ -1553,11 +1564,11 @@ yyreduce:
 
         g_free((yyvsp[-1].strval));
     }
-#line 1557 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/assembler_parser.c" /* yacc.c:1652  */
+#line 1568 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/assembler_parser.c" /* yacc.c:1652  */
     break;
 
   case 17:
-#line 271 "assembler/parser.y" /* yacc.c:1652  */
+#line 278 "assembler/parser.y" /* yacc.c:1652  */
     {
         printf("Instruction: RSTORE %s,%s\n", (yyvsp[-1].strval), (yyvsp[0].strval));
 
@@ -1570,27 +1581,45 @@ yyreduce:
         g_free((yyvsp[-1].strval));
         g_free((yyvsp[0].strval));
     }
-#line 1574 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/assembler_parser.c" /* yacc.c:1652  */
+#line 1585 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/assembler_parser.c" /* yacc.c:1652  */
     break;
 
   case 18:
-#line 283 "assembler/parser.y" /* yacc.c:1652  */
+#line 290 "assembler/parser.y" /* yacc.c:1652  */
     {
-        printf("Instruction: CLOAD %d,%s\n", (yyvsp[-1].intval), (yyvsp[0].strval));
+        printf("Instruction: CLOAD (constant) %d,%s\n", (yyvsp[-1].intval), (yyvsp[0].strval));
 
         Instruction *instruction = g_new(Instruction, 1);
         instruction->operation = OPERATION_CLOAD;
+        instruction->operation_variant = CLOAD_CONSTANT;
         instruction->operand1.operand_constant = (yyvsp[-1].intval);
         instruction->operand2.operand_register = stringToRegister((yyvsp[0].strval));
         instructions_table = g_slist_append(instructions_table, instruction);
 
         g_free((yyvsp[0].strval));
     }
-#line 1590 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/assembler_parser.c" /* yacc.c:1652  */
+#line 1602 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/assembler_parser.c" /* yacc.c:1652  */
     break;
 
   case 19:
-#line 294 "assembler/parser.y" /* yacc.c:1652  */
+#line 302 "assembler/parser.y" /* yacc.c:1652  */
+    {
+        printf("Instruction: CLOAD (address) [%d],%s\n", (yyvsp[-2].strval), (yyvsp[0].strval));
+
+        Instruction *instruction = g_new(Instruction, 1);
+        instruction->operation = OPERATION_CLOAD;
+        instruction->operation_variant = CLOAD_ADDRESS;
+        instruction->operand1.operand_address = (yyvsp[-2].strval);
+        instruction->operand2.operand_register = stringToRegister((yyvsp[0].strval));
+        instructions_table = g_slist_append(instructions_table, instruction);
+
+        g_free((yyvsp[0].strval));
+    }
+#line 1619 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/assembler_parser.c" /* yacc.c:1652  */
+    break;
+
+  case 20:
+#line 314 "assembler/parser.y" /* yacc.c:1652  */
     {
         printf("Instruction: ADD %s,%s\n", (yyvsp[-1].strval), (yyvsp[0].strval));
 
@@ -1603,11 +1632,11 @@ yyreduce:
         g_free((yyvsp[-1].strval));
         g_free((yyvsp[0].strval));
     }
-#line 1607 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/assembler_parser.c" /* yacc.c:1652  */
+#line 1636 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/assembler_parser.c" /* yacc.c:1652  */
     break;
 
-  case 20:
-#line 306 "assembler/parser.y" /* yacc.c:1652  */
+  case 21:
+#line 326 "assembler/parser.y" /* yacc.c:1652  */
     {
         printf("Instruction: SUB %s,%s\n", (yyvsp[-1].strval), (yyvsp[0].strval));
 
@@ -1620,11 +1649,11 @@ yyreduce:
         g_free((yyvsp[-1].strval));
         g_free((yyvsp[0].strval));
     }
-#line 1624 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/assembler_parser.c" /* yacc.c:1652  */
+#line 1653 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/assembler_parser.c" /* yacc.c:1652  */
     break;
 
-  case 21:
-#line 318 "assembler/parser.y" /* yacc.c:1652  */
+  case 22:
+#line 338 "assembler/parser.y" /* yacc.c:1652  */
     {
         printf("Instruction: MULT %s,%s\n", (yyvsp[-1].strval), (yyvsp[0].strval));
 
@@ -1637,11 +1666,11 @@ yyreduce:
         g_free((yyvsp[-1].strval));
         g_free((yyvsp[0].strval));
     }
-#line 1641 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/assembler_parser.c" /* yacc.c:1652  */
+#line 1670 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/assembler_parser.c" /* yacc.c:1652  */
     break;
 
-  case 22:
-#line 330 "assembler/parser.y" /* yacc.c:1652  */
+  case 23:
+#line 350 "assembler/parser.y" /* yacc.c:1652  */
     {
         printf("Instruction: DIV %s,%s\n", (yyvsp[-1].strval), (yyvsp[0].strval));
 
@@ -1654,11 +1683,11 @@ yyreduce:
         g_free((yyvsp[-1].strval));
         g_free((yyvsp[0].strval));
     }
-#line 1658 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/assembler_parser.c" /* yacc.c:1652  */
+#line 1687 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/assembler_parser.c" /* yacc.c:1652  */
     break;
 
-  case 23:
-#line 342 "assembler/parser.y" /* yacc.c:1652  */
+  case 24:
+#line 362 "assembler/parser.y" /* yacc.c:1652  */
     {
         printf("Instruction: OUT %s,%s\n", (yyvsp[-1].strval), (yyvsp[0].strval));
 
@@ -1671,11 +1700,11 @@ yyreduce:
         g_free((yyvsp[-1].strval));
         g_free((yyvsp[0].strval));
     }
-#line 1675 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/assembler_parser.c" /* yacc.c:1652  */
+#line 1704 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/assembler_parser.c" /* yacc.c:1652  */
     break;
 
-  case 24:
-#line 354 "assembler/parser.y" /* yacc.c:1652  */
+  case 25:
+#line 374 "assembler/parser.y" /* yacc.c:1652  */
     {
         printf("Instruction: MOV %s,%s\n", (yyvsp[-1].strval), (yyvsp[0].strval));
 
@@ -1688,11 +1717,11 @@ yyreduce:
         g_free((yyvsp[-1].strval));
         g_free((yyvsp[0].strval));
     }
-#line 1692 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/assembler_parser.c" /* yacc.c:1652  */
+#line 1721 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/assembler_parser.c" /* yacc.c:1652  */
     break;
 
-  case 25:
-#line 366 "assembler/parser.y" /* yacc.c:1652  */
+  case 26:
+#line 386 "assembler/parser.y" /* yacc.c:1652  */
     {
         printf("Instruction: IN %s,%s\n", (yyvsp[-1].strval), (yyvsp[0].strval));
 
@@ -1705,11 +1734,11 @@ yyreduce:
         g_free((yyvsp[-1].strval));
         g_free((yyvsp[0].strval));
     }
-#line 1709 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/assembler_parser.c" /* yacc.c:1652  */
+#line 1738 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/assembler_parser.c" /* yacc.c:1652  */
     break;
 
-  case 26:
-#line 378 "assembler/parser.y" /* yacc.c:1652  */
+  case 27:
+#line 398 "assembler/parser.y" /* yacc.c:1652  */
     {
         printf("Instruction: CMP %s,%s\n", (yyvsp[-1].strval), (yyvsp[0].strval));
 
@@ -1722,11 +1751,11 @@ yyreduce:
         g_free((yyvsp[-1].strval));
         g_free((yyvsp[0].strval));
     }
-#line 1726 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/assembler_parser.c" /* yacc.c:1652  */
+#line 1755 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/assembler_parser.c" /* yacc.c:1652  */
     break;
 
-  case 27:
-#line 390 "assembler/parser.y" /* yacc.c:1652  */
+  case 28:
+#line 410 "assembler/parser.y" /* yacc.c:1652  */
     {
         printf("Instruction: OR %s,%s\n", (yyvsp[-1].strval), (yyvsp[0].strval));
 
@@ -1739,11 +1768,11 @@ yyreduce:
         g_free((yyvsp[-1].strval));
         g_free((yyvsp[0].strval));
     }
-#line 1743 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/assembler_parser.c" /* yacc.c:1652  */
+#line 1772 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/assembler_parser.c" /* yacc.c:1652  */
     break;
 
-  case 28:
-#line 402 "assembler/parser.y" /* yacc.c:1652  */
+  case 29:
+#line 422 "assembler/parser.y" /* yacc.c:1652  */
     {
         printf("Instruction: AND %s,%s\n", (yyvsp[-1].strval), (yyvsp[0].strval));
 
@@ -1756,11 +1785,11 @@ yyreduce:
         g_free((yyvsp[-1].strval));
         g_free((yyvsp[0].strval));
     }
-#line 1760 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/assembler_parser.c" /* yacc.c:1652  */
+#line 1789 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/assembler_parser.c" /* yacc.c:1652  */
     break;
 
-  case 29:
-#line 414 "assembler/parser.y" /* yacc.c:1652  */
+  case 30:
+#line 434 "assembler/parser.y" /* yacc.c:1652  */
     {
         printf("Instruction: XOR %s,%s\n", (yyvsp[-1].strval), (yyvsp[0].strval));
 
@@ -1773,11 +1802,11 @@ yyreduce:
         g_free((yyvsp[-1].strval));
         g_free((yyvsp[0].strval));
     }
-#line 1777 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/assembler_parser.c" /* yacc.c:1652  */
+#line 1806 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/assembler_parser.c" /* yacc.c:1652  */
     break;
 
-  case 30:
-#line 426 "assembler/parser.y" /* yacc.c:1652  */
+  case 31:
+#line 446 "assembler/parser.y" /* yacc.c:1652  */
     {
         printf("Instruction: NOT %s\n", (yyvsp[0].strval));
 
@@ -1788,11 +1817,11 @@ yyreduce:
 
         g_free((yyvsp[0].strval));
     }
-#line 1792 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/assembler_parser.c" /* yacc.c:1652  */
+#line 1821 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/assembler_parser.c" /* yacc.c:1652  */
     break;
 
-  case 31:
-#line 436 "assembler/parser.y" /* yacc.c:1652  */
+  case 32:
+#line 456 "assembler/parser.y" /* yacc.c:1652  */
     {
         printf("Instruction: JMPL %s\n", (yyvsp[0].strval));
 
@@ -1801,11 +1830,11 @@ yyreduce:
         instruction->operand1.operand_address = (yyvsp[0].strval);
         instructions_table = g_slist_append(instructions_table, instruction);
     }
-#line 1805 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/assembler_parser.c" /* yacc.c:1652  */
+#line 1834 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/assembler_parser.c" /* yacc.c:1652  */
     break;
 
-  case 32:
-#line 444 "assembler/parser.y" /* yacc.c:1652  */
+  case 33:
+#line 464 "assembler/parser.y" /* yacc.c:1652  */
     {
         printf("Instruction: JMPE %s\n", (yyvsp[0].strval));
 
@@ -1814,11 +1843,11 @@ yyreduce:
         instruction->operand1.operand_address = (yyvsp[0].strval);
         instructions_table = g_slist_append(instructions_table, instruction);
     }
-#line 1818 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/assembler_parser.c" /* yacc.c:1652  */
+#line 1847 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/assembler_parser.c" /* yacc.c:1652  */
     break;
 
-  case 33:
-#line 452 "assembler/parser.y" /* yacc.c:1652  */
+  case 34:
+#line 472 "assembler/parser.y" /* yacc.c:1652  */
     {
         printf("Instruction: JMPG %s\n", (yyvsp[0].strval));
 
@@ -1827,11 +1856,11 @@ yyreduce:
         instruction->operand1.operand_address = (yyvsp[0].strval);
         instructions_table = g_slist_append(instructions_table, instruction);
     }
-#line 1831 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/assembler_parser.c" /* yacc.c:1652  */
+#line 1860 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/assembler_parser.c" /* yacc.c:1652  */
     break;
 
-  case 34:
-#line 460 "assembler/parser.y" /* yacc.c:1652  */
+  case 35:
+#line 480 "assembler/parser.y" /* yacc.c:1652  */
     {
         printf("Instruction: RST\n");
 
@@ -1839,11 +1868,11 @@ yyreduce:
         instruction->operation = OPERATION_RST;
         instructions_table = g_slist_append(instructions_table, instruction);
     }
-#line 1843 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/assembler_parser.c" /* yacc.c:1652  */
+#line 1872 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/assembler_parser.c" /* yacc.c:1652  */
     break;
 
-  case 35:
-#line 467 "assembler/parser.y" /* yacc.c:1652  */
+  case 36:
+#line 487 "assembler/parser.y" /* yacc.c:1652  */
     {
         printf("Instruction: HALT\n");
 
@@ -1851,11 +1880,11 @@ yyreduce:
         instruction->operation = OPERATION_HALT;
         instructions_table = g_slist_append(instructions_table, instruction);
     }
-#line 1855 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/assembler_parser.c" /* yacc.c:1652  */
+#line 1884 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/assembler_parser.c" /* yacc.c:1652  */
     break;
 
-  case 36:
-#line 474 "assembler/parser.y" /* yacc.c:1652  */
+  case 37:
+#line 494 "assembler/parser.y" /* yacc.c:1652  */
     {
         printf("Instruction: ISR %s,%s\n", (yyvsp[-1].strval), (yyvsp[0].strval));
 
@@ -1867,11 +1896,11 @@ yyreduce:
 
         g_free((yyvsp[-1].strval));
     }
-#line 1871 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/assembler_parser.c" /* yacc.c:1652  */
+#line 1900 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/assembler_parser.c" /* yacc.c:1652  */
     break;
 
-  case 37:
-#line 485 "assembler/parser.y" /* yacc.c:1652  */
+  case 38:
+#line 505 "assembler/parser.y" /* yacc.c:1652  */
     {
         printf("Instruction: INT %s\n", (yyvsp[0].strval));
 
@@ -1882,11 +1911,11 @@ yyreduce:
 
         g_free((yyvsp[0].strval));
     }
-#line 1886 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/assembler_parser.c" /* yacc.c:1652  */
+#line 1915 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/assembler_parser.c" /* yacc.c:1652  */
     break;
 
-  case 38:
-#line 495 "assembler/parser.y" /* yacc.c:1652  */
+  case 39:
+#line 515 "assembler/parser.y" /* yacc.c:1652  */
     {
         printf("Instruction: ENDINT\n");
 
@@ -1894,11 +1923,11 @@ yyreduce:
         instruction->operation = OPERATION_ENDINT;
         instructions_table = g_slist_append(instructions_table, instruction);
     }
-#line 1898 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/assembler_parser.c" /* yacc.c:1652  */
+#line 1927 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/assembler_parser.c" /* yacc.c:1652  */
     break;
 
 
-#line 1902 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/assembler_parser.c" /* yacc.c:1652  */
+#line 1931 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/assembler_parser.c" /* yacc.c:1652  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -2129,7 +2158,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 504 "assembler/parser.y" /* yacc.c:1918  */
+#line 524 "assembler/parser.y" /* yacc.c:1918  */
 
 
 // Forward declarations of functions in lexer.l that allow Flex to parse an in-memory buffer instead of a file handle.
@@ -2295,7 +2324,15 @@ int main(int argc, char *argv[]) {
                 operand2_is_register = TRUE;
                 break;
             case OPERATION_CLOAD:
-                operand1_is_constant = TRUE;
+                if (instruction->operation_variant == CLOAD_CONSTANT) {
+                    operand1_is_constant = TRUE;
+                }
+                else if (instruction->operation_variant == CLOAD_ADDRESS) {
+                    operand1_is_address = TRUE;
+                }
+                else {
+                    printf("\033[1;31mERROR:\033[0m Invalid variant for CLOAD.\n");
+                }
                 operand2_is_register = TRUE;
                 break;
             case OPERATION_MULT:

@@ -46,6 +46,7 @@
 %token TOKEN_FORWARD_SLASH
 %token TOKEN_PERCENT
 %token TOKEN_PROCEDURE
+%token TOKEN_STRING_LITERAL
 
 %start program
 
@@ -67,6 +68,7 @@
 
 %type <strval> TOKEN_IDENTIFIER;
 %type <intval> TOKEN_CONSTANT;
+%type <strval> TOKEN_STRING_LITERAL;
 %type <statement_node> statement;
 %type <variable_declaration_node> variable_declaration;
 %type <variable_assignment_node> variable_assignment;
@@ -117,6 +119,10 @@ variable_declaration: TOKEN_VAR TOKEN_IDENTIFIER {
                     | TOKEN_VAR TOKEN_IDENTIFIER TOKEN_EQUALS TOKEN_CONSTANT {
                         $$ = new ASTVariableDeclarationNode($2, $4);
                         free($2);
+                    }
+                    | TOKEN_VAR TOKEN_IDENTIFIER TOKEN_EQUALS TOKEN_STRING_LITERAL {
+                        $$ = new ASTVariableDeclarationNode($2, $4);
+                        free($4);
                     }
 ;
 

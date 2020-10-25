@@ -100,6 +100,32 @@ std::string AssemblyGenerator::generateStackVariableWrite(OPERAND_C_TYPE constan
     return code.str();
 }
 
+std::string AssemblyGenerator::generateStackVariableStringLoad(std::string string_name, std::string variable_name) {
+    std::string stack_pointer_register;
+    Stackframe *stackframe = nullptr;
+    if (current_stackframe->containsVariable(variable_name)) {
+        stackframe = current_stackframe;
+        stack_pointer_register = "G";
+    }
+    else if (global_stackframe->containsVariable(variable_name)) {
+        stackframe = global_stackframe;
+        stack_pointer_register = "F";
+    }
+    else {
+        std::cout << fmt::format("\033[1;31mERROR:\033[0m Attempt to access undeclared variable `{}`.", variable_name) << std::endl;
+        std::exit(1);
+    }
+
+    // Generate code to store a value from the source register to address (G + variable_offset) in RAM. Remember that G is the register that stores the stack pointer.
+    std::stringstream code;
+    code << fmt::format("    CLOAD {},A", stackframe->getVariableOffset(variable_name)) << std::endl;
+    code << fmt::format("    ADD {},A", stack_pointer_register) << std::endl;
+    code << fmt::format("    CLOAD [{}],B", string_name) << std::endl;
+    code << "    RSTORE B,A" << std::endl;
+
+    return code.str();
+}
+
 std::string AssemblyGenerator::getGeneratedAssembly(ASTNode *node) {
     auto generated_assembly = generateAsm(node);
     return std::get<0>(generated_assembly) + std::get<1>(generated_assembly);
@@ -149,7 +175,15 @@ std::tuple<std::string, std::string> AssemblyGenerator::generateAsm(ASTNode *nod
     else if (node->getNodeType() == VARIABLE_DECLARATION_NODE) {
         ASTVariableDeclarationNode *declaration = (ASTVariableDeclarationNode *) node;
         current_stackframe->addVariable(declaration->getVariableName(), OPERAND_SIZE);
-        code_section << generateStackVariableWrite(declaration->getValue(), declaration->getVariableName());
+        if (declaration->getVariableDeclarationNodeType() == INTEGER_DECLARATION) {
+            code_section << generateStackVariableWrite(declaration->getIntegerValue(), declaration->getVariableName());
+        }
+        else if (declaration->getVariableDeclarationNodeType() == STRING_DECLARATION) {
+            std::string string_name = fmt::format("string{}", string_counter);
+            string_counter++;
+            data_section << fmt::format("    {} = \"{}\"", string_name, declaration->getStringValue()) << std::endl;
+            code_section << generateStackVariableStringLoad(string_name, declaration->getVariableName());
+        }
     }
 
     else if (node->getNodeType() == VARIABLE_ASSIGNMENT_NODE) {
