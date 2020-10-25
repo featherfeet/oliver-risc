@@ -1463,7 +1463,7 @@ yyreduce:
                         Variable *variable = g_new(Variable, 1);
                         variable->variable_type = STRING_VARIABLE;
                         OPERAND_C_TYPE variable_address = variables_address_counter;
-                        variables_address_counter += strlen(variable_value);
+                        variables_address_counter += strlen(variable_value) + 1;
                         // Create the Variable structure.
                         variable->variable_value.string = variable_value;
                         memcpy(variable->address, &variable_address, OPERAND_SIZE);
@@ -1604,7 +1604,7 @@ yyreduce:
   case 19:
 #line 302 "assembler/parser.y" /* yacc.c:1652  */
     {
-        printf("Instruction: CLOAD (address) [%d],%s\n", (yyvsp[-2].strval), (yyvsp[0].strval));
+        printf("Instruction: CLOAD (address) [%s],%s\n", (yyvsp[-2].strval), (yyvsp[0].strval));
 
         Instruction *instruction = g_new(Instruction, 1);
         instruction->operation = OPERATION_CLOAD;
@@ -2220,7 +2220,7 @@ int main(int argc, char *argv[]) {
     // Take the variables_table hash table and convert it into the final binary format.
     ///////////////////////////////////////////////////////////////////////////////////////
     // Allocate memory to store the final binary format of the variables (.data) section of the output binary.
-    size_t variables_binary_size = variables_address_counter - OPERAND_SIZE; // Subtract OPERAND_SIZE to compensate for the first OPERAND_SIZE bytes of the file being used to store the length of the .data section.
+    gsize variables_binary_size = variables_address_counter - OPERAND_SIZE; // Subtract OPERAND_SIZE to compensate for the first OPERAND_SIZE bytes of the file being used to store the length of the .data section.
     void *variables_binary = g_malloc0(variables_binary_size);
     // Iterate over the variables_table hash table.
     GHashTableIter iter;
