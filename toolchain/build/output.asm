@@ -1,6 +1,7 @@
 .data:
     output_address = 0
     output_value = 0
+    temp0 = 0 // General-purpose temporary storage location.
     string0 = "Hello World!"
 .code:
     // Start root node.
@@ -35,6 +36,34 @@
     RSTORE C,A
 
     // End variable assignment node.
+    // Start buffer write node.
+    // Start expression node.
+    CLOAD 0,C
+    CLOAD 97,D
+    ADD C,D
+    MOV A,C
+    // End expression node.
+    STORE C,temp0
+    // Start expression node.
+    CLOAD 0,C
+    CLOAD 8,A
+    ADD G,A
+    RLOAD A,D
+
+    ADD C,D
+    MOV A,C
+    CLOAD 1,D
+    ADD C,D
+    MOV A,C
+    // End expression node.
+    LOAD temp0,B
+    MOV C,D
+    MOV B,E
+    CLOAD 4,A
+    ADD G,A
+    ADD A,D
+    RSTORE E,A
+    // End buffer write node.
     // Start procedure call node.
     HALT
     // End procedure call node.

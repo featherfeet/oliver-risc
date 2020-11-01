@@ -10,6 +10,7 @@ enum ASTNodeType {
     ROOT_NODE,
     VARIABLE_DECLARATION_NODE,
     VARIABLE_ASSIGNMENT_NODE,
+    BUFFER_WRITE_NODE,
     EXPRESSION_NODE,
     TERM_NODE,
     CONDITION_NODE,
@@ -94,7 +95,6 @@ class ASTTermNode : public ASTNode {
     TermNodeType type;
     OPERAND_C_TYPE constant_value;
     std::string variable_name;
-
     public:
         ASTTermNode(TermNodeOperation operation, OPERAND_C_TYPE constant_value);
         ASTTermNode(TermNodeOperation operation, std::string variable_name);
@@ -165,6 +165,21 @@ class ASTVariableAssignmentNode : public ASTStatementNode {
         std::string getHumanReadable();
         std::string getVariableName();
         ~ASTVariableAssignmentNode();
+};
+
+class ASTBufferWriteNode : public ASTStatementNode {
+    std::string variable_name;
+    ASTExpressionNode *offset_expression;
+    ASTExpressionNode *value_expression;
+
+    public:
+        ASTBufferWriteNode(std::string variable_name, ASTExpressionNode *offset_expression, ASTExpressionNode *value_expression);
+        ASTNodeType getNodeType();
+        std::string getHumanReadable();
+        ASTExpressionNode *getOffsetExpression();
+        ASTExpressionNode *getValueExpression();
+        std::string getVariableName();
+        ~ASTBufferWriteNode();
 };
 
 class ASTProcedureCallNode : public ASTStatementNode {

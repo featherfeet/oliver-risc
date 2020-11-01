@@ -14,6 +14,7 @@ class AssemblyGenerator {
     std::string generateStackVariableWrite(std::string source_register, std::string variable_name);
     std::string generateStackVariableWrite(OPERAND_C_TYPE constant_value, std::string variable_name);
     std::string generateStackVariableStringLoad(std::string string_name, std::string variable_name);
+    std::string generateBufferWrite(std::string variable_name, std::string offset_register, std::string value_register);
     std::tuple<std::string, std::string> generateAsm(ASTNode *node);
 
     public:

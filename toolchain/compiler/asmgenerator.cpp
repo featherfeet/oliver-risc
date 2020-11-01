@@ -126,6 +126,37 @@ std::string AssemblyGenerator::generateStackVariableStringLoad(std::string strin
     return code.str();
 }
 
+// Generate code to set the byte at the offset stored in offset_register of the buffer specified by variable_name to the value in value_register.
+std::string AssemblyGenerator::generateBufferWrite(std::string variable_name, std::string offset_register, std::string value_register) {
+    std::string stack_pointer_register;
+    Stackframe *stackframe = nullptr;
+    if (current_stackframe->containsVariable(variable_name)) {
+        stackframe = current_stackframe;
+        stack_pointer_register = "G";
+    }
+    else if (global_stackframe->containsVariable(variable_name)) {
+        stackframe = global_stackframe;
+        stack_pointer_register = "F";
+    }
+    else {
+        std::cout << fmt::format("\033[1;31mERROR:\033[0m Attempt to access undeclared variable `{}`.", variable_name) << std::endl;
+        std::exit(1);
+    }
+
+    std::stringstream code;
+    // Save the offset and value registers into D and E so that they don't get corrupted.
+    code << fmt::format("    MOV {},D", offset_register) << std::endl;
+    code << fmt::format("    MOV {},E", value_register) << std::endl;
+    // Calculate the address in RAM of the variable being written to.
+    code << fmt::format("    CLOAD {},A", stackframe->getVariableOffset(variable_name)) << std::endl;
+    code << fmt::format("    ADD {},A", stack_pointer_register) << std::endl;
+    // Add the offset to the address of the variable being written to.
+    code << "    ADD A,D" << std::endl;
+    // Write the value to the calculated address in RAM.
+    code << "    RSTORE E,A" << std::endl;
+    return code.str();
+}
+
 std::string AssemblyGenerator::getGeneratedAssembly(ASTNode *node) {
     auto generated_assembly = generateAsm(node);
     return std::get<0>(generated_assembly) + std::get<1>(generated_assembly);
@@ -145,6 +176,7 @@ std::tuple<std::string, std::string> AssemblyGenerator::generateAsm(ASTNode *nod
         data_section << ".data:" << std::endl;
         data_section << "    output_address = 0" << std::endl;
         data_section << "    output_value = 0" << std::endl;
+        data_section << "    temp0 = 0 // General-purpose temporary storage location." << std::endl;
 
         code_section << ".code:" << std::endl;
         code_section << "    // Start root node." << std::endl;
@@ -198,6 +230,27 @@ std::tuple<std::string, std::string> AssemblyGenerator::generateAsm(ASTNode *nod
         code_section << generateStackVariableWrite("C", assignment->getVariableName()) << std::endl;
 
         code_section << "    // End variable assignment node." << std::endl;
+    }
+
+    else if (node->getNodeType() == BUFFER_WRITE_NODE) {
+        code_section << "    // Start buffer write node." << std::endl;
+        ASTBufferWriteNode *buffer_write = (ASTBufferWriteNode *) node;
+
+        // Generate assembly code that evaluates the value expression and stores the result in temp0 in RAM.
+        auto generated_value_expression_assembly = generateAsm(buffer_write->getValueExpression());
+        data_section << std::get<0>(generated_value_expression_assembly);
+        code_section << std::get<1>(generated_value_expression_assembly);
+        code_section << "    STORE C,temp0" << std::endl;
+
+        // Generate assembly code that evaluates the offset expression and stores the result in register C.
+        auto generated_offset_expression_assembly = generateAsm(buffer_write->getOffsetExpression());
+        data_section << std::get<0>(generated_offset_expression_assembly);
+        code_section << std::get<1>(generated_offset_expression_assembly);
+
+        code_section << "    LOAD temp0,B" << std::endl;
+        code_section << generateBufferWrite(buffer_write->getVariableName(), "C", "B");
+
+        code_section << "    // End buffer write node." << std::endl;
     }
 
     else if (node->getNodeType() == EXPRESSION_NODE) {

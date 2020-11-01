@@ -43,6 +43,17 @@ std::string ASTRootNode::generateGraphvizCode(std::string node_id, ASTNode *stat
         output << generateGraphvizCode(node_id + "_0", variable_assignment->getExpressionNode());
         output << fmt::format("    \"{}\" -> \"{}_0\";", node_id, node_id) << std::endl;
     }
+    else if (statement->getNodeType() == BUFFER_WRITE_NODE) {
+        output << fmt::format("    \"{}\" [label=\"{}\", shape=box];", node_id, statement->getHumanReadable()) << std::endl;
+
+        ASTBufferWriteNode *buffer_write = (ASTBufferWriteNode *) statement;
+
+        output << generateGraphvizCode(node_id + "_0", buffer_write->getOffsetExpression());
+        output << fmt::format("    \"{}\" -> \"{}_0\";", node_id, node_id) << std::endl;
+
+        output << generateGraphvizCode(node_id + "_1", buffer_write->getValueExpression());
+        output << fmt::format("    \"{}\" -> \"{}_1\";", node_id, node_id) << std::endl;
+    }
     else if (statement->getNodeType() == EXPRESSION_NODE) {
         output << fmt::format("    \"{}\" [label=\"{}\", shape=box];", node_id, statement->getHumanReadable()) << std::endl;
 
@@ -195,6 +206,7 @@ std::string ASTVariableDeclarationNode::getHumanReadable() {
     else if (node_type == STRING_DECLARATION) {
         return fmt::format("Declare `{}` as `{}`.", variable_name, string_value);
     }
+    return "UNKNOWN";
 }
 
 std::string ASTVariableDeclarationNode::getVariableName() {
@@ -387,6 +399,37 @@ std::string ASTVariableAssignmentNode::getVariableName() {
 
 ASTVariableAssignmentNode::~ASTVariableAssignmentNode() {
     delete value;
+}
+
+ASTBufferWriteNode::ASTBufferWriteNode(std::string variable_name, ASTExpressionNode *offset_expression, ASTExpressionNode *value_expression) {
+    this->variable_name = variable_name;
+    this->offset_expression = offset_expression;
+    this->value_expression = value_expression;
+}
+
+ASTNodeType ASTBufferWriteNode::getNodeType() {
+    return BUFFER_WRITE_NODE;
+}
+
+std::string ASTBufferWriteNode::getHumanReadable() {
+    return fmt::format("Buffer write to variable `{}`.", variable_name);
+}
+
+ASTExpressionNode *ASTBufferWriteNode::getOffsetExpression() {
+    return offset_expression;
+}
+
+ASTExpressionNode *ASTBufferWriteNode::getValueExpression() {
+    return value_expression;
+}
+
+std::string ASTBufferWriteNode::getVariableName() {
+    return variable_name;
+}
+
+ASTBufferWriteNode::~ASTBufferWriteNode() {
+    delete offset_expression;
+    delete value_expression;
 }
 
 ASTProcedureCallNode::ASTProcedureCallNode(std::string procedure_name) {

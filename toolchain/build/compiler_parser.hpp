@@ -79,7 +79,9 @@ extern int yydebug;
     TOKEN_FORWARD_SLASH = 279,
     TOKEN_PERCENT = 280,
     TOKEN_PROCEDURE = 281,
-    TOKEN_STRING_LITERAL = 282
+    TOKEN_STRING_LITERAL = 282,
+    TOKEN_LEFT_SQUARE_BRACKET = 283,
+    TOKEN_RIGHT_SQUARE_BRACKET = 284
   };
 #endif
 
@@ -88,13 +90,14 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 53 "compiler/parser.y" /* yacc.c:1921  */
+#line 55 "compiler/parser.y" /* yacc.c:1921  */
 
     int intval;
     char *strval;
     ASTStatementNode *statement_node;
     ASTVariableDeclarationNode *variable_declaration_node;
     ASTVariableAssignmentNode *variable_assignment_node;
+    ASTBufferWriteNode *buffer_write_node;
     ASTExpressionNode *expression_node;
     ASTTermNode *term_node;
     ASTConditionalNode *conditional_node;
@@ -104,7 +107,7 @@ union YYSTYPE
     ASTWhileLoopNode *while_loop_node;
     ASTProcedureNode *procedure_node;
 
-#line 108 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/compiler_parser.hpp" /* yacc.c:1921  */
+#line 111 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/compiler_parser.hpp" /* yacc.c:1921  */
 };
 
 typedef union YYSTYPE YYSTYPE;

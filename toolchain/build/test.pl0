@@ -3,4 +3,6 @@ VAR myvar = "Hello World!";
 VAR i = 0;
 i := i + 1;
 
+myvar[i + 1] := 97;
+
 CALL HALT;

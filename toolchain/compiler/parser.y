@@ -47,6 +47,8 @@
 %token TOKEN_PERCENT
 %token TOKEN_PROCEDURE
 %token TOKEN_STRING_LITERAL
+%token TOKEN_LEFT_SQUARE_BRACKET
+%token TOKEN_RIGHT_SQUARE_BRACKET
 
 %start program
 
@@ -56,6 +58,7 @@
     ASTStatementNode *statement_node;
     ASTVariableDeclarationNode *variable_declaration_node;
     ASTVariableAssignmentNode *variable_assignment_node;
+    ASTBufferWriteNode *buffer_write_node;
     ASTExpressionNode *expression_node;
     ASTTermNode *term_node;
     ASTConditionalNode *conditional_node;
@@ -81,6 +84,7 @@
 %type <procedure_call_node> procedure_call;
 %type <while_loop_node> while_loop;
 %type <procedure_node> procedure;
+%type <buffer_write_node> buffer_write;
 
 %%
 
@@ -96,6 +100,9 @@ statement: variable_declaration TOKEN_SEMICOLON {
             $$ = $1;
          }
          | variable_assignment TOKEN_SEMICOLON {
+            $$ = $1;
+         }
+         | buffer_write TOKEN_SEMICOLON {
             $$ = $1;
          }
          | conditional TOKEN_SEMICOLON {
@@ -129,6 +136,12 @@ variable_declaration: TOKEN_VAR TOKEN_IDENTIFIER {
 variable_assignment: TOKEN_IDENTIFIER TOKEN_COLON_EQUALS expression {
                    $$ = new ASTVariableAssignmentNode($1, $3);
                    free($1);
+}
+;
+
+buffer_write: TOKEN_IDENTIFIER TOKEN_LEFT_SQUARE_BRACKET expression TOKEN_RIGHT_SQUARE_BRACKET TOKEN_COLON_EQUALS expression {
+            $$ = new ASTBufferWriteNode($1, $3, $6);
+            free($1);
 }
 ;
 
@@ -271,7 +284,7 @@ int main(int argc, char *argv[]) {
     endParseString();
 
     // Uncomment to display Graphviz-based AST visualization.
-    // ast->showGraph();
+    ast->showGraph();
 
     AssemblyGenerator asmGenerator;
 

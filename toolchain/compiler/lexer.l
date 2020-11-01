@@ -82,6 +82,14 @@
     return TOKEN_COLON_EQUALS;
 }
 
+"[" {
+    return TOKEN_LEFT_SQUARE_BRACKET;
+}
+
+"]" {
+    return TOKEN_RIGHT_SQUARE_BRACKET;
+}
+
 "IF" {
     return TOKEN_IF;
 }
