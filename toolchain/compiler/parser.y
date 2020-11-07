@@ -60,7 +60,7 @@
     ASTVariableAssignmentNode *variable_assignment_node;
     ASTBufferWriteNode *buffer_write_node;
     ASTExpressionNode *expression_node;
-    ASTTermNode *term_node;
+    ASTNode *term_node; // NOTE: Since a term can be either an ASTTermNode or an ASTBufferReadNode, we use the ASTNode type to store them.
     ASTConditionalNode *conditional_node;
     ASTConditionNode *condition_node;
     ASTBeginEndBlockNode *begin_end_block_node;
@@ -205,6 +205,21 @@ term: TOKEN_IDENTIFIER {
     }
     | TOKEN_PERCENT TOKEN_CONSTANT {
         $$ = new ASTTermNode(MODULUS, $2);
+    }
+    | TOKEN_PLUS TOKEN_IDENTIFIER TOKEN_LEFT_SQUARE_BRACKET expression TOKEN_RIGHT_SQUARE_BRACKET {
+        $$ = new ASTBufferReadNode(ADDITION, $2, $4);
+    }
+    | TOKEN_MINUS TOKEN_IDENTIFIER TOKEN_LEFT_SQUARE_BRACKET expression TOKEN_RIGHT_SQUARE_BRACKET {
+        $$ = new ASTBufferReadNode(SUBTRACTION, $2, $4);
+    }
+    | TOKEN_ASTERISK TOKEN_IDENTIFIER TOKEN_LEFT_SQUARE_BRACKET expression TOKEN_RIGHT_SQUARE_BRACKET {
+        $$ = new ASTBufferReadNode(MULTIPLICATION, $2, $4);
+    }
+    | TOKEN_FORWARD_SLASH TOKEN_IDENTIFIER TOKEN_LEFT_SQUARE_BRACKET expression TOKEN_RIGHT_SQUARE_BRACKET {
+        $$ = new ASTBufferReadNode(DIVISION, $2, $4);
+    }
+    | TOKEN_PERCENT TOKEN_IDENTIFIER TOKEN_LEFT_SQUARE_BRACKET expression TOKEN_RIGHT_SQUARE_BRACKET {
+        $$ = new ASTBufferReadNode(MODULUS, $2, $4);
     }
 ;
 

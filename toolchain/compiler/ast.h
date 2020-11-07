@@ -18,7 +18,8 @@ enum ASTNodeType {
     BEGIN_END_BLOCK_NODE,
     PROCEDURE_CALL_NODE,
     WHILE_LOOP_NODE,
-    PROCEDURE_NODE
+    PROCEDURE_NODE,
+    BUFFER_READ_NODE
 };
 
 class ASTNode {
@@ -107,14 +108,29 @@ class ASTTermNode : public ASTNode {
 };
 
 class ASTExpressionNode : public ASTNode {
-    std::vector<ASTTermNode*> terms;
+    std::vector<ASTNode*> terms;
 
     public:
-        void addTerm(ASTTermNode *term);
+        void addTerm(ASTNode *term);
         ASTNodeType getNodeType();
-        std::vector<ASTTermNode*> getTerms();
+        std::vector<ASTNode*> getTerms();
         std::string getHumanReadable();
         ~ASTExpressionNode();
+};
+
+class ASTBufferReadNode : public ASTNode {
+    TermNodeOperation operation;
+    std::string variable_name;
+    ASTExpressionNode *offset_expression;
+
+    public:
+        ASTBufferReadNode(TermNodeOperation operation, std::string variable_name, ASTExpressionNode *offset_expression);
+        ASTNodeType getNodeType();
+        std::string getHumanReadable();
+        ASTExpressionNode *getOffsetExpression();
+        std::string getVariableName();
+        TermNodeOperation getOperation();
+        ~ASTBufferReadNode();
 };
 
 enum ConditionNodeComparison {

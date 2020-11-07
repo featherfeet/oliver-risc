@@ -256,39 +256,42 @@ std::tuple<std::string, std::string> AssemblyGenerator::generateAsm(ASTNode *nod
     else if (node->getNodeType() == EXPRESSION_NODE) {
         code_section << "    // Start expression node." << std::endl;
         ASTExpressionNode *expression = (ASTExpressionNode *) node;
-        std::vector<ASTTermNode*> terms = expression->getTerms();
+        std::vector<ASTNode*> terms = expression->getTerms();
 
         // Generate assembly that evaluates the expression. Register C is used as the accumulator.
         code_section << "    CLOAD 0,C" << std::endl;
 
         for (int i = 0; i < terms.size(); i++) {
-            ASTTermNode *term = terms[i];
-
-            if (term->getType() == CONSTANT) {
-                code_section << fmt::format("    CLOAD {},D", term->getConstantValue()) << std::endl;
-            }
-            else if (term->getType() == VARIABLE) {
-                code_section << generateStackVariableRead(term->getVariableName(), "D") << std::endl;
-            }
-            if (term->getOperation() == ADDITION) {
-                code_section << "    ADD C,D" << std::endl;
-                code_section << "    MOV A,C" << std::endl;
-            }
-            else if (term->getOperation() == SUBTRACTION) {
-                code_section << "    SUB C,D" << std::endl;
-                code_section << "    MOV A,C" << std::endl;
-            }
-            else if (term->getOperation() == MULTIPLICATION) {
-                code_section << "    MULT C,D" << std::endl;
-                code_section << "    MOV A,C" << std::endl;
-            }
-            else if (term->getOperation() == DIVISION) {
-                code_section << "    DIV C,D" << std::endl;
-                code_section << "    MOV A,C" << std::endl;
-            }
-            else if (term->getOperation() == MODULUS) {
-                code_section << "    DIV C,D" << std::endl;
-                code_section << "    MOV B,C" << std::endl;
+            ASTNode *ast_node = terms[i];
+            
+            if (ast_node->getNodeType() == TERM_NODE) {
+                ASTTermNode *term = (ASTTermNode*) ast_node;
+                if (term->getType() == CONSTANT) {
+                    code_section << fmt::format("    CLOAD {},D", term->getConstantValue()) << std::endl;
+                }
+                else if (term->getType() == VARIABLE) {
+                    code_section << generateStackVariableRead(term->getVariableName(), "D") << std::endl;
+                }
+                if (term->getOperation() == ADDITION) {
+                    code_section << "    ADD C,D" << std::endl;
+                    code_section << "    MOV A,C" << std::endl;
+                }
+                else if (term->getOperation() == SUBTRACTION) {
+                    code_section << "    SUB C,D" << std::endl;
+                    code_section << "    MOV A,C" << std::endl;
+                }
+                else if (term->getOperation() == MULTIPLICATION) {
+                    code_section << "    MULT C,D" << std::endl;
+                    code_section << "    MOV A,C" << std::endl;
+                }
+                else if (term->getOperation() == DIVISION) {
+                    code_section << "    DIV C,D" << std::endl;
+                    code_section << "    MOV A,C" << std::endl;
+                }
+                else if (term->getOperation() == MODULUS) {
+                    code_section << "    DIV C,D" << std::endl;
+                    code_section << "    MOV B,C" << std::endl;
+                }
             }
         }
         code_section << "    // End expression node." << std::endl;

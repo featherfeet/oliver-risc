@@ -59,7 +59,7 @@ std::string ASTRootNode::generateGraphvizCode(std::string node_id, ASTNode *stat
 
         ASTExpressionNode *expression = (ASTExpressionNode *) statement;
 
-        std::vector<ASTTermNode*> terms = expression->getTerms();
+        std::vector<ASTNode*> terms = expression->getTerms();
         for (int i = 0; i < terms.size(); i++) {
             output << generateGraphvizCode(fmt::format("{}_{}", node_id, i), terms[i]);
             output << fmt::format("    \"{}\" -> \"{}_{}\";", node_id, node_id, i) << std::endl;
@@ -354,7 +354,7 @@ std::string ASTTermNode::getVariableName() {
     return variable_name;
 }
 
-void ASTExpressionNode::addTerm(ASTTermNode *term) {
+void ASTExpressionNode::addTerm(ASTNode *term) {
     terms.push_back(term);
 }
 
@@ -366,7 +366,7 @@ std::string ASTExpressionNode::getHumanReadable() {
     return "Expression";
 }
 
-std::vector<ASTTermNode*> ASTExpressionNode::getTerms() {
+std::vector<ASTNode*> ASTExpressionNode::getTerms() {
     return terms;
 }
 
@@ -497,4 +497,34 @@ ASTBeginEndBlockNode *ASTProcedureNode::getBeginEndBlock() {
 
 ASTProcedureNode::~ASTProcedureNode() {
     delete begin_end_block;
+}
+
+ASTBufferReadNode::ASTBufferReadNode(TermNodeOperation operation, std::string variable_name, ASTExpressionNode *offset_expression) {
+    this->operation = operation;
+    this->variable_name = variable_name;
+    this->offset_expression = offset_expression;
+}
+
+ASTNodeType ASTBufferReadNode::getNodeType() {
+    return BUFFER_READ_NODE;
+}
+
+std::string ASTBufferReadNode::getHumanReadable() {
+    return fmt::format("Buffer read from variable `{}`.", variable_name);
+}
+
+ASTExpressionNode *ASTBufferReadNode::getOffsetExpression() {
+    return offset_expression;
+}
+
+std::string ASTBufferReadNode::getVariableName() {
+    return variable_name;
+}
+
+TermNodeOperation ASTBufferReadNode::getOperation() {
+    return operation;
+}
+
+ASTBufferReadNode::~ASTBufferReadNode() {
+    delete offset_expression;
 }
