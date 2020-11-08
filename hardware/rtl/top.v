@@ -127,6 +127,7 @@ reg gpu_access_state;
 reg [31:0] program_rom_address;
 wire [7:0] program_rom_byte;
 wire program_rom_done;
+reg program_rom_read_state;
 rom program_rom (
     .CLOCK_50(CLOCK_50),
     .address(program_rom_address),
@@ -309,6 +310,7 @@ begin
         sdram_controller_rd_n_i <= 'b1;
         sdram_controller_wr_n_i <= 'b1;
         program_rom_address <= 'b0;
+        program_rom_read_state <= `PROGRAM_ROM_READ_STATE_SETUP;
         state <= 'b0;
         operation <= 'b0;
         operand1 <= 'b0;
@@ -385,6 +387,7 @@ begin
                 end
                 else
                 begin
+                    /*
                     // Load the program from the ROM to RAM.
                     write_to_ram(program_rom_address, program_rom_byte);
                     if (ram_write_complete)
@@ -405,6 +408,27 @@ begin
                     begin
                         state <= `STATE_LOAD_TO_RAM;
                     end
+                    */
+                    if (program_rom_read_state == `PROGRAM_ROM_READ_STATE_SETUP)
+                    begin
+                        write_to_ram(program_rom_address, program_rom_byte);
+                        $display("program_rom_address: %d", program_rom_address);
+                        $display("program_rom_byte: %d", program_rom_byte);
+                    end
+                    if (ram_write_complete)
+                    begin
+                        if (program_rom_address < `OPERAND_SIZE_BYTES)
+                        begin
+                            code_section_start_address <= {program_rom_byte, code_section_start_address[31:8]};
+                        end
+                        // Read the next address.
+                        program_rom_address <= program_rom_address + 1;
+                        // Wait a cycle for the ROM to read by going through
+                        // the FINISH state.
+                        program_rom_read_state <= `PROGRAM_ROM_READ_STATE_FINISH;
+                    end
+                    else if (program_rom_read_state <= `PROGRAM_ROM_READ_STATE_FINISH)
+                        program_rom_read_state <= `PROGRAM_ROM_READ_STATE_SETUP;
                 end
             end
             `STATE_FETCH_OPERATION:

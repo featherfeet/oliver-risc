@@ -95,7 +95,7 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 132 "assembler/parser.y" /* yacc.c:1921  */
+#line 134 "assembler/parser.y" /* yacc.c:1921  */
 
     int intval;
     char *strval;
