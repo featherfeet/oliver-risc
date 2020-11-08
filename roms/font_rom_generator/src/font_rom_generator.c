@@ -30,10 +30,10 @@ int main(int argc, char *argv[]) {
     fprintf(verilog_output_file, "\tend\n");
     fprintf(verilog_output_file, "\talways @(posedge CLOCK_50)\n");
     fprintf(verilog_output_file, "\tbegin\n");
-    fprintf(verilog_output_file, "\tif ((character_cell_y * 'd%d + character_cell_x) > 'd127)\n");
-    fprintf(verilog_output_file, "\t\tpixel_value <= 'b0;\n");
-    fprintf(verilog_output_file, "\telse\n");
-    fprintf(verilog_output_file, "\t\tpixel_value <= font_storage[character][character_cell_y * 'd%d + character_cell_x];\n", CHARACTER_CELL_WIDTH_PIXELS);
+    fprintf(verilog_output_file, "\t\tif ((character_cell_y * 'd%d + character_cell_x) > 'd127)\n");
+    fprintf(verilog_output_file, "\t\t\tpixel_value <= 'b0;\n");
+    fprintf(verilog_output_file, "\t\telse\n");
+    fprintf(verilog_output_file, "\t\t\tpixel_value <= font_storage[character][character_cell_y * 'd%d + character_cell_x];\n", CHARACTER_CELL_WIDTH_PIXELS);
     fprintf(verilog_output_file, "\tend\n");
     fprintf(verilog_output_file, "endmodule");
     // Write the body of the Verilog model.

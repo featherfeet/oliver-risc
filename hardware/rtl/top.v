@@ -128,6 +128,7 @@ reg [31:0] program_rom_address;
 wire [7:0] program_rom_byte;
 wire program_rom_done;
 rom program_rom (
+    .CLOCK_50(CLOCK_50),
     .address(program_rom_address),
     .output_byte(program_rom_byte),
     .done(program_rom_done)

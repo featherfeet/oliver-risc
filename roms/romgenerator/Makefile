@@ -1,4 +1,4 @@
 romgenerator: romgenerator.c
-	gcc -o romgenerator romgenerator.c
+	gcc -g -o romgenerator romgenerator.c
 run: romgenerator
-	./romgenerator ../assembler/build/out.bin rom.v
+	./romgenerator ../../toolchain/build/out.bin rom.v rom.mem
