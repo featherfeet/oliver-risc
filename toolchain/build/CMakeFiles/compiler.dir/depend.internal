@@ -9,14 +9,149 @@ CMakeFiles/compiler.dir/compiler/asmgenerator.cpp.o
  /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/asmgenerator.cpp
  /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/asmgenerator.h
  /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/ast.h
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astbeginendblocknode.h
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astbufferreadnode.h
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astbufferwritenode.h
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astconditionalnode.h
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astconditionnode.h
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astexpressionnode.h
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astnode.h
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astprocedurecallnode.h
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astprocedurenode.h
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astrootnode.h
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/aststatementnode.h
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/asttermnode.h
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astvariableassignmentnode.h
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astvariabledeclarationnode.h
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astwhileloopnode.h
  /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/stackframe.h
-CMakeFiles/compiler.dir/compiler/ast.cpp.o
+CMakeFiles/compiler.dir/compiler/astbeginendblocknode.cpp.o
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/ast.h
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astbeginendblocknode.cpp
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astbeginendblocknode.h
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astnode.h
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/aststatementnode.h
+CMakeFiles/compiler.dir/compiler/astbufferreadnode.cpp.o
  .././compiler/include/fmt/core.h
  .././compiler/include/fmt/format-inl.h
  .././compiler/include/fmt/format.h
  .././processor.h
- /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/ast.cpp
  /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/ast.h
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astbufferreadnode.cpp
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astbufferreadnode.h
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astexpressionnode.h
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astnode.h
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/asttermnode.h
+CMakeFiles/compiler.dir/compiler/astbufferwritenode.cpp.o
+ .././compiler/include/fmt/core.h
+ .././compiler/include/fmt/format-inl.h
+ .././compiler/include/fmt/format.h
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/ast.h
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astbufferwritenode.cpp
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astbufferwritenode.h
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astexpressionnode.h
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astnode.h
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/aststatementnode.h
+CMakeFiles/compiler.dir/compiler/astconditionalnode.cpp.o
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/ast.h
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astbeginendblocknode.h
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astconditionalnode.cpp
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astconditionalnode.h
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astconditionnode.h
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astexpressionnode.h
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astnode.h
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/aststatementnode.h
+CMakeFiles/compiler.dir/compiler/astconditionnode.cpp.o
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/ast.h
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astconditionnode.cpp
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astconditionnode.h
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astexpressionnode.h
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astnode.h
+CMakeFiles/compiler.dir/compiler/astexpressionnode.cpp.o
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/ast.h
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astexpressionnode.cpp
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astexpressionnode.h
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astnode.h
+CMakeFiles/compiler.dir/compiler/astnode.cpp.o
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/ast.h
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astnode.cpp
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astnode.h
+CMakeFiles/compiler.dir/compiler/astprocedurecallnode.cpp.o
+ .././compiler/include/fmt/core.h
+ .././compiler/include/fmt/format-inl.h
+ .././compiler/include/fmt/format.h
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/ast.h
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astnode.h
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astprocedurecallnode.cpp
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astprocedurecallnode.h
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/aststatementnode.h
+CMakeFiles/compiler.dir/compiler/astprocedurenode.cpp.o
+ .././compiler/include/fmt/core.h
+ .././compiler/include/fmt/format-inl.h
+ .././compiler/include/fmt/format.h
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/ast.h
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astbeginendblocknode.h
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astnode.h
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astprocedurenode.cpp
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astprocedurenode.h
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/aststatementnode.h
+CMakeFiles/compiler.dir/compiler/astrootnode.cpp.o
+ .././compiler/include/fmt/core.h
+ .././compiler/include/fmt/format-inl.h
+ .././compiler/include/fmt/format.h
+ .././processor.h
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/ast.h
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astbeginendblocknode.h
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astbufferreadnode.h
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astbufferwritenode.h
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astconditionalnode.h
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astconditionnode.h
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astexpressionnode.h
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astnode.h
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astprocedurecallnode.h
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astprocedurenode.h
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astrootnode.cpp
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astrootnode.h
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/aststatementnode.h
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/asttermnode.h
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astvariableassignmentnode.h
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astvariabledeclarationnode.h
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astwhileloopnode.h
+CMakeFiles/compiler.dir/compiler/asttermnode.cpp.o
+ .././processor.h
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/ast.h
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astnode.h
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/asttermnode.cpp
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/asttermnode.h
+CMakeFiles/compiler.dir/compiler/astvariableassignmentnode.cpp.o
+ .././compiler/include/fmt/core.h
+ .././compiler/include/fmt/format-inl.h
+ .././compiler/include/fmt/format.h
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/ast.h
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astexpressionnode.h
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astnode.h
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/aststatementnode.h
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astvariableassignmentnode.cpp
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astvariableassignmentnode.h
+CMakeFiles/compiler.dir/compiler/astvariabledeclarationnode.cpp.o
+ .././compiler/include/fmt/core.h
+ .././compiler/include/fmt/format-inl.h
+ .././compiler/include/fmt/format.h
+ .././processor.h
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/ast.h
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astnode.h
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/aststatementnode.h
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astvariabledeclarationnode.cpp
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astvariabledeclarationnode.h
+CMakeFiles/compiler.dir/compiler/astwhileloopnode.cpp.o
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/ast.h
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astbeginendblocknode.h
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astconditionnode.h
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astexpressionnode.h
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astnode.h
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/aststatementnode.h
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astwhileloopnode.cpp
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astwhileloopnode.h
 CMakeFiles/compiler.dir/compiler/stackframe.cpp.o
  .././compiler/include/fmt/core.h
  .././compiler/include/fmt/format-inl.h
@@ -26,12 +161,42 @@ CMakeFiles/compiler.dir/compiler/stackframe.cpp.o
  /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/stackframe.h
 CMakeFiles/compiler.dir/compiler_lexer.cpp.o
  .././compiler/ast.h
+ .././compiler/astbeginendblocknode.h
+ .././compiler/astbufferreadnode.h
+ .././compiler/astbufferwritenode.h
+ .././compiler/astconditionalnode.h
+ .././compiler/astconditionnode.h
+ .././compiler/astexpressionnode.h
+ .././compiler/astnode.h
+ .././compiler/astprocedurecallnode.h
+ .././compiler/astprocedurenode.h
+ .././compiler/astrootnode.h
+ .././compiler/aststatementnode.h
+ .././compiler/asttermnode.h
+ .././compiler/astvariableassignmentnode.h
+ .././compiler/astvariabledeclarationnode.h
+ .././compiler/astwhileloopnode.h
  .././processor.h
  /home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/compiler_lexer.cpp
  /home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/compiler_parser.hpp
 CMakeFiles/compiler.dir/compiler_parser.cpp.o
  .././compiler/asmgenerator.h
  .././compiler/ast.h
+ .././compiler/astbeginendblocknode.h
+ .././compiler/astbufferreadnode.h
+ .././compiler/astbufferwritenode.h
+ .././compiler/astconditionalnode.h
+ .././compiler/astconditionnode.h
+ .././compiler/astexpressionnode.h
+ .././compiler/astnode.h
+ .././compiler/astprocedurecallnode.h
+ .././compiler/astprocedurenode.h
+ .././compiler/astrootnode.h
+ .././compiler/aststatementnode.h
+ .././compiler/asttermnode.h
+ .././compiler/astvariableassignmentnode.h
+ .././compiler/astvariabledeclarationnode.h
+ .././compiler/astwhileloopnode.h
  .././compiler/stackframe.h
  .././processor.h
  /home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/compiler_parser.cpp

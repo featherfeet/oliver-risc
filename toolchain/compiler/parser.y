@@ -4,6 +4,21 @@
     #include <sstream>
     #include <fstream>
     #include "ast.h"
+    #include "astnode.h"
+    #include "aststatementnode.h"
+    #include "astrootnode.h"
+    #include "astvariabledeclarationnode.h"
+    #include "astexpressionnode.h"
+    #include "astvariableassignmentnode.h"
+    #include "astbufferwritenode.h"
+    #include "asttermnode.h"
+    #include "astbeginendblocknode.h"
+    #include "astconditionnode.h"
+    #include "astconditionalnode.h"
+    #include "astprocedurecallnode.h"
+    #include "astwhileloopnode.h"
+    #include "astprocedurenode.h"
+    #include "astbufferreadnode.h"
     #include "asmgenerator.h"
 
     // #define YYDEBUG 1
@@ -20,6 +35,21 @@
 
 %code requires {
     #include "ast.h"
+    #include "astnode.h"
+    #include "aststatementnode.h"
+    #include "astrootnode.h"
+    #include "astvariabledeclarationnode.h"
+    #include "astexpressionnode.h"
+    #include "astvariableassignmentnode.h"
+    #include "astbufferwritenode.h"
+    #include "asttermnode.h"
+    #include "astbeginendblocknode.h"
+    #include "astconditionnode.h"
+    #include "astconditionalnode.h"
+    #include "astprocedurecallnode.h"
+    #include "astwhileloopnode.h"
+    #include "astprocedurenode.h"
+    #include "astbufferreadnode.h"
 }
 
 %token TOKEN_VAR

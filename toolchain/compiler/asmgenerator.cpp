@@ -5,6 +5,21 @@
 #include "processor.h"
 #include "asmgenerator.h"
 #include "stackframe.h"
+#include "astnode.h"
+#include "aststatementnode.h"
+#include "astrootnode.h"
+#include "astvariabledeclarationnode.h"
+#include "astexpressionnode.h"
+#include "astvariableassignmentnode.h"
+#include "astbufferwritenode.h"
+#include "asttermnode.h"
+#include "astbeginendblocknode.h"
+#include "astconditionnode.h"
+#include "astconditionalnode.h"
+#include "astprocedurecallnode.h"
+#include "astwhileloopnode.h"
+#include "astprocedurenode.h"
+#include "astbufferreadnode.h"
 
 #define FMT_HEADER_ONLY
 #include <fmt/format.h>

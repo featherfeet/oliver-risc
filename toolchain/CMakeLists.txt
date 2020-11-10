@@ -15,9 +15,23 @@ ADD_FLEX_BISON_DEPENDENCY(CompilerLexer CompilerParser)
 
 include_directories(./ ./compiler/include/ ./compiler)
 add_executable(compiler
-               compiler/ast.cpp
                compiler/asmgenerator.cpp
                compiler/stackframe.cpp
+               compiler/asmgenerator.cpp
+               compiler/astnode.cpp
+               compiler/astbeginendblocknode.cpp
+               compiler/astbufferreadnode.cpp
+               compiler/astbufferwritenode.cpp
+               compiler/astconditionalnode.cpp
+               compiler/astconditionnode.cpp
+               compiler/astexpressionnode.cpp
+               compiler/astprocedurecallnode.cpp
+               compiler/astprocedurenode.cpp
+               compiler/astrootnode.cpp
+               compiler/asttermnode.cpp
+               compiler/astvariableassignmentnode.cpp
+               compiler/astvariabledeclarationnode.cpp
+               compiler/astwhileloopnode.cpp
                ${BISON_CompilerParser_OUTPUTS}
                ${FLEX_CompilerLexer_OUTPUTS})
 target_link_libraries(compiler

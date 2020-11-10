@@ -243,32 +243,383 @@ compiler/asmgenerator.cpp.s:
 	$(MAKE) -f CMakeFiles/compiler.dir/build.make CMakeFiles/compiler.dir/compiler/asmgenerator.cpp.s
 .PHONY : compiler/asmgenerator.cpp.s
 
-compiler/ast.o: compiler/ast.cpp.o
+compiler/astbeginendblocknode.o: compiler/astbeginendblocknode.cpp.o
 
-.PHONY : compiler/ast.o
+.PHONY : compiler/astbeginendblocknode.o
 
 # target to build an object file
-compiler/ast.cpp.o:
-	$(MAKE) -f CMakeFiles/compiler.dir/build.make CMakeFiles/compiler.dir/compiler/ast.cpp.o
-.PHONY : compiler/ast.cpp.o
+compiler/astbeginendblocknode.cpp.o:
+	$(MAKE) -f CMakeFiles/compiler.dir/build.make CMakeFiles/compiler.dir/compiler/astbeginendblocknode.cpp.o
+.PHONY : compiler/astbeginendblocknode.cpp.o
 
-compiler/ast.i: compiler/ast.cpp.i
+compiler/astbeginendblocknode.i: compiler/astbeginendblocknode.cpp.i
 
-.PHONY : compiler/ast.i
+.PHONY : compiler/astbeginendblocknode.i
 
 # target to preprocess a source file
-compiler/ast.cpp.i:
-	$(MAKE) -f CMakeFiles/compiler.dir/build.make CMakeFiles/compiler.dir/compiler/ast.cpp.i
-.PHONY : compiler/ast.cpp.i
+compiler/astbeginendblocknode.cpp.i:
+	$(MAKE) -f CMakeFiles/compiler.dir/build.make CMakeFiles/compiler.dir/compiler/astbeginendblocknode.cpp.i
+.PHONY : compiler/astbeginendblocknode.cpp.i
 
-compiler/ast.s: compiler/ast.cpp.s
+compiler/astbeginendblocknode.s: compiler/astbeginendblocknode.cpp.s
 
-.PHONY : compiler/ast.s
+.PHONY : compiler/astbeginendblocknode.s
 
 # target to generate assembly for a file
-compiler/ast.cpp.s:
-	$(MAKE) -f CMakeFiles/compiler.dir/build.make CMakeFiles/compiler.dir/compiler/ast.cpp.s
-.PHONY : compiler/ast.cpp.s
+compiler/astbeginendblocknode.cpp.s:
+	$(MAKE) -f CMakeFiles/compiler.dir/build.make CMakeFiles/compiler.dir/compiler/astbeginendblocknode.cpp.s
+.PHONY : compiler/astbeginendblocknode.cpp.s
+
+compiler/astbufferreadnode.o: compiler/astbufferreadnode.cpp.o
+
+.PHONY : compiler/astbufferreadnode.o
+
+# target to build an object file
+compiler/astbufferreadnode.cpp.o:
+	$(MAKE) -f CMakeFiles/compiler.dir/build.make CMakeFiles/compiler.dir/compiler/astbufferreadnode.cpp.o
+.PHONY : compiler/astbufferreadnode.cpp.o
+
+compiler/astbufferreadnode.i: compiler/astbufferreadnode.cpp.i
+
+.PHONY : compiler/astbufferreadnode.i
+
+# target to preprocess a source file
+compiler/astbufferreadnode.cpp.i:
+	$(MAKE) -f CMakeFiles/compiler.dir/build.make CMakeFiles/compiler.dir/compiler/astbufferreadnode.cpp.i
+.PHONY : compiler/astbufferreadnode.cpp.i
+
+compiler/astbufferreadnode.s: compiler/astbufferreadnode.cpp.s
+
+.PHONY : compiler/astbufferreadnode.s
+
+# target to generate assembly for a file
+compiler/astbufferreadnode.cpp.s:
+	$(MAKE) -f CMakeFiles/compiler.dir/build.make CMakeFiles/compiler.dir/compiler/astbufferreadnode.cpp.s
+.PHONY : compiler/astbufferreadnode.cpp.s
+
+compiler/astbufferwritenode.o: compiler/astbufferwritenode.cpp.o
+
+.PHONY : compiler/astbufferwritenode.o
+
+# target to build an object file
+compiler/astbufferwritenode.cpp.o:
+	$(MAKE) -f CMakeFiles/compiler.dir/build.make CMakeFiles/compiler.dir/compiler/astbufferwritenode.cpp.o
+.PHONY : compiler/astbufferwritenode.cpp.o
+
+compiler/astbufferwritenode.i: compiler/astbufferwritenode.cpp.i
+
+.PHONY : compiler/astbufferwritenode.i
+
+# target to preprocess a source file
+compiler/astbufferwritenode.cpp.i:
+	$(MAKE) -f CMakeFiles/compiler.dir/build.make CMakeFiles/compiler.dir/compiler/astbufferwritenode.cpp.i
+.PHONY : compiler/astbufferwritenode.cpp.i
+
+compiler/astbufferwritenode.s: compiler/astbufferwritenode.cpp.s
+
+.PHONY : compiler/astbufferwritenode.s
+
+# target to generate assembly for a file
+compiler/astbufferwritenode.cpp.s:
+	$(MAKE) -f CMakeFiles/compiler.dir/build.make CMakeFiles/compiler.dir/compiler/astbufferwritenode.cpp.s
+.PHONY : compiler/astbufferwritenode.cpp.s
+
+compiler/astconditionalnode.o: compiler/astconditionalnode.cpp.o
+
+.PHONY : compiler/astconditionalnode.o
+
+# target to build an object file
+compiler/astconditionalnode.cpp.o:
+	$(MAKE) -f CMakeFiles/compiler.dir/build.make CMakeFiles/compiler.dir/compiler/astconditionalnode.cpp.o
+.PHONY : compiler/astconditionalnode.cpp.o
+
+compiler/astconditionalnode.i: compiler/astconditionalnode.cpp.i
+
+.PHONY : compiler/astconditionalnode.i
+
+# target to preprocess a source file
+compiler/astconditionalnode.cpp.i:
+	$(MAKE) -f CMakeFiles/compiler.dir/build.make CMakeFiles/compiler.dir/compiler/astconditionalnode.cpp.i
+.PHONY : compiler/astconditionalnode.cpp.i
+
+compiler/astconditionalnode.s: compiler/astconditionalnode.cpp.s
+
+.PHONY : compiler/astconditionalnode.s
+
+# target to generate assembly for a file
+compiler/astconditionalnode.cpp.s:
+	$(MAKE) -f CMakeFiles/compiler.dir/build.make CMakeFiles/compiler.dir/compiler/astconditionalnode.cpp.s
+.PHONY : compiler/astconditionalnode.cpp.s
+
+compiler/astconditionnode.o: compiler/astconditionnode.cpp.o
+
+.PHONY : compiler/astconditionnode.o
+
+# target to build an object file
+compiler/astconditionnode.cpp.o:
+	$(MAKE) -f CMakeFiles/compiler.dir/build.make CMakeFiles/compiler.dir/compiler/astconditionnode.cpp.o
+.PHONY : compiler/astconditionnode.cpp.o
+
+compiler/astconditionnode.i: compiler/astconditionnode.cpp.i
+
+.PHONY : compiler/astconditionnode.i
+
+# target to preprocess a source file
+compiler/astconditionnode.cpp.i:
+	$(MAKE) -f CMakeFiles/compiler.dir/build.make CMakeFiles/compiler.dir/compiler/astconditionnode.cpp.i
+.PHONY : compiler/astconditionnode.cpp.i
+
+compiler/astconditionnode.s: compiler/astconditionnode.cpp.s
+
+.PHONY : compiler/astconditionnode.s
+
+# target to generate assembly for a file
+compiler/astconditionnode.cpp.s:
+	$(MAKE) -f CMakeFiles/compiler.dir/build.make CMakeFiles/compiler.dir/compiler/astconditionnode.cpp.s
+.PHONY : compiler/astconditionnode.cpp.s
+
+compiler/astexpressionnode.o: compiler/astexpressionnode.cpp.o
+
+.PHONY : compiler/astexpressionnode.o
+
+# target to build an object file
+compiler/astexpressionnode.cpp.o:
+	$(MAKE) -f CMakeFiles/compiler.dir/build.make CMakeFiles/compiler.dir/compiler/astexpressionnode.cpp.o
+.PHONY : compiler/astexpressionnode.cpp.o
+
+compiler/astexpressionnode.i: compiler/astexpressionnode.cpp.i
+
+.PHONY : compiler/astexpressionnode.i
+
+# target to preprocess a source file
+compiler/astexpressionnode.cpp.i:
+	$(MAKE) -f CMakeFiles/compiler.dir/build.make CMakeFiles/compiler.dir/compiler/astexpressionnode.cpp.i
+.PHONY : compiler/astexpressionnode.cpp.i
+
+compiler/astexpressionnode.s: compiler/astexpressionnode.cpp.s
+
+.PHONY : compiler/astexpressionnode.s
+
+# target to generate assembly for a file
+compiler/astexpressionnode.cpp.s:
+	$(MAKE) -f CMakeFiles/compiler.dir/build.make CMakeFiles/compiler.dir/compiler/astexpressionnode.cpp.s
+.PHONY : compiler/astexpressionnode.cpp.s
+
+compiler/astnode.o: compiler/astnode.cpp.o
+
+.PHONY : compiler/astnode.o
+
+# target to build an object file
+compiler/astnode.cpp.o:
+	$(MAKE) -f CMakeFiles/compiler.dir/build.make CMakeFiles/compiler.dir/compiler/astnode.cpp.o
+.PHONY : compiler/astnode.cpp.o
+
+compiler/astnode.i: compiler/astnode.cpp.i
+
+.PHONY : compiler/astnode.i
+
+# target to preprocess a source file
+compiler/astnode.cpp.i:
+	$(MAKE) -f CMakeFiles/compiler.dir/build.make CMakeFiles/compiler.dir/compiler/astnode.cpp.i
+.PHONY : compiler/astnode.cpp.i
+
+compiler/astnode.s: compiler/astnode.cpp.s
+
+.PHONY : compiler/astnode.s
+
+# target to generate assembly for a file
+compiler/astnode.cpp.s:
+	$(MAKE) -f CMakeFiles/compiler.dir/build.make CMakeFiles/compiler.dir/compiler/astnode.cpp.s
+.PHONY : compiler/astnode.cpp.s
+
+compiler/astprocedurecallnode.o: compiler/astprocedurecallnode.cpp.o
+
+.PHONY : compiler/astprocedurecallnode.o
+
+# target to build an object file
+compiler/astprocedurecallnode.cpp.o:
+	$(MAKE) -f CMakeFiles/compiler.dir/build.make CMakeFiles/compiler.dir/compiler/astprocedurecallnode.cpp.o
+.PHONY : compiler/astprocedurecallnode.cpp.o
+
+compiler/astprocedurecallnode.i: compiler/astprocedurecallnode.cpp.i
+
+.PHONY : compiler/astprocedurecallnode.i
+
+# target to preprocess a source file
+compiler/astprocedurecallnode.cpp.i:
+	$(MAKE) -f CMakeFiles/compiler.dir/build.make CMakeFiles/compiler.dir/compiler/astprocedurecallnode.cpp.i
+.PHONY : compiler/astprocedurecallnode.cpp.i
+
+compiler/astprocedurecallnode.s: compiler/astprocedurecallnode.cpp.s
+
+.PHONY : compiler/astprocedurecallnode.s
+
+# target to generate assembly for a file
+compiler/astprocedurecallnode.cpp.s:
+	$(MAKE) -f CMakeFiles/compiler.dir/build.make CMakeFiles/compiler.dir/compiler/astprocedurecallnode.cpp.s
+.PHONY : compiler/astprocedurecallnode.cpp.s
+
+compiler/astprocedurenode.o: compiler/astprocedurenode.cpp.o
+
+.PHONY : compiler/astprocedurenode.o
+
+# target to build an object file
+compiler/astprocedurenode.cpp.o:
+	$(MAKE) -f CMakeFiles/compiler.dir/build.make CMakeFiles/compiler.dir/compiler/astprocedurenode.cpp.o
+.PHONY : compiler/astprocedurenode.cpp.o
+
+compiler/astprocedurenode.i: compiler/astprocedurenode.cpp.i
+
+.PHONY : compiler/astprocedurenode.i
+
+# target to preprocess a source file
+compiler/astprocedurenode.cpp.i:
+	$(MAKE) -f CMakeFiles/compiler.dir/build.make CMakeFiles/compiler.dir/compiler/astprocedurenode.cpp.i
+.PHONY : compiler/astprocedurenode.cpp.i
+
+compiler/astprocedurenode.s: compiler/astprocedurenode.cpp.s
+
+.PHONY : compiler/astprocedurenode.s
+
+# target to generate assembly for a file
+compiler/astprocedurenode.cpp.s:
+	$(MAKE) -f CMakeFiles/compiler.dir/build.make CMakeFiles/compiler.dir/compiler/astprocedurenode.cpp.s
+.PHONY : compiler/astprocedurenode.cpp.s
+
+compiler/astrootnode.o: compiler/astrootnode.cpp.o
+
+.PHONY : compiler/astrootnode.o
+
+# target to build an object file
+compiler/astrootnode.cpp.o:
+	$(MAKE) -f CMakeFiles/compiler.dir/build.make CMakeFiles/compiler.dir/compiler/astrootnode.cpp.o
+.PHONY : compiler/astrootnode.cpp.o
+
+compiler/astrootnode.i: compiler/astrootnode.cpp.i
+
+.PHONY : compiler/astrootnode.i
+
+# target to preprocess a source file
+compiler/astrootnode.cpp.i:
+	$(MAKE) -f CMakeFiles/compiler.dir/build.make CMakeFiles/compiler.dir/compiler/astrootnode.cpp.i
+.PHONY : compiler/astrootnode.cpp.i
+
+compiler/astrootnode.s: compiler/astrootnode.cpp.s
+
+.PHONY : compiler/astrootnode.s
+
+# target to generate assembly for a file
+compiler/astrootnode.cpp.s:
+	$(MAKE) -f CMakeFiles/compiler.dir/build.make CMakeFiles/compiler.dir/compiler/astrootnode.cpp.s
+.PHONY : compiler/astrootnode.cpp.s
+
+compiler/asttermnode.o: compiler/asttermnode.cpp.o
+
+.PHONY : compiler/asttermnode.o
+
+# target to build an object file
+compiler/asttermnode.cpp.o:
+	$(MAKE) -f CMakeFiles/compiler.dir/build.make CMakeFiles/compiler.dir/compiler/asttermnode.cpp.o
+.PHONY : compiler/asttermnode.cpp.o
+
+compiler/asttermnode.i: compiler/asttermnode.cpp.i
+
+.PHONY : compiler/asttermnode.i
+
+# target to preprocess a source file
+compiler/asttermnode.cpp.i:
+	$(MAKE) -f CMakeFiles/compiler.dir/build.make CMakeFiles/compiler.dir/compiler/asttermnode.cpp.i
+.PHONY : compiler/asttermnode.cpp.i
+
+compiler/asttermnode.s: compiler/asttermnode.cpp.s
+
+.PHONY : compiler/asttermnode.s
+
+# target to generate assembly for a file
+compiler/asttermnode.cpp.s:
+	$(MAKE) -f CMakeFiles/compiler.dir/build.make CMakeFiles/compiler.dir/compiler/asttermnode.cpp.s
+.PHONY : compiler/asttermnode.cpp.s
+
+compiler/astvariableassignmentnode.o: compiler/astvariableassignmentnode.cpp.o
+
+.PHONY : compiler/astvariableassignmentnode.o
+
+# target to build an object file
+compiler/astvariableassignmentnode.cpp.o:
+	$(MAKE) -f CMakeFiles/compiler.dir/build.make CMakeFiles/compiler.dir/compiler/astvariableassignmentnode.cpp.o
+.PHONY : compiler/astvariableassignmentnode.cpp.o
+
+compiler/astvariableassignmentnode.i: compiler/astvariableassignmentnode.cpp.i
+
+.PHONY : compiler/astvariableassignmentnode.i
+
+# target to preprocess a source file
+compiler/astvariableassignmentnode.cpp.i:
+	$(MAKE) -f CMakeFiles/compiler.dir/build.make CMakeFiles/compiler.dir/compiler/astvariableassignmentnode.cpp.i
+.PHONY : compiler/astvariableassignmentnode.cpp.i
+
+compiler/astvariableassignmentnode.s: compiler/astvariableassignmentnode.cpp.s
+
+.PHONY : compiler/astvariableassignmentnode.s
+
+# target to generate assembly for a file
+compiler/astvariableassignmentnode.cpp.s:
+	$(MAKE) -f CMakeFiles/compiler.dir/build.make CMakeFiles/compiler.dir/compiler/astvariableassignmentnode.cpp.s
+.PHONY : compiler/astvariableassignmentnode.cpp.s
+
+compiler/astvariabledeclarationnode.o: compiler/astvariabledeclarationnode.cpp.o
+
+.PHONY : compiler/astvariabledeclarationnode.o
+
+# target to build an object file
+compiler/astvariabledeclarationnode.cpp.o:
+	$(MAKE) -f CMakeFiles/compiler.dir/build.make CMakeFiles/compiler.dir/compiler/astvariabledeclarationnode.cpp.o
+.PHONY : compiler/astvariabledeclarationnode.cpp.o
+
+compiler/astvariabledeclarationnode.i: compiler/astvariabledeclarationnode.cpp.i
+
+.PHONY : compiler/astvariabledeclarationnode.i
+
+# target to preprocess a source file
+compiler/astvariabledeclarationnode.cpp.i:
+	$(MAKE) -f CMakeFiles/compiler.dir/build.make CMakeFiles/compiler.dir/compiler/astvariabledeclarationnode.cpp.i
+.PHONY : compiler/astvariabledeclarationnode.cpp.i
+
+compiler/astvariabledeclarationnode.s: compiler/astvariabledeclarationnode.cpp.s
+
+.PHONY : compiler/astvariabledeclarationnode.s
+
+# target to generate assembly for a file
+compiler/astvariabledeclarationnode.cpp.s:
+	$(MAKE) -f CMakeFiles/compiler.dir/build.make CMakeFiles/compiler.dir/compiler/astvariabledeclarationnode.cpp.s
+.PHONY : compiler/astvariabledeclarationnode.cpp.s
+
+compiler/astwhileloopnode.o: compiler/astwhileloopnode.cpp.o
+
+.PHONY : compiler/astwhileloopnode.o
+
+# target to build an object file
+compiler/astwhileloopnode.cpp.o:
+	$(MAKE) -f CMakeFiles/compiler.dir/build.make CMakeFiles/compiler.dir/compiler/astwhileloopnode.cpp.o
+.PHONY : compiler/astwhileloopnode.cpp.o
+
+compiler/astwhileloopnode.i: compiler/astwhileloopnode.cpp.i
+
+.PHONY : compiler/astwhileloopnode.i
+
+# target to preprocess a source file
+compiler/astwhileloopnode.cpp.i:
+	$(MAKE) -f CMakeFiles/compiler.dir/build.make CMakeFiles/compiler.dir/compiler/astwhileloopnode.cpp.i
+.PHONY : compiler/astwhileloopnode.cpp.i
+
+compiler/astwhileloopnode.s: compiler/astwhileloopnode.cpp.s
+
+.PHONY : compiler/astwhileloopnode.s
+
+# target to generate assembly for a file
+compiler/astwhileloopnode.cpp.s:
+	$(MAKE) -f CMakeFiles/compiler.dir/build.make CMakeFiles/compiler.dir/compiler/astwhileloopnode.cpp.s
+.PHONY : compiler/astwhileloopnode.cpp.s
 
 compiler/stackframe.o: compiler/stackframe.cpp.o
 
@@ -426,9 +777,48 @@ help:
 	@echo "... compiler/asmgenerator.o"
 	@echo "... compiler/asmgenerator.i"
 	@echo "... compiler/asmgenerator.s"
-	@echo "... compiler/ast.o"
-	@echo "... compiler/ast.i"
-	@echo "... compiler/ast.s"
+	@echo "... compiler/astbeginendblocknode.o"
+	@echo "... compiler/astbeginendblocknode.i"
+	@echo "... compiler/astbeginendblocknode.s"
+	@echo "... compiler/astbufferreadnode.o"
+	@echo "... compiler/astbufferreadnode.i"
+	@echo "... compiler/astbufferreadnode.s"
+	@echo "... compiler/astbufferwritenode.o"
+	@echo "... compiler/astbufferwritenode.i"
+	@echo "... compiler/astbufferwritenode.s"
+	@echo "... compiler/astconditionalnode.o"
+	@echo "... compiler/astconditionalnode.i"
+	@echo "... compiler/astconditionalnode.s"
+	@echo "... compiler/astconditionnode.o"
+	@echo "... compiler/astconditionnode.i"
+	@echo "... compiler/astconditionnode.s"
+	@echo "... compiler/astexpressionnode.o"
+	@echo "... compiler/astexpressionnode.i"
+	@echo "... compiler/astexpressionnode.s"
+	@echo "... compiler/astnode.o"
+	@echo "... compiler/astnode.i"
+	@echo "... compiler/astnode.s"
+	@echo "... compiler/astprocedurecallnode.o"
+	@echo "... compiler/astprocedurecallnode.i"
+	@echo "... compiler/astprocedurecallnode.s"
+	@echo "... compiler/astprocedurenode.o"
+	@echo "... compiler/astprocedurenode.i"
+	@echo "... compiler/astprocedurenode.s"
+	@echo "... compiler/astrootnode.o"
+	@echo "... compiler/astrootnode.i"
+	@echo "... compiler/astrootnode.s"
+	@echo "... compiler/asttermnode.o"
+	@echo "... compiler/asttermnode.i"
+	@echo "... compiler/asttermnode.s"
+	@echo "... compiler/astvariableassignmentnode.o"
+	@echo "... compiler/astvariableassignmentnode.i"
+	@echo "... compiler/astvariableassignmentnode.s"
+	@echo "... compiler/astvariabledeclarationnode.o"
+	@echo "... compiler/astvariabledeclarationnode.i"
+	@echo "... compiler/astvariabledeclarationnode.s"
+	@echo "... compiler/astwhileloopnode.o"
+	@echo "... compiler/astwhileloopnode.i"
+	@echo "... compiler/astwhileloopnode.s"
 	@echo "... compiler/stackframe.o"
 	@echo "... compiler/stackframe.i"
 	@echo "... compiler/stackframe.s"

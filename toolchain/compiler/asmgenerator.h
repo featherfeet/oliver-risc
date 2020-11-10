@@ -1,5 +1,5 @@
 #include "processor.h"
-#include "ast.h"
+#include "astnode.h"
 #include "stackframe.h"
 #include <map>
 #include <string>

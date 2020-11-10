@@ -44,11 +44,26 @@
 extern int yydebug;
 #endif
 /* "%code requires" blocks.  */
-#line 21 "compiler/parser.y" /* yacc.c:1921  */
+#line 36 "compiler/parser.y" /* yacc.c:1921  */
 
     #include "ast.h"
+    #include "astnode.h"
+    #include "aststatementnode.h"
+    #include "astrootnode.h"
+    #include "astvariabledeclarationnode.h"
+    #include "astexpressionnode.h"
+    #include "astvariableassignmentnode.h"
+    #include "astbufferwritenode.h"
+    #include "asttermnode.h"
+    #include "astbeginendblocknode.h"
+    #include "astconditionnode.h"
+    #include "astconditionalnode.h"
+    #include "astprocedurecallnode.h"
+    #include "astwhileloopnode.h"
+    #include "astprocedurenode.h"
+    #include "astbufferreadnode.h"
 
-#line 52 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/compiler_parser.hpp" /* yacc.c:1921  */
+#line 67 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/compiler_parser.hpp" /* yacc.c:1921  */
 
 /* Token type.  */
 #ifndef YYTOKENTYPE
@@ -90,7 +105,7 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 55 "compiler/parser.y" /* yacc.c:1921  */
+#line 85 "compiler/parser.y" /* yacc.c:1921  */
 
     int intval;
     char *strval;
@@ -107,7 +122,7 @@ union YYSTYPE
     ASTWhileLoopNode *while_loop_node;
     ASTProcedureNode *procedure_node;
 
-#line 111 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/compiler_parser.hpp" /* yacc.c:1921  */
+#line 126 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/compiler_parser.hpp" /* yacc.c:1921  */
 };
 
 typedef union YYSTYPE YYSTYPE;

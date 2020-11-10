@@ -68,22 +68,9 @@ compiler_lexer.cpp: ../compiler/lexer.l
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "[FLEX][CompilerLexer] Building scanner with flex 2.6.4"
 	cd /home/oliver/Projects/FPGA_Projects/CPU/toolchain && /usr/bin/flex -o/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/compiler_lexer.cpp compiler/lexer.l
 
-CMakeFiles/compiler.dir/compiler/ast.cpp.o: CMakeFiles/compiler.dir/flags.make
-CMakeFiles/compiler.dir/compiler/ast.cpp.o: ../compiler/ast.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/compiler.dir/compiler/ast.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/compiler.dir/compiler/ast.cpp.o -c /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/ast.cpp
-
-CMakeFiles/compiler.dir/compiler/ast.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/compiler.dir/compiler/ast.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/ast.cpp > CMakeFiles/compiler.dir/compiler/ast.cpp.i
-
-CMakeFiles/compiler.dir/compiler/ast.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/compiler.dir/compiler/ast.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/ast.cpp -o CMakeFiles/compiler.dir/compiler/ast.cpp.s
-
 CMakeFiles/compiler.dir/compiler/asmgenerator.cpp.o: CMakeFiles/compiler.dir/flags.make
 CMakeFiles/compiler.dir/compiler/asmgenerator.cpp.o: ../compiler/asmgenerator.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/compiler.dir/compiler/asmgenerator.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/compiler.dir/compiler/asmgenerator.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/compiler.dir/compiler/asmgenerator.cpp.o -c /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/asmgenerator.cpp
 
 CMakeFiles/compiler.dir/compiler/asmgenerator.cpp.i: cmake_force
@@ -96,7 +83,7 @@ CMakeFiles/compiler.dir/compiler/asmgenerator.cpp.s: cmake_force
 
 CMakeFiles/compiler.dir/compiler/stackframe.cpp.o: CMakeFiles/compiler.dir/flags.make
 CMakeFiles/compiler.dir/compiler/stackframe.cpp.o: ../compiler/stackframe.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/compiler.dir/compiler/stackframe.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/compiler.dir/compiler/stackframe.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/compiler.dir/compiler/stackframe.cpp.o -c /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/stackframe.cpp
 
 CMakeFiles/compiler.dir/compiler/stackframe.cpp.i: cmake_force
@@ -107,9 +94,191 @@ CMakeFiles/compiler.dir/compiler/stackframe.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/compiler.dir/compiler/stackframe.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/stackframe.cpp -o CMakeFiles/compiler.dir/compiler/stackframe.cpp.s
 
+CMakeFiles/compiler.dir/compiler/astnode.cpp.o: CMakeFiles/compiler.dir/flags.make
+CMakeFiles/compiler.dir/compiler/astnode.cpp.o: ../compiler/astnode.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/compiler.dir/compiler/astnode.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/compiler.dir/compiler/astnode.cpp.o -c /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astnode.cpp
+
+CMakeFiles/compiler.dir/compiler/astnode.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/compiler.dir/compiler/astnode.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astnode.cpp > CMakeFiles/compiler.dir/compiler/astnode.cpp.i
+
+CMakeFiles/compiler.dir/compiler/astnode.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/compiler.dir/compiler/astnode.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astnode.cpp -o CMakeFiles/compiler.dir/compiler/astnode.cpp.s
+
+CMakeFiles/compiler.dir/compiler/astbeginendblocknode.cpp.o: CMakeFiles/compiler.dir/flags.make
+CMakeFiles/compiler.dir/compiler/astbeginendblocknode.cpp.o: ../compiler/astbeginendblocknode.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/compiler.dir/compiler/astbeginendblocknode.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/compiler.dir/compiler/astbeginendblocknode.cpp.o -c /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astbeginendblocknode.cpp
+
+CMakeFiles/compiler.dir/compiler/astbeginendblocknode.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/compiler.dir/compiler/astbeginendblocknode.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astbeginendblocknode.cpp > CMakeFiles/compiler.dir/compiler/astbeginendblocknode.cpp.i
+
+CMakeFiles/compiler.dir/compiler/astbeginendblocknode.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/compiler.dir/compiler/astbeginendblocknode.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astbeginendblocknode.cpp -o CMakeFiles/compiler.dir/compiler/astbeginendblocknode.cpp.s
+
+CMakeFiles/compiler.dir/compiler/astbufferreadnode.cpp.o: CMakeFiles/compiler.dir/flags.make
+CMakeFiles/compiler.dir/compiler/astbufferreadnode.cpp.o: ../compiler/astbufferreadnode.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/compiler.dir/compiler/astbufferreadnode.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/compiler.dir/compiler/astbufferreadnode.cpp.o -c /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astbufferreadnode.cpp
+
+CMakeFiles/compiler.dir/compiler/astbufferreadnode.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/compiler.dir/compiler/astbufferreadnode.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astbufferreadnode.cpp > CMakeFiles/compiler.dir/compiler/astbufferreadnode.cpp.i
+
+CMakeFiles/compiler.dir/compiler/astbufferreadnode.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/compiler.dir/compiler/astbufferreadnode.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astbufferreadnode.cpp -o CMakeFiles/compiler.dir/compiler/astbufferreadnode.cpp.s
+
+CMakeFiles/compiler.dir/compiler/astbufferwritenode.cpp.o: CMakeFiles/compiler.dir/flags.make
+CMakeFiles/compiler.dir/compiler/astbufferwritenode.cpp.o: ../compiler/astbufferwritenode.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/compiler.dir/compiler/astbufferwritenode.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/compiler.dir/compiler/astbufferwritenode.cpp.o -c /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astbufferwritenode.cpp
+
+CMakeFiles/compiler.dir/compiler/astbufferwritenode.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/compiler.dir/compiler/astbufferwritenode.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astbufferwritenode.cpp > CMakeFiles/compiler.dir/compiler/astbufferwritenode.cpp.i
+
+CMakeFiles/compiler.dir/compiler/astbufferwritenode.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/compiler.dir/compiler/astbufferwritenode.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astbufferwritenode.cpp -o CMakeFiles/compiler.dir/compiler/astbufferwritenode.cpp.s
+
+CMakeFiles/compiler.dir/compiler/astconditionalnode.cpp.o: CMakeFiles/compiler.dir/flags.make
+CMakeFiles/compiler.dir/compiler/astconditionalnode.cpp.o: ../compiler/astconditionalnode.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/compiler.dir/compiler/astconditionalnode.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/compiler.dir/compiler/astconditionalnode.cpp.o -c /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astconditionalnode.cpp
+
+CMakeFiles/compiler.dir/compiler/astconditionalnode.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/compiler.dir/compiler/astconditionalnode.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astconditionalnode.cpp > CMakeFiles/compiler.dir/compiler/astconditionalnode.cpp.i
+
+CMakeFiles/compiler.dir/compiler/astconditionalnode.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/compiler.dir/compiler/astconditionalnode.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astconditionalnode.cpp -o CMakeFiles/compiler.dir/compiler/astconditionalnode.cpp.s
+
+CMakeFiles/compiler.dir/compiler/astconditionnode.cpp.o: CMakeFiles/compiler.dir/flags.make
+CMakeFiles/compiler.dir/compiler/astconditionnode.cpp.o: ../compiler/astconditionnode.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/compiler.dir/compiler/astconditionnode.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/compiler.dir/compiler/astconditionnode.cpp.o -c /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astconditionnode.cpp
+
+CMakeFiles/compiler.dir/compiler/astconditionnode.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/compiler.dir/compiler/astconditionnode.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astconditionnode.cpp > CMakeFiles/compiler.dir/compiler/astconditionnode.cpp.i
+
+CMakeFiles/compiler.dir/compiler/astconditionnode.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/compiler.dir/compiler/astconditionnode.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astconditionnode.cpp -o CMakeFiles/compiler.dir/compiler/astconditionnode.cpp.s
+
+CMakeFiles/compiler.dir/compiler/astexpressionnode.cpp.o: CMakeFiles/compiler.dir/flags.make
+CMakeFiles/compiler.dir/compiler/astexpressionnode.cpp.o: ../compiler/astexpressionnode.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/compiler.dir/compiler/astexpressionnode.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/compiler.dir/compiler/astexpressionnode.cpp.o -c /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astexpressionnode.cpp
+
+CMakeFiles/compiler.dir/compiler/astexpressionnode.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/compiler.dir/compiler/astexpressionnode.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astexpressionnode.cpp > CMakeFiles/compiler.dir/compiler/astexpressionnode.cpp.i
+
+CMakeFiles/compiler.dir/compiler/astexpressionnode.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/compiler.dir/compiler/astexpressionnode.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astexpressionnode.cpp -o CMakeFiles/compiler.dir/compiler/astexpressionnode.cpp.s
+
+CMakeFiles/compiler.dir/compiler/astprocedurecallnode.cpp.o: CMakeFiles/compiler.dir/flags.make
+CMakeFiles/compiler.dir/compiler/astprocedurecallnode.cpp.o: ../compiler/astprocedurecallnode.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/compiler.dir/compiler/astprocedurecallnode.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/compiler.dir/compiler/astprocedurecallnode.cpp.o -c /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astprocedurecallnode.cpp
+
+CMakeFiles/compiler.dir/compiler/astprocedurecallnode.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/compiler.dir/compiler/astprocedurecallnode.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astprocedurecallnode.cpp > CMakeFiles/compiler.dir/compiler/astprocedurecallnode.cpp.i
+
+CMakeFiles/compiler.dir/compiler/astprocedurecallnode.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/compiler.dir/compiler/astprocedurecallnode.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astprocedurecallnode.cpp -o CMakeFiles/compiler.dir/compiler/astprocedurecallnode.cpp.s
+
+CMakeFiles/compiler.dir/compiler/astprocedurenode.cpp.o: CMakeFiles/compiler.dir/flags.make
+CMakeFiles/compiler.dir/compiler/astprocedurenode.cpp.o: ../compiler/astprocedurenode.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/compiler.dir/compiler/astprocedurenode.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/compiler.dir/compiler/astprocedurenode.cpp.o -c /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astprocedurenode.cpp
+
+CMakeFiles/compiler.dir/compiler/astprocedurenode.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/compiler.dir/compiler/astprocedurenode.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astprocedurenode.cpp > CMakeFiles/compiler.dir/compiler/astprocedurenode.cpp.i
+
+CMakeFiles/compiler.dir/compiler/astprocedurenode.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/compiler.dir/compiler/astprocedurenode.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astprocedurenode.cpp -o CMakeFiles/compiler.dir/compiler/astprocedurenode.cpp.s
+
+CMakeFiles/compiler.dir/compiler/astrootnode.cpp.o: CMakeFiles/compiler.dir/flags.make
+CMakeFiles/compiler.dir/compiler/astrootnode.cpp.o: ../compiler/astrootnode.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/compiler.dir/compiler/astrootnode.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/compiler.dir/compiler/astrootnode.cpp.o -c /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astrootnode.cpp
+
+CMakeFiles/compiler.dir/compiler/astrootnode.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/compiler.dir/compiler/astrootnode.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astrootnode.cpp > CMakeFiles/compiler.dir/compiler/astrootnode.cpp.i
+
+CMakeFiles/compiler.dir/compiler/astrootnode.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/compiler.dir/compiler/astrootnode.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astrootnode.cpp -o CMakeFiles/compiler.dir/compiler/astrootnode.cpp.s
+
+CMakeFiles/compiler.dir/compiler/asttermnode.cpp.o: CMakeFiles/compiler.dir/flags.make
+CMakeFiles/compiler.dir/compiler/asttermnode.cpp.o: ../compiler/asttermnode.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building CXX object CMakeFiles/compiler.dir/compiler/asttermnode.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/compiler.dir/compiler/asttermnode.cpp.o -c /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/asttermnode.cpp
+
+CMakeFiles/compiler.dir/compiler/asttermnode.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/compiler.dir/compiler/asttermnode.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/asttermnode.cpp > CMakeFiles/compiler.dir/compiler/asttermnode.cpp.i
+
+CMakeFiles/compiler.dir/compiler/asttermnode.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/compiler.dir/compiler/asttermnode.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/asttermnode.cpp -o CMakeFiles/compiler.dir/compiler/asttermnode.cpp.s
+
+CMakeFiles/compiler.dir/compiler/astvariableassignmentnode.cpp.o: CMakeFiles/compiler.dir/flags.make
+CMakeFiles/compiler.dir/compiler/astvariableassignmentnode.cpp.o: ../compiler/astvariableassignmentnode.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building CXX object CMakeFiles/compiler.dir/compiler/astvariableassignmentnode.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/compiler.dir/compiler/astvariableassignmentnode.cpp.o -c /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astvariableassignmentnode.cpp
+
+CMakeFiles/compiler.dir/compiler/astvariableassignmentnode.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/compiler.dir/compiler/astvariableassignmentnode.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astvariableassignmentnode.cpp > CMakeFiles/compiler.dir/compiler/astvariableassignmentnode.cpp.i
+
+CMakeFiles/compiler.dir/compiler/astvariableassignmentnode.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/compiler.dir/compiler/astvariableassignmentnode.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astvariableassignmentnode.cpp -o CMakeFiles/compiler.dir/compiler/astvariableassignmentnode.cpp.s
+
+CMakeFiles/compiler.dir/compiler/astvariabledeclarationnode.cpp.o: CMakeFiles/compiler.dir/flags.make
+CMakeFiles/compiler.dir/compiler/astvariabledeclarationnode.cpp.o: ../compiler/astvariabledeclarationnode.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building CXX object CMakeFiles/compiler.dir/compiler/astvariabledeclarationnode.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/compiler.dir/compiler/astvariabledeclarationnode.cpp.o -c /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astvariabledeclarationnode.cpp
+
+CMakeFiles/compiler.dir/compiler/astvariabledeclarationnode.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/compiler.dir/compiler/astvariabledeclarationnode.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astvariabledeclarationnode.cpp > CMakeFiles/compiler.dir/compiler/astvariabledeclarationnode.cpp.i
+
+CMakeFiles/compiler.dir/compiler/astvariabledeclarationnode.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/compiler.dir/compiler/astvariabledeclarationnode.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astvariabledeclarationnode.cpp -o CMakeFiles/compiler.dir/compiler/astvariabledeclarationnode.cpp.s
+
+CMakeFiles/compiler.dir/compiler/astwhileloopnode.cpp.o: CMakeFiles/compiler.dir/flags.make
+CMakeFiles/compiler.dir/compiler/astwhileloopnode.cpp.o: ../compiler/astwhileloopnode.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building CXX object CMakeFiles/compiler.dir/compiler/astwhileloopnode.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/compiler.dir/compiler/astwhileloopnode.cpp.o -c /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astwhileloopnode.cpp
+
+CMakeFiles/compiler.dir/compiler/astwhileloopnode.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/compiler.dir/compiler/astwhileloopnode.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astwhileloopnode.cpp > CMakeFiles/compiler.dir/compiler/astwhileloopnode.cpp.i
+
+CMakeFiles/compiler.dir/compiler/astwhileloopnode.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/compiler.dir/compiler/astwhileloopnode.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astwhileloopnode.cpp -o CMakeFiles/compiler.dir/compiler/astwhileloopnode.cpp.s
+
 CMakeFiles/compiler.dir/compiler_parser.cpp.o: CMakeFiles/compiler.dir/flags.make
 CMakeFiles/compiler.dir/compiler_parser.cpp.o: compiler_parser.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/compiler.dir/compiler_parser.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building CXX object CMakeFiles/compiler.dir/compiler_parser.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/compiler.dir/compiler_parser.cpp.o -c /home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/compiler_parser.cpp
 
 CMakeFiles/compiler.dir/compiler_parser.cpp.i: cmake_force
@@ -123,7 +292,7 @@ CMakeFiles/compiler.dir/compiler_parser.cpp.s: cmake_force
 CMakeFiles/compiler.dir/compiler_lexer.cpp.o: CMakeFiles/compiler.dir/flags.make
 CMakeFiles/compiler.dir/compiler_lexer.cpp.o: compiler_lexer.cpp
 CMakeFiles/compiler.dir/compiler_lexer.cpp.o: compiler_parser.hpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/compiler.dir/compiler_lexer.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Building CXX object CMakeFiles/compiler.dir/compiler_lexer.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/compiler.dir/compiler_lexer.cpp.o -c /home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/compiler_lexer.cpp
 
 CMakeFiles/compiler.dir/compiler_lexer.cpp.i: cmake_force
@@ -136,24 +305,50 @@ CMakeFiles/compiler.dir/compiler_lexer.cpp.s: cmake_force
 
 # Object files for target compiler
 compiler_OBJECTS = \
-"CMakeFiles/compiler.dir/compiler/ast.cpp.o" \
 "CMakeFiles/compiler.dir/compiler/asmgenerator.cpp.o" \
 "CMakeFiles/compiler.dir/compiler/stackframe.cpp.o" \
+"CMakeFiles/compiler.dir/compiler/astnode.cpp.o" \
+"CMakeFiles/compiler.dir/compiler/astbeginendblocknode.cpp.o" \
+"CMakeFiles/compiler.dir/compiler/astbufferreadnode.cpp.o" \
+"CMakeFiles/compiler.dir/compiler/astbufferwritenode.cpp.o" \
+"CMakeFiles/compiler.dir/compiler/astconditionalnode.cpp.o" \
+"CMakeFiles/compiler.dir/compiler/astconditionnode.cpp.o" \
+"CMakeFiles/compiler.dir/compiler/astexpressionnode.cpp.o" \
+"CMakeFiles/compiler.dir/compiler/astprocedurecallnode.cpp.o" \
+"CMakeFiles/compiler.dir/compiler/astprocedurenode.cpp.o" \
+"CMakeFiles/compiler.dir/compiler/astrootnode.cpp.o" \
+"CMakeFiles/compiler.dir/compiler/asttermnode.cpp.o" \
+"CMakeFiles/compiler.dir/compiler/astvariableassignmentnode.cpp.o" \
+"CMakeFiles/compiler.dir/compiler/astvariabledeclarationnode.cpp.o" \
+"CMakeFiles/compiler.dir/compiler/astwhileloopnode.cpp.o" \
 "CMakeFiles/compiler.dir/compiler_parser.cpp.o" \
 "CMakeFiles/compiler.dir/compiler_lexer.cpp.o"
 
 # External object files for target compiler
 compiler_EXTERNAL_OBJECTS =
 
-compiler: CMakeFiles/compiler.dir/compiler/ast.cpp.o
 compiler: CMakeFiles/compiler.dir/compiler/asmgenerator.cpp.o
 compiler: CMakeFiles/compiler.dir/compiler/stackframe.cpp.o
+compiler: CMakeFiles/compiler.dir/compiler/astnode.cpp.o
+compiler: CMakeFiles/compiler.dir/compiler/astbeginendblocknode.cpp.o
+compiler: CMakeFiles/compiler.dir/compiler/astbufferreadnode.cpp.o
+compiler: CMakeFiles/compiler.dir/compiler/astbufferwritenode.cpp.o
+compiler: CMakeFiles/compiler.dir/compiler/astconditionalnode.cpp.o
+compiler: CMakeFiles/compiler.dir/compiler/astconditionnode.cpp.o
+compiler: CMakeFiles/compiler.dir/compiler/astexpressionnode.cpp.o
+compiler: CMakeFiles/compiler.dir/compiler/astprocedurecallnode.cpp.o
+compiler: CMakeFiles/compiler.dir/compiler/astprocedurenode.cpp.o
+compiler: CMakeFiles/compiler.dir/compiler/astrootnode.cpp.o
+compiler: CMakeFiles/compiler.dir/compiler/asttermnode.cpp.o
+compiler: CMakeFiles/compiler.dir/compiler/astvariableassignmentnode.cpp.o
+compiler: CMakeFiles/compiler.dir/compiler/astvariabledeclarationnode.cpp.o
+compiler: CMakeFiles/compiler.dir/compiler/astwhileloopnode.cpp.o
 compiler: CMakeFiles/compiler.dir/compiler_parser.cpp.o
 compiler: CMakeFiles/compiler.dir/compiler_lexer.cpp.o
 compiler: CMakeFiles/compiler.dir/build.make
 compiler: /usr/lib/x86_64-linux-gnu/libfl.so
 compiler: CMakeFiles/compiler.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Linking CXX executable compiler"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Linking CXX executable compiler"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/compiler.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
