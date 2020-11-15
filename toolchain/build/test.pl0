@@ -5,4 +5,6 @@ i := i + 1;
 
 myvar[i + 1] := 97;
 
+i := i + myvar[myvar[i + 1]];
+
 CALL HALT;

@@ -1,6 +1,7 @@
 #include "processor.h"
 #include "astbufferreadnode.h"
 
+#include <sstream>
 #define FMT_HEADER_ONLY
 #include <fmt/format.h>
 
@@ -15,7 +16,25 @@ ASTNodeType ASTBufferReadNode::getNodeType() {
 }
 
 std::string ASTBufferReadNode::getHumanReadable() {
-    return fmt::format("Buffer read from variable `{}`.", variable_name);
+    std::stringstream human_readable;
+    if (operation == ADDITION) {
+        human_readable << "+ ";
+    }
+    else if (operation == SUBTRACTION) {
+        human_readable << "- ";
+    }
+    else if (operation == MULTIPLICATION) {
+        human_readable << "* ";
+    }
+    else if (operation == DIVISION) {
+        human_readable << "/ ";
+    }
+    else if (operation == MODULUS) {
+        human_readable << "% ";
+    }
+
+    human_readable << fmt::format("{}[]", variable_name);
+    return human_readable.str();
 }
 
 ASTExpressionNode *ASTBufferReadNode::getOffsetExpression() {

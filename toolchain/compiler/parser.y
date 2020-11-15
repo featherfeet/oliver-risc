@@ -236,6 +236,9 @@ term: TOKEN_IDENTIFIER {
     | TOKEN_PERCENT TOKEN_CONSTANT {
         $$ = new ASTTermNode(MODULUS, $2);
     }
+    | TOKEN_IDENTIFIER TOKEN_LEFT_SQUARE_BRACKET expression TOKEN_RIGHT_SQUARE_BRACKET {
+        $$ = new ASTBufferReadNode(ADDITION, $1, $3);
+    }
     | TOKEN_PLUS TOKEN_IDENTIFIER TOKEN_LEFT_SQUARE_BRACKET expression TOKEN_RIGHT_SQUARE_BRACKET {
         $$ = new ASTBufferReadNode(ADDITION, $2, $4);
     }
