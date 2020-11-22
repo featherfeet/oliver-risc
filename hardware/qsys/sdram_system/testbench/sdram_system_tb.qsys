@@ -13,15 +13,7 @@
    {
       datum _sortIndex
       {
-         value = "4";
-         type = "int";
-      }
-   }
-   element new_sdram_controller_0_my_partner_clk_bfm
-   {
-      datum _sortIndex
-      {
-         value = "5";
+         value = "3";
          type = "int";
       }
    }
@@ -30,14 +22,6 @@
       datum _sortIndex
       {
          value = "0";
-         type = "int";
-      }
-   }
-   element sdram_system_inst_avalon_bridge_bfm
-   {
-      datum _sortIndex
-      {
-         value = "3";
          type = "int";
       }
    }
@@ -72,7 +56,7 @@
  <parameter name="projectName" value="" />
  <parameter name="sopcBorderPoints" value="false" />
  <parameter name="systemHash" value="1" />
- <parameter name="timeStamp" value="1595914268485" />
+ <parameter name="timeStamp" value="1606034264701" />
  <parameter name="useTestBenchNamingPattern" value="true" />
  <instanceScript></instanceScript>
  <module
@@ -85,8 +69,8 @@
   <parameter name="AUTO_DEVICE_FAMILY" value="Cyclone II" />
   <parameter name="AUTO_DEVICE" value="EP2C20F484C7" />
   <parameter name="AUTO_CLK_CLOCK_RATE" value="0" />
-  <parameter name="AUTO_CLK_CLOCK_DOMAIN" value="2" />
-  <parameter name="AUTO_CLK_RESET_DOMAIN" value="2" />
+  <parameter name="AUTO_CLK_CLOCK_DOMAIN" value="1" />
+  <parameter name="AUTO_CLK_RESET_DOMAIN" value="1" />
  </module>
  <module
    kind="altera_avalon_clock_source"
@@ -105,17 +89,6 @@
   <parameter name="INITIAL_RESET_CYCLES" value="50" />
  </module>
  <module
-   kind="altera_conduit_bfm"
-   version="13.0"
-   enabled="1"
-   name="sdram_system_inst_avalon_bridge_bfm">
-  <parameter name="CLOCKED_SIGNAL" value="false" />
-  <parameter name="ENABLE_RESET" value="false" />
-  <parameter name="SIGNAL_ROLES">address,byte_enable,read,write,write_data,acknowledge,read_data</parameter>
-  <parameter name="SIGNAL_WIDTHS" value="23,2,1,1,16,1,16" />
-  <parameter name="SIGNAL_DIRECTIONS">output,output,output,output,output,input,input</parameter>
- </module>
- <module
    kind="altera_sdram_partner_module"
    version="11.0"
    enabled="1"
@@ -129,14 +102,6 @@
   <parameter name="CONTR_NAME">sdram_system_new_sdram_controller_0</parameter>
   <parameter name="AUTO_CLK_CLOCK_RATE" value="0" />
   <parameter name="AUTO_DEVICE_FAMILY" value="Cyclone II" />
- </module>
- <module
-   kind="altera_avalon_clock_source"
-   version="13.0"
-   enabled="1"
-   name="new_sdram_controller_0_my_partner_clk_bfm">
-  <parameter name="CLOCK_RATE" value="50000000" />
-  <parameter name="CLOCK_UNIT" value="1" />
  </module>
  <connection
    kind="clock"
@@ -156,17 +121,6 @@
  <connection
    kind="conduit"
    version="13.0"
-   start="sdram_system_inst_avalon_bridge_bfm.conduit"
-   end="sdram_system_inst.avalon_bridge">
-  <parameter name="endPort" value="" />
-  <parameter name="endPortLSB" value="0" />
-  <parameter name="startPort" value="" />
-  <parameter name="startPortLSB" value="0" />
-  <parameter name="width" value="0" />
- </connection>
- <connection
-   kind="conduit"
-   version="13.0"
    start="new_sdram_controller_0_my_partner.conduit"
    end="sdram_system_inst.sdram_controller">
   <parameter name="endPort" value="" />
@@ -178,7 +132,7 @@
  <connection
    kind="clock"
    version="13.0"
-   start="new_sdram_controller_0_my_partner_clk_bfm.clk"
+   start="sdram_system_inst_clk_bfm.clk"
    end="new_sdram_controller_0_my_partner.clk" />
  <interconnectRequirement for="$system" name="qsys_mm.clockCrossingAdapter" value="HANDSHAKE" />
  <interconnectRequirement for="$system" name="qsys_mm.maxAdditionalLatency" value="1" />

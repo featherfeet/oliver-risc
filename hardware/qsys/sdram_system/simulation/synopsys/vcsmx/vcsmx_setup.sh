@@ -12,7 +12,7 @@
 # or its authorized distributors. Please refer to the applicable 
 # agreement for further details.
 
-# ACDS 13.0sp1 232 linux 2020.07.27.22:31:04
+# ACDS 13.0sp1 232 linux 2020.11.22.00:37:41
 
 # ----------------------------------------
 # vcsmx - auto-generated simulation script
@@ -46,19 +46,8 @@ done
 # ----------------------------------------
 # create compilation libraries
 mkdir -p ./libraries/work/
-mkdir -p ./libraries/crosser/
-mkdir -p ./libraries/cmd_xbar_demux/
 mkdir -p ./libraries/rst_controller/
-mkdir -p ./libraries/id_router/
-mkdir -p ./libraries/addr_router/
-mkdir -p ./libraries/new_sdram_controller_0_s1_translator_avalon_universal_slave_0_agent_rsp_fifo/
-mkdir -p ./libraries/new_sdram_controller_0_s1_translator_avalon_universal_slave_0_agent/
-mkdir -p ./libraries/bridge_0_avalon_master_translator_avalon_universal_master_0_agent/
-mkdir -p ./libraries/new_sdram_controller_0_s1_translator/
-mkdir -p ./libraries/bridge_0_avalon_master_translator/
-mkdir -p ./libraries/bridge_0/
 mkdir -p ./libraries/new_sdram_controller_0/
-mkdir -p ./libraries/up_clocks_0/
 mkdir -p ./libraries/altera_ver/
 mkdir -p ./libraries/lpm_ver/
 mkdir -p ./libraries/sgate_ver/
@@ -83,25 +72,11 @@ fi
 # ----------------------------------------
 # compile design files in correct order
 if [ $SKIP_COM -eq 0 ]; then
-  vlogan +v2k           "$QSYS_SIMDIR/submodules/altera_avalon_st_handshake_clock_crosser.v"           -work crosser                                                                     
-  vlogan +v2k           "$QSYS_SIMDIR/submodules/altera_avalon_st_clock_crosser.v"                     -work crosser                                                                     
-  vlogan +v2k           "$QSYS_SIMDIR/submodules/altera_avalon_st_pipeline_base.v"                     -work crosser                                                                     
-  vlogan +v2k -sverilog "$QSYS_SIMDIR/submodules/sdram_system_cmd_xbar_demux.sv"                       -work cmd_xbar_demux                                                              
-  vlogan +v2k           "$QSYS_SIMDIR/submodules/altera_reset_controller.v"                            -work rst_controller                                                              
-  vlogan +v2k           "$QSYS_SIMDIR/submodules/altera_reset_synchronizer.v"                          -work rst_controller                                                              
-  vlogan +v2k -sverilog "$QSYS_SIMDIR/submodules/sdram_system_id_router.sv"                            -work id_router                                                                   
-  vlogan +v2k -sverilog "$QSYS_SIMDIR/submodules/sdram_system_addr_router.sv"                          -work addr_router                                                                 
-  vlogan +v2k           "$QSYS_SIMDIR/submodules/altera_avalon_sc_fifo.v"                              -work new_sdram_controller_0_s1_translator_avalon_universal_slave_0_agent_rsp_fifo
-  vlogan +v2k -sverilog "$QSYS_SIMDIR/submodules/altera_merlin_slave_agent.sv"                         -work new_sdram_controller_0_s1_translator_avalon_universal_slave_0_agent         
-  vlogan +v2k -sverilog "$QSYS_SIMDIR/submodules/altera_merlin_burst_uncompressor.sv"                  -work new_sdram_controller_0_s1_translator_avalon_universal_slave_0_agent         
-  vlogan +v2k -sverilog "$QSYS_SIMDIR/submodules/altera_merlin_master_agent.sv"                        -work bridge_0_avalon_master_translator_avalon_universal_master_0_agent           
-  vlogan +v2k -sverilog "$QSYS_SIMDIR/submodules/altera_merlin_slave_translator.sv"                    -work new_sdram_controller_0_s1_translator                                        
-  vlogan +v2k -sverilog "$QSYS_SIMDIR/submodules/altera_merlin_master_translator.sv"                   -work bridge_0_avalon_master_translator                                           
-  vlogan +v2k           "$QSYS_SIMDIR/submodules/sdram_system_bridge_0.v"                              -work bridge_0                                                                    
-  vlogan +v2k           "$QSYS_SIMDIR/submodules/sdram_system_new_sdram_controller_0_test_component.v" -work new_sdram_controller_0                                                      
-  vlogan +v2k           "$QSYS_SIMDIR/submodules/sdram_system_new_sdram_controller_0.v"                -work new_sdram_controller_0                                                      
-  vlogan +v2k           "$QSYS_SIMDIR/submodules/sdram_system_up_clocks_0.v"                           -work up_clocks_0                                                                 
-  vlogan +v2k           "$QSYS_SIMDIR/sdram_system.v"                                                                                                                                    
+  vlogan +v2k "$QSYS_SIMDIR/submodules/altera_reset_controller.v"                            -work rst_controller        
+  vlogan +v2k "$QSYS_SIMDIR/submodules/altera_reset_synchronizer.v"                          -work rst_controller        
+  vlogan +v2k "$QSYS_SIMDIR/submodules/sdram_system_new_sdram_controller_0_test_component.v" -work new_sdram_controller_0
+  vlogan +v2k "$QSYS_SIMDIR/submodules/sdram_system_new_sdram_controller_0.v"                -work new_sdram_controller_0
+  vlogan +v2k "$QSYS_SIMDIR/sdram_system.v"                                                                              
 fi
 
 # ----------------------------------------

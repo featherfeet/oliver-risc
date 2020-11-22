@@ -67,7 +67,7 @@ div.greydiv { vertical-align:top ; text-align:center ; background:#eeeeee ; bord
   </table>
   <table class="blueBar">
    <tr>
-    <td class="l">2020.07.27.22:31:16</td>
+    <td class="l">2020.11.22.00:37:50</td>
     <td class="r">Datasheet</td>
    </tr>
   </table>
@@ -97,24 +97,15 @@ div.greydiv { vertical-align:top ; text-align:center ; background:#eeeeee ; bord
   <table class="mmap">
    <tr>
     <td class="empty" rowspan="2"></td>
-    <td class="mastermodule" colspan="1">
-     <a href="#module_sdram_system_inst_bridge_0"><b>sdram_system_inst_bridge_0</b>
-     </a>
-    </td>
-   </tr>
-   <tr>
-    <td class="masterlr">&#160;avalon_master</td>
    </tr>
    <tr>
     <td class="slavemodule">&#160;
      <a href="#module_sdram_system_inst_new_sdram_controller_0"><b>sdram_system_inst_new_sdram_controller_0</b>
      </a>
     </td>
-    <td class="empty"></td>
    </tr>
    <tr>
     <td class="slaveb">s1&#160;</td>
-    <td class="addr"><span style="color:#989898">0x</span>00000000</td>
    </tr>
   </table>
   <a name="module_sdram_system_inst"> </a>
@@ -131,7 +122,7 @@ div.greydiv { vertical-align:top ; text-align:center ; background:#eeeeee ; bord
       <table>
        <tr>
         <td class="parametername">AUTO_GENERATION_ID</td>
-        <td class="parametervalue">1595914276</td>
+        <td class="parametervalue">1606034270</td>
        </tr>
        <tr>
         <td class="parametername">AUTO_UNIQUE_ID</td>
@@ -151,245 +142,11 @@ div.greydiv { vertical-align:top ; text-align:center ; background:#eeeeee ; bord
        </tr>
        <tr>
         <td class="parametername">AUTO_CLK_CLOCK_DOMAIN</td>
-        <td class="parametervalue">2</td>
+        <td class="parametervalue">1</td>
        </tr>
        <tr>
         <td class="parametername">AUTO_CLK_RESET_DOMAIN</td>
-        <td class="parametervalue">2</td>
-       </tr>
-       <tr>
-        <td class="parametername">deviceFamily</td>
-        <td class="parametervalue">Cyclone II</td>
-       </tr>
-       <tr>
-        <td class="parametername">generateLegacySim</td>
-        <td class="parametervalue">false</td>
-       </tr>
-      </table>
-     </td>
-    </tr>
-   </table>&#160;&#160;
-   <table class="flowbox">
-    <tr>
-     <td class="parametersbox">
-      <h2>Software Assignments</h2>(none)</td>
-    </tr>
-   </table>
-  </div>
-  <a name="module_sdram_system_inst_clk_0"> </a>
-  <div>
-   <hr/>
-   <h2>sdram_system_inst_clk_0</h2>clock_source v13.0
-   <br/>
-   <div class="greydiv">
-    <table class="connectionboxes">
-     <tr>
-      <td class="neighbor" rowspan="2">
-       <a href="#module_sdram_system_inst_clk_bfm">sdram_system_inst_clk_bfm</a>
-      </td>
-      <td class="from">clk&#160;&#160;</td>
-      <td class="main" rowspan="17">sdram_system_inst_clk_0</td>
-     </tr>
-     <tr>
-      <td class="to">&#160;&#160;clk_in</td>
-     </tr>
-     <tr style="height:6px">
-      <td></td>
-     </tr>
-     <tr>
-      <td class="neighbor" rowspan="2">
-       <a href="#module_sdram_system_inst_reset_bfm">sdram_system_inst_reset_bfm</a>
-      </td>
-      <td class="from">reset&#160;&#160;</td>
-     </tr>
-     <tr>
-      <td class="to">&#160;&#160;clk_in_reset</td>
-     </tr>
-     <tr>
-      <td></td>
-      <td></td>
-      <td class="from">clk&#160;&#160;</td>
-      <td class="neighbor" rowspan="4">
-       <a href="#module_sdram_system_inst_up_clocks_0">sdram_system_inst_up_clocks_0</a>
-      </td>
-     </tr>
-     <tr>
-      <td></td>
-      <td></td>
-      <td class="to">&#160;&#160;clk_in_primary</td>
-     </tr>
-     <tr>
-      <td></td>
-      <td></td>
-      <td class="from">clk_reset&#160;&#160;</td>
-     </tr>
-     <tr>
-      <td></td>
-      <td></td>
-      <td class="to">&#160;&#160;clk_in_primary_reset</td>
-     </tr>
-     <tr style="height:6px">
-      <td></td>
-     </tr>
-     <tr>
-      <td></td>
-      <td></td>
-      <td class="from">clk_reset&#160;&#160;</td>
-      <td class="neighbor" rowspan="2">
-       <a href="#module_sdram_system_inst_new_sdram_controller_0">sdram_system_inst_new_sdram_controller_0</a>
-      </td>
-     </tr>
-     <tr>
-      <td></td>
-      <td></td>
-      <td class="to">&#160;&#160;reset</td>
-     </tr>
-     <tr style="height:6px">
-      <td></td>
-     </tr>
-     <tr>
-      <td></td>
-      <td></td>
-      <td class="from">clk&#160;&#160;</td>
-      <td class="neighbor" rowspan="4">
-       <a href="#module_sdram_system_inst_bridge_0">sdram_system_inst_bridge_0</a>
-      </td>
-     </tr>
-     <tr>
-      <td></td>
-      <td></td>
-      <td class="to">&#160;&#160;clock_reset</td>
-     </tr>
-     <tr>
-      <td></td>
-      <td></td>
-      <td class="from">clk_reset&#160;&#160;</td>
-     </tr>
-     <tr>
-      <td></td>
-      <td></td>
-      <td class="to">&#160;&#160;clock_reset_reset</td>
-     </tr>
-    </table>
-   </div>
-   <br/>
-   <br/>
-   <table class="flowbox">
-    <tr>
-     <td class="parametersbox">
-      <h2>Parameters</h2>
-      <table>
-       <tr>
-        <td class="parametername">clockFrequency</td>
-        <td class="parametervalue">50000000</td>
-       </tr>
-       <tr>
-        <td class="parametername">clockFrequencyKnown</td>
-        <td class="parametervalue">true</td>
-       </tr>
-       <tr>
-        <td class="parametername">inputClockFrequency</td>
-        <td class="parametervalue">0</td>
-       </tr>
-       <tr>
-        <td class="parametername">resetSynchronousEdges</td>
-        <td class="parametervalue">NONE</td>
-       </tr>
-       <tr>
-        <td class="parametername">deviceFamily</td>
-        <td class="parametervalue">UNKNOWN</td>
-       </tr>
-       <tr>
-        <td class="parametername">generateLegacySim</td>
-        <td class="parametervalue">false</td>
-       </tr>
-      </table>
-     </td>
-    </tr>
-   </table>&#160;&#160;
-   <table class="flowbox">
-    <tr>
-     <td class="parametersbox">
-      <h2>Software Assignments</h2>(none)</td>
-    </tr>
-   </table>
-  </div>
-  <a name="module_sdram_system_inst_up_clocks_0"> </a>
-  <div>
-   <hr/>
-   <h2>sdram_system_inst_up_clocks_0</h2>altera_up_clocks v13.0
-   <br/>
-   <div class="greydiv">
-    <table class="connectionboxes">
-     <tr>
-      <td class="neighbor" rowspan="4">
-       <a href="#module_sdram_system_inst_clk_0">sdram_system_inst_clk_0</a>
-      </td>
-      <td class="from">clk&#160;&#160;</td>
-      <td class="main" rowspan="6">sdram_system_inst_up_clocks_0</td>
-     </tr>
-     <tr>
-      <td class="to">&#160;&#160;clk_in_primary</td>
-     </tr>
-     <tr>
-      <td class="from">clk_reset&#160;&#160;</td>
-     </tr>
-     <tr>
-      <td class="to">&#160;&#160;clk_in_primary_reset</td>
-     </tr>
-     <tr>
-      <td></td>
-      <td></td>
-      <td class="from">sdram_clk&#160;&#160;</td>
-      <td class="neighbor" rowspan="2">
-       <a href="#module_sdram_system_inst_new_sdram_controller_0">sdram_system_inst_new_sdram_controller_0</a>
-      </td>
-     </tr>
-     <tr>
-      <td></td>
-      <td></td>
-      <td class="to">&#160;&#160;clk</td>
-     </tr>
-    </table>
-   </div>
-   <br/>
-   <br/>
-   <table class="flowbox">
-    <tr>
-     <td class="parametersbox">
-      <h2>Parameters</h2>
-      <table>
-       <tr>
-        <td class="parametername">board</td>
-        <td class="parametervalue">DE1</td>
-       </tr>
-       <tr>
-        <td class="parametername">sys_clk_freq</td>
-        <td class="parametervalue">50</td>
-       </tr>
-       <tr>
-        <td class="parametername">sdram_clk</td>
-        <td class="parametervalue">true</td>
-       </tr>
-       <tr>
-        <td class="parametername">vga_clk</td>
-        <td class="parametervalue">true</td>
-       </tr>
-       <tr>
-        <td class="parametername">audio_clk</td>
-        <td class="parametervalue">false</td>
-       </tr>
-       <tr>
-        <td class="parametername">audio_clk_freq</td>
-        <td class="parametervalue">12.288</td>
-       </tr>
-       <tr>
-        <td class="parametername">AUTO_CLK_IN_PRIMARY_CLOCK_RATE</td>
-        <td class="parametervalue">50000000</td>
-       </tr>
-       <tr>
-        <td class="parametername">AUTO_DEVICE_FAMILY</td>
-        <td class="parametervalue">CYCLONEII</td>
+        <td class="parametervalue">1</td>
        </tr>
        <tr>
         <td class="parametername">deviceFamily</td>
@@ -418,38 +175,20 @@ div.greydiv { vertical-align:top ; text-align:center ; background:#eeeeee ; bord
    <div class="greydiv">
     <table class="connectionboxes">
      <tr>
-      <td class="neighbor" rowspan="2">
+      <td class="neighbor" rowspan="4">
        <a href="#module_sdram_system_inst_clk_0">sdram_system_inst_clk_0</a>
       </td>
       <td class="from">clk_reset&#160;&#160;</td>
-      <td class="main" rowspan="11">sdram_system_inst_new_sdram_controller_0</td>
+      <td class="main" rowspan="7">sdram_system_inst_new_sdram_controller_0</td>
      </tr>
      <tr>
       <td class="to">&#160;&#160;reset</td>
      </tr>
-     <tr style="height:6px">
-      <td></td>
-     </tr>
      <tr>
-      <td class="neighbor" rowspan="2">
-       <a href="#module_sdram_system_inst_up_clocks_0">sdram_system_inst_up_clocks_0</a>
-      </td>
-      <td class="from">sdram_clk&#160;&#160;</td>
+      <td class="from">clk&#160;&#160;</td>
      </tr>
      <tr>
       <td class="to">&#160;&#160;clk</td>
-     </tr>
-     <tr style="height:6px">
-      <td></td>
-     </tr>
-     <tr>
-      <td class="neighbor" rowspan="2">
-       <a href="#module_sdram_system_inst_bridge_0">sdram_system_inst_bridge_0</a>
-      </td>
-      <td class="from">avalon_master&#160;&#160;</td>
-     </tr>
-     <tr>
-      <td class="to">&#160;&#160;s1</td>
      </tr>
      <tr style="height:6px">
       <td></td>
@@ -698,53 +437,57 @@ div.greydiv { vertical-align:top ; text-align:center ; background:#eeeeee ; bord
     </tr>
    </table>
   </div>
-  <a name="module_sdram_system_inst_bridge_0"> </a>
+  <a name="module_sdram_system_inst_clk_0"> </a>
   <div>
    <hr/>
-   <h2>sdram_system_inst_bridge_0</h2>altera_up_external_bus_to_avalon_bridge v13.0
+   <h2>sdram_system_inst_clk_0</h2>clock_source v13.0
    <br/>
    <div class="greydiv">
     <table class="connectionboxes">
      <tr>
-      <td class="neighbor" rowspan="4">
-       <a href="#module_sdram_system_inst_clk_0">sdram_system_inst_clk_0</a>
+      <td class="neighbor" rowspan="2">
+       <a href="#module_sdram_system_inst_clk_bfm">sdram_system_inst_clk_bfm</a>
       </td>
       <td class="from">clk&#160;&#160;</td>
-      <td class="main" rowspan="9">sdram_system_inst_bridge_0</td>
+      <td class="main" rowspan="9">sdram_system_inst_clk_0</td>
      </tr>
      <tr>
-      <td class="to">&#160;&#160;clock_reset</td>
-     </tr>
-     <tr>
-      <td class="from">clk_reset&#160;&#160;</td>
-     </tr>
-     <tr>
-      <td class="to">&#160;&#160;clock_reset_reset</td>
+      <td class="to">&#160;&#160;clk_in</td>
      </tr>
      <tr style="height:6px">
       <td></td>
      </tr>
      <tr>
       <td class="neighbor" rowspan="2">
-       <a href="#module_sdram_system_inst_avalon_bridge_bfm">sdram_system_inst_avalon_bridge_bfm</a>
+       <a href="#module_sdram_system_inst_reset_bfm">sdram_system_inst_reset_bfm</a>
       </td>
-      <td class="from">conduit&#160;&#160;</td>
+      <td class="from">reset&#160;&#160;</td>
      </tr>
      <tr>
-      <td class="to">&#160;&#160;external_interface</td>
+      <td class="to">&#160;&#160;clk_in_reset</td>
      </tr>
      <tr>
       <td></td>
       <td></td>
-      <td class="from">avalon_master&#160;&#160;</td>
-      <td class="neighbor" rowspan="2">
+      <td class="from">clk_reset&#160;&#160;</td>
+      <td class="neighbor" rowspan="4">
        <a href="#module_sdram_system_inst_new_sdram_controller_0">sdram_system_inst_new_sdram_controller_0</a>
       </td>
      </tr>
      <tr>
       <td></td>
       <td></td>
-      <td class="to">&#160;&#160;s1</td>
+      <td class="to">&#160;&#160;reset</td>
+     </tr>
+     <tr>
+      <td></td>
+      <td></td>
+      <td class="from">clk&#160;&#160;</td>
+     </tr>
+     <tr>
+      <td></td>
+      <td></td>
+      <td class="to">&#160;&#160;clk</td>
      </tr>
     </table>
    </div>
@@ -756,28 +499,24 @@ div.greydiv { vertical-align:top ; text-align:center ; background:#eeeeee ; bord
       <h2>Parameters</h2>
       <table>
        <tr>
-        <td class="parametername">addr_size</td>
-        <td class="parametervalue">8</td>
-       </tr>
-       <tr>
-        <td class="parametername">addr_size_multiplier</td>
-        <td class="parametervalue">Mbytes</td>
-       </tr>
-       <tr>
-        <td class="parametername">data_size</td>
-        <td class="parametervalue">16</td>
-       </tr>
-       <tr>
-        <td class="parametername">AUTO_CLOCK_RESET_CLOCK_RATE</td>
+        <td class="parametername">clockFrequency</td>
         <td class="parametervalue">50000000</td>
        </tr>
        <tr>
-        <td class="parametername">AUTO_DEVICE_FAMILY</td>
-        <td class="parametervalue">CYCLONEII</td>
+        <td class="parametername">clockFrequencyKnown</td>
+        <td class="parametervalue">true</td>
+       </tr>
+       <tr>
+        <td class="parametername">inputClockFrequency</td>
+        <td class="parametervalue">0</td>
+       </tr>
+       <tr>
+        <td class="parametername">resetSynchronousEdges</td>
+        <td class="parametervalue">NONE</td>
        </tr>
        <tr>
         <td class="parametername">deviceFamily</td>
-        <td class="parametervalue">Cyclone II</td>
+        <td class="parametervalue">UNKNOWN</td>
        </tr>
        <tr>
         <td class="parametername">generateLegacySim</td>
@@ -899,57 +638,6 @@ div.greydiv { vertical-align:top ; text-align:center ; background:#eeeeee ; bord
     </tr>
    </table>
   </div>
-  <a name="module_sdram_system_inst_avalon_bridge_bfm"> </a>
-  <div>
-   <hr/>
-   <h2>sdram_system_inst_avalon_bridge_bfm</h2>altera_conduit_bfm v13.0
-   <br/>
-   <br/>
-   <br/>
-   <table class="flowbox">
-    <tr>
-     <td class="parametersbox">
-      <h2>Parameters</h2>
-      <table>
-       <tr>
-        <td class="parametername">CLOCKED_SIGNAL</td>
-        <td class="parametervalue">false</td>
-       </tr>
-       <tr>
-        <td class="parametername">ENABLE_RESET</td>
-        <td class="parametervalue">false</td>
-       </tr>
-       <tr>
-        <td class="parametername">SIGNAL_ROLES</td>
-        <td class="parametervalue">address,byte_enable,read,write,write_data,acknowledge,read_data</td>
-       </tr>
-       <tr>
-        <td class="parametername">SIGNAL_WIDTHS</td>
-        <td class="parametervalue">23,2,1,1,16,1,16</td>
-       </tr>
-       <tr>
-        <td class="parametername">SIGNAL_DIRECTIONS</td>
-        <td class="parametervalue">output,output,output,output,output,input,input</td>
-       </tr>
-       <tr>
-        <td class="parametername">deviceFamily</td>
-        <td class="parametervalue">UNKNOWN</td>
-       </tr>
-       <tr>
-        <td class="parametername">generateLegacySim</td>
-        <td class="parametervalue">false</td>
-       </tr>
-      </table>
-     </td>
-    </tr>
-   </table>&#160;&#160;
-   <table class="flowbox">
-    <tr>
-     <td class="parametersbox">
-      <h2>Software Assignments</h2>(none)</td>
-    </tr>
-   </table>
-  </div>
   <a name="module_new_sdram_controller_0_my_partner"> </a>
   <div>
    <hr/>
@@ -959,7 +647,7 @@ div.greydiv { vertical-align:top ; text-align:center ; background:#eeeeee ; bord
     <table class="connectionboxes">
      <tr>
       <td class="neighbor" rowspan="2">
-       <a href="#module_new_sdram_controller_0_my_partner_clk_bfm">new_sdram_controller_0_my_partner_clk_bfm</a>
+       <a href="#module_sdram_system_inst_clk_bfm">sdram_system_inst_clk_bfm</a>
       </td>
       <td class="from">clk&#160;&#160;</td>
       <td class="main" rowspan="4">new_sdram_controller_0_my_partner</td>
@@ -1028,45 +716,6 @@ div.greydiv { vertical-align:top ; text-align:center ; background:#eeeeee ; bord
        <tr>
         <td class="parametername">deviceFamily</td>
         <td class="parametervalue">Cyclone II</td>
-       </tr>
-       <tr>
-        <td class="parametername">generateLegacySim</td>
-        <td class="parametervalue">false</td>
-       </tr>
-      </table>
-     </td>
-    </tr>
-   </table>&#160;&#160;
-   <table class="flowbox">
-    <tr>
-     <td class="parametersbox">
-      <h2>Software Assignments</h2>(none)</td>
-    </tr>
-   </table>
-  </div>
-  <a name="module_new_sdram_controller_0_my_partner_clk_bfm"> </a>
-  <div>
-   <hr/>
-   <h2>new_sdram_controller_0_my_partner_clk_bfm</h2>altera_avalon_clock_source v13.0
-   <br/>
-   <br/>
-   <br/>
-   <table class="flowbox">
-    <tr>
-     <td class="parametersbox">
-      <h2>Parameters</h2>
-      <table>
-       <tr>
-        <td class="parametername">CLOCK_RATE</td>
-        <td class="parametervalue">50000000</td>
-       </tr>
-       <tr>
-        <td class="parametername">CLOCK_UNIT</td>
-        <td class="parametervalue">1</td>
-       </tr>
-       <tr>
-        <td class="parametername">deviceFamily</td>
-        <td class="parametervalue">UNKNOWN</td>
        </tr>
        <tr>
         <td class="parametername">generateLegacySim</td>

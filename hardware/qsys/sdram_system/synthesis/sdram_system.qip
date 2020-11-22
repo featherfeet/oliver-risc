@@ -2,62 +2,21 @@ set_global_assignment -entity "sdram_system" -library "sdram_system" -name IP_TO
 set_global_assignment -entity "sdram_system" -library "sdram_system" -name IP_TOOL_VERSION "13.0sp1"
 set_global_assignment -entity "sdram_system" -library "sdram_system" -name IP_TOOL_ENV "Qsys"
 set_global_assignment -library "sdram_system" -name SOPCINFO_FILE [file join $::quartus(qip_path) "../../sdram_system.sopcinfo"]
-set_instance_assignment -entity "sdram_system" -library "sdram_system" -name SLD_INFO "QSYS_NAME sdram_system HAS_SOPCINFO 1 GENERATION_ID 1595914281"
+set_instance_assignment -entity "sdram_system" -library "sdram_system" -name SLD_INFO "QSYS_NAME sdram_system HAS_SOPCINFO 1 GENERATION_ID 1606034273"
 set_global_assignment -library "sdram_system" -name MISC_FILE [file join $::quartus(qip_path) "../../sdram_system.cmp"]
 set_global_assignment -name SYNTHESIS_ONLY_QIP ON
 set_global_assignment -library "sdram_system" -name MISC_FILE [file join $::quartus(qip_path) "../../sdram_system.qsys"]
 
 set_global_assignment -library "sdram_system" -name VERILOG_FILE [file join $::quartus(qip_path) "sdram_system.v"]
-set_global_assignment -library "sdram_system" -name VERILOG_FILE [file join $::quartus(qip_path) "submodules/altera_avalon_st_handshake_clock_crosser.v"]
-set_global_assignment -library "sdram_system" -name VERILOG_FILE [file join $::quartus(qip_path) "submodules/altera_avalon_st_clock_crosser.v"]
-set_global_assignment -library "sdram_system" -name VERILOG_FILE [file join $::quartus(qip_path) "submodules/altera_avalon_st_pipeline_base.v"]
-set_global_assignment -library "sdram_system" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "submodules/sdram_system_cmd_xbar_demux.sv"]
 set_global_assignment -library "sdram_system" -name VERILOG_FILE [file join $::quartus(qip_path) "submodules/altera_reset_controller.v"]
 set_global_assignment -library "sdram_system" -name VERILOG_FILE [file join $::quartus(qip_path) "submodules/altera_reset_synchronizer.v"]
 set_global_assignment -library "sdram_system" -name SDC_FILE [file join $::quartus(qip_path) "submodules/altera_reset_controller.sdc"]
-set_global_assignment -library "sdram_system" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "submodules/sdram_system_id_router.sv"]
-set_global_assignment -library "sdram_system" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "submodules/sdram_system_addr_router.sv"]
-set_global_assignment -library "sdram_system" -name VERILOG_FILE [file join $::quartus(qip_path) "submodules/altera_avalon_sc_fifo.v"]
-set_global_assignment -library "sdram_system" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "submodules/altera_merlin_slave_agent.sv"]
-set_global_assignment -library "sdram_system" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "submodules/altera_merlin_burst_uncompressor.sv"]
-set_global_assignment -library "sdram_system" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "submodules/altera_merlin_master_agent.sv"]
-set_global_assignment -library "sdram_system" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "submodules/altera_merlin_slave_translator.sv"]
-set_global_assignment -library "sdram_system" -name SYSTEMVERILOG_FILE [file join $::quartus(qip_path) "submodules/altera_merlin_master_translator.sv"]
-set_global_assignment -library "sdram_system" -name VERILOG_FILE [file join $::quartus(qip_path) "submodules/sdram_system_bridge_0.v"]
 set_global_assignment -library "sdram_system" -name VERILOG_FILE [file join $::quartus(qip_path) "submodules/sdram_system_new_sdram_controller_0_test_component.v"]
 set_global_assignment -library "sdram_system" -name VERILOG_FILE [file join $::quartus(qip_path) "submodules/sdram_system_new_sdram_controller_0.v"]
-set_global_assignment -library "sdram_system" -name VERILOG_FILE [file join $::quartus(qip_path) "submodules/sdram_system_up_clocks_0.v"]
 
-set_global_assignment -entity "altera_avalon_st_handshake_clock_crosser" -library "sdram_system" -name IP_TOOL_NAME "altera_avalon_st_handshake_clock_crosser"
-set_global_assignment -entity "altera_avalon_st_handshake_clock_crosser" -library "sdram_system" -name IP_TOOL_VERSION "13.0"
-set_global_assignment -entity "altera_avalon_st_handshake_clock_crosser" -library "sdram_system" -name IP_TOOL_ENV "Qsys"
-set_global_assignment -entity "sdram_system_cmd_xbar_demux" -library "sdram_system" -name IP_TOOL_NAME "altera_merlin_demultiplexer"
-set_global_assignment -entity "sdram_system_cmd_xbar_demux" -library "sdram_system" -name IP_TOOL_VERSION "13.0"
-set_global_assignment -entity "sdram_system_cmd_xbar_demux" -library "sdram_system" -name IP_TOOL_ENV "Qsys"
 set_global_assignment -entity "altera_reset_controller" -library "sdram_system" -name IP_TOOL_NAME "altera_reset_controller"
 set_global_assignment -entity "altera_reset_controller" -library "sdram_system" -name IP_TOOL_VERSION "13.0"
 set_global_assignment -entity "altera_reset_controller" -library "sdram_system" -name IP_TOOL_ENV "Qsys"
-set_global_assignment -entity "sdram_system_id_router" -library "sdram_system" -name IP_TOOL_NAME "altera_merlin_router"
-set_global_assignment -entity "sdram_system_id_router" -library "sdram_system" -name IP_TOOL_VERSION "13.0"
-set_global_assignment -entity "sdram_system_id_router" -library "sdram_system" -name IP_TOOL_ENV "Qsys"
-set_global_assignment -entity "sdram_system_addr_router" -library "sdram_system" -name IP_TOOL_NAME "altera_merlin_router"
-set_global_assignment -entity "sdram_system_addr_router" -library "sdram_system" -name IP_TOOL_VERSION "13.0"
-set_global_assignment -entity "sdram_system_addr_router" -library "sdram_system" -name IP_TOOL_ENV "Qsys"
-set_global_assignment -entity "altera_avalon_sc_fifo" -library "sdram_system" -name IP_TOOL_NAME "altera_avalon_sc_fifo"
-set_global_assignment -entity "altera_avalon_sc_fifo" -library "sdram_system" -name IP_TOOL_VERSION "13.0"
-set_global_assignment -entity "altera_avalon_sc_fifo" -library "sdram_system" -name IP_TOOL_ENV "Qsys"
-set_global_assignment -entity "altera_merlin_slave_agent" -library "sdram_system" -name IP_TOOL_NAME "altera_merlin_slave_agent"
-set_global_assignment -entity "altera_merlin_slave_agent" -library "sdram_system" -name IP_TOOL_VERSION "13.0"
-set_global_assignment -entity "altera_merlin_slave_agent" -library "sdram_system" -name IP_TOOL_ENV "Qsys"
-set_global_assignment -entity "altera_merlin_master_agent" -library "sdram_system" -name IP_TOOL_NAME "altera_merlin_master_agent"
-set_global_assignment -entity "altera_merlin_master_agent" -library "sdram_system" -name IP_TOOL_VERSION "13.0"
-set_global_assignment -entity "altera_merlin_master_agent" -library "sdram_system" -name IP_TOOL_ENV "Qsys"
-set_global_assignment -entity "altera_merlin_slave_translator" -library "sdram_system" -name IP_TOOL_NAME "altera_merlin_slave_translator"
-set_global_assignment -entity "altera_merlin_slave_translator" -library "sdram_system" -name IP_TOOL_VERSION "13.0"
-set_global_assignment -entity "altera_merlin_slave_translator" -library "sdram_system" -name IP_TOOL_ENV "Qsys"
-set_global_assignment -entity "altera_merlin_master_translator" -library "sdram_system" -name IP_TOOL_NAME "altera_merlin_master_translator"
-set_global_assignment -entity "altera_merlin_master_translator" -library "sdram_system" -name IP_TOOL_VERSION "13.0"
-set_global_assignment -entity "altera_merlin_master_translator" -library "sdram_system" -name IP_TOOL_ENV "Qsys"
 set_global_assignment -entity "sdram_system_new_sdram_controller_0" -library "sdram_system" -name IP_TOOL_NAME "altera_avalon_new_sdram_controller"
 set_global_assignment -entity "sdram_system_new_sdram_controller_0" -library "sdram_system" -name IP_TOOL_VERSION "13.0.1.99.2"
 set_global_assignment -entity "sdram_system_new_sdram_controller_0" -library "sdram_system" -name IP_TOOL_ENV "Qsys"

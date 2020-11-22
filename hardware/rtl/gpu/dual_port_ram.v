@@ -1,5 +1,7 @@
+`include "gpu_defines.v"
+
 module dual_port_ram(
-    input CLOCK_50,
+    input CLOCK_150,
     input[$clog2(`GPU_TEXT_BUFFER_LENGTH) - 1:0] port_a_address,
     input[$clog2(`GPU_TEXT_BUFFER_LENGTH) - 1:0] port_b_address,
     input[7:0] port_a_data_in,
@@ -17,7 +19,7 @@ module dual_port_ram(
 		$readmemh("rtl/gpu/boot_screen.mem", ram_buffer);
     end
 
-    always @(posedge CLOCK_50)
+    always @(posedge CLOCK_150)
     begin
         if (port_a_write_enable)
         begin
@@ -28,7 +30,7 @@ module dual_port_ram(
             port_a_data_out <= ram_buffer[port_a_address];
     end
 
-    always @(posedge CLOCK_50)
+    always @(posedge CLOCK_150)
     begin
         if (port_b_write_enable)
         begin

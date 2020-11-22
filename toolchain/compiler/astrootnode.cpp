@@ -126,11 +126,6 @@ std::string ASTRootNode::generateGraphvizCode(std::string node_id, ASTNode *stat
     }
     else if (statement->getNodeType() == BUFFER_READ_NODE) {
         output << fmt::format("    \"{}\" [label=\"{}\", shape=box];", node_id, statement->getHumanReadable()) << std::endl;
-
-        ASTBufferReadNode *buffer_read = (ASTBufferReadNode *) statement;
-
-        output << generateGraphvizCode(node_id + "_0", buffer_read->getOffsetExpression());
-        output << fmt::format("    \"{}\" -> \"{}_0\";", node_id, node_id) << std::endl;
     }
 
     return output.str();

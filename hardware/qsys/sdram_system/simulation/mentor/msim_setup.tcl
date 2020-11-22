@@ -12,7 +12,7 @@
 # or its authorized distributors. Please refer to the applicable 
 # agreement for further details.
 
-# ACDS 13.0sp1 232 linux 2020.07.27.22:31:04
+# ACDS 13.0sp1 232 linux 2020.11.22.00:37:41
 
 # ----------------------------------------
 # Auto-generated simulation script
@@ -65,32 +65,10 @@ if { ![ string match "*ModelSim ALTERA*" [ vsim -version ] ] } {
   ensure_lib                  ./libraries/cycloneii_ver/   
   vmap       cycloneii_ver    ./libraries/cycloneii_ver/   
 }
-ensure_lib                                                                              ./libraries/crosser/                                                                     
-vmap       crosser                                                                      ./libraries/crosser/                                                                     
-ensure_lib                                                                              ./libraries/cmd_xbar_demux/                                                              
-vmap       cmd_xbar_demux                                                               ./libraries/cmd_xbar_demux/                                                              
-ensure_lib                                                                              ./libraries/rst_controller/                                                              
-vmap       rst_controller                                                               ./libraries/rst_controller/                                                              
-ensure_lib                                                                              ./libraries/id_router/                                                                   
-vmap       id_router                                                                    ./libraries/id_router/                                                                   
-ensure_lib                                                                              ./libraries/addr_router/                                                                 
-vmap       addr_router                                                                  ./libraries/addr_router/                                                                 
-ensure_lib                                                                              ./libraries/new_sdram_controller_0_s1_translator_avalon_universal_slave_0_agent_rsp_fifo/
-vmap       new_sdram_controller_0_s1_translator_avalon_universal_slave_0_agent_rsp_fifo ./libraries/new_sdram_controller_0_s1_translator_avalon_universal_slave_0_agent_rsp_fifo/
-ensure_lib                                                                              ./libraries/new_sdram_controller_0_s1_translator_avalon_universal_slave_0_agent/         
-vmap       new_sdram_controller_0_s1_translator_avalon_universal_slave_0_agent          ./libraries/new_sdram_controller_0_s1_translator_avalon_universal_slave_0_agent/         
-ensure_lib                                                                              ./libraries/bridge_0_avalon_master_translator_avalon_universal_master_0_agent/           
-vmap       bridge_0_avalon_master_translator_avalon_universal_master_0_agent            ./libraries/bridge_0_avalon_master_translator_avalon_universal_master_0_agent/           
-ensure_lib                                                                              ./libraries/new_sdram_controller_0_s1_translator/                                        
-vmap       new_sdram_controller_0_s1_translator                                         ./libraries/new_sdram_controller_0_s1_translator/                                        
-ensure_lib                                                                              ./libraries/bridge_0_avalon_master_translator/                                           
-vmap       bridge_0_avalon_master_translator                                            ./libraries/bridge_0_avalon_master_translator/                                           
-ensure_lib                                                                              ./libraries/bridge_0/                                                                    
-vmap       bridge_0                                                                     ./libraries/bridge_0/                                                                    
-ensure_lib                                                                              ./libraries/new_sdram_controller_0/                                                      
-vmap       new_sdram_controller_0                                                       ./libraries/new_sdram_controller_0/                                                      
-ensure_lib                                                                              ./libraries/up_clocks_0/                                                                 
-vmap       up_clocks_0                                                                  ./libraries/up_clocks_0/                                                                 
+ensure_lib                        ./libraries/rst_controller/        
+vmap       rst_controller         ./libraries/rst_controller/        
+ensure_lib                        ./libraries/new_sdram_controller_0/
+vmap       new_sdram_controller_0 ./libraries/new_sdram_controller_0/
 
 # ----------------------------------------
 # Compile device library files
@@ -110,39 +88,25 @@ alias dev_com {
 # Compile the design files in correct order
 alias com {
   echo "\[exec\] com"
-  vlog     "$QSYS_SIMDIR/submodules/altera_avalon_st_handshake_clock_crosser.v"           -work crosser                                                                     
-  vlog     "$QSYS_SIMDIR/submodules/altera_avalon_st_clock_crosser.v"                     -work crosser                                                                     
-  vlog     "$QSYS_SIMDIR/submodules/altera_avalon_st_pipeline_base.v"                     -work crosser                                                                     
-  vlog -sv "$QSYS_SIMDIR/submodules/sdram_system_cmd_xbar_demux.sv"                       -work cmd_xbar_demux                                                              
-  vlog     "$QSYS_SIMDIR/submodules/altera_reset_controller.v"                            -work rst_controller                                                              
-  vlog     "$QSYS_SIMDIR/submodules/altera_reset_synchronizer.v"                          -work rst_controller                                                              
-  vlog -sv "$QSYS_SIMDIR/submodules/sdram_system_id_router.sv"                            -work id_router                                                                   
-  vlog -sv "$QSYS_SIMDIR/submodules/sdram_system_addr_router.sv"                          -work addr_router                                                                 
-  vlog     "$QSYS_SIMDIR/submodules/altera_avalon_sc_fifo.v"                              -work new_sdram_controller_0_s1_translator_avalon_universal_slave_0_agent_rsp_fifo
-  vlog -sv "$QSYS_SIMDIR/submodules/altera_merlin_slave_agent.sv"                         -work new_sdram_controller_0_s1_translator_avalon_universal_slave_0_agent         
-  vlog -sv "$QSYS_SIMDIR/submodules/altera_merlin_burst_uncompressor.sv"                  -work new_sdram_controller_0_s1_translator_avalon_universal_slave_0_agent         
-  vlog -sv "$QSYS_SIMDIR/submodules/altera_merlin_master_agent.sv"                        -work bridge_0_avalon_master_translator_avalon_universal_master_0_agent           
-  vlog -sv "$QSYS_SIMDIR/submodules/altera_merlin_slave_translator.sv"                    -work new_sdram_controller_0_s1_translator                                        
-  vlog -sv "$QSYS_SIMDIR/submodules/altera_merlin_master_translator.sv"                   -work bridge_0_avalon_master_translator                                           
-  vlog     "$QSYS_SIMDIR/submodules/sdram_system_bridge_0.v"                              -work bridge_0                                                                    
-  vlog     "$QSYS_SIMDIR/submodules/sdram_system_new_sdram_controller_0_test_component.v" -work new_sdram_controller_0                                                      
-  vlog     "$QSYS_SIMDIR/submodules/sdram_system_new_sdram_controller_0.v"                -work new_sdram_controller_0                                                      
-  vlog     "$QSYS_SIMDIR/submodules/sdram_system_up_clocks_0.v"                           -work up_clocks_0                                                                 
-  vlog     "$QSYS_SIMDIR/sdram_system.v"                                                                                                                                    
+  vlog "$QSYS_SIMDIR/submodules/altera_reset_controller.v"                            -work rst_controller        
+  vlog "$QSYS_SIMDIR/submodules/altera_reset_synchronizer.v"                          -work rst_controller        
+  vlog "$QSYS_SIMDIR/submodules/sdram_system_new_sdram_controller_0_test_component.v" -work new_sdram_controller_0
+  vlog "$QSYS_SIMDIR/submodules/sdram_system_new_sdram_controller_0.v"                -work new_sdram_controller_0
+  vlog "$QSYS_SIMDIR/sdram_system.v"                                                                              
 }
 
 # ----------------------------------------
 # Elaborate top level design
 alias elab {
   echo "\[exec\] elab"
-  vsim -t ps -L work -L work_lib -L crosser -L cmd_xbar_demux -L rst_controller -L id_router -L addr_router -L new_sdram_controller_0_s1_translator_avalon_universal_slave_0_agent_rsp_fifo -L new_sdram_controller_0_s1_translator_avalon_universal_slave_0_agent -L bridge_0_avalon_master_translator_avalon_universal_master_0_agent -L new_sdram_controller_0_s1_translator -L bridge_0_avalon_master_translator -L bridge_0 -L new_sdram_controller_0 -L up_clocks_0 -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L cycloneii_ver $TOP_LEVEL_NAME
+  vsim -t ps -L work -L work_lib -L rst_controller -L new_sdram_controller_0 -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L cycloneii_ver $TOP_LEVEL_NAME
 }
 
 # ----------------------------------------
 # Elaborate the top level design with novopt option
 alias elab_debug {
   echo "\[exec\] elab_debug"
-  vsim -novopt -t ps -L work -L work_lib -L crosser -L cmd_xbar_demux -L rst_controller -L id_router -L addr_router -L new_sdram_controller_0_s1_translator_avalon_universal_slave_0_agent_rsp_fifo -L new_sdram_controller_0_s1_translator_avalon_universal_slave_0_agent -L bridge_0_avalon_master_translator_avalon_universal_master_0_agent -L new_sdram_controller_0_s1_translator -L bridge_0_avalon_master_translator -L bridge_0 -L new_sdram_controller_0 -L up_clocks_0 -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L cycloneii_ver $TOP_LEVEL_NAME
+  vsim -novopt -t ps -L work -L work_lib -L rst_controller -L new_sdram_controller_0 -L altera_ver -L lpm_ver -L sgate_ver -L altera_mf_ver -L altera_lnsim_ver -L cycloneii_ver $TOP_LEVEL_NAME
 }
 
 # ----------------------------------------

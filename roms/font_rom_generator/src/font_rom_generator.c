@@ -1,10 +1,10 @@
 #include <stdio.h>
 #include <string.h>
 
-#define SCREEN_WIDTH_PIXELS 640
-#define SCREEN_HEIGHT_PIXELS 480
-#define SCREEN_WIDTH_COLUMNS 80
-#define SCREEN_HEIGHT_ROWS 24
+#define SCREEN_WIDTH_PIXELS 1920
+#define SCREEN_HEIGHT_PIXELS 1080
+#define SCREEN_WIDTH_COLUMNS 240
+#define SCREEN_HEIGHT_ROWS 67
 
 #define CHARACTER_CELL_WIDTH_PIXELS (SCREEN_WIDTH_PIXELS / SCREEN_WIDTH_COLUMNS)
 #define CHARACTER_CELL_HEIGHT_PIXELS (SCREEN_HEIGHT_PIXELS / SCREEN_HEIGHT_ROWS)
@@ -23,17 +23,17 @@ int main(int argc, char *argv[]) {
     FILE *mem_output_file = fopen(argv[3], "w");
 
     // Write the Verilog module header.
-    fprintf(verilog_output_file, "module font_rom(input CLOCK_50, input[7:0] character, input[$clog2(%d) - 1:0] character_cell_x, input[$clog2(%d) - 1:0] character_cell_y, output reg pixel_value);\n", CHARACTER_CELL_WIDTH_PIXELS, CHARACTER_CELL_HEIGHT_PIXELS);
-    fprintf(verilog_output_file, "\treg[0:127] font_storage[0:%d - 1];\n", NUMBER_OF_CHARACTERS);
+    fprintf(verilog_output_file, "module font_rom(input CLOCK_150, input[7:0] character, input[$clog2(%u) - 1:0] character_cell_x, input[$clog2(%u) - 1:0] character_cell_y, output reg pixel_value);\n", CHARACTER_CELL_WIDTH_PIXELS, CHARACTER_CELL_HEIGHT_PIXELS);
+    fprintf(verilog_output_file, "\treg[0:127] font_storage[0:%u - 1];\n", NUMBER_OF_CHARACTERS);
     fprintf(verilog_output_file, "\tinitial begin\n");
     fprintf(verilog_output_file, "\t\t$readmemh(\"rtl/gpu/font_rom.mem\", font_storage);\n");
     fprintf(verilog_output_file, "\tend\n");
-    fprintf(verilog_output_file, "\talways @(posedge CLOCK_50)\n");
+    fprintf(verilog_output_file, "\talways @(posedge CLOCK_150)\n");
     fprintf(verilog_output_file, "\tbegin\n");
-    fprintf(verilog_output_file, "\t\tif ((character_cell_y * 'd%d + character_cell_x) > 'd127)\n");
+    fprintf(verilog_output_file, "\t\tif ((character_cell_y * 'd%u + character_cell_x) > 'd127)\n", CHARACTER_CELL_WIDTH_PIXELS);
     fprintf(verilog_output_file, "\t\t\tpixel_value <= 'b0;\n");
     fprintf(verilog_output_file, "\t\telse\n");
-    fprintf(verilog_output_file, "\t\t\tpixel_value <= font_storage[character][character_cell_y * 'd%d + character_cell_x];\n", CHARACTER_CELL_WIDTH_PIXELS);
+    fprintf(verilog_output_file, "\t\t\tpixel_value <= font_storage[character][character_cell_y * 'd%u + character_cell_x];\n", CHARACTER_CELL_WIDTH_PIXELS);
     fprintf(verilog_output_file, "\tend\n");
     fprintf(verilog_output_file, "endmodule");
     // Write the body of the Verilog model.

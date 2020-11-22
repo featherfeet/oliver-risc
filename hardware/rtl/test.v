@@ -3,8 +3,8 @@
 
 module test();
     // See the verilog-vga-simulator/demo.v file and http://martin.hinner.info/vga/timing.html.
-    localparam dots_per_line = 640 + 16 + 96 + 48;
-    localparam lines_per_frame = 480 + 11 + 2 + 31;
+    localparam dots_per_line = 2200;
+    localparam lines_per_frame = 1125;
 
     integer i;
     reg[3:0] reset = 4'd0;

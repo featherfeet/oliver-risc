@@ -12,7 +12,7 @@
 # or its authorized distributors. Please refer to the applicable 
 # agreement for further details.
 
-# ACDS 13.0sp1 232 linux 2020.07.27.22:31:21
+# ACDS 13.0sp1 232 linux 2020.11.22.00:37:52
 
 # ----------------------------------------
 # ncsim - auto-generated simulation script
@@ -46,21 +46,9 @@ done
 # ----------------------------------------
 # create compilation libraries
 mkdir -p ./libraries/work/
-mkdir -p ./libraries/crosser/
-mkdir -p ./libraries/cmd_xbar_demux/
 mkdir -p ./libraries/rst_controller/
-mkdir -p ./libraries/id_router/
-mkdir -p ./libraries/addr_router/
-mkdir -p ./libraries/new_sdram_controller_0_s1_translator_avalon_universal_slave_0_agent_rsp_fifo/
-mkdir -p ./libraries/new_sdram_controller_0_s1_translator_avalon_universal_slave_0_agent/
-mkdir -p ./libraries/bridge_0_avalon_master_translator_avalon_universal_master_0_agent/
-mkdir -p ./libraries/new_sdram_controller_0_s1_translator/
-mkdir -p ./libraries/bridge_0_avalon_master_translator/
-mkdir -p ./libraries/bridge_0/
 mkdir -p ./libraries/new_sdram_controller_0/
-mkdir -p ./libraries/up_clocks_0/
 mkdir -p ./libraries/new_sdram_controller_0_my_partner/
-mkdir -p ./libraries/sdram_system_inst_avalon_bridge_bfm/
 mkdir -p ./libraries/sdram_system_inst_reset_bfm/
 mkdir -p ./libraries/sdram_system_inst_clk_bfm/
 mkdir -p ./libraries/sdram_system_inst/
@@ -88,33 +76,17 @@ fi
 # ----------------------------------------
 # compile design files in correct order
 if [ $SKIP_COM -eq 0 ]; then
-  ncvlog     "$QSYS_SIMDIR/sdram_system_tb/simulation/submodules/altera_avalon_st_handshake_clock_crosser.v"           -work crosser                                                                      -cdslib ./cds_libs/crosser.cds.lib                                                                     
-  ncvlog     "$QSYS_SIMDIR/sdram_system_tb/simulation/submodules/altera_avalon_st_clock_crosser.v"                     -work crosser                                                                      -cdslib ./cds_libs/crosser.cds.lib                                                                     
-  ncvlog     "$QSYS_SIMDIR/sdram_system_tb/simulation/submodules/altera_avalon_st_pipeline_base.v"                     -work crosser                                                                      -cdslib ./cds_libs/crosser.cds.lib                                                                     
-  ncvlog -sv "$QSYS_SIMDIR/sdram_system_tb/simulation/submodules/sdram_system_cmd_xbar_demux.sv"                       -work cmd_xbar_demux                                                               -cdslib ./cds_libs/cmd_xbar_demux.cds.lib                                                              
-  ncvlog     "$QSYS_SIMDIR/sdram_system_tb/simulation/submodules/altera_reset_controller.v"                            -work rst_controller                                                               -cdslib ./cds_libs/rst_controller.cds.lib                                                              
-  ncvlog     "$QSYS_SIMDIR/sdram_system_tb/simulation/submodules/altera_reset_synchronizer.v"                          -work rst_controller                                                               -cdslib ./cds_libs/rst_controller.cds.lib                                                              
-  ncvlog -sv "$QSYS_SIMDIR/sdram_system_tb/simulation/submodules/sdram_system_id_router.sv"                            -work id_router                                                                    -cdslib ./cds_libs/id_router.cds.lib                                                                   
-  ncvlog -sv "$QSYS_SIMDIR/sdram_system_tb/simulation/submodules/sdram_system_addr_router.sv"                          -work addr_router                                                                  -cdslib ./cds_libs/addr_router.cds.lib                                                                 
-  ncvlog     "$QSYS_SIMDIR/sdram_system_tb/simulation/submodules/altera_avalon_sc_fifo.v"                              -work new_sdram_controller_0_s1_translator_avalon_universal_slave_0_agent_rsp_fifo -cdslib ./cds_libs/new_sdram_controller_0_s1_translator_avalon_universal_slave_0_agent_rsp_fifo.cds.lib
-  ncvlog -sv "$QSYS_SIMDIR/sdram_system_tb/simulation/submodules/altera_merlin_slave_agent.sv"                         -work new_sdram_controller_0_s1_translator_avalon_universal_slave_0_agent          -cdslib ./cds_libs/new_sdram_controller_0_s1_translator_avalon_universal_slave_0_agent.cds.lib         
-  ncvlog -sv "$QSYS_SIMDIR/sdram_system_tb/simulation/submodules/altera_merlin_burst_uncompressor.sv"                  -work new_sdram_controller_0_s1_translator_avalon_universal_slave_0_agent          -cdslib ./cds_libs/new_sdram_controller_0_s1_translator_avalon_universal_slave_0_agent.cds.lib         
-  ncvlog -sv "$QSYS_SIMDIR/sdram_system_tb/simulation/submodules/altera_merlin_master_agent.sv"                        -work bridge_0_avalon_master_translator_avalon_universal_master_0_agent            -cdslib ./cds_libs/bridge_0_avalon_master_translator_avalon_universal_master_0_agent.cds.lib           
-  ncvlog -sv "$QSYS_SIMDIR/sdram_system_tb/simulation/submodules/altera_merlin_slave_translator.sv"                    -work new_sdram_controller_0_s1_translator                                         -cdslib ./cds_libs/new_sdram_controller_0_s1_translator.cds.lib                                        
-  ncvlog -sv "$QSYS_SIMDIR/sdram_system_tb/simulation/submodules/altera_merlin_master_translator.sv"                   -work bridge_0_avalon_master_translator                                            -cdslib ./cds_libs/bridge_0_avalon_master_translator.cds.lib                                           
-  ncvlog     "$QSYS_SIMDIR/sdram_system_tb/simulation/submodules/sdram_system_bridge_0.v"                              -work bridge_0                                                                     -cdslib ./cds_libs/bridge_0.cds.lib                                                                    
-  ncvlog     "$QSYS_SIMDIR/sdram_system_tb/simulation/submodules/sdram_system_new_sdram_controller_0_test_component.v" -work new_sdram_controller_0                                                       -cdslib ./cds_libs/new_sdram_controller_0.cds.lib                                                      
-  ncvlog     "$QSYS_SIMDIR/sdram_system_tb/simulation/submodules/sdram_system_new_sdram_controller_0.v"                -work new_sdram_controller_0                                                       -cdslib ./cds_libs/new_sdram_controller_0.cds.lib                                                      
-  ncvlog     "$QSYS_SIMDIR/sdram_system_tb/simulation/submodules/sdram_system_up_clocks_0.v"                           -work up_clocks_0                                                                  -cdslib ./cds_libs/up_clocks_0.cds.lib                                                                 
-  ncvlog     "$QSYS_SIMDIR/sdram_system_tb/simulation/submodules/altera_sdram_partner_module.v"                        -work new_sdram_controller_0_my_partner                                            -cdslib ./cds_libs/new_sdram_controller_0_my_partner.cds.lib                                           
-  ncvlog -sv "$QSYS_SIMDIR/sdram_system_tb/simulation/submodules/verbosity_pkg.sv"                                     -work sdram_system_inst_avalon_bridge_bfm                                          -cdslib ./cds_libs/sdram_system_inst_avalon_bridge_bfm.cds.lib                                         
-  ncvlog -sv "$QSYS_SIMDIR/sdram_system_tb/simulation/submodules/altera_conduit_bfm.sv"                                -work sdram_system_inst_avalon_bridge_bfm                                          -cdslib ./cds_libs/sdram_system_inst_avalon_bridge_bfm.cds.lib                                         
-  ncvlog -sv "$QSYS_SIMDIR/sdram_system_tb/simulation/submodules/verbosity_pkg.sv"                                     -work sdram_system_inst_reset_bfm                                                  -cdslib ./cds_libs/sdram_system_inst_reset_bfm.cds.lib                                                 
-  ncvlog -sv "$QSYS_SIMDIR/sdram_system_tb/simulation/submodules/altera_avalon_reset_source.sv"                        -work sdram_system_inst_reset_bfm                                                  -cdslib ./cds_libs/sdram_system_inst_reset_bfm.cds.lib                                                 
-  ncvlog -sv "$QSYS_SIMDIR/sdram_system_tb/simulation/submodules/verbosity_pkg.sv"                                     -work sdram_system_inst_clk_bfm                                                    -cdslib ./cds_libs/sdram_system_inst_clk_bfm.cds.lib                                                   
-  ncvlog -sv "$QSYS_SIMDIR/sdram_system_tb/simulation/submodules/altera_avalon_clock_source.sv"                        -work sdram_system_inst_clk_bfm                                                    -cdslib ./cds_libs/sdram_system_inst_clk_bfm.cds.lib                                                   
-  ncvlog     "$QSYS_SIMDIR/sdram_system_tb/simulation/submodules/sdram_system.v"                                       -work sdram_system_inst                                                            -cdslib ./cds_libs/sdram_system_inst.cds.lib                                                           
-  ncvlog     "$QSYS_SIMDIR/sdram_system_tb/simulation/sdram_system_tb.v"                                                                                                                                                                                                                                         
+  ncvlog     "$QSYS_SIMDIR/sdram_system_tb/simulation/submodules/altera_reset_controller.v"                            -work rst_controller                    -cdslib ./cds_libs/rst_controller.cds.lib                   
+  ncvlog     "$QSYS_SIMDIR/sdram_system_tb/simulation/submodules/altera_reset_synchronizer.v"                          -work rst_controller                    -cdslib ./cds_libs/rst_controller.cds.lib                   
+  ncvlog     "$QSYS_SIMDIR/sdram_system_tb/simulation/submodules/sdram_system_new_sdram_controller_0_test_component.v" -work new_sdram_controller_0            -cdslib ./cds_libs/new_sdram_controller_0.cds.lib           
+  ncvlog     "$QSYS_SIMDIR/sdram_system_tb/simulation/submodules/sdram_system_new_sdram_controller_0.v"                -work new_sdram_controller_0            -cdslib ./cds_libs/new_sdram_controller_0.cds.lib           
+  ncvlog     "$QSYS_SIMDIR/sdram_system_tb/simulation/submodules/altera_sdram_partner_module.v"                        -work new_sdram_controller_0_my_partner -cdslib ./cds_libs/new_sdram_controller_0_my_partner.cds.lib
+  ncvlog -sv "$QSYS_SIMDIR/sdram_system_tb/simulation/submodules/verbosity_pkg.sv"                                     -work sdram_system_inst_reset_bfm       -cdslib ./cds_libs/sdram_system_inst_reset_bfm.cds.lib      
+  ncvlog -sv "$QSYS_SIMDIR/sdram_system_tb/simulation/submodules/altera_avalon_reset_source.sv"                        -work sdram_system_inst_reset_bfm       -cdslib ./cds_libs/sdram_system_inst_reset_bfm.cds.lib      
+  ncvlog -sv "$QSYS_SIMDIR/sdram_system_tb/simulation/submodules/verbosity_pkg.sv"                                     -work sdram_system_inst_clk_bfm         -cdslib ./cds_libs/sdram_system_inst_clk_bfm.cds.lib        
+  ncvlog -sv "$QSYS_SIMDIR/sdram_system_tb/simulation/submodules/altera_avalon_clock_source.sv"                        -work sdram_system_inst_clk_bfm         -cdslib ./cds_libs/sdram_system_inst_clk_bfm.cds.lib        
+  ncvlog     "$QSYS_SIMDIR/sdram_system_tb/simulation/submodules/sdram_system.v"                                       -work sdram_system_inst                 -cdslib ./cds_libs/sdram_system_inst.cds.lib                
+  ncvlog     "$QSYS_SIMDIR/sdram_system_tb/simulation/sdram_system_tb.v"                                                                                                                                                   
 fi
 
 # ----------------------------------------

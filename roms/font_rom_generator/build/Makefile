@@ -1,5 +1,5 @@
 font_rom_generator: ../src/font_rom_generator.c
-	gcc -o $@ ../src/font_rom_generator.c
+	gcc -Wall -Wpedantic -o $@ ../src/font_rom_generator.c
 
 debug: ../src/font_rom_generator.c
 	gcc -g -Wall -Wpedantic -fsanitize=address -o font_rom_generator ../src/font_rom_generator.c

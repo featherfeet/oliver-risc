@@ -12,14 +12,6 @@
    element $${FILENAME}
    {
    }
-   element bridge_0
-   {
-      datum _sortIndex
-      {
-         value = "3";
-         type = "int";
-      }
-   }
    element clk_0
    {
       datum _sortIndex
@@ -29,14 +21,6 @@
       }
    }
    element new_sdram_controller_0
-   {
-      datum _sortIndex
-      {
-         value = "2";
-         type = "int";
-      }
-   }
-   element up_clocks_0
    {
       datum _sortIndex
       {
@@ -59,42 +43,16 @@
  <parameter name="projectName" value="" />
  <parameter name="sopcBorderPoints" value="false" />
  <parameter name="systemHash" value="1" />
- <parameter name="timeStamp" value="1554357841118" />
+ <parameter name="timeStamp" value="1606034173726" />
  <parameter name="useTestBenchNamingPattern" value="false" />
  <instanceScript></instanceScript>
- <interface name="clk" internal="clk_0.clk_in" type="clock" dir="end" />
- <interface name="reset" internal="clk_0.clk_in_reset" type="reset" dir="end" />
- <interface
-   name="vga_clk"
-   internal="up_clocks_0.vga_clk"
-   type="clock"
-   dir="start" />
  <interface
    name="sdram_controller"
    internal="new_sdram_controller_0.wire"
    type="conduit"
    dir="end" />
- <interface
-   name="avalon_bridge"
-   internal="bridge_0.external_interface"
-   type="conduit"
-   dir="end" />
- <module kind="clock_source" version="13.0" enabled="1" name="clk_0">
-  <parameter name="clockFrequency" value="50000000" />
-  <parameter name="clockFrequencyKnown" value="true" />
-  <parameter name="inputClockFrequency" value="0" />
-  <parameter name="resetSynchronousEdges" value="NONE" />
- </module>
- <module kind="altera_up_clocks" version="13.0" enabled="1" name="up_clocks_0">
-  <parameter name="board" value="DE1" />
-  <parameter name="sys_clk_freq" value="50" />
-  <parameter name="sdram_clk" value="true" />
-  <parameter name="vga_clk" value="true" />
-  <parameter name="audio_clk" value="false" />
-  <parameter name="audio_clk_freq" value="12.288" />
-  <parameter name="AUTO_CLK_IN_PRIMARY_CLOCK_RATE" value="50000000" />
-  <parameter name="AUTO_DEVICE_FAMILY" value="Cyclone II" />
- </module>
+ <interface name="reset" internal="clk_0.clk_in_reset" type="reset" dir="end" />
+ <interface name="clk" internal="clk_0.clk_in" type="clock" dir="end" />
  <module
    kind="altera_avalon_new_sdram_controller"
    version="13.0.1.99.2"
@@ -124,27 +82,12 @@
   <parameter name="clockRate" value="50000000" />
   <parameter name="componentName">$${FILENAME}_new_sdram_controller_0</parameter>
  </module>
- <module
-   kind="altera_up_external_bus_to_avalon_bridge"
-   version="13.0"
-   enabled="1"
-   name="bridge_0">
-  <parameter name="addr_size" value="8" />
-  <parameter name="addr_size_multiplier" value="Mbytes" />
-  <parameter name="data_size" value="16" />
-  <parameter name="AUTO_CLOCK_RESET_CLOCK_RATE" value="50000000" />
-  <parameter name="AUTO_DEVICE_FAMILY" value="Cyclone II" />
+ <module kind="clock_source" version="13.0" enabled="1" name="clk_0">
+  <parameter name="clockFrequency" value="50000000" />
+  <parameter name="clockFrequencyKnown" value="true" />
+  <parameter name="inputClockFrequency" value="0" />
+  <parameter name="resetSynchronousEdges" value="NONE" />
  </module>
- <connection
-   kind="clock"
-   version="13.0"
-   start="clk_0.clk"
-   end="up_clocks_0.clk_in_primary" />
- <connection
-   kind="reset"
-   version="13.0"
-   start="clk_0.clk_reset"
-   end="up_clocks_0.clk_in_primary_reset" />
  <connection
    kind="reset"
    version="13.0"
@@ -153,27 +96,8 @@
  <connection
    kind="clock"
    version="13.0"
-   start="up_clocks_0.sdram_clk"
-   end="new_sdram_controller_0.clk" />
- <connection
-   kind="clock"
-   version="13.0"
    start="clk_0.clk"
-   end="bridge_0.clock_reset" />
- <connection
-   kind="reset"
-   version="13.0"
-   start="clk_0.clk_reset"
-   end="bridge_0.clock_reset_reset" />
- <connection
-   kind="avalon"
-   version="13.0"
-   start="bridge_0.avalon_master"
-   end="new_sdram_controller_0.s1">
-  <parameter name="arbitrationPriority" value="1" />
-  <parameter name="baseAddress" value="0x0000" />
-  <parameter name="defaultConnection" value="false" />
- </connection>
+   end="new_sdram_controller_0.clk" />
  <interconnectRequirement for="$system" name="qsys_mm.clockCrossingAdapter" value="HANDSHAKE" />
  <interconnectRequirement for="$system" name="qsys_mm.maxAdditionalLatency" value="1" />
 </system>

@@ -1,3 +1,3 @@
 #!/bin/bash
 
-jp2a --height=24 --width=80 boot_screen.jpg > boot_screen.txt
+jp2a --height=67 --width=240 boot_screen.jpg > boot_screen.txt

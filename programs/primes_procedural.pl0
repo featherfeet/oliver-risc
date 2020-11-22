@@ -2,6 +2,10 @@
 Program for calculating and displaying prime numbers that uses procedures. Based on an example from the Wikipedia article on PL/0.
 ********************************/
 
+// Configuration variables (dimensions of console rendered by GPU).
+VAR SCREEN_WIDTH = 240;
+VAR SCREEN_HEIGHT = 67;
+
 VAR integer_to_measure = 0;
 VAR integer_length = 0;
 PROCEDURE get_integer_length;
@@ -17,7 +21,6 @@ BEGIN
     END;
 END;
 
-VAR SCREEN_WIDTH = 80;
 VAR integer = 0;
 VAR line = 0;
 PROCEDURE print_integer;
@@ -59,12 +62,12 @@ BEGIN
 	END;
 END;
 
-VAR max = 90;
 VAR line_counter = 0;
 PROCEDURE primes;
 BEGIN
+    VAR break = 0;
 	arg := 2;
-	WHILE arg < max DO
+	WHILE break = 0 DO
 	BEGIN
 		CALL is_prime;
 		IF ret = 1 THEN
@@ -74,6 +77,10 @@ BEGIN
             CALL print_integer;
 
             line_counter := line_counter + 1;
+            IF line_counter = SCREEN_HEIGHT THEN
+            BEGIN
+                break := 1;
+            END;
         END;
 		arg := arg + 1;
 	END;

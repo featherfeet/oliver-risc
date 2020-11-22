@@ -12,7 +12,7 @@
 # or its authorized distributors. Please refer to the applicable 
 # agreement for further details.
 
-# ACDS 13.0sp1 232 linux 2020.07.27.22:31:04
+# ACDS 13.0sp1 232 linux 2020.11.22.00:37:41
 
 # ----------------------------------------
 # vcs - auto-generated simulation script
@@ -50,24 +50,10 @@ vcs -lca -timescale=1ps/1ps -sverilog +verilog2001ext+.v -ntb_opts dtm $USER_DEF
   -v $QUARTUS_INSTALL_DIR/eda/sim_lib/altera_mf.v \
   $QUARTUS_INSTALL_DIR/eda/sim_lib/altera_lnsim.sv \
   -v $QUARTUS_INSTALL_DIR/eda/sim_lib/cycloneii_atoms.v \
-  $QSYS_SIMDIR/submodules/altera_avalon_st_handshake_clock_crosser.v \
-  $QSYS_SIMDIR/submodules/altera_avalon_st_clock_crosser.v \
-  $QSYS_SIMDIR/submodules/altera_avalon_st_pipeline_base.v \
-  $QSYS_SIMDIR/submodules/sdram_system_cmd_xbar_demux.sv \
   $QSYS_SIMDIR/submodules/altera_reset_controller.v \
   $QSYS_SIMDIR/submodules/altera_reset_synchronizer.v \
-  $QSYS_SIMDIR/submodules/sdram_system_id_router.sv \
-  $QSYS_SIMDIR/submodules/sdram_system_addr_router.sv \
-  $QSYS_SIMDIR/submodules/altera_avalon_sc_fifo.v \
-  $QSYS_SIMDIR/submodules/altera_merlin_slave_agent.sv \
-  $QSYS_SIMDIR/submodules/altera_merlin_burst_uncompressor.sv \
-  $QSYS_SIMDIR/submodules/altera_merlin_master_agent.sv \
-  $QSYS_SIMDIR/submodules/altera_merlin_slave_translator.sv \
-  $QSYS_SIMDIR/submodules/altera_merlin_master_translator.sv \
-  $QSYS_SIMDIR/submodules/sdram_system_bridge_0.v \
   $QSYS_SIMDIR/submodules/sdram_system_new_sdram_controller_0_test_component.v \
   $QSYS_SIMDIR/submodules/sdram_system_new_sdram_controller_0.v \
-  $QSYS_SIMDIR/submodules/sdram_system_up_clocks_0.v \
   $QSYS_SIMDIR/sdram_system.v \
   -top $TOP_LEVEL_NAME
 # ----------------------------------------

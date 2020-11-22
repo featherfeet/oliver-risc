@@ -33,6 +33,17 @@ module top(
 
 integer i; // Counter used for unrolled for-loops.
 
+
+// Clock generator for the SDRAM and VGA clocks. When given a 50 MHz clock as
+// inclk0, this PLL generates a 50 MHz clock with -3000 ps phase shift as c0
+// and a 150 MHz clock with 0 ps phase shift as c1. c0 is used for the SDRAM
+// clock, and c1 is used as the VGA pixel clock.
+clock_generator clock_generator(.areset(~KEY[0]),
+                                .inclk0(CLOCK_50),
+                                .c0(DRAM_CLK),
+                                .c1(VGA_PIXEL_CLOCK)
+);
+
 // CPU registers.
 reg [`OPERATION_SIZE_BITS - 1:0] operation;
 reg [`OPERAND_SIZE_BITS - 1:0] operand1;
@@ -109,9 +120,8 @@ reg [$clog2(`GPU_TEXT_BUFFER_LENGTH) - 1:0] gpu_cell_to_access;
 reg gpu_write_enable;
 reg [7:0] gpu_character_to_write;
 wire [7:0] gpu_character_read;
-gpu integrated_graphics(.CLOCK_50(CLOCK_50),
+gpu integrated_graphics(.CLOCK_150(VGA_PIXEL_CLOCK),
                         .reset(~KEY[0]),
-                        .VGA_CLK(VGA_PIXEL_CLOCK),
                         .VGA_R(VGA_R),
                         .VGA_G(VGA_G),
                         .VGA_B(VGA_B),
@@ -133,16 +143,6 @@ rom program_rom (
     .address(program_rom_address),
     .output_byte(program_rom_byte),
     .done(program_rom_done)
-);
-
-// Clock generator for SDRAM and VGA.
-sdram_system_up_clocks_0 up_clocks_0 (
-    .CLOCK_50    (CLOCK_50),                      // clk_in_primary.clk
-    .reset       (~KEY[0]),                       // clk_in_primary_reset.reset
-    .sys_clk     (),                              // sys_clk.clk
-    .sys_reset_n (),                              // sys_clk_reset.reset_n
-    .SDRAM_CLK   (DRAM_CLK),                      // sdram_clk.clk
-    .VGA_CLK     (VGA_PIXEL_CLOCK)
 );
 
 // SDRAM controller.
