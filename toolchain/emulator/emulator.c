@@ -9,10 +9,28 @@
 #define REGISTER_B registers[2]
 #define REGISTER_G registers[7]
 
+// Size of the text display.
+#define GPU_TEXT_DISPLAY_ROWS 67
+#define GPU_TEXT_DISPLAY_COLUMNS 240
+#define GPU_DISPLAY_WIDTH_PIXELS 1920
+#define GPU_DISPLAY_HEIGHT_PIXELS 1080
+// The dimensions (in pixels) of each character cell. To work with GNU Unifont, character cells should be 8 pixels wide by 16 pixels tall.
+#define GPU_CHARACTER_CELL_WIDTH (GPU_DISPLAY_WIDTH_PIXELS / GPU_TEXT_DISPLAY_COLUMNS)
+#define GPU_CHARACTER_CELL_HEIGHT (GPU_DISPLAY_HEIGHT_PIXELS / GPU_TEXT_DISPLAY_ROWS)
+// The length of the GPU text buffer.
+#define GPU_TEXT_BUFFER_LENGTH (GPU_TEXT_DISPLAY_ROWS * GPU_TEXT_DISPLAY_COLUMNS)
+
 FILE *file = NULL;
 uint8_t *raw_binary = NULL;
+char *gpu_text_buffer = NULL;
 
 void cleanup() {
+    FILE *gpu_text_buffer_log = fopen("gpu_text_buffer_log.txt", "w");
+    for (int row = 0; row < GPU_TEXT_DISPLAY_ROWS; row++) {
+        fwrite(gpu_text_buffer + GPU_TEXT_DISPLAY_COLUMNS * row, 1, GPU_TEXT_DISPLAY_COLUMNS, gpu_text_buffer_log);
+        fprintf(gpu_text_buffer_log, "\n");
+    }
+    fclose(gpu_text_buffer_log);
     fclose(file);
     free(raw_binary);
 }
@@ -37,6 +55,10 @@ int main(int argc, char *argv[]) {
 
     // Define registers.
     OPERAND_C_TYPE registers[NUM_REGISTERS] = {0};
+
+    // Allocate memory to simulate the text buffer of the GPU.
+    gpu_text_buffer = (char *) malloc(GPU_TEXT_BUFFER_LENGTH);
+    memset(gpu_text_buffer, ' ', GPU_TEXT_BUFFER_LENGTH);
 
     // Find the start of the .code section.
     OPERAND_C_TYPE start_of_code_section_offset = 0; // The address in the raw binary where the .code section starts.
@@ -101,6 +123,7 @@ int main(int argc, char *argv[]) {
                 break;
             case (OPERATION_OUT):
                 printf("\033[1;32mOUT [address %u, character '%c' (integer value %u)]\033[0m\n", registers[operand1], registers[operand2], registers[operand2]);
+                gpu_text_buffer[registers[operand1]] = registers[operand2];
                 REGISTER_IP += INSTRUCTION_SIZE;
                 break;
             case (OPERATION_IN):
@@ -186,7 +209,7 @@ int main(int argc, char *argv[]) {
                 break;
         }
     }
-    
+
     cleanup();
     return 0;
 }

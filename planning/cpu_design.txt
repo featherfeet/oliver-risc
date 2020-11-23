@@ -63,13 +63,14 @@ Example program to print out numbers 1-5:
 	LOAD step,C
 	LOAD end,D
 	begin:
-		OUT B,
+        CLOAD 0,F
+		OUT F,B // Writes the value in register B to location 0, which is the first position on the GPU's rendered screen.
 		ADD B,C
 		MOV A,B
 		CMP B,D
-		JMPL, begin
-		JMPE, begin
-		JMPG, finish
+		JMPL begin
+		JMPE begin
+		JMPG finish
 	finish:
 		HALT
 
@@ -79,6 +80,15 @@ When the CPU decides it has time to execute the interrupt, then it pops it from 
 It copies all registers (IP and A-G) to the set of shadow registers. It then sets the IP register to the memory address of the ISR and executes ISR code. The ISR code sets the interrupt-running register to 1 to indicate that an interrupt is being run. While this register is 1, new interrupts will be added to the FIFO but not executed.
 At the end of the ISR, it calls the ENDINT instruction, which copies all of the shadow registers over to the normal registers. This has the effect of setting the IP and interrupt-running registers back to what they were before.
 The program then a) does the next interrupt in the FIFO or b) keeps executing normal code if there are no more interrupts in the FIFO.
+
+I/O:
+The GPU has a buffer of bytes that store the text to be shown on the screen in left-to-right, top-down order.
+This buffer is `GPU_TEXT_DISPLAY_COLUMNS characters wide and `GPU_TEXT_DISPLAY_ROWS characters tall (see hardware/rtl/gpu/gpu_defines.v and toolchain/emulator/emulator.c for these definitions).
+The actual video signal from the GPU is `GPU_DISPLAY_WIDTH_PIXELS pixels wide and `GPU_DISPLAY_HEIGHT_PIXELS pixels tall.
+Therefore, each character cell on-screen is `GPU_CHARACTER_CELL_WIDTH pixels wide, which is defined as `GPU_DISPLAY_WIDTH_PIXELS / `GPU_TEXT_DISPLAY_COLUMNS.
+Each character cell is `GPU_CHARACTER_CELL_HEIGHT pixels tall, which is defined as `GPU_DISPLAY_HEIGHT_PIXELS / `GPU_TEXT_DISPLAY_ROWS.
+The GPU text buffer is `GPU_TEXT_BUFFER_LENGTH = `GPU_TEXT_DISPLAY_ROWS * `GPU_TEXT_DISPLAY_COLUMNS bytes long, with one byte per character. Characters are encoded in ASCII.
+The IN and OUT instructions can access a separate memory space called the "ports." Port addresses in the range [0, `GPU_TEXT_BUFFER_LENGTH - 1] can be used to get/set characters on-screen. Port address `GPU_TEXT_BUFFER_LENGTH (i. e. the port just after the end of the GPU memory) is a special read-only location called `INTERRUPT_VALUE_PORT, used to pass values like keyboard scancodes into interrupt routines.
 
 Future planned features:
 Use a stack to push/pop the call stack.
