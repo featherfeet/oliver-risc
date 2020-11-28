@@ -2,6 +2,7 @@
 
 module gpu(
     // Clock and reset signals.
+    input CLOCK_50,                           // 50 MHz system clock, used for the CPU's access to the GPU text buffer.
     input reset,                              // Reset (active-high).
     // VGA signals.
     input CLOCK_150,                          // 150 (technically should be 148.5) MHz clock for VGA pixels.
@@ -18,14 +19,13 @@ module gpu(
 );
 
 // Buffer holding the text that is being displayed on-screen. Each cell in the array is a byte (8 bits) storing an ASCII character. The first `GPU_TEXT_DISPLAY_COLUMNS cells are the first row of text, the second `GPU_TEXT_DISPLAY_COLUMNS cells are the second row of text, and so on.
-dual_port_ram text_buffer(.CLOCK_150(CLOCK_150),
+dual_port_ram text_buffer(.port_a_clock(CLOCK_50),
                           .port_a_address(cell_to_access),
                           .port_a_data_in(character_to_write),
                           .port_a_write_enable(write_enable),
                           .port_a_data_out(character_read),
+                          .port_b_clock(CLOCK_150),
                           .port_b_address(current_character_cell),
-                          .port_b_data_in(),
-                          .port_b_write_enable(1'b0),
                           .port_b_data_out(current_character));
 
 // Create a VGA controller with 150 MHz pixel clock.
