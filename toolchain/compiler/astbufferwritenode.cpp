@@ -3,10 +3,18 @@
 #define FMT_HEADER_ONLY
 #include <fmt/format.h>
 
-ASTBufferWriteNode::ASTBufferWriteNode(std::string variable_name, ASTExpressionNode *offset_expression, ASTExpressionNode *value_expression) {
+ASTBufferWriteNode::ASTBufferWriteNode(std::string variable_name, OPERAND_C_TYPE offset_constant_value, ASTExpressionNode *value_expression) {
     this->variable_name = variable_name;
-    this->offset_expression = offset_expression;
+    this->offset_constant_value = offset_constant_value;
     this->value_expression = value_expression;
+    this->type = CONSTANT;
+}
+
+ASTBufferWriteNode::ASTBufferWriteNode(std::string variable_name, std::string offset_variable_value, ASTExpressionNode *value_expression) {
+    this->variable_name = variable_name;
+    this->offset_variable_value = offset_variable_value;
+    this->value_expression = value_expression;
+    this->type = VARIABLE;
 }
 
 ASTNodeType ASTBufferWriteNode::getNodeType() {
@@ -14,11 +22,18 @@ ASTNodeType ASTBufferWriteNode::getNodeType() {
 }
 
 std::string ASTBufferWriteNode::getHumanReadable() {
-    return fmt::format("Buffer write to variable `{}`.", variable_name);
+    if (type == CONSTANT) {
+        return fmt::format("Buffer write to variable `{}` at offset `{}`.", variable_name, offset_constant_value);
+    }
+    return fmt::format("Buffer write to variable `{}` at offset `{}`.", variable_name, offset_variable_value);
 }
 
-ASTExpressionNode *ASTBufferWriteNode::getOffsetExpression() {
-    return offset_expression;
+OPERAND_C_TYPE ASTBufferWriteNode::getOffsetConstantValue() {
+    return offset_constant_value;
+}
+
+std::string ASTBufferWriteNode::getOffsetVariableValue() {
+    return offset_variable_value;
 }
 
 ASTExpressionNode *ASTBufferWriteNode::getValueExpression() {
@@ -29,7 +44,10 @@ std::string ASTBufferWriteNode::getVariableName() {
     return variable_name;
 }
 
+TermNodeType ASTBufferWriteNode::getType() {
+    return type;
+}
+
 ASTBufferWriteNode::~ASTBufferWriteNode() {
-    delete offset_expression;
     delete value_expression;
 }

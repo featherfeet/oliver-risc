@@ -169,10 +169,15 @@ variable_assignment: TOKEN_IDENTIFIER TOKEN_COLON_EQUALS expression {
 }
 ;
 
-buffer_write: TOKEN_IDENTIFIER TOKEN_LEFT_SQUARE_BRACKET expression TOKEN_RIGHT_SQUARE_BRACKET TOKEN_COLON_EQUALS expression {
+buffer_write: TOKEN_IDENTIFIER TOKEN_LEFT_SQUARE_BRACKET TOKEN_CONSTANT TOKEN_RIGHT_SQUARE_BRACKET TOKEN_COLON_EQUALS expression {
             $$ = new ASTBufferWriteNode($1, $3, $6);
             free($1);
 }
+            | TOKEN_IDENTIFIER TOKEN_LEFT_SQUARE_BRACKET TOKEN_IDENTIFIER TOKEN_RIGHT_SQUARE_BRACKET TOKEN_COLON_EQUALS expression {
+                $$ = new ASTBufferWriteNode($1, $3, $6);
+                free($1);
+                free($3);
+            }
 ;
 
 conditional: TOKEN_IF condition TOKEN_THEN begin_end_block {

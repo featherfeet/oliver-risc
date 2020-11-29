@@ -247,10 +247,10 @@ std::tuple<std::string, std::string> AssemblyGenerator::generateAsm(ASTNode *nod
         code_section << "    // End variable assignment node." << std::endl;
     }
 
+/*
     else if (node->getNodeType() == BUFFER_WRITE_NODE) {
         code_section << "    // Start buffer write node." << std::endl;
         ASTBufferWriteNode *buffer_write = (ASTBufferWriteNode *) node;
-
         // Generate assembly code that evaluates the value expression and stores the result in temp0 in RAM.
         auto generated_value_expression_assembly = generateAsm(buffer_write->getValueExpression());
         data_section << std::get<0>(generated_value_expression_assembly);
@@ -267,6 +267,7 @@ std::tuple<std::string, std::string> AssemblyGenerator::generateAsm(ASTNode *nod
 
         code_section << "    // End buffer write node." << std::endl;
     }
+*/
 
     else if (node->getNodeType() == EXPRESSION_NODE) {
         code_section << "    // Start expression node." << std::endl;

@@ -45,12 +45,14 @@ CMakeFiles/compiler.dir/compiler/astbufferreadnode.cpp.o: ../compiler/asttermnod
 CMakeFiles/compiler.dir/compiler/astbufferwritenode.cpp.o: .././compiler/include/fmt/core.h
 CMakeFiles/compiler.dir/compiler/astbufferwritenode.cpp.o: .././compiler/include/fmt/format-inl.h
 CMakeFiles/compiler.dir/compiler/astbufferwritenode.cpp.o: .././compiler/include/fmt/format.h
+CMakeFiles/compiler.dir/compiler/astbufferwritenode.cpp.o: .././processor.h
 CMakeFiles/compiler.dir/compiler/astbufferwritenode.cpp.o: ../compiler/ast.h
 CMakeFiles/compiler.dir/compiler/astbufferwritenode.cpp.o: ../compiler/astbufferwritenode.cpp
 CMakeFiles/compiler.dir/compiler/astbufferwritenode.cpp.o: ../compiler/astbufferwritenode.h
 CMakeFiles/compiler.dir/compiler/astbufferwritenode.cpp.o: ../compiler/astexpressionnode.h
 CMakeFiles/compiler.dir/compiler/astbufferwritenode.cpp.o: ../compiler/astnode.h
 CMakeFiles/compiler.dir/compiler/astbufferwritenode.cpp.o: ../compiler/aststatementnode.h
+CMakeFiles/compiler.dir/compiler/astbufferwritenode.cpp.o: ../compiler/asttermnode.h
 
 CMakeFiles/compiler.dir/compiler/astconditionalnode.cpp.o: ../compiler/ast.h
 CMakeFiles/compiler.dir/compiler/astconditionalnode.cpp.o: ../compiler/astbeginendblocknode.h

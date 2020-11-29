@@ -46,12 +46,14 @@ CMakeFiles/compiler.dir/compiler/astbufferwritenode.cpp.o
  .././compiler/include/fmt/core.h
  .././compiler/include/fmt/format-inl.h
  .././compiler/include/fmt/format.h
+ .././processor.h
  /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/ast.h
  /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astbufferwritenode.cpp
  /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astbufferwritenode.h
  /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astexpressionnode.h
  /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astnode.h
  /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/aststatementnode.h
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/asttermnode.h
 CMakeFiles/compiler.dir/compiler/astconditionalnode.cpp.o
  /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/ast.h
  /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astbeginendblocknode.h

@@ -52,11 +52,8 @@ std::string ASTRootNode::generateGraphvizCode(std::string node_id, ASTNode *stat
 
         ASTBufferWriteNode *buffer_write = (ASTBufferWriteNode *) statement;
 
-        output << generateGraphvizCode(node_id + "_0", buffer_write->getOffsetExpression());
+        output << generateGraphvizCode(node_id + "_0", buffer_write->getValueExpression());
         output << fmt::format("    \"{}\" -> \"{}_0\";", node_id, node_id) << std::endl;
-
-        output << generateGraphvizCode(node_id + "_1", buffer_write->getValueExpression());
-        output << fmt::format("    \"{}\" -> \"{}_1\";", node_id, node_id) << std::endl;
     }
     else if (statement->getNodeType() == EXPRESSION_NODE) {
         output << fmt::format("    \"{}\" [label=\"{}\", shape=box];", node_id, statement->getHumanReadable()) << std::endl;
