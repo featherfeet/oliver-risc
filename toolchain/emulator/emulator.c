@@ -207,6 +207,26 @@ int main(int argc, char *argv[]) {
                 memcpy(&registers[operand2], &operand1, OPERAND_SIZE);
                 REGISTER_IP += INSTRUCTION_SIZE;
                 break;
+            case (OPERATION_OR):
+                printf("OR\n");
+                REGISTER_A = registers[operand1] | registers[operand2];
+                REGISTER_IP += INSTRUCTION_SIZE;
+                break;
+            case (OPERATION_AND):
+                printf("AND\n");
+                REGISTER_A = registers[operand1] & registers[operand2];
+                REGISTER_IP += INSTRUCTION_SIZE;
+                break;
+            case (OPERATION_XOR):
+                printf("XOR\n");
+                REGISTER_A = registers[operand1] ^ registers[operand2];
+                REGISTER_IP += INSTRUCTION_SIZE;
+                break;
+            case (OPERATION_NOT):
+                printf("NOT\n");
+                registers[operand1] = ~registers[operand1];
+                REGISTER_IP += INSTRUCTION_SIZE;
+                break;
         }
     }
 

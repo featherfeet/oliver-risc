@@ -34,13 +34,13 @@ std::string AssemblyGenerator::generateStackVariableRead(std::string variable_na
 
     std::string stack_pointer_register;
     Stackframe *stackframe = nullptr;
-    if (current_stackframe->containsVariable(variable_name)) {
-        stackframe = current_stackframe;
-        stack_pointer_register = "G";
-    }
-    else if (global_stackframe->containsVariable(variable_name)) {
+    if (global_stackframe->containsVariable(variable_name)) {
         stackframe = global_stackframe;
         stack_pointer_register = "F";
+    }
+    else if (current_stackframe->containsVariable(variable_name)) {
+        stackframe = current_stackframe;
+        stack_pointer_register = "G";
     }
     else {
         std::cout << fmt::format("\033[1;31mERROR:\033[0m Attempt to access undeclared variable `{}`.", variable_name) << std::endl;
@@ -63,13 +63,13 @@ std::string AssemblyGenerator::generateStackVariableWrite(std::string source_reg
 
     std::string stack_pointer_register;
     Stackframe *stackframe = nullptr;
-    if (current_stackframe->containsVariable(variable_name)) {
-        stackframe = current_stackframe;
-        stack_pointer_register = "G";
-    }
-    else if (global_stackframe->containsVariable(variable_name)) {
+    if (global_stackframe->containsVariable(variable_name)) {
         stackframe = global_stackframe;
         stack_pointer_register = "F";
+    }
+    else if (current_stackframe->containsVariable(variable_name)) {
+        stackframe = current_stackframe;
+        stack_pointer_register = "G";
     }
     else {
         std::cout << fmt::format("\033[1;31mERROR:\033[0m Attempt to access undeclared variable `{}`.", variable_name) << std::endl;
@@ -92,13 +92,13 @@ std::string AssemblyGenerator::generateStackVariableWrite(OPERAND_C_TYPE constan
 
     std::string stack_pointer_register;
     Stackframe *stackframe = nullptr;
-    if (current_stackframe->containsVariable(variable_name)) {
-        stackframe = current_stackframe;
-        stack_pointer_register = "G";
-    }
-    else if (global_stackframe->containsVariable(variable_name)) {
+    if (global_stackframe->containsVariable(variable_name)) {
         stackframe = global_stackframe;
         stack_pointer_register = "F";
+    }
+    else if (current_stackframe->containsVariable(variable_name)) {
+        stackframe = current_stackframe;
+        stack_pointer_register = "G";
     }
     else {
         std::cout << fmt::format("\033[1;31mERROR:\033[0m Attempt to access undeclared variable `{}`.", variable_name) << std::endl;
@@ -118,13 +118,13 @@ std::string AssemblyGenerator::generateStackVariableWrite(OPERAND_C_TYPE constan
 std::string AssemblyGenerator::generateStackVariableStringLoad(std::string string_name, std::string variable_name) {
     std::string stack_pointer_register;
     Stackframe *stackframe = nullptr;
-    if (current_stackframe->containsVariable(variable_name)) {
-        stackframe = current_stackframe;
-        stack_pointer_register = "G";
-    }
-    else if (global_stackframe->containsVariable(variable_name)) {
+    if (global_stackframe->containsVariable(variable_name)) {
         stackframe = global_stackframe;
         stack_pointer_register = "F";
+    }
+    else if (current_stackframe->containsVariable(variable_name)) {
+        stackframe = current_stackframe;
+        stack_pointer_register = "G";
     }
     else {
         std::cout << fmt::format("\033[1;31mERROR:\033[0m Attempt to access undeclared variable `{}`.", variable_name) << std::endl;
@@ -145,13 +145,13 @@ std::string AssemblyGenerator::generateStackVariableStringLoad(std::string strin
 std::string AssemblyGenerator::generateBufferWrite(std::string variable_name, std::string offset_register, std::string value_register) {
     std::string stack_pointer_register;
     Stackframe *stackframe = nullptr;
-    if (current_stackframe->containsVariable(variable_name)) {
-        stackframe = current_stackframe;
-        stack_pointer_register = "G";
-    }
-    else if (global_stackframe->containsVariable(variable_name)) {
+    if (global_stackframe->containsVariable(variable_name)) {
         stackframe = global_stackframe;
         stack_pointer_register = "F";
+    }
+    else if (current_stackframe->containsVariable(variable_name)) {
+        stackframe = current_stackframe;
+        stack_pointer_register = "G";
     }
     else {
         std::cout << fmt::format("\033[1;31mERROR:\033[0m Attempt to access undeclared variable `{}`.", variable_name) << std::endl;
@@ -160,15 +160,61 @@ std::string AssemblyGenerator::generateBufferWrite(std::string variable_name, st
 
     std::stringstream code;
     // Save the offset and value registers into D and E so that they don't get corrupted.
-    code << fmt::format("    MOV {},D", offset_register) << std::endl;
-    code << fmt::format("    MOV {},E", value_register) << std::endl;
-    // Calculate the address in RAM of the variable being written to.
-    code << fmt::format("    CLOAD {},A", stackframe->getVariableOffset(variable_name)) << std::endl;
-    code << fmt::format("    ADD {},A", stack_pointer_register) << std::endl;
-    // Add the offset to the address of the variable being written to.
-    code << "    ADD A,D" << std::endl;
-    // Write the value to the calculated address in RAM.
-    code << "    RSTORE E,A" << std::endl;
+    if (offset_register != "E") {
+        code << fmt::format("    MOV {},E", offset_register) << std::endl;
+    }
+    if (offset_register != "D") {
+        code << fmt::format("    MOV {},D", value_register) << std::endl;
+    }
+    // Retrive the value stored in the variable specified by variable_name. This value is the address of the first byte of the buffer.
+    code << generateStackVariableRead(variable_name, "B");
+    // Add the offset to the address being written to.
+    code << "    ADD B,E" << std::endl;
+    code << "    MOV A,E" << std::endl;
+    // Read-modify-write the value (stored in register D) to the calculated address in RAM (stored in register E). This ensures that we only set the byte that we want to set (and don't corrupt the other bytes in the word).
+    code << "    RLOAD E,A" << std::endl; // Read.
+    code << fmt::format("    CLOAD {},B", 0b11111111111111111111111100000000) << std::endl;
+    code << "    AND A,B" << std::endl; // Clear the last 8 bits of the word.
+    code << "    OR A,D" << std::endl; // Modify the word (set the last 8 bits of the word to the last 8 bits of D).
+    code << "    RSTORE A,E" << std::endl; // Write the word back to memory.
+    return code.str();
+}
+
+// Generate code to get the byte at the offset stored in offset_register of the buffer specified by variable_name, then store that byte in the register specified in value_register.
+std::string AssemblyGenerator::generateBufferRead(std::string variable_name, std::string offset_register, std::string value_register) {
+    std::string stack_pointer_register;
+    Stackframe *stackframe = nullptr;
+    if (global_stackframe->containsVariable(variable_name)) {
+        stackframe = global_stackframe;
+        stack_pointer_register = "F";
+    }
+    else if (current_stackframe->containsVariable(variable_name)) {
+        stackframe = current_stackframe;
+        stack_pointer_register = "G";
+    }
+    else {
+        std::cout << fmt::format("\033[1;31mERROR:\033[0m Attempt to access undeclared variable `{}`.", variable_name) << std::endl;
+        std::exit(1);
+    }
+
+    std::stringstream code;
+    // Save the offset and value registers into D and E so that they don't get corrupted.
+    if (offset_register != "E") {
+        code << fmt::format("    MOV {},E", offset_register) << std::endl;
+    }
+    if (value_register != "D") {
+        code << fmt::format("    MOV {},D", value_register) << std::endl;
+    }
+    // Retrive the value stored in the variable specified by variable_name. This value is the address of the first byte of the buffer.
+    code << generateStackVariableRead(variable_name, "B");
+    // Add the offset to the address of the variable being read from.
+    code << "    ADD B,E" << std::endl;
+    // Load from the calculated address in RAM to the value_register.
+    code << fmt::format("    RLOAD A,{}", value_register) << std::endl;
+    // Mask out the unwanted bytes.
+    code << fmt::format("    CLOAD {},A", 0b00000000000000000000000011111111) << std::endl;
+    code << fmt::format("    AND A,{}", value_register) << std::endl;
+    code << fmt::format("    MOV A,{}", value_register) << std::endl;
     return code.str();
 }
 
@@ -242,32 +288,31 @@ std::tuple<std::string, std::string> AssemblyGenerator::generateAsm(ASTNode *nod
         data_section << std::get<0>(generated_expression_assembly);
         code_section << std::get<1>(generated_expression_assembly);
 
-        code_section << generateStackVariableWrite("C", assignment->getVariableName()) << std::endl;
+        code_section << generateStackVariableWrite("C", assignment->getVariableName());
 
         code_section << "    // End variable assignment node." << std::endl;
     }
 
-/*
     else if (node->getNodeType() == BUFFER_WRITE_NODE) {
         code_section << "    // Start buffer write node." << std::endl;
         ASTBufferWriteNode *buffer_write = (ASTBufferWriteNode *) node;
-        // Generate assembly code that evaluates the value expression and stores the result in temp0 in RAM.
+        // Generate assembly code that evaluates the value expression and stores the result in register C.
         auto generated_value_expression_assembly = generateAsm(buffer_write->getValueExpression());
         data_section << std::get<0>(generated_value_expression_assembly);
         code_section << std::get<1>(generated_value_expression_assembly);
-        code_section << "    STORE C,temp0" << std::endl;
 
-        // Generate assembly code that evaluates the offset expression and stores the result in register C.
-        auto generated_offset_expression_assembly = generateAsm(buffer_write->getOffsetExpression());
-        data_section << std::get<0>(generated_offset_expression_assembly);
-        code_section << std::get<1>(generated_offset_expression_assembly);
+        // Get the offset.
+        if (buffer_write->getType() == CONSTANT) {
+            code_section << fmt::format("    CLOAD {},E", buffer_write->getOffsetConstantValue()) << std::endl;
+        }
+        else if (buffer_write->getType() == VARIABLE) {
+            code_section << generateStackVariableRead(buffer_write->getOffsetVariableValue(), "E");
+        }
 
-        code_section << "    LOAD temp0,B" << std::endl;
-        code_section << generateBufferWrite(buffer_write->getVariableName(), "C", "B");
+        code_section << generateBufferWrite(buffer_write->getVariableName(), "E", "C");
 
         code_section << "    // End buffer write node." << std::endl;
     }
-*/
 
     else if (node->getNodeType() == EXPRESSION_NODE) {
         code_section << "    // Start expression node." << std::endl;
@@ -286,7 +331,7 @@ std::tuple<std::string, std::string> AssemblyGenerator::generateAsm(ASTNode *nod
                     code_section << fmt::format("    CLOAD {},D", term->getConstantValue()) << std::endl;
                 }
                 else if (term->getType() == VARIABLE) {
-                    code_section << generateStackVariableRead(term->getVariableName(), "D") << std::endl;
+                    code_section << generateStackVariableRead(term->getVariableName(), "D");
                 }
                 if (term->getOperation() == ADDITION) {
                     code_section << "    ADD C,D" << std::endl;
@@ -308,6 +353,38 @@ std::tuple<std::string, std::string> AssemblyGenerator::generateAsm(ASTNode *nod
                     code_section << "    DIV C,D" << std::endl;
                     code_section << "    MOV B,C" << std::endl;
                 }
+            }
+            else if (ast_node->getNodeType() == BUFFER_READ_NODE) {
+                code_section << "    // Start buffer read node." << std::endl;
+                ASTBufferReadNode *buffer_read = (ASTBufferReadNode*) ast_node;
+                if (buffer_read->getType() == CONSTANT) {
+                    code_section << fmt::format("    CLOAD {},E", buffer_read->getConstantValue()) << std::endl;
+                }
+                else if (buffer_read->getType() == VARIABLE) {
+                    code_section << generateStackVariableRead(buffer_read->getVariableValue(), "E");
+                }
+                code_section << generateBufferRead(buffer_read->getVariableName(), "E", "D");
+                if (buffer_read->getOperation() == ADDITION) {
+                    code_section << "    ADD C,D" << std::endl;
+                    code_section << "    MOV A,C" << std::endl;
+                }
+                else if (buffer_read->getOperation() == SUBTRACTION) {
+                    code_section << "    SUB C,D" << std::endl;
+                    code_section << "    MOV A,C" << std::endl;
+                }
+                else if (buffer_read->getOperation() == MULTIPLICATION) {
+                    code_section << "    MULT C,D" << std::endl;
+                    code_section << "    MOV A,C" << std::endl;
+                }
+                else if (buffer_read->getOperation() == DIVISION) {
+                    code_section << "    DIV C,D" << std::endl;
+                    code_section << "    MOV A,C" << std::endl;
+                }
+                else if (buffer_read->getOperation() == MODULUS) {
+                    code_section << "    DIV C,D" << std::endl;
+                    code_section << "    MOV B,C" << std::endl;
+                }
+                code_section << "    // End buffer read node." << std::endl;
             }
         }
         code_section << "    // End expression node." << std::endl;

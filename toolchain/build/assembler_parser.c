@@ -557,7 +557,7 @@ static const yytype_uint16 yyrline[] =
        0,   142,   142,   144,   146,   152,   158,   172,   174,   178,
      196,   217,   224,   235,   246,   258,   269,   280,   292,   304,
      316,   328,   340,   352,   364,   376,   388,   400,   412,   424,
-     436,   448,   458,   466,   474,   482,   489,   496,   507,   517
+     436,   448,   458,   466,   474,   482,   489,   496,   508,   518
 };
 #endif
 
@@ -658,7 +658,7 @@ static const yytype_uint8 yytable[] =
       76,    67,    49,    40,    41,    50,    42,    43,    36,    46,
       68,    47,    48,    51,    52,    53,    54,    57,    58,    59,
       60,    61,    62,     0,     0,    65,    63,    64,    66,    69,
-      70,    71,    72,    73,    74,    78,     0,    79,    77,    80,
+      70,    71,    72,    73,    74,     0,    78,    79,    77,    80,
       81,    82,     0,    83,    84,    85,    86,    87,    89,     0,
        0,     0,     0,     0,     0,     0,     0,     0,    88
 };
@@ -672,7 +672,7 @@ static const yytype_int8 yycheck[] =
       38,    19,    21,    20,    20,    24,    20,    20,    28,    19,
       28,    23,    23,    20,    20,    20,    20,    20,    20,    20,
       20,    20,    20,    -1,    -1,    20,    23,    23,    20,    20,
-      20,    20,    20,    20,    20,    19,    -1,    20,    23,    20,
+      20,    20,    20,    20,    20,    -1,    20,    20,    23,    20,
       20,    19,    -1,    20,    20,    20,    20,    20,    20,    -1,
       -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    40
 };
@@ -688,7 +688,7 @@ static const yytype_uint8 yystos[] =
       20,    20,    20,    20,    19,    19,    19,    23,    23,    21,
       24,    20,    20,    20,    20,    22,    39,    20,    20,    20,
       20,    20,    20,    23,    23,    20,    20,    19,    28,    20,
-      20,    20,    20,    20,    20,    22,    38,    23,    19,    20,
+      20,    20,    20,    20,    20,    22,    38,    23,    20,    20,
       20,    20,    19,    20,    20,    20,    20,    20,    40,    20
 };
 
@@ -1893,16 +1893,17 @@ yyreduce:
         Instruction *instruction = g_new(Instruction, 1);
         instruction->operation = OPERATION_ISR;
         instruction->operand1.operand_register = stringToRegister((yyvsp[-1].strval));
-        instruction->operand2.operand_address = (yyvsp[0].strval);
+        instruction->operand2.operand_register = stringToRegister((yyvsp[0].strval));
         instructions_table = g_slist_append(instructions_table, instruction);
 
         g_free((yyvsp[-1].strval));
+        g_free((yyvsp[0].strval));
     }
-#line 1902 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/assembler_parser.c" /* yacc.c:1652  */
+#line 1903 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/assembler_parser.c" /* yacc.c:1652  */
     break;
 
   case 38:
-#line 507 "assembler/parser.y" /* yacc.c:1652  */
+#line 508 "assembler/parser.y" /* yacc.c:1652  */
     {
         printf("Instruction: INT %s\n", (yyvsp[0].strval));
 
@@ -1913,11 +1914,11 @@ yyreduce:
 
         g_free((yyvsp[0].strval));
     }
-#line 1917 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/assembler_parser.c" /* yacc.c:1652  */
+#line 1918 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/assembler_parser.c" /* yacc.c:1652  */
     break;
 
   case 39:
-#line 517 "assembler/parser.y" /* yacc.c:1652  */
+#line 518 "assembler/parser.y" /* yacc.c:1652  */
     {
         printf("Instruction: ENDINT\n");
 
@@ -1925,11 +1926,11 @@ yyreduce:
         instruction->operation = OPERATION_ENDINT;
         instructions_table = g_slist_append(instructions_table, instruction);
     }
-#line 1929 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/assembler_parser.c" /* yacc.c:1652  */
+#line 1930 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/assembler_parser.c" /* yacc.c:1652  */
     break;
 
 
-#line 1933 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/assembler_parser.c" /* yacc.c:1652  */
+#line 1934 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/assembler_parser.c" /* yacc.c:1652  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -2160,7 +2161,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 526 "assembler/parser.y" /* yacc.c:1918  */
+#line 527 "assembler/parser.y" /* yacc.c:1918  */
 
 
 // Forward declarations of functions in lexer.l that allow Flex to parse an in-memory buffer instead of a file handle.
@@ -2314,6 +2315,7 @@ int main(int argc, char *argv[]) {
                 break;
             case OPERATION_ISR:
                 operand1_is_register = TRUE;
+                operand2_is_register = TRUE;
                 break;
             case OPERATION_INT:
                 operand1_is_register = TRUE;
@@ -2345,6 +2347,21 @@ int main(int argc, char *argv[]) {
             case OPERATION_DIV:
                 operand1_is_register = TRUE;
                 operand2_is_register = TRUE;
+                break;
+            case OPERATION_OR:
+                operand1_is_register = TRUE;
+                operand2_is_register = TRUE;
+                break;
+            case OPERATION_AND:
+                operand1_is_register = TRUE;
+                operand2_is_register = TRUE;
+                break;
+            case OPERATION_XOR:
+                operand1_is_register = TRUE;
+                operand2_is_register = TRUE;
+                break;
+            case OPERATION_NOT:
+                operand1_is_register = TRUE;
                 break;
             default:
                 break;

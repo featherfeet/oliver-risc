@@ -1,10 +1,28 @@
-VAR myvar = "Hello World!";
+VAR myvar = "Hello world!!!";
 
 VAR i = 0;
 
-VAR tmp;
-tmp := i + 1;
-myvar[tmp] := 97;
-myvar[3] := 98 - tmp;
+//VAR tmp;
+//tmp := i + 1;
+//myvar[tmp] := 97;
+//myvar[3] := 98 - tmp;
+
+// Print out the string.
+i := 0;
+output_address := i;
+output_value := myvar[output_address];
+
+WHILE output_value # 0 DO
+BEGIN
+    CALL OUT;
+    output_address := i + 1;
+    output_value := myvar[output_address];
+    i := i + 1;
+END;
+
+//VAR str = "Hello world!";
+//output_value := str[i];
+//output_address := 0;
+//CALL OUT;
 
 CALL HALT;

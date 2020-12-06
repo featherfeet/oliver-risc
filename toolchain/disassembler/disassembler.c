@@ -72,6 +72,16 @@ const char *operationToString(Operation operation) {
             return "MULT";
         case OPERATION_DIV:
             return "DIV";
+        case OPERATION_OR:
+            return "OR";
+        case OPERATION_AND:
+            return "AND";
+        case OPERATION_XOR:
+            return "XOR";
+        case OPERATION_NOT:
+            return "NOT";
+        default:
+            return "???";
     }
 }
 
@@ -174,6 +184,18 @@ int main(int argc, char *argv[]) {
                 break;
             case OPERATION_CLOAD:
                 printf(" %d, %s\n", operand1, registerToString(operand2));
+                break;
+            case OPERATION_OR:
+                printf(" %s, %s\n", registerToString(operand1), registerToString(operand2));
+                break;
+            case OPERATION_AND:
+                printf(" %s, %s\n", registerToString(operand1), registerToString(operand2));
+                break;
+            case OPERATION_XOR:
+                printf(" %s, %s\n", registerToString(operand1), registerToString(operand2));
+                break;
+            case OPERATION_NOT:
+                printf(" %s\n", registerToString(operand1));
                 break;
         }
     }

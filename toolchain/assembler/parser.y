@@ -493,16 +493,17 @@ instruction: TOKEN_NOP {
         instruction->operation = OPERATION_HALT;
         instructions_table = g_slist_append(instructions_table, instruction);
     }
-    | TOKEN_ISR TOKEN_REGISTER TOKEN_IDENTIFIER {
+    | TOKEN_ISR TOKEN_REGISTER TOKEN_REGISTER {
         printf("Instruction: ISR %s,%s\n", $<strval>2, $<strval>3);
 
         Instruction *instruction = g_new(Instruction, 1);
         instruction->operation = OPERATION_ISR;
         instruction->operand1.operand_register = stringToRegister($<strval>2);
-        instruction->operand2.operand_address = $<strval>3;
+        instruction->operand2.operand_register = stringToRegister($<strval>3);
         instructions_table = g_slist_append(instructions_table, instruction);
 
         g_free($<strval>2);
+        g_free($<strval>3);
     }
     | TOKEN_INT TOKEN_REGISTER {
         printf("Instruction: INT %s\n", $<strval>2);
@@ -676,6 +677,7 @@ int main(int argc, char *argv[]) {
                 break;
             case OPERATION_ISR:
                 operand1_is_register = TRUE;
+                operand2_is_register = TRUE;
                 break;
             case OPERATION_INT:
                 operand1_is_register = TRUE;
@@ -707,6 +709,21 @@ int main(int argc, char *argv[]) {
             case OPERATION_DIV:
                 operand1_is_register = TRUE;
                 operand2_is_register = TRUE;
+                break;
+            case OPERATION_OR:
+                operand1_is_register = TRUE;
+                operand2_is_register = TRUE;
+                break;
+            case OPERATION_AND:
+                operand1_is_register = TRUE;
+                operand2_is_register = TRUE;
+                break;
+            case OPERATION_XOR:
+                operand1_is_register = TRUE;
+                operand2_is_register = TRUE;
+                break;
+            case OPERATION_NOT:
+                operand1_is_register = TRUE;
                 break;
             default:
                 break;
