@@ -15,6 +15,7 @@ CMakeFiles/compiler.dir/compiler/asmgenerator.cpp.o
  /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astconditionalnode.h
  /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astconditionnode.h
  /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astexpressionnode.h
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astinlineassemblynode.h
  /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astnode.h
  /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astprocedurecallnode.h
  /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astprocedurenode.h
@@ -74,6 +75,15 @@ CMakeFiles/compiler.dir/compiler/astexpressionnode.cpp.o
  /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astexpressionnode.cpp
  /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astexpressionnode.h
  /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astnode.h
+CMakeFiles/compiler.dir/compiler/astinlineassemblynode.cpp.o
+ .././compiler/include/fmt/core.h
+ .././compiler/include/fmt/format-inl.h
+ .././compiler/include/fmt/format.h
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/ast.h
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astinlineassemblynode.cpp
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astinlineassemblynode.h
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astnode.h
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/aststatementnode.h
 CMakeFiles/compiler.dir/compiler/astnode.cpp.o
  /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/ast.h
  /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astnode.cpp
@@ -109,6 +119,7 @@ CMakeFiles/compiler.dir/compiler/astrootnode.cpp.o
  /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astconditionalnode.h
  /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astconditionnode.h
  /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astexpressionnode.h
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astinlineassemblynode.h
  /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astnode.h
  /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astprocedurecallnode.h
  /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astprocedurenode.h
@@ -169,6 +180,7 @@ CMakeFiles/compiler.dir/compiler_lexer.cpp.o
  .././compiler/astconditionalnode.h
  .././compiler/astconditionnode.h
  .././compiler/astexpressionnode.h
+ .././compiler/astinlineassemblynode.h
  .././compiler/astnode.h
  .././compiler/astprocedurecallnode.h
  .././compiler/astprocedurenode.h
@@ -190,6 +202,7 @@ CMakeFiles/compiler.dir/compiler_parser.cpp.o
  .././compiler/astconditionalnode.h
  .././compiler/astconditionnode.h
  .././compiler/astexpressionnode.h
+ .././compiler/astinlineassemblynode.h
  .././compiler/astnode.h
  .././compiler/astprocedurecallnode.h
  .././compiler/astprocedurenode.h

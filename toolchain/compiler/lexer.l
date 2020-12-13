@@ -118,6 +118,22 @@
     return TOKEN_PROCEDURE;
 }
 
+"ISR" {
+    return TOKEN_ISR;
+}
+
+"__ASM__" {
+    return TOKEN_ASM;
+}
+
+"(" {
+    return TOKEN_LEFT_PARENTHESIS;
+}
+
+")" {
+    return TOKEN_RIGHT_PARENTHESIS;
+}
+
 "#" {
     return TOKEN_NOT_EQUALS;
 }

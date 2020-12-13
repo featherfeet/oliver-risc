@@ -14,6 +14,7 @@ CMakeFiles/compiler.dir/compiler/asmgenerator.cpp.o: ../compiler/astbufferwriten
 CMakeFiles/compiler.dir/compiler/asmgenerator.cpp.o: ../compiler/astconditionalnode.h
 CMakeFiles/compiler.dir/compiler/asmgenerator.cpp.o: ../compiler/astconditionnode.h
 CMakeFiles/compiler.dir/compiler/asmgenerator.cpp.o: ../compiler/astexpressionnode.h
+CMakeFiles/compiler.dir/compiler/asmgenerator.cpp.o: ../compiler/astinlineassemblynode.h
 CMakeFiles/compiler.dir/compiler/asmgenerator.cpp.o: ../compiler/astnode.h
 CMakeFiles/compiler.dir/compiler/asmgenerator.cpp.o: ../compiler/astprocedurecallnode.h
 CMakeFiles/compiler.dir/compiler/asmgenerator.cpp.o: ../compiler/astprocedurenode.h
@@ -74,6 +75,15 @@ CMakeFiles/compiler.dir/compiler/astexpressionnode.cpp.o: ../compiler/astexpress
 CMakeFiles/compiler.dir/compiler/astexpressionnode.cpp.o: ../compiler/astexpressionnode.h
 CMakeFiles/compiler.dir/compiler/astexpressionnode.cpp.o: ../compiler/astnode.h
 
+CMakeFiles/compiler.dir/compiler/astinlineassemblynode.cpp.o: .././compiler/include/fmt/core.h
+CMakeFiles/compiler.dir/compiler/astinlineassemblynode.cpp.o: .././compiler/include/fmt/format-inl.h
+CMakeFiles/compiler.dir/compiler/astinlineassemblynode.cpp.o: .././compiler/include/fmt/format.h
+CMakeFiles/compiler.dir/compiler/astinlineassemblynode.cpp.o: ../compiler/ast.h
+CMakeFiles/compiler.dir/compiler/astinlineassemblynode.cpp.o: ../compiler/astinlineassemblynode.cpp
+CMakeFiles/compiler.dir/compiler/astinlineassemblynode.cpp.o: ../compiler/astinlineassemblynode.h
+CMakeFiles/compiler.dir/compiler/astinlineassemblynode.cpp.o: ../compiler/astnode.h
+CMakeFiles/compiler.dir/compiler/astinlineassemblynode.cpp.o: ../compiler/aststatementnode.h
+
 CMakeFiles/compiler.dir/compiler/astnode.cpp.o: ../compiler/ast.h
 CMakeFiles/compiler.dir/compiler/astnode.cpp.o: ../compiler/astnode.cpp
 CMakeFiles/compiler.dir/compiler/astnode.cpp.o: ../compiler/astnode.h
@@ -108,6 +118,7 @@ CMakeFiles/compiler.dir/compiler/astrootnode.cpp.o: ../compiler/astbufferwriteno
 CMakeFiles/compiler.dir/compiler/astrootnode.cpp.o: ../compiler/astconditionalnode.h
 CMakeFiles/compiler.dir/compiler/astrootnode.cpp.o: ../compiler/astconditionnode.h
 CMakeFiles/compiler.dir/compiler/astrootnode.cpp.o: ../compiler/astexpressionnode.h
+CMakeFiles/compiler.dir/compiler/astrootnode.cpp.o: ../compiler/astinlineassemblynode.h
 CMakeFiles/compiler.dir/compiler/astrootnode.cpp.o: ../compiler/astnode.h
 CMakeFiles/compiler.dir/compiler/astrootnode.cpp.o: ../compiler/astprocedurecallnode.h
 CMakeFiles/compiler.dir/compiler/astrootnode.cpp.o: ../compiler/astprocedurenode.h
@@ -168,6 +179,7 @@ CMakeFiles/compiler.dir/compiler_lexer.cpp.o: .././compiler/astbufferwritenode.h
 CMakeFiles/compiler.dir/compiler_lexer.cpp.o: .././compiler/astconditionalnode.h
 CMakeFiles/compiler.dir/compiler_lexer.cpp.o: .././compiler/astconditionnode.h
 CMakeFiles/compiler.dir/compiler_lexer.cpp.o: .././compiler/astexpressionnode.h
+CMakeFiles/compiler.dir/compiler_lexer.cpp.o: .././compiler/astinlineassemblynode.h
 CMakeFiles/compiler.dir/compiler_lexer.cpp.o: .././compiler/astnode.h
 CMakeFiles/compiler.dir/compiler_lexer.cpp.o: .././compiler/astprocedurecallnode.h
 CMakeFiles/compiler.dir/compiler_lexer.cpp.o: .././compiler/astprocedurenode.h
@@ -189,6 +201,7 @@ CMakeFiles/compiler.dir/compiler_parser.cpp.o: .././compiler/astbufferwritenode.
 CMakeFiles/compiler.dir/compiler_parser.cpp.o: .././compiler/astconditionalnode.h
 CMakeFiles/compiler.dir/compiler_parser.cpp.o: .././compiler/astconditionnode.h
 CMakeFiles/compiler.dir/compiler_parser.cpp.o: .././compiler/astexpressionnode.h
+CMakeFiles/compiler.dir/compiler_parser.cpp.o: .././compiler/astinlineassemblynode.h
 CMakeFiles/compiler.dir/compiler_parser.cpp.o: .././compiler/astnode.h
 CMakeFiles/compiler.dir/compiler_parser.cpp.o: .././compiler/astprocedurecallnode.h
 CMakeFiles/compiler.dir/compiler_parser.cpp.o: .././compiler/astprocedurenode.h

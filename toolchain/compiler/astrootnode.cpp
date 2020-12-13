@@ -13,6 +13,7 @@
 #include "astwhileloopnode.h"
 #include "astprocedurenode.h"
 #include "astbufferreadnode.h"
+#include "astinlineassemblynode.h"
 
 #define FMT_HEADER_ONLY
 #include <fmt/format.h>
@@ -101,6 +102,9 @@ std::string ASTRootNode::generateGraphvizCode(std::string node_id, ASTNode *stat
         }
     }
     else if (statement->getNodeType() == PROCEDURE_CALL_NODE) {
+        output << fmt::format("    \"{}\" [label=\"{}\", shape=box];", node_id, statement->getHumanReadable()) << std::endl;
+    }
+    else if (statement->getNodeType() == INLINE_ASSEMBLY_NODE) {
         output << fmt::format("    \"{}\" [label=\"{}\", shape=box];", node_id, statement->getHumanReadable()) << std::endl;
     }
     else if (statement->getNodeType() == WHILE_LOOP_NODE) {

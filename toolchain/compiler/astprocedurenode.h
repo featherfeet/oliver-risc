@@ -10,12 +10,14 @@
 class ASTProcedureNode : public ASTStatementNode {
     std::string procedure_name;
     ASTBeginEndBlockNode *begin_end_block;
+    bool is_isr = false;
 
     public:
-        ASTProcedureNode(std::string procedure_name, ASTBeginEndBlockNode *begin_end_block);
+        ASTProcedureNode(std::string procedure_name, ASTBeginEndBlockNode *begin_end_block, bool is_isr);
         ASTNodeType getNodeType();
         std::string getHumanReadable();
         std::string getProcedureName();
+        bool getIsISR();
         ASTBeginEndBlockNode *getBeginEndBlock();
         ~ASTProcedureNode();
 };

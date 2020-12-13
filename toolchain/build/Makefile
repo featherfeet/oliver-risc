@@ -405,6 +405,33 @@ compiler/astexpressionnode.cpp.s:
 	$(MAKE) -f CMakeFiles/compiler.dir/build.make CMakeFiles/compiler.dir/compiler/astexpressionnode.cpp.s
 .PHONY : compiler/astexpressionnode.cpp.s
 
+compiler/astinlineassemblynode.o: compiler/astinlineassemblynode.cpp.o
+
+.PHONY : compiler/astinlineassemblynode.o
+
+# target to build an object file
+compiler/astinlineassemblynode.cpp.o:
+	$(MAKE) -f CMakeFiles/compiler.dir/build.make CMakeFiles/compiler.dir/compiler/astinlineassemblynode.cpp.o
+.PHONY : compiler/astinlineassemblynode.cpp.o
+
+compiler/astinlineassemblynode.i: compiler/astinlineassemblynode.cpp.i
+
+.PHONY : compiler/astinlineassemblynode.i
+
+# target to preprocess a source file
+compiler/astinlineassemblynode.cpp.i:
+	$(MAKE) -f CMakeFiles/compiler.dir/build.make CMakeFiles/compiler.dir/compiler/astinlineassemblynode.cpp.i
+.PHONY : compiler/astinlineassemblynode.cpp.i
+
+compiler/astinlineassemblynode.s: compiler/astinlineassemblynode.cpp.s
+
+.PHONY : compiler/astinlineassemblynode.s
+
+# target to generate assembly for a file
+compiler/astinlineassemblynode.cpp.s:
+	$(MAKE) -f CMakeFiles/compiler.dir/build.make CMakeFiles/compiler.dir/compiler/astinlineassemblynode.cpp.s
+.PHONY : compiler/astinlineassemblynode.cpp.s
+
 compiler/astnode.o: compiler/astnode.cpp.o
 
 .PHONY : compiler/astnode.o
@@ -795,6 +822,9 @@ help:
 	@echo "... compiler/astexpressionnode.o"
 	@echo "... compiler/astexpressionnode.i"
 	@echo "... compiler/astexpressionnode.s"
+	@echo "... compiler/astinlineassemblynode.o"
+	@echo "... compiler/astinlineassemblynode.i"
+	@echo "... compiler/astinlineassemblynode.s"
 	@echo "... compiler/astnode.o"
 	@echo "... compiler/astnode.i"
 	@echo "... compiler/astnode.s"

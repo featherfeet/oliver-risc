@@ -1,0 +1,73 @@
+/*********************
+ORISC Shell Program
+*********************/
+
+// Console width in characters.
+VAR SCREEN_HEIGHT_ROWS = 67;
+VAR SCREEN_WIDTH_COLUMNS = 240;
+VAR GPU_MEMORY_LENGTH;
+GPU_MEMORY_LENGTH := SCREEN_WIDTH_COLUMNS * SCREEN_HEIGHT_ROWS;
+
+// Prompt string.
+VAR prompt_s = "ORISC> ";
+
+// Cursor string.
+VAR cursor_s = "_";
+
+// Empty buffer used to hold command as it is typed.
+VAR command_buffer_s = "                                   ";
+
+// On-screen location of the cursor.
+VAR cursor_row_i = 0;
+VAR cursor_column_i = 0;
+
+// Print function. Takes one string argument. Prints it at the current cursor location.
+VAR print_procedure_arg_string_s;
+PROCEDURE print;
+BEGIN
+    VAR i = 0;
+    output_address := cursor_row_i * SCREEN_WIDTH_COLUMNS + cursor_column_i;
+    output_value := print_procedure_arg_string_s[0];
+
+    WHILE output_value # 0 DO
+    BEGIN
+        CALL OUT;
+        i := i + 1;
+        cursor_column_i := cursor_column_i + 1;
+        output_address := output_address + 1;
+        output_value := print_procedure_arg_string_s[i];
+    END;
+END;
+
+// Execution starts here, by printing out the prompt.
+print_procedure_arg_string_s := prompt_s;
+CALL print;
+
+// Render the cursor.
+print_procedure_arg_string_s := cursor_s;
+CALL print;
+
+// Interrupt Service Routine that is called whenever a key is pressed.
+PROCEDURE ISR key_pressed;
+BEGIN
+    __ASM__("CLOAD 16080,B"); // This number is GPU_MEMORY_LENGTH, which is also the offset to the INput port for the "interrupt value" that has the key scancode in it.
+    __ASM__("IN B,C");
+    __ASM__("STORE C,output_value"); // Since output_value is a "special" variable in the compiler that's at a fixed offset, both the PL/0 and asm can access it easily.
+    VAR print_buffer = " ";
+    print_buffer[0] := output_value;
+    print_procedure_arg_string_s := print_buffer;
+    CALL print;
+END;
+
+// Set up the ISR for keypresses.
+__ASM__("CLOAD 0,A");
+__ASM__("CLOAD key_pressed_procedure,B");
+__ASM__("ISR A,B");
+
+// Main busy-wait loop.
+WHILE 1 = 1 DO
+BEGIN
+    // Wait for interrupts.
+END;
+
+CALL HALT;

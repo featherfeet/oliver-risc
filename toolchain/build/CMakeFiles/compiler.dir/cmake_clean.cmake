@@ -18,6 +18,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/compiler.dir/compiler/astvariableassignmentnode.cpp.o"
   "CMakeFiles/compiler.dir/compiler/astvariabledeclarationnode.cpp.o"
   "CMakeFiles/compiler.dir/compiler/astwhileloopnode.cpp.o"
+  "CMakeFiles/compiler.dir/compiler/astinlineassemblynode.cpp.o"
   "CMakeFiles/compiler.dir/compiler_parser.cpp.o"
   "CMakeFiles/compiler.dir/compiler_lexer.cpp.o"
   "compiler.pdb"

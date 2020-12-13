@@ -50,6 +50,7 @@
     #include "astwhileloopnode.h"
     #include "astprocedurenode.h"
     #include "astbufferreadnode.h"
+    #include "astinlineassemblynode.h"
 }
 
 %token TOKEN_VAR
@@ -79,6 +80,10 @@
 %token TOKEN_STRING_LITERAL
 %token TOKEN_LEFT_SQUARE_BRACKET
 %token TOKEN_RIGHT_SQUARE_BRACKET
+%token TOKEN_ISR
+%token TOKEN_ASM
+%token TOKEN_LEFT_PARENTHESIS
+%token TOKEN_RIGHT_PARENTHESIS
 
 %start program
 
@@ -97,6 +102,7 @@
     ASTProcedureCallNode *procedure_call_node;
     ASTWhileLoopNode *while_loop_node;
     ASTProcedureNode *procedure_node;
+    ASTInlineAssemblyNode *inline_assembly_node;
 }
 
 %type <strval> TOKEN_IDENTIFIER;
@@ -115,6 +121,7 @@
 %type <while_loop_node> while_loop;
 %type <procedure_node> procedure;
 %type <buffer_write_node> buffer_write;
+%type <inline_assembly_node> inline_assembly;
 
 %%
 
@@ -145,6 +152,9 @@ statement: variable_declaration TOKEN_SEMICOLON {
             $$ = $1;
          }
          | procedure TOKEN_SEMICOLON {
+            $$ = $1;
+         }
+         | inline_assembly TOKEN_SEMICOLON {
             $$ = $1;
          }
 ;
@@ -339,8 +349,18 @@ while_loop: TOKEN_WHILE condition TOKEN_DO begin_end_block {
 ;
 
 procedure: TOKEN_PROCEDURE TOKEN_IDENTIFIER TOKEN_SEMICOLON begin_end_block {
-    $$ = new ASTProcedureNode($2, $4);
+    $$ = new ASTProcedureNode($2, $4, false);
     free($2);
+}
+         | TOKEN_PROCEDURE TOKEN_ISR TOKEN_IDENTIFIER TOKEN_SEMICOLON begin_end_block {
+             $$ = new ASTProcedureNode($3, $5, true);
+             free($3);
+}
+;
+
+inline_assembly: TOKEN_ASM TOKEN_LEFT_PARENTHESIS TOKEN_STRING_LITERAL TOKEN_RIGHT_PARENTHESIS {
+    $$ = new ASTInlineAssemblyNode($3);
+    free($3);
 }
 ;
 

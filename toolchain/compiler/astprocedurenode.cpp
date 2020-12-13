@@ -3,9 +3,10 @@
 #define FMT_HEADER_ONLY
 #include <fmt/format.h>
 
-ASTProcedureNode::ASTProcedureNode(std::string procedure_name, ASTBeginEndBlockNode *begin_end_block) {
+ASTProcedureNode::ASTProcedureNode(std::string procedure_name, ASTBeginEndBlockNode *begin_end_block, bool is_isr) {
     this->procedure_name = procedure_name;
     this->begin_end_block = begin_end_block;
+    this->is_isr = is_isr;
 }
 
 ASTNodeType ASTProcedureNode::getNodeType() {
@@ -22,6 +23,10 @@ std::string ASTProcedureNode::getProcedureName() {
 
 ASTBeginEndBlockNode *ASTProcedureNode::getBeginEndBlock() {
     return begin_end_block;
+}
+
+bool ASTProcedureNode::getIsISR() {
+    return is_isr;
 }
 
 ASTProcedureNode::~ASTProcedureNode() {

@@ -20,6 +20,7 @@
 #include "astwhileloopnode.h"
 #include "astprocedurenode.h"
 #include "astbufferreadnode.h"
+#include "astinlineassemblynode.h"
 
 #define FMT_HEADER_ONLY
 #include <fmt/format.h>
@@ -553,18 +554,31 @@ std::tuple<std::string, std::string> AssemblyGenerator::generateAsm(ASTNode *nod
         auto generated_block_assembly = generateAsm(procedure->getBeginEndBlock());
         data_section << std::get<0>(generated_block_assembly);
         code_section << std::get<1>(generated_block_assembly);
-        // Generate instructions to exit the procedure and return to the calling stack frame.
-        code_section << fmt::format("    MOV G,B") << std::endl; // Save stack pointer value before incrementing it.
-        code_section << fmt::format("    CLOAD {},A", current_stackframe->getTotalSize()) << std::endl; // Add the number of bytes that the function's stack took to the stack pointer. This has the effect of de-allocating the stack memory used by the function.
-        code_section << fmt::format("    ADD A,G") << std::endl;
-        code_section << fmt::format("    MOV A,G") << std::endl;
-        code_section << fmt::format("    RLOAD B,IP") << std::endl; // Return from the procedure by jumping IP back to where the stack pointer was before incrementing it.
+        // If this is an ISR (Interrupt Service Routine), call the ENDINT instruction to restore the execution state from before the routine was triggered.
+        if (procedure->getIsISR()) {
+            code_section << "    ENDINT" << std::endl;
+        }
+        // If this is a regular procedure, generate instructions to exit the procedure and return to the calling stack frame.
+        else {
+            code_section << fmt::format("    MOV G,B") << std::endl; // Save stack pointer value before incrementing it.
+            code_section << fmt::format("    CLOAD {},A", current_stackframe->getTotalSize()) << std::endl; // Add the number of bytes that the function's stack took to the stack pointer. This has the effect of de-allocating the stack memory used by the function.
+            code_section << fmt::format("    ADD A,G") << std::endl;
+            code_section << fmt::format("    MOV A,G") << std::endl;
+            code_section << fmt::format("    RLOAD B,IP") << std::endl; // Return from the procedure by jumping IP back to where the stack pointer was before incrementing it.
+        }
         // End label.
         code_section << fmt::format("    end_procedure_{}:", procedure->getProcedureName()) << std::endl;
         code_section << "    // End procedure node." << std::endl;
         stack_allocations[procedure->getProcedureName()] = current_stackframe->getTotalSize(); // Store the amount of RAM that the function's stack takes up in a global table. This will be used to allocate memory for the function when it is called.
         delete current_stackframe;
         current_stackframe = global_stackframe;
+    }
+
+    else if (node->getNodeType() == INLINE_ASSEMBLY_NODE) {
+        ASTInlineAssemblyNode *inline_assembly = (ASTInlineAssemblyNode*) node;
+        code_section << "    // Start inline assembly node." << std::endl;
+        code_section << "    " + inline_assembly->getInlineAssembly() << std::endl;
+        code_section << "    // End inline assembly node." << std::endl;
     }
 
     return std::make_tuple(data_section.str(), code_section.str());

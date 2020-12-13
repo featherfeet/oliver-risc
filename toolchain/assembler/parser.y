@@ -752,10 +752,19 @@ int main(int argc, char *argv[]) {
                 OPERAND_C_TYPE address = strtol(address_string + 1, NULL, 16);
                 memcpy(instructions_binary + INSTRUCTION_SIZE * i + OPERATION_SIZE, &address, OPERAND_SIZE);
             }
-            // Other addresses are variables.
+            // Other addresses are variables or labels.
             else {
+                // Check if the address string is a variable.
                 Variable *variable = g_hash_table_lookup(variables_table, instruction->operand1.operand_address);
-                memcpy(instructions_binary + INSTRUCTION_SIZE * i + OPERATION_SIZE, variable->address, OPERAND_SIZE);
+                // If it wasn't a variable, then it's a label.
+                if (variable == NULL) {
+                    uint8_t *binary_instruction_index = g_hash_table_lookup(labels_table, instruction->operand1.operand_address);
+                    memcpy(instructions_binary + INSTRUCTION_SIZE * i + OPERATION_SIZE, binary_instruction_index, OPERAND_SIZE);
+                }
+                // If it was a variable, get the address of that variable.
+                else {
+                    memcpy(instructions_binary + INSTRUCTION_SIZE * i + OPERATION_SIZE, variable->address, OPERAND_SIZE);
+                }
             }
         }
         if (operand2_is_register) {
@@ -777,10 +786,6 @@ int main(int argc, char *argv[]) {
                 Variable *variable = g_hash_table_lookup(variables_table, instruction->operand2.operand_address);
                 memcpy(instructions_binary + INSTRUCTION_SIZE * i + OPERATION_SIZE + OPERAND_SIZE, variable->address, OPERAND_SIZE);
             }
-        }
-        else if (instruction->operation == OPERATION_ISR) {
-            uint8_t *binary_instruction_index = g_hash_table_lookup(labels_table, instruction->operand2.operand_address);
-            memcpy(instructions_binary + INSTRUCTION_SIZE * i + OPERATION_SIZE + OPERAND_SIZE, binary_instruction_index, OPERAND_SIZE);
         }
         i++;
     }

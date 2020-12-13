@@ -131,6 +131,8 @@ astprocedurenode.h
 /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astprocedurenode.h
 astbufferreadnode.h
 /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astbufferreadnode.h
+astinlineassemblynode.h
+/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astinlineassemblynode.h
 fmt/format.h
 -
 
@@ -212,6 +214,14 @@ astnode.h
 string
 -
 vector
+-
+
+/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astinlineassemblynode.h
+ast.h
+/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/ast.h
+aststatementnode.h
+/home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/aststatementnode.h
+string
 -
 
 /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astnode.h
