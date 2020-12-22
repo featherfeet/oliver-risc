@@ -1,1 +1,1 @@
-/usr/bin/cc -g  -rdynamic CMakeFiles/emulator.dir/emulator/emulator.c.o  -o emulator 
+/usr/bin/cc -O3 -DNDEBUG  -rdynamic CMakeFiles/emulator.dir/emulator/emulator.c.o  -o emulator 

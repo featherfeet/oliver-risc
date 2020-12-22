@@ -2,7 +2,7 @@ cmake_minimum_required (VERSION 2.8)
 project (cpu_toolchain)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_BUILD_TYPE Debug)
+set(CMAKE_BUILD_TYPE Release)
 
 find_package(FLEX REQUIRED)
 find_package(BISON REQUIRED)

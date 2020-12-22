@@ -1,0 +1,1 @@
+initSidebarItems({"enum":[["Tree",""]],"fn":[["write_tree","writes a tree in an ascii tree to the writer"]]});

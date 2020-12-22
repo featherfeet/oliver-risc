@@ -1,0 +1,135 @@
+WHITESPACE = _{ " " | "\t" }
+
+COMMENT = _{ "/*" ~ (!"*/" ~ ANY) ~ "*/" }
+
+char = @{
+    !("\"" | "\\") ~ ANY
+    | "\\" ~ ("\"" | "\\" | "/" | "b" | "f" | "n" | "r" | "t")
+    | "\\" ~ ("u" ~ ASCII_HEX_DIGIT{4})
+}
+
+line_comment = _{ "//" ~ (!NEWLINE ~ ANY)* }
+
+indentation = _{ WHITESPACE* }
+
+program = {
+    SOI ~
+    (indentation ~ (section_declaration | variable_declaration | label | instruction)? ~ line_comment? ~ NEWLINE)* ~
+    EOI
+}
+
+section_declaration = { data_section_declaration | code_section_declaration }
+
+data_section_declaration = { ".data:" }
+
+code_section_declaration = { ".code:" }
+
+// quoted_character = @{ "'" ~ char ~ "'" }
+
+constant_operand = @{ ASCII_DIGIT+ }
+
+register_operand = { "IP" | "A" | "B" | "C" | "D" | "E" | "F" | "G" }
+
+address_operand = {
+    identifier |
+    "[" ~ identifier ~ "]" |
+    "[" ~ constant_operand ~ "]"
+}
+
+identifier = @{('a' .. 'z' | 'A' .. 'Z') ~ (ASCII_ALPHANUMERIC | "_")+ }
+
+string_contents = @{ char* }
+
+string_literal = ${ "\"" ~ string_contents ~ "\"" }
+
+variable_declaration = { integer_declaration | string_declaration }
+
+integer_declaration = { identifier ~ "=" ~ constant_operand }
+
+string_declaration = { identifier ~ "=" ~ string_literal }
+
+label = { identifier ~ ":"}
+
+instruction = {
+	nop_instruction |
+	load_instruction |
+	store_instruction |
+	add_instruction |
+	sub_instruction |
+	out_instruction |
+	in_instruction |
+	mov_instruction |
+	cmp_instruction |
+	jmpl_instruction |
+	jmpe_instruction |
+	jmpg_instruction |
+    rload_instruction |
+    rstore_instruction |
+	rst_instruction |
+	halt_instruction |
+    isr_instruction |
+    int_instruction |
+    endint_instruction |
+    cload_instruction |
+    mult_instruction |
+    div_instruction |
+    or_instruction |
+    and_instruction |
+    xor_instruction |
+    not_instruction
+}
+
+nop_instruction = { "NOP" }
+
+load_instruction = { "LOAD" ~ address_operand ~ "," ~ register_operand }
+
+store_instruction = { "STORE" ~ register_operand ~ "," ~ address_operand }
+
+add_instruction = { "ADD" ~ register_operand ~ "," ~ register_operand }
+
+sub_instruction = { "SUB" ~ register_operand ~ "," ~ register_operand }
+
+out_instruction = { "OUT" ~ register_operand ~ "," ~ register_operand }
+
+in_instruction = { "IN" ~ register_operand ~ "," ~ register_operand }
+
+mov_instruction = { "MOV" ~ register_operand ~ "," ~ register_operand }
+
+cmp_instruction = { "CMP" ~ register_operand ~ "," ~ register_operand }
+
+jmpl_instruction = { "JMPL" ~ address_operand }
+
+jmpe_instruction = { "JMPE" ~ address_operand }
+
+jmpg_instruction = { "JMPG" ~ address_operand }
+
+rload_instruction = { "RLOAD" ~ register_operand ~ "," ~ register_operand }
+
+rstore_instruction = { "RSTORE" ~ register_operand ~ "," ~ register_operand }
+
+rst_instruction = { "RST" }
+
+halt_instruction = { "HALT" }
+
+isr_instruction = { "ISR" ~ register_operand ~ "," ~ register_operand }
+
+int_instruction = { "INT" ~ register_operand }
+
+endint_instruction = { "ENDINT" }
+
+cload_instruction = {
+    "CLOAD" ~ address_operand ~ "," ~ register_operand |
+    "CLOAD" ~ constant_operand ~ "," ~ register_operand
+}
+
+mult_instruction = { "MULT" ~ register_operand ~ "," ~ register_operand }
+
+div_instruction = { "DIV" ~ register_operand ~ "," ~ register_operand }
+
+or_instruction = { "OR" ~ register_operand ~ "," ~ register_operand }
+
+and_instruction = { "AND" ~ register_operand ~ "," ~ register_operand }
+
+xor_instruction = { "XOR" ~ register_operand ~ "," ~ register_operand }
+
+not_instruction = { "NOT" ~ register_operand }

@@ -1,0 +1,1 @@
+/home/oliver/Projects/FPGA_Projects/CPU/toolchain/rust_assembler/target/release/rust_assembler: /home/oliver/Projects/FPGA_Projects/CPU/toolchain/rust_assembler/src/assembly.pest /home/oliver/Projects/FPGA_Projects/CPU/toolchain/rust_assembler/src/main.rs

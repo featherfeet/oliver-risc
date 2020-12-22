@@ -3,7 +3,7 @@
     #include <glib.h>
     #include "processor.h"
 
-    #define YYDEBUG 1 // TODO: REMOVE.
+//    #define YYDEBUG 1 // TODO: REMOVE.
 
     // Forward declarations for functions provided by the Flex-generated lexer (or defined later in this program).
     int yylex(void);
@@ -531,7 +531,7 @@ void startParseString(const char *);
 void endParseString(void);
 
 int main(int argc, char *argv[]) {
-    yydebug = 1; // TODO: REMOVE
+//    yydebug = 1; // TODO: REMOVE
     // Initialize the hash tables with strings as keys. Use g_free to automatically free the memory used by keys and values.
     variables_table = g_hash_table_new_full(g_str_hash, g_str_equal, (GDestroyNotify) g_free, (GDestroyNotify) freeVariable);
     labels_table = g_hash_table_new_full(g_str_hash, g_str_equal, (GDestroyNotify) g_free, (GDestroyNotify) g_free);
