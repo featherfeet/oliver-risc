@@ -54,7 +54,8 @@ BEGIN
     __ASM__("IN B,C");
     __ASM__("STORE C,output_value"); // Since output_value is a "special" variable in the compiler that's at a fixed offset, both the PL/0 and asm can access it easily.
     VAR print_buffer = " ";
-    print_buffer[0] := output_value;
+//    print_buffer[0] := output_value; // TODO: Translate PS/2 scancodes into ASCII.
+    print_buffer[0] := 88;
     print_procedure_arg_string_s := print_buffer;
     CALL print;
 END;
