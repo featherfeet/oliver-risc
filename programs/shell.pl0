@@ -61,13 +61,13 @@ END;
 
 // Set up the ISR for keypresses.
 __ASM__("CLOAD 0,A");
-__ASM__("CLOAD key_pressed_procedure,B");
+__ASM__("CLOAD start_procedure_key_pressed,B");
 __ASM__("ISR A,B");
 
 // Main busy-wait loop.
 WHILE 1 = 1 DO
 BEGIN
-    // Wait for interrupts.
+    __ASM__("NOP");
 END;
 
 CALL HALT;

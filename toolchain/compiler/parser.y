@@ -21,7 +21,7 @@
     #include "astbufferreadnode.h"
     #include "asmgenerator.h"
 
-    // #define YYDEBUG 1
+//    #define YYDEBUG 1
 
     // Forward declarations for functions provided by the Flex-generated lexer (or defined later in this program).
     extern "C" {
@@ -371,7 +371,7 @@ void startParseString(const char *);
 void endParseString(void);
 
 int main(int argc, char *argv[]) {
-    // yydebug = 1;
+//    yydebug = 1;
 
     if (argc < 2) {
         std::cout << "Usage: ./main program.pl0 [output.asm]" << std::endl;
