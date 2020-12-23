@@ -71,6 +71,7 @@ fn main() {
     // Set up NCurses to emulate the GPU output and keyboard input.
     initscr();
     cbreak();
+    nodelay(stdscr(), true);
     noecho();
     curs_set(CURSOR_VISIBILITY::CURSOR_INVISIBLE);
     resizeterm(GPU_TEXT_DISPLAY_ROWS as i32, GPU_TEXT_DISPLAY_COLUMNS as i32);
@@ -108,6 +109,7 @@ fn main() {
     registers[Register::IP as usize] = start_of_code_section_offset;
     loop {
         let register_ip = registers[Register::IP as usize] as usize;
+        mvprintw(12, 10, &format!("IP = {}            ", register_ip));
         // Fetch operation and operands.
         let operation: u8 = raw_binary[register_ip];
         let operand1_bytes: [u8; OPERAND_SIZE] = raw_binary[register_ip + OPERATION_SIZE .. register_ip + OPERATION_SIZE + OPERAND_SIZE].try_into().expect("ERROR: Emulator's OPERAND_SIZE must match the number of bytes in the RawProcessorOperand type.");
@@ -218,7 +220,7 @@ fn main() {
                 registers.resize(NUM_REGISTERS as usize, 0);
             }
             Some(Operation::HALT) => {
-                std::thread::sleep(std::time::Duration::from_millis(10 * 1000));
+                //std::thread::sleep(std::time::Duration::from_millis(10 * 1000));
                 endwin();
                 //println!("HALT");
                 break;
@@ -290,11 +292,21 @@ fn main() {
             }
         }
         // Handle interrupts.
-        if interrupt_fifo.len() > 0 {
+        if interrupt_fifo.len() > 0 && registers[Register::IR as usize] == 0 {
             let interrupt_number: RawProcessorOperand = interrupt_fifo.pop_back().unwrap();
+            mvprintw(10, 10, &format!("Interrupt {} triggered!", interrupt_number));
             shadow_registers.copy_from_slice(&registers);
-            shadow_registers[Register::IP as usize] = registers[Register::IP as usize] + INSTRUCTION_SIZE as RawProcessorOperand;
+            //shadow_registers[Register::IP as usize] = registers[Register::IP as usize] + INSTRUCTION_SIZE as RawProcessorOperand;
             registers[Register::IP as usize] = start_of_code_section_offset + interrupt_vector_table[interrupt_number as usize];
+            mvprintw(11, 10, &format!("Jumping IP to {}.", interrupt_vector_table[interrupt_number as usize]));
+            refresh();
+            registers[Register::IR as usize] = 1;
+        }
+        // Add keyboard interrupts.
+        let ch: i32 = getch();
+        if ch != ERR && ch != 410 {
+            interrupt_fifo.push_front(0);
+            interrupt_value_fifo.push_front(0x22);
         }
     }
 }

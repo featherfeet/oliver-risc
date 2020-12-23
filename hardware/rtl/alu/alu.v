@@ -273,15 +273,15 @@ case (operation)
     `OPERATION_ISR:
     begin
         $display("ISR");
+        $display("Setting interrupt No. %d to address %d.", registers[operand1], registers[operand2]);
         interrupt_vector_table[registers[operand1]] <= registers[operand2];
         next_instruction();
     end
     `OPERATION_INT:
     begin
-        $display("INT");
         if (interrupt_fifo_access_state == `INTERRUPT_FIFO_ACCESS_STATE_SETUP)
         begin
-            $display("Triggering interrupt No. %d.\n", registers[operand1]);
+            $display("Triggering interrupt No. %d.", registers[operand1]);
             interrupt_fifo_data_in <= registers[operand1];
             interrupt_fifo_write <= 'b1;
             interrupt_fifo_access_state <= `INTERRUPT_FIFO_ACCESS_STATE_FINISH;
@@ -290,10 +290,11 @@ case (operation)
         end
         else
         begin
-            state <= `STATE_RUN_INTERRUPT;
+            $display("INT");
             interrupt_fifo_write <= 'b0;
             interrupt_value_fifo_write <= 'b0;
             interrupt_fifo_access_state <= `INTERRUPT_FIFO_ACCESS_STATE_SETUP;
+            next_instruction();
         end
     end
     `OPERATION_RST:

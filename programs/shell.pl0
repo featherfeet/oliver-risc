@@ -37,14 +37,13 @@ BEGIN
         output_address := output_address + 1;
         output_value := print_procedure_arg_string_s[i];
     END;
+
+    output_value := cursor_s[0];
+    CALL OUT;
 END;
 
 // Execution starts here, by printing out the prompt.
 print_procedure_arg_string_s := prompt_s;
-CALL print;
-
-// Render the cursor.
-print_procedure_arg_string_s := cursor_s;
 CALL print;
 
 // Interrupt Service Routine that is called whenever a key is pressed.

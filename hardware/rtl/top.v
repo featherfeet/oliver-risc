@@ -74,7 +74,7 @@ fifo #(.ITEM_SIZE_BITS(`OPERAND_SIZE_BITS), .FIFO_SIZE(10)) interrupt_fifo(.CLOC
                     .empty(interrupt_fifo_empty),
                     .full(interrupt_fifo_full)
 );
-reg interrupt_fifo_access_state;
+reg [1:0] interrupt_fifo_access_state;
 
 // Interrupt value FIFO -- used to store data that needs to be passed to interrupt service routines.
 // Is always read/written in sync with the interrupt FIFO, so the empty/full signals aren't necessary.
@@ -497,6 +497,13 @@ begin
                 begin
                     interrupt_fifo_read <= 'b1;
                     interrupt_value_fifo_read <= 'b1;
+                    interrupt_fifo_access_state <= `INTERRUPT_FIFO_ACCESS_STATE_WAIT;
+                end
+                else if (interrupt_fifo_access_state == `INTERRUPT_FIFO_ACCESS_STATE_WAIT)
+                begin
+                    // Stop reading from the FIFO.
+                    interrupt_fifo_read <= 'b0;
+                    interrupt_value_fifo_read <= 'b0;
                     interrupt_fifo_access_state <= `INTERRUPT_FIFO_ACCESS_STATE_FINISH;
                 end
                 // Process the interrupt that was read from the FIFO.
@@ -504,6 +511,12 @@ begin
                 begin
                     // Set the interrupt-running register.
                     `REGISTER_IR <= 'b1;
+                    // ~~~~~~~~~~~~~
+                    // Save all registers' states.
+                    for (i = 0; i < `NUM_REGISTERS; i = i + 1)
+                        shadow_registers[i] <= registers[i];
+                    // ~~~~~~~~~~~~~
+                    /*
                     // Save all registers' states (except the IP register).
                     for (i = 1; i < `NUM_REGISTERS; i = i + 1)
                         shadow_registers[i] <= registers[i];
@@ -512,11 +525,10 @@ begin
                         shadow_registers[0] <= `REGISTER_IP;
                     else
                         shadow_registers[0] <= `REGISTER_IP + `INSTRUCTION_SIZE_BYTES;
+                    */
                     // Jump the current IP register to the interrupt routine.
+                    $display("interrupt_fifo_data_out: %d", interrupt_fifo_data_out);
                     `REGISTER_IP <= code_section_start_address + interrupt_vector_table[interrupt_fifo_data_out];
-                    // Stop reading from the FIFO.
-                    interrupt_fifo_read <= 'b0;
-                    interrupt_value_fifo_read <= 'b0;
                     interrupt_fifo_access_state <= `INTERRUPT_FIFO_ACCESS_STATE_SETUP;
                     state <= `STATE_ADD_INTERRUPTS;
                 end
