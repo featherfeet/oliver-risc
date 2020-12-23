@@ -168,7 +168,7 @@ int main(int argc, char *argv[]) {
                 printf("\n");
                 break;
             case OPERATION_ISR:
-                printf(" %s, [%#08x]\n", registerToString(operand1), operand2);
+                printf(" %s, %s\n", registerToString(operand1), registerToString(operand2));
                 break;
             case OPERATION_INT:
                 printf(" %s\n", registerToString(operand1));

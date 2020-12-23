@@ -273,7 +273,7 @@ case (operation)
     `OPERATION_ISR:
     begin
         $display("ISR");
-        interrupt_vector_table[registers[operand1]] <= operand2;
+        interrupt_vector_table[registers[operand1]] <= registers[operand2];
         next_instruction();
     end
     `OPERATION_INT:
@@ -281,6 +281,7 @@ case (operation)
         $display("INT");
         if (interrupt_fifo_access_state == `INTERRUPT_FIFO_ACCESS_STATE_SETUP)
         begin
+            $display("Triggering interrupt No. %d.\n", registers[operand1]);
             interrupt_fifo_data_in <= registers[operand1];
             interrupt_fifo_write <= 'b1;
             interrupt_fifo_access_state <= `INTERRUPT_FIFO_ACCESS_STATE_FINISH;

@@ -232,7 +232,7 @@ fn main() {
                 //println!("INT");
                 interrupt_fifo.push_front(registers[operand1 as usize]);
                 interrupt_value_fifo.push_front(0);
-                registers[Register::IP as usize] += INSTRUCTION_SIZE as RawProcessorOperand;
+//                registers[Register::IP as usize] += INSTRUCTION_SIZE as RawProcessorOperand;
             }
             Some(Operation::ENDINT) => {
                 //println!("ENDINT");
@@ -288,6 +288,13 @@ fn main() {
                 //println!("ERROR: Invalid instruction.");
                 registers[Register::IP as usize] += INSTRUCTION_SIZE as RawProcessorOperand;
             }
+        }
+        // Handle interrupts.
+        if interrupt_fifo.len() > 0 {
+            let interrupt_number: RawProcessorOperand = interrupt_fifo.pop_back().unwrap();
+            shadow_registers.copy_from_slice(&registers);
+            shadow_registers[Register::IP as usize] = registers[Register::IP as usize] + INSTRUCTION_SIZE as RawProcessorOperand;
+            registers[Register::IP as usize] = start_of_code_section_offset + interrupt_vector_table[interrupt_number as usize];
         }
     }
 }
