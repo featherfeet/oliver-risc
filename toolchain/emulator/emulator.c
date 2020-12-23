@@ -104,6 +104,7 @@ int main(int argc, char *argv[]) {
                 break;
             case (OPERATION_SUB):
                 printf("SUB\n");
+                printf("%u - %u\n", registers[operand1], registers[operand2]);
                 REGISTER_A = registers[operand1] - registers[operand2];
                 REGISTER_IP += INSTRUCTION_SIZE;
                 break;
