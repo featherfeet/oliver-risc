@@ -117,7 +117,8 @@ int main(int argc, char *argv[]) {
         uint32_t operand2 = 0;
         memcpy(&operand1, raw_binary + i + OPERATION_SIZE, OPERAND_SIZE);
         memcpy(&operand2, raw_binary + i + OPERATION_SIZE + OPERAND_SIZE, OPERAND_SIZE);
-        printf("\t[%#08x]\t%s", i - start_of_code_section_offset, operationToString(raw_binary[i]));
+//        printf("\t[%#08x]\t%s", i - start_of_code_section_offset, operationToString(raw_binary[i]));
+        printf("\t[%#08x]\t%s", i, operationToString(raw_binary[i]));
         switch (operation) {
             case OPERATION_NOP:
                 printf("\n");

@@ -1,0 +1,744 @@
+CLOAD
+CLOAD
+SUB
+MOV
+MOV
+CLOAD
+CLOAD
+ISR
+Setting interrupt No.          0 to address       1773.
+CLOAD
+ADD
+CLOAD
+RSTORE
+CLOAD
+ADD
+CLOAD
+RSTORE
+CLOAD
+ADD
+CLOAD
+RSTORE
+CLOAD
+CLOAD
+ADD
+RLOAD
+Loaded value 240 from address 3999968 in RAM to register 4.
+ADD
+MOV
+CLOAD
+ADD
+RLOAD
+Loaded value 67 from address 3999964 in RAM to register 4.
+MULT
+MOV
+CLOAD
+ADD
+RSTORE
+CLOAD
+ADD
+CLOAD
+RSTORE
+CLOAD
+ADD
+CLOAD
+RSTORE
+CLOAD
+ADD
+CLOAD
+RSTORE
+CLOAD
+ADD
+CLOAD
+RSTORE
+CLOAD
+ADD
+CLOAD
+RSTORE
+CLOAD
+ADD
+interrupt_fifo_data_out:          0
+CLOAD
+interrupt_fifo_data_out:          0
+CLOAD
+IN
+STORE
+CLOAD
+ADD
+CLOAD
+RSTORE
+CLOAD
+CLOAD
+ADD
+MOV
+CLOAD
+MOV
+CLOAD
+ADD
+RLOAD
+Loaded value 62 from address 3999964 in RAM to register 2.
+ADD
+MOV
+RLOAD
+Loaded value 1245216 from address 62 in RAM to register 1.
+CLOAD
+RSTORE
+CLOAD
+CLOAD
+ADD
+RLOAD
+Loaded value 62 from address 3999964 in RAM to register 4.
+ADD
+MOV
+CLOAD
+ADD
+RSTORE
+CLOAD
+SUB
+MOV
+CLOAD
+ADD
+RSTORE
+CMP register 1 (value 2179), register 1 (value 2179)
+JMPE
+CLOAD
+ADD
+CLOAD
+RSTORE
+CLOAD
+CLOAD
+ADD
+RLOAD
+Loaded value 0 from address 3999988 in RAM to register 4.
+ADD
+MOV
+CLOAD
+ADD
+RLOAD
+Loaded value 240 from address 3999968 in RAM to register 4.
+MULT
+MOV
+CLOAD
+ADD
+RLOAD
+Loaded value 0 from address 3999992 in RAM to register 4.
+ADD
+MOV
+STORE
+CLOAD
+CLOAD
+CLOAD
+ADD
+RLOAD
+Loaded value 62 from address 3999996 in RAM to register 2.
+ADD
+RLOAD
+Loaded value 1245272 from address 62 in RAM to register 4.
+CLOAD
+MOV
+ADD
+MOV
+STORE
+CLOAD
+LOAD
+Loaded value 88 from address 8 in RAM to register 4.
+ADD
+MOV
+MOV
+CLOAD
+CLOAD
+ADD
+MOV
+CMP register 5 (value 88), register 3 (value 0)
+JMPE
+LOAD
+Loaded value 0 from address 4 in RAM to register 1.
+LOAD
+Loaded value 88 from address 8 in RAM to register 2.
+OUT [address 0, character 'X' (integer value 88)]
+CLOAD
+CLOAD
+ADD
+RLOAD
+Loaded value 0 from address 3999956 in RAM to register 4.
+ADD
+MOV
+CLOAD
+ADD
+MOV
+CLOAD
+ADD
+RSTORE
+CLOAD
+CLOAD
+ADD
+RLOAD
+Loaded value 0 from address 3999992 in RAM to register 4.
+ADD
+MOV
+CLOAD
+ADD
+MOV
+CLOAD
+ADD
+RSTORE
+CLOAD
+LOAD
+Loaded value 0 from address 4 in RAM to register 4.
+ADD
+MOV
+CLOAD
+ADD
+MOV
+STORE
+CLOAD
+CLOAD
+ADD
+RLOAD
+Loaded value 1 from address 3999956 in RAM to register 5.
+CLOAD
+ADD
+RLOAD
+Loaded value 62 from address 3999996 in RAM to register 2.
+ADD
+RLOAD
+Loaded value 150999808 from address 63 in RAM to register 4.
+CLOAD
+MOV
+ADD
+MOV
+STORE
+CMP register 1 (value 0), register 1 (value 0)
+JMPE
+CLOAD
+LOAD
+Loaded value 0 from address 8 in RAM to register 4.
+ADD
+MOV
+MOV
+CLOAD
+CLOAD
+ADD
+MOV
+CMP register 5 (value 0), register 3 (value 0)
+JMPE
+CLOAD
+CLOAD
+CLOAD
+ADD
+RLOAD
+Loaded value 24 from address 3999980 in RAM to register 2.
+ADD
+RLOAD
+Loaded value 538968159 from address 24 in RAM to register 4.
+CLOAD
+MOV
+ADD
+MOV
+STORE
+LOAD
+Loaded value 1 from address 4 in RAM to register 1.
+LOAD
+Loaded value 95 from address 8 in RAM to register 2.
+OUT [address 1, character '_' (integer value 95)]
+MOV
+CLOAD
+ADD
+MOV
+RLOAD
+Loaded value 2179 from address 3999952 in RAM to register 0.
+JMPE
+ENDINT
+IN
+STORE
+CLOAD
+ADD
+CLOAD
+RSTORE
+CLOAD
+CLOAD
+ADD
+MOV
+CLOAD
+MOV
+CLOAD
+ADD
+RLOAD
+Loaded value 62 from address 3999964 in RAM to register 2.
+ADD
+MOV
+RLOAD
+Loaded value 1245272 from address 62 in RAM to register 1.
+CLOAD
+RSTORE
+CLOAD
+CLOAD
+ADD
+RLOAD
+Loaded value 62 from address 3999964 in RAM to register 4.
+ADD
+MOV
+CLOAD
+ADD
+RSTORE
+CLOAD
+SUB
+MOV
+CLOAD
+ADD
+RSTORE
+CMP register 1 (value 2179), register 1 (value 2179)
+JMPE
+CLOAD
+ADD
+CLOAD
+RSTORE
+CLOAD
+CLOAD
+ADD
+RLOAD
+Loaded value 0 from address 3999988 in RAM to register 4.
+ADD
+MOV
+CLOAD
+ADD
+RLOAD
+Loaded value 240 from address 3999968 in RAM to register 4.
+MULT
+MOV
+CLOAD
+ADD
+RLOAD
+Loaded value 1 from address 3999992 in RAM to register 4.
+ADD
+MOV
+STORE
+CLOAD
+CLOAD
+CLOAD
+ADD
+RLOAD
+Loaded value 62 from address 3999996 in RAM to register 2.
+ADD
+RLOAD
+Loaded value 1245272 from address 62 in RAM to register 4.
+CLOAD
+MOV
+ADD
+MOV
+STORE
+CLOAD
+LOAD
+Loaded value 88 from address 8 in RAM to register 4.
+ADD
+MOV
+MOV
+CLOAD
+CLOAD
+ADD
+MOV
+CMP register 5 (value 88), register 3 (value 0)
+JMPE
+LOAD
+Loaded value 1 from address 4 in RAM to register 1.
+LOAD
+Loaded value 88 from address 8 in RAM to register 2.
+OUT [address 1, character 'X' (integer value 88)]
+CLOAD
+CLOAD
+ADD
+RLOAD
+Loaded value 0 from address 3999956 in RAM to register 4.
+ADD
+MOV
+CLOAD
+ADD
+MOV
+CLOAD
+ADD
+RSTORE
+CLOAD
+CLOAD
+ADD
+RLOAD
+Loaded value 1 from address 3999992 in RAM to register 4.
+ADD
+MOV
+CLOAD
+ADD
+MOV
+CLOAD
+ADD
+RSTORE
+CLOAD
+LOAD
+Loaded value 1 from address 4 in RAM to register 4.
+ADD
+MOV
+CLOAD
+ADD
+MOV
+STORE
+CLOAD
+CLOAD
+ADD
+RLOAD
+Loaded value 1 from address 3999956 in RAM to register 5.
+CLOAD
+ADD
+RLOAD
+Loaded value 62 from address 3999996 in RAM to register 2.
+ADD
+RLOAD
+Loaded value 150999808 from address 63 in RAM to register 4.
+CLOAD
+MOV
+ADD
+MOV
+STORE
+CMP register 1 (value 0), register 1 (value 0)
+JMPE
+CLOAD
+LOAD
+Loaded value 0 from address 8 in RAM to register 4.
+ADD
+MOV
+MOV
+CLOAD
+CLOAD
+ADD
+MOV
+CMP register 5 (value 0), register 3 (value 0)
+JMPE
+CLOAD
+CLOAD
+CLOAD
+ADD
+RLOAD
+Loaded value 24 from address 3999980 in RAM to register 2.
+ADD
+RLOAD
+Loaded value 538968159 from address 24 in RAM to register 4.
+CLOAD
+MOV
+ADD
+MOV
+STORE
+LOAD
+Loaded value 2 from address 4 in RAM to register 1.
+LOAD
+Loaded value 95 from address 8 in RAM to register 2.
+OUT [address 2, character '_' (integer value 95)]
+MOV
+CLOAD
+ADD
+MOV
+RLOAD
+Loaded value 2179 from address 3999952 in RAM to register 0.
+JMPE
+ENDINT
+IN
+STORE
+CLOAD
+ADD
+CLOAD
+RSTORE
+CLOAD
+CLOAD
+ADD
+MOV
+CLOAD
+MOV
+CLOAD
+ADD
+RLOAD
+Loaded value 62 from address 3999964 in RAM to register 2.
+ADD
+MOV
+RLOAD
+Loaded value 1245272 from address 62 in RAM to register 1.
+CLOAD
+RSTORE
+CLOAD
+CLOAD
+ADD
+RLOAD
+Loaded value 62 from address 3999964 in RAM to register 4.
+ADD
+MOV
+CLOAD
+ADD
+RSTORE
+CLOAD
+SUB
+MOV
+CLOAD
+ADD
+RSTORE
+CMP register 1 (value 2179), register 1 (value 2179)
+JMPE
+CLOAD
+ADD
+CLOAD
+RSTORE
+CLOAD
+CLOAD
+ADD
+RLOAD
+Loaded value 0 from address 3999988 in RAM to register 4.
+ADD
+MOV
+CLOAD
+ADD
+RLOAD
+Loaded value 240 from address 3999968 in RAM to register 4.
+MULT
+MOV
+CLOAD
+ADD
+RLOAD
+Loaded value 2 from address 3999992 in RAM to register 4.
+ADD
+MOV
+STORE
+CLOAD
+CLOAD
+CLOAD
+ADD
+RLOAD
+Loaded value 62 from address 3999996 in RAM to register 2.
+ADD
+RLOAD
+Loaded value 1245272 from address 62 in RAM to register 4.
+CLOAD
+MOV
+ADD
+MOV
+STORE
+CLOAD
+LOAD
+Loaded value 88 from address 8 in RAM to register 4.
+ADD
+MOV
+MOV
+CLOAD
+CLOAD
+ADD
+MOV
+CMP register 5 (value 88), register 3 (value 0)
+JMPE
+LOAD
+Loaded value 2 from address 4 in RAM to register 1.
+LOAD
+Loaded value 88 from address 8 in RAM to register 2.
+OUT [address 2, character 'X' (integer value 88)]
+CLOAD
+CLOAD
+ADD
+RLOAD
+Loaded value 0 from address 3999956 in RAM to register 4.
+ADD
+MOV
+CLOAD
+ADD
+MOV
+CLOAD
+ADD
+RSTORE
+CLOAD
+CLOAD
+ADD
+RLOAD
+Loaded value 2 from address 3999992 in RAM to register 4.
+ADD
+MOV
+CLOAD
+ADD
+MOV
+CLOAD
+ADD
+RSTORE
+CLOAD
+LOAD
+Loaded value 2 from address 4 in RAM to register 4.
+ADD
+MOV
+CLOAD
+ADD
+MOV
+STORE
+CLOAD
+CLOAD
+ADD
+RLOAD
+Loaded value 1 from address 3999956 in RAM to register 5.
+CLOAD
+ADD
+RLOAD
+Loaded value 62 from address 3999996 in RAM to register 2.
+ADD
+RLOAD
+Loaded value 150999808 from address 63 in RAM to register 4.
+CLOAD
+MOV
+ADD
+MOV
+STORE
+CMP register 1 (value 0), register 1 (value 0)
+JMPE
+CLOAD
+LOAD
+Loaded value 0 from address 8 in RAM to register 4.
+ADD
+MOV
+MOV
+CLOAD
+CLOAD
+ADD
+MOV
+CMP register 5 (value 0), register 3 (value 0)
+JMPE
+CLOAD
+CLOAD
+CLOAD
+ADD
+RLOAD
+Loaded value 24 from address 3999980 in RAM to register 2.
+ADD
+RLOAD
+Loaded value 538968159 from address 24 in RAM to register 4.
+CLOAD
+MOV
+ADD
+MOV
+STORE
+LOAD
+Loaded value 3 from address 4 in RAM to register 1.
+LOAD
+Loaded value 95 from address 8 in RAM to register 2.
+OUT [address 3, character '_' (integer value 95)]
+MOV
+CLOAD
+ADD
+MOV
+RLOAD
+Loaded value 2179 from address 3999952 in RAM to register 0.
+JMPE
+ENDINT
+IN
+STORE
+CLOAD
+ADD
+CLOAD
+RSTORE
+CLOAD
+CLOAD
+ADD
+MOV
+CLOAD
+MOV
+CLOAD
+ADD
+RLOAD
+Loaded value 62 from address 3999964 in RAM to register 2.
+ADD
+MOV
+RLOAD
+Loaded value 1245272 from address 62 in RAM to register 1.
+CLOAD
+RSTORE
+CLOAD
+CLOAD
+ADD
+RLOAD
+Loaded value 62 from address 3999964 in RAM to register 4.
+ADD
+MOV
+CLOAD
+ADD
+RSTORE
+CLOAD
+SUB
+MOV
+CLOAD
+ADD
+RSTORE
+CMP register 1 (value 2179), register 1 (value 2179)
+JMPE
+CLOAD
+ADD
+CLOAD
+RSTORE
+CLOAD
+CLOAD
+ADD
+RLOAD
+Loaded value 0 from address 3999988 in RAM to register 4.
+ADD
+MOV
+CLOAD
+ADD
+RLOAD
+Loaded value 240 from address 3999968 in RAM to register 4.
+MULT
+MOV
+CLOAD
+ADD
+RLOAD
+Loaded value 3 from address 3999992 in RAM to register 4.
+ADD
+MOV
+STORE
+CLOAD
+CLOAD
+CLOAD
+ADD
+RLOAD
+Loaded value 62 from address 3999996 in RAM to register 2.
+ADD
+RLOAD
+Loaded value 1245272 from address 62 in RAM to register 4.
+CLOAD
+MOV
+ADD
+MOV
+STORE
+CLOAD
+LOAD
+Loaded value 88 from address 8 in RAM to register 4.
+ADD
+MOV
+MOV
+CLOAD
+CLOAD
+ADD
+MOV
+CMP register 5 (value 88), register 3 (value 0)
+JMPE
+LOAD
+Loaded value 3 from address 4 in RAM to register 1.
+LOAD
+Loaded value 88 from address 8 in RAM to register 2.
+OUT [address 3, character 'X' (integer value 88)]
+CLOAD
+CLOAD
+ADD
+RLOAD
+Loaded value 0 from address 3999956 in RAM to register 4.
+ADD
+MOV
+CLOAD
+ADD
+MOV
+CLOAD
+ADD
+RSTORE
+CLOAD
+CLOAD
+ADD
+RLOAD
+Loaded value 3 from address 3999992 in RAM to register 4.
+ADD
+MOV
+CLOAD
+ADD

@@ -344,6 +344,7 @@ begin
         keyboard_scancode_fifo_access_state <= `KEYBOARD_SCANCODE_FIFO_ACCESS_STATE_READ_START;
         interrupt_value_fifo_write <= 'b0;
         interrupt_value_fifo_read <= 'b0;
+        interrupt_value_fifo_data_in <= 'b0;
         code_section_start_address <= 'b0;
         program_end_address <= 'b0;
         divider_numerator <= 'b0;
@@ -490,7 +491,7 @@ begin
             `STATE_RUN_INTERRUPT:
             begin
                 // If there are no interrupts to process (and we're not in the middle of processing one), proceed to the next state.
-                if (interrupt_fifo_empty && interrupt_fifo_access_state == `INTERRUPT_FIFO_ACCESS_STATE_SETUP)
+                if (`REGISTER_IR || (interrupt_fifo_empty && interrupt_fifo_access_state == `INTERRUPT_FIFO_ACCESS_STATE_SETUP))
                     state <= `STATE_ADD_INTERRUPTS;
                 // If there is an interrupt to process (and we are not currently servicing an ISR), read it from the interrupt FIFO.
                 else if (~`REGISTER_IR && ~interrupt_fifo_empty && interrupt_fifo_access_state == `INTERRUPT_FIFO_ACCESS_STATE_SETUP)

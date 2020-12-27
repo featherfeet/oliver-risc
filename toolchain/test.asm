@@ -1,7 +1,6 @@
 .data:
+    cursor = 0
 .code:
-    // Set up cursor.
-    CLOAD 0,C
     // Set up ISR.
     CLOAD 0,A
     CLOAD key_handler,B
@@ -12,10 +11,11 @@
         JMPE loop_start
     // Key interrupt handler.
     key_handler:
+        LOAD cursor,C
         CLOAD 88,B
         OUT C,B
         CLOAD 1,A
         ADD A,C
-        MOV A,C
+        STORE A,cursor
         ENDINT
     HALT

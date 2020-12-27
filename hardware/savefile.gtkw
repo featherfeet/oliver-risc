@@ -1,18 +1,20 @@
 [*]
 [*] GTKWave Analyzer v3.3.98 (w)1999-2019 BSI
-[*] Wed Dec 23 06:28:11 2020
+[*] Sun Dec 27 05:30:54 2020
 [*]
 [dumpfile] "/home/oliver/Projects/FPGA_Projects/CPU/hardware/dump.lxt"
-[dumpfile_mtime] "Wed Dec 23 06:22:22 2020"
-[dumpfile_size] 35075806
+[dumpfile_mtime] "Sun Dec 27 05:15:21 2020"
+[dumpfile_size] 67407523
 [savefile] "/home/oliver/Projects/FPGA_Projects/CPU/hardware/savefile.gtkw"
-[timestart] 144752800
+[timestart] 404183000
 [size] 1920 1016
-[pos] -84 -84
-*-16.438879 145040000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[pos] -1 -1
+*-19.547693 406380000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] test.
 [treeopen] test.top_instantiation.
-[sst_width] 228
+[treeopen] test.top_instantiation.interrupt_value_fifo.
+[treeopen] test.top_instantiation.keyboard_scancodes_fifo.
+[sst_width] 343
 [signals_width] 348
 [sst_expanded] 1
 [sst_vpaned_height] 285
@@ -25,9 +27,33 @@ test.top_instantiation.operation[7:0]
 test.top_instantiation.interrupt_fifo_write[0]
 @24
 test.top_instantiation.interrupt_fifo_data_in[31:0]
-@29
+@28
 test.top_instantiation.interrupt_fifo_read[0]
 @24
 test.top_instantiation.interrupt_fifo_data_out[31:0]
+@28
+test.top_instantiation.ps2_keyboard.PS2_CLK[0]
+test.top_instantiation.ps2_keyboard.PS2_DAT[0]
+@24
+test.top_instantiation.keyboard_scancodes_fifo.current_fifo_size[2:0]
+@22
+test.top_instantiation.interrupt_value_fifo.data_in[31:0]
+test.top_instantiation.interrupt_value_fifo.data_out[31:0]
+@820
+test.top_instantiation.gpu_character_to_write[7:0]
+@24
+test.top_instantiation.gpu_cell_to_access[13:0]
+@22
+test.top_instantiation.ps2_keyboard.scancode[7:0]
+@28
+test.top_instantiation.ps2_keyboard.ready[0]
+@22
+test.top_instantiation.\registers[0][31:0]
+test.top_instantiation.\shadow_registers[0][31:0]
+test.top_instantiation.\registers[9][31:0]
+@24
+test.top_instantiation.interrupt_fifo_access_state[1:0]
+@29
+test.top_instantiation.interrupt_fifo_empty[0]
 [pattern_trace] 1
 [pattern_trace] 0

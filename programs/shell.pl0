@@ -2,6 +2,11 @@
 ORISC Shell Program
 *********************/
 
+// Set up the ISR for keypresses.
+__ASM__("CLOAD 0,A");
+__ASM__("CLOAD start_procedure_key_pressed,B");
+__ASM__("ISR A,B");
+
 // Console width in characters.
 VAR SCREEN_HEIGHT_ROWS = 67;
 VAR SCREEN_WIDTH_COLUMNS = 240;
@@ -58,11 +63,6 @@ BEGIN
     print_procedure_arg_string_s := print_buffer;
     CALL print;
 END;
-
-// Set up the ISR for keypresses.
-__ASM__("CLOAD 0,A");
-__ASM__("CLOAD start_procedure_key_pressed,B");
-__ASM__("ISR A,B");
 
 // Main busy-wait loop.
 WHILE 1 = 1 DO

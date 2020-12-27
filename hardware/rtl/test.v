@@ -76,7 +76,10 @@ module test();
         $dumpfile("dump.lxt");
         $dumpvars(0, test);
         for (i = 0; i < `NUM_REGISTERS; i = i + 1)
+        begin
             $dumpvars(0, top_instantiation.registers[i]);
+            $dumpvars(0, top_instantiation.shadow_registers[i]);
+        end
         $vgasimInit(
             dots_per_line,
             lines_per_frame,
@@ -88,8 +91,7 @@ module test();
         reset = 'b0;
         //#80000 reset = 'hF;
         #80 reset = 'hF;
-        /*
-        #150_000;
+        #400_000;
         #10 PS2_DAT = 'b0; // START
         #10 PS2_CLK = 'b0;
         #10 PS2_CLK = 'b1;
@@ -157,6 +159,5 @@ module test();
         #10 PS2_DAT = 'b0; // STOP
         #10 PS2_CLK = 'b0;
         #10 PS2_CLK = 'b1;
-        */
     end
 endmodule
