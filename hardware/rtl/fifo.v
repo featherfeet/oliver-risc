@@ -29,7 +29,7 @@ begin
         data_out <= 'b0;
         current_fifo_size <= 'b0;
         for (i = 0; i < FIFO_SIZE; i = i + 1)
-            items[i] = 'b0;
+            items[i] <= 'b0;
     end
     else
     begin
@@ -37,17 +37,19 @@ begin
         begin
             current_fifo_size <= current_fifo_size + 'b1;
             items[write_pointer] <= data_in;
-            write_pointer <= write_pointer + 'b1;
             if (write_pointer == FIFO_SIZE - 'b1)
                 write_pointer <= 'b0;
+            else
+                write_pointer <= write_pointer + 'b1;
         end
         if (read && ~empty)
         begin
             current_fifo_size <= current_fifo_size - 'b1;
             data_out <= items[read_pointer];
-            read_pointer <= read_pointer + 'b1;
             if (read_pointer == FIFO_SIZE - 'b1)
                 read_pointer <= 'b0;
+            else
+                read_pointer <= read_pointer + 'b1;
         end
     end
 end

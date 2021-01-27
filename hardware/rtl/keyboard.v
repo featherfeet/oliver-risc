@@ -1,16 +1,19 @@
 module keyboard(
+    input CLOCK_50,
     input PS2_CLK,
     input PS2_DAT,
     output wire [7:0] scancode,
-    output wire ready
+    output wire ready,
+    output reg done, // DEBUG
+    output reg other_done // DEBUG
 );
 
 reg [10:0] shift_register;
 assign scancode = shift_register[8:0]; // The first bit of PS/2 is a start bit, the second-to-last is a parity bit, and the last is a stop bit.
 
 reg[$clog2(11) - 1:0] bits_counter; // PS/2 has 11 bits per byte transmitted.
-reg done;
-reg other_done;
+//reg done;
+//reg other_done;
 
 initial begin
     shift_register <= 'b0;
@@ -35,12 +38,17 @@ begin
         done <= 'b0;
 end
 
-always @(posedge PS2_CLK)
+assign bits_counter_finished = (bits_counter == 'd10);
+
+always @(posedge bits_counter_finished or posedge PS2_CLK or posedge CLOCK_50)
 begin
-    if (bits_counter == 'd10)
+    if (bits_counter_finished)
         other_done <= 'b1;
     else
-        other_done <= 'b0;
+    begin
+        if (CLOCK_50 == 'b1)
+            other_done <= 'b0;
+    end
 end
 
 endmodule

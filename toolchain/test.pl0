@@ -1,0 +1,39 @@
+// Console width in characters.
+VAR SCREEN_HEIGHT_ROWS = 67;
+VAR SCREEN_WIDTH_COLUMNS = 240;
+
+// Cursor string.
+VAR cursor_s = "_";
+
+// On-screen location of the cursor.
+VAR cursor_row_i = 0;
+VAR cursor_column_i = 0;
+
+// Print function. Takes one string argument. Prints it at the current cursor location.
+VAR print_procedure_arg_string_s;
+PROCEDURE print;
+BEGIN
+    VAR i = 0;
+    output_address := cursor_row_i * SCREEN_WIDTH_COLUMNS + cursor_column_i;
+    output_value := print_procedure_arg_string_s[0];
+
+    WHILE output_value # 0 DO
+    BEGIN
+        CALL OUT;
+        i := i + 1;
+        cursor_column_i := cursor_column_i + 1;
+        output_address := output_address + 1;
+        output_value := print_procedure_arg_string_s[i];
+    END;
+
+    output_value := cursor_s[0];
+    CALL OUT;
+END;
+
+VAR buf = " ";
+output_value := 88;
+buf[0] := output_value;
+print_procedure_arg_string_s := buf;
+CALL print;
+
+CALL HALT;

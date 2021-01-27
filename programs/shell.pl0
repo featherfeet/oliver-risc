@@ -58,10 +58,67 @@ BEGIN
     __ASM__("IN B,C");
     __ASM__("STORE C,output_value"); // Since output_value is a "special" variable in the compiler that's at a fixed offset, both the PL/0 and asm can access it easily.
     VAR print_buffer = " ";
-//    print_buffer[0] := output_value; // TODO: Translate PS/2 scancodes into ASCII.
-    print_buffer[0] := 88;
-    print_procedure_arg_string_s := print_buffer;
-    CALL print;
+    VAR valid = 0;
+    IF output_value = 22 THEN // 1
+    BEGIN
+        print_buffer[0] := 49;
+        valid := 1;
+    END;
+    IF output_value = 30 THEN // 2
+    BEGIN
+        print_buffer[0] := 50;
+        valid := 1;
+    END;
+    IF output_value = 38 THEN // 3
+    BEGIN
+        print_buffer[0] := 51;
+        valid := 1;
+    END;
+    IF output_value = 37 THEN // 4
+    BEGIN
+        print_buffer[0] := 52;
+        valid := 1;
+    END;
+    IF output_value = 46 THEN // 5
+    BEGIN
+        print_buffer[0] := 53;
+        valid := 1;
+    END;
+    IF output_value = 54 THEN // 6
+    BEGIN
+        print_buffer[0] := 54;
+        valid := 1;
+    END;
+    IF output_value = 61 THEN // 7
+    BEGIN
+        print_buffer[0] := 55;
+        valid := 1;
+    END;
+    IF output_value = 62 THEN // 8
+    BEGIN
+        print_buffer[0] := 56;
+        valid := 1;
+    END;
+    IF output_value = 70 THEN // 9
+    BEGIN
+        print_buffer[0] := 57;
+        valid := 1;
+    END;
+    IF output_value = 69 THEN // 0
+    BEGIN
+        print_buffer[0] := 48;
+        valid := 1;
+    END;
+    IF output_value = 26 THEN // Z
+    BEGIN
+        print_buffer[0] := 90;
+        valid := 1;
+    END;
+    IF valid = 1 THEN
+    BEGIN
+        print_procedure_arg_string_s := print_buffer;
+        CALL print;
+    END;
 END;
 
 // Main busy-wait loop.

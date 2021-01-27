@@ -285,6 +285,9 @@ fn main() {
                     let character: u8 = registers[operand2 as usize].to_le_bytes()[0];
                     gpu_text_buffer[address] = character;
                     mvaddch((address / GPU_TEXT_DISPLAY_COLUMNS) as i32, (address % GPU_TEXT_DISPLAY_COLUMNS) as i32, character.into());
+                    if character as char != '_' {
+                        mvprintw(13, 10, &format!("Outputting {} at address {}.", character, address));
+                    }
                     refresh();
                 }
                 else if registers[operand1 as usize] == INTERRUPT_VALUE_PORT as RawProcessorOperand {
@@ -356,7 +359,7 @@ fn main() {
                 registers.resize(NUM_REGISTERS as usize, 0);
             }
             Some(Operation::HALT) => {
-                //std::thread::sleep(std::time::Duration::from_millis(10 * 1000));
+                std::thread::sleep(std::time::Duration::from_millis(10 * 1000));
                 endwin();
                 //println!("HALT");
                 break;
@@ -430,6 +433,7 @@ fn main() {
         // Handle interrupts.
         if interrupt_fifo.len() > 0 && registers[Register::IR as usize] == 0 {
             let interrupt_number: RawProcessorOperand = interrupt_fifo.pop_back().unwrap();
+            interrupt_value_fifo_data_out = interrupt_value_fifo.pop_back().unwrap();
             mvprintw(10, 10, &format!("Interrupt {} triggered!", interrupt_number));
             shadow_registers.copy_from_slice(&registers);
             registers[Register::IP as usize] = start_of_code_section_offset + interrupt_vector_table[interrupt_number as usize];

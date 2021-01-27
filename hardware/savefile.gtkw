@@ -1,59 +1,77 @@
 [*]
 [*] GTKWave Analyzer v3.3.98 (w)1999-2019 BSI
-[*] Sun Dec 27 05:30:54 2020
+[*] Wed Jan 13 20:24:52 2021
 [*]
 [dumpfile] "/home/oliver/Projects/FPGA_Projects/CPU/hardware/dump.lxt"
-[dumpfile_mtime] "Sun Dec 27 05:15:21 2020"
-[dumpfile_size] 67407523
+[dumpfile_mtime] "Wed Jan 13 12:04:04 2021"
+[dumpfile_size] 879216783
 [savefile] "/home/oliver/Projects/FPGA_Projects/CPU/hardware/savefile.gtkw"
-[timestart] 404183000
+[timestart] 0
 [size] 1920 1016
-[pos] -1 -1
-*-19.547693 406380000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[pos] 1919 26
+*-31.108461 2867280000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] test.
 [treeopen] test.top_instantiation.
-[treeopen] test.top_instantiation.interrupt_value_fifo.
 [treeopen] test.top_instantiation.keyboard_scancodes_fifo.
-[sst_width] 343
-[signals_width] 348
+[sst_width] 262
+[signals_width] 269
 [sst_expanded] 1
-[sst_vpaned_height] 285
+[sst_vpaned_height] 267
 @28
 test.top_instantiation.CLOCK_50[0]
+test.PS2_CLK[0]
+test.PS2_DAT[0]
+@200
+-keyboard_scancodes_fifo
 @24
-test.top_instantiation.state[7:0]
-test.top_instantiation.operation[7:0]
+test.top_instantiation.keyboard_scancodes_fifo.data_in[7:0]
 @28
-test.top_instantiation.interrupt_fifo_write[0]
+test.top_instantiation.keyboard_scancodes_fifo.write[0]
+test.top_instantiation.keyboard_scancodes_fifo.read[0]
 @24
-test.top_instantiation.interrupt_fifo_data_in[31:0]
+test.top_instantiation.keyboard_scancodes_fifo.\items[0][7:0]
+test.top_instantiation.keyboard_scancodes_fifo.\items[1][7:0]
+test.top_instantiation.keyboard_scancodes_fifo.\items[2][7:0]
+test.top_instantiation.keyboard_scancodes_fifo.\items[3][7:0]
+test.top_instantiation.keyboard_scancodes_fifo.\items[4][7:0]
+test.top_instantiation.keyboard_scancodes_fifo.read_pointer[2:0]
+test.top_instantiation.keyboard_scancodes_fifo.write_pointer[2:0]
+@200
+-interrupt_value_fifo
+@24
+test.top_instantiation.interrupt_value_fifo.\items[0][31:0]
+test.top_instantiation.interrupt_value_fifo.\items[1][31:0]
+test.top_instantiation.interrupt_value_fifo.\items[2][31:0]
+test.top_instantiation.interrupt_value_fifo.\items[3][31:0]
+test.top_instantiation.interrupt_value_fifo.\items[4][31:0]
+test.top_instantiation.interrupt_value_fifo.\items[5][31:0]
+test.top_instantiation.interrupt_value_fifo.\items[6][31:0]
+test.top_instantiation.interrupt_value_fifo.\items[7][31:0]
+test.top_instantiation.interrupt_value_fifo.\items[8][31:0]
+test.top_instantiation.interrupt_value_fifo.\items[9][31:0]
 @28
-test.top_instantiation.interrupt_fifo_read[0]
-@24
-test.top_instantiation.interrupt_fifo_data_out[31:0]
-@28
-test.top_instantiation.ps2_keyboard.PS2_CLK[0]
-test.top_instantiation.ps2_keyboard.PS2_DAT[0]
-@24
-test.top_instantiation.keyboard_scancodes_fifo.current_fifo_size[2:0]
+test.top_instantiation.interrupt_value_fifo.read[0]
 @22
-test.top_instantiation.interrupt_value_fifo.data_in[31:0]
+test.top_instantiation.interrupt_value_fifo.read_pointer[3:0]
+test.top_instantiation.interrupt_value_fifo.write_pointer[3:0]
+@24
+test.top_instantiation.interrupt_value_fifo.current_fifo_size[3:0]
 test.top_instantiation.interrupt_value_fifo.data_out[31:0]
-@820
-test.top_instantiation.gpu_character_to_write[7:0]
+@200
+-General CPU
 @24
-test.top_instantiation.gpu_cell_to_access[13:0]
-@22
-test.top_instantiation.ps2_keyboard.scancode[7:0]
-@28
-test.top_instantiation.ps2_keyboard.ready[0]
+test.top_instantiation.operation[7:0]
 @22
 test.top_instantiation.\registers[0][31:0]
-test.top_instantiation.\shadow_registers[0][31:0]
-test.top_instantiation.\registers[9][31:0]
+test.top_instantiation.\registers[3][31:0]
 @24
-test.top_instantiation.interrupt_fifo_access_state[1:0]
-@29
-test.top_instantiation.interrupt_fifo_empty[0]
+test.top_instantiation.\registers[9][31:0]
+test.top_instantiation.state[7:0]
+@200
+-GPU
+@28
+test.top_instantiation.gpu_write_enable[0]
+@821
+test.top_instantiation.gpu_character_to_write[7:0]
 [pattern_trace] 1
 [pattern_trace] 0

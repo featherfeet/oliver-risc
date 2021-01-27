@@ -92,13 +92,26 @@ fifo #(.ITEM_SIZE_BITS(`OPERAND_SIZE_BITS), .FIFO_SIZE(10)) interrupt_value_fifo
 // PS/2 keyboard.
 wire[7:0] keyboard_scancode;
 wire keyboard_scancode_ready;
+wire keyboard_done; // DEBUG
+wire keyboard_other_done; // DEBUG
+/*
 assign GPIO_0[0] = PS2_CLK; // DEBUG
 assign GPIO_0[1] = PS2_DAT; // DEBUG
+assign GPIO_0[2] = keyboard_scancode_ready; // DEBUG
+assign GPIO_0[3] = CLOCK_50; // DEBUG
+assign GPIO_0[4] = keyboard_done; // DEBUG
+assign GPIO_0[5] = keyboard_other_done; // DEBUG
+*/
+assign GPIO_0[0] = PS2_CLK; // DEBUG
+assign GPIO_0[1] = keyboard_scancode_ready; // DEBUG
 assign LEDG = keyboard_scancode; // DEBUG
 keyboard ps2_keyboard(.scancode(keyboard_scancode),
                       .ready(keyboard_scancode_ready),
+                      .CLOCK_50(CLOCK_50),
                       .PS2_CLK(PS2_CLK),
-                      .PS2_DAT(PS2_DAT));
+                      .PS2_DAT(PS2_DAT),
+                      .done(keyboard_done), // DEBUG
+                      .other_done(keyboard_other_done)); // DEBUG
 
 // FIFO to store keys.
 wire [7:0] keyboard_scancode_fifo_data_out;
@@ -336,6 +349,8 @@ begin
         for (i = 0; i < `NUM_INTERRUPTS; i = i + 1)
             interrupt_vector_table[i] <= 'b0;
         gpu_access_state <= `GPU_ACCESS_STATE_SETUP;
+        gpu_write_enable <= 'b0;
+        gpu_character_to_write <= 'b0;
         interrupt_fifo_write <= 'b0;
         interrupt_fifo_data_in <= 'b0;
         interrupt_fifo_read <= 'b0;
@@ -545,10 +560,12 @@ begin
                     keyboard_scancode_fifo_access_state <= `KEYBOARD_SCANCODE_FIFO_ACCESS_STATE_READ_END;
                 end
                 else if (keyboard_scancode_fifo_access_state == `KEYBOARD_SCANCODE_FIFO_ACCESS_STATE_READ_END)
-                    keyboard_scancode_fifo_access_state <= `KEYBOARD_SCANCODE_FIFO_ACCESS_STATE_WRITE_START;
-                else if (keyboard_scancode_fifo_access_state == `KEYBOARD_SCANCODE_FIFO_ACCESS_STATE_WRITE_START)
                 begin
                     keyboard_scancode_fifo_read <= 'b0;
+                    keyboard_scancode_fifo_access_state <= `KEYBOARD_SCANCODE_FIFO_ACCESS_STATE_WRITE_START;
+                end
+                else if (keyboard_scancode_fifo_access_state == `KEYBOARD_SCANCODE_FIFO_ACCESS_STATE_WRITE_START)
+                begin
                     interrupt_fifo_write <= 'b1;
                     interrupt_fifo_data_in <= `INTERRUPT_TYPE_KEY;
                     interrupt_value_fifo_data_in <= {24'b0, keyboard_scancode_fifo_data_out};
@@ -556,8 +573,6 @@ begin
                     keyboard_scancode_fifo_access_state <= `KEYBOARD_SCANCODE_FIFO_ACCESS_STATE_WRITE_END;
                 end
                 else if (keyboard_scancode_fifo_access_state == `KEYBOARD_SCANCODE_FIFO_ACCESS_STATE_WRITE_END)
-                    keyboard_scancode_fifo_access_state <= `KEYBOARD_SCANCODE_FIFO_ACCESS_STATE_FINISH;
-                else if (keyboard_scancode_fifo_access_state == `KEYBOARD_SCANCODE_FIFO_ACCESS_STATE_FINISH)
                 begin
                     interrupt_fifo_write <= 'b0;
                     interrupt_value_fifo_write <= 'b0;
