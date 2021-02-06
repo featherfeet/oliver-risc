@@ -54,6 +54,10 @@
     return TOKEN_CALL;
 }
 
+"RETURN" {
+    return TOKEN_RETURN;
+}
+
 "+" {
     return TOKEN_PLUS;
 }

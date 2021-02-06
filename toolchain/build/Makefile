@@ -513,6 +513,33 @@ compiler/astprocedurenode.cpp.s:
 	$(MAKE) -f CMakeFiles/compiler.dir/build.make CMakeFiles/compiler.dir/compiler/astprocedurenode.cpp.s
 .PHONY : compiler/astprocedurenode.cpp.s
 
+compiler/astprocedurereturnnode.o: compiler/astprocedurereturnnode.cpp.o
+
+.PHONY : compiler/astprocedurereturnnode.o
+
+# target to build an object file
+compiler/astprocedurereturnnode.cpp.o:
+	$(MAKE) -f CMakeFiles/compiler.dir/build.make CMakeFiles/compiler.dir/compiler/astprocedurereturnnode.cpp.o
+.PHONY : compiler/astprocedurereturnnode.cpp.o
+
+compiler/astprocedurereturnnode.i: compiler/astprocedurereturnnode.cpp.i
+
+.PHONY : compiler/astprocedurereturnnode.i
+
+# target to preprocess a source file
+compiler/astprocedurereturnnode.cpp.i:
+	$(MAKE) -f CMakeFiles/compiler.dir/build.make CMakeFiles/compiler.dir/compiler/astprocedurereturnnode.cpp.i
+.PHONY : compiler/astprocedurereturnnode.cpp.i
+
+compiler/astprocedurereturnnode.s: compiler/astprocedurereturnnode.cpp.s
+
+.PHONY : compiler/astprocedurereturnnode.s
+
+# target to generate assembly for a file
+compiler/astprocedurereturnnode.cpp.s:
+	$(MAKE) -f CMakeFiles/compiler.dir/build.make CMakeFiles/compiler.dir/compiler/astprocedurereturnnode.cpp.s
+.PHONY : compiler/astprocedurereturnnode.cpp.s
+
 compiler/astrootnode.o: compiler/astrootnode.cpp.o
 
 .PHONY : compiler/astrootnode.o
@@ -834,6 +861,9 @@ help:
 	@echo "... compiler/astprocedurenode.o"
 	@echo "... compiler/astprocedurenode.i"
 	@echo "... compiler/astprocedurenode.s"
+	@echo "... compiler/astprocedurereturnnode.o"
+	@echo "... compiler/astprocedurereturnnode.i"
+	@echo "... compiler/astprocedurereturnnode.s"
 	@echo "... compiler/astrootnode.o"
 	@echo "... compiler/astrootnode.i"
 	@echo "... compiler/astrootnode.s"

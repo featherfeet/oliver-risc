@@ -19,6 +19,7 @@ CMakeFiles/compiler.dir/compiler/asmgenerator.cpp.o
  /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astnode.h
  /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astprocedurecallnode.h
  /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astprocedurenode.h
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astprocedurereturnnode.h
  /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astrootnode.h
  /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/aststatementnode.h
  /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/asttermnode.h
@@ -107,6 +108,12 @@ CMakeFiles/compiler.dir/compiler/astprocedurenode.cpp.o
  /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astprocedurenode.cpp
  /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astprocedurenode.h
  /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/aststatementnode.h
+CMakeFiles/compiler.dir/compiler/astprocedurereturnnode.cpp.o
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/ast.h
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astnode.h
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astprocedurereturnnode.cpp
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astprocedurereturnnode.h
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/aststatementnode.h
 CMakeFiles/compiler.dir/compiler/astrootnode.cpp.o
  .././compiler/include/fmt/core.h
  .././compiler/include/fmt/format-inl.h
@@ -123,6 +130,7 @@ CMakeFiles/compiler.dir/compiler/astrootnode.cpp.o
  /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astnode.h
  /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astprocedurecallnode.h
  /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astprocedurenode.h
+ /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astprocedurereturnnode.h
  /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astrootnode.cpp
  /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/astrootnode.h
  /home/oliver/Projects/FPGA_Projects/CPU/toolchain/compiler/aststatementnode.h
@@ -184,6 +192,7 @@ CMakeFiles/compiler.dir/compiler_lexer.cpp.o
  .././compiler/astnode.h
  .././compiler/astprocedurecallnode.h
  .././compiler/astprocedurenode.h
+ .././compiler/astprocedurereturnnode.h
  .././compiler/astrootnode.h
  .././compiler/aststatementnode.h
  .././compiler/asttermnode.h
@@ -206,6 +215,7 @@ CMakeFiles/compiler.dir/compiler_parser.cpp.o
  .././compiler/astnode.h
  .././compiler/astprocedurecallnode.h
  .././compiler/astprocedurenode.h
+ .././compiler/astprocedurereturnnode.h
  .././compiler/astrootnode.h
  .././compiler/aststatementnode.h
  .././compiler/asttermnode.h

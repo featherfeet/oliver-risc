@@ -21,6 +21,7 @@
 #include "astprocedurenode.h"
 #include "astbufferreadnode.h"
 #include "astinlineassemblynode.h"
+#include "astprocedurereturnnode.h"
 
 #define FMT_HEADER_ONLY
 #include <fmt/format.h>
@@ -232,7 +233,7 @@ std::tuple<std::string, std::string> AssemblyGenerator::generateAsm(ASTNode *nod
         ASTRootNode *rootNode = (ASTRootNode *) node;
         std::vector<ASTStatementNode*> children = rootNode->getChildren();
 
-        global_stackframe = new Stackframe();
+        global_stackframe = new Stackframe("global");
         current_stackframe = global_stackframe;
 
         data_section << ".data:" << std::endl;
@@ -543,7 +544,7 @@ std::tuple<std::string, std::string> AssemblyGenerator::generateAsm(ASTNode *nod
     else if (node->getNodeType() == PROCEDURE_NODE) {
         ASTProcedureNode *procedure = (ASTProcedureNode*) node;
         // Initialize a Stackframe object to track variables in the procedure.
-        current_stackframe = new Stackframe();
+        current_stackframe = new Stackframe(procedure->getProcedureName());
         // Generate code for the procedure.
         code_section << "    // Start procedure node." << std::endl;
         // Generate instructions that cause the CPU to skip executing the procedure when IP passes through here. This way, the procedure only gets executed if the program jumps directly to the start_procedure_{procedurename} label.
@@ -554,17 +555,19 @@ std::tuple<std::string, std::string> AssemblyGenerator::generateAsm(ASTNode *nod
         auto generated_block_assembly = generateAsm(procedure->getBeginEndBlock());
         data_section << std::get<0>(generated_block_assembly);
         code_section << std::get<1>(generated_block_assembly);
+        // Generate instructions for the end of the procedure.
+        code_section << fmt::format("    return_from_procedure_{}:", procedure->getProcedureName()) << std::endl;
         // If this is an ISR (Interrupt Service Routine), call the ENDINT instruction to restore the execution state from before the routine was triggered.
         if (procedure->getIsISR()) {
-            code_section << "    ENDINT" << std::endl;
+            code_section << "        ENDINT" << std::endl;
         }
         // If this is a regular procedure, generate instructions to exit the procedure and return to the calling stack frame.
         else {
-            code_section << fmt::format("    MOV G,B") << std::endl; // Save stack pointer value before incrementing it.
-            code_section << fmt::format("    CLOAD {},A", current_stackframe->getTotalSize()) << std::endl; // Add the number of bytes that the function's stack took to the stack pointer. This has the effect of de-allocating the stack memory used by the function.
-            code_section << fmt::format("    ADD A,G") << std::endl;
-            code_section << fmt::format("    MOV A,G") << std::endl;
-            code_section << fmt::format("    RLOAD B,IP") << std::endl; // Return from the procedure by jumping IP back to where the stack pointer was before incrementing it.
+            code_section << fmt::format("        MOV G,B") << std::endl; // Save stack pointer value before incrementing it.
+            code_section << fmt::format("        CLOAD {},A", current_stackframe->getTotalSize()) << std::endl; // Add the number of bytes that the function's stack took to the stack pointer. This has the effect of de-allocating the stack memory used by the function.
+            code_section << fmt::format("        ADD A,G") << std::endl;
+            code_section << fmt::format("        MOV A,G") << std::endl;
+            code_section << fmt::format("        RLOAD B,IP") << std::endl; // Return from the procedure by jumping IP back to where the stack pointer was before incrementing it.
         }
         // End label.
         code_section << fmt::format("    end_procedure_{}:", procedure->getProcedureName()) << std::endl;
@@ -572,6 +575,18 @@ std::tuple<std::string, std::string> AssemblyGenerator::generateAsm(ASTNode *nod
         stack_allocations[procedure->getProcedureName()] = current_stackframe->getTotalSize(); // Store the amount of RAM that the function's stack takes up in a global table. This will be used to allocate memory for the function when it is called.
         delete current_stackframe;
         current_stackframe = global_stackframe;
+    }
+
+    else if (node->getNodeType() == PROCEDURE_RETURN_NODE) {
+        if (current_stackframe == global_stackframe) {
+            std::cout << "\033[1;31mERROR: RETURN cannot be called from the global scope. It must be called from within a procedure.\033[0m" << std::endl;
+        }
+        else {
+            code_section << "    // Start procedure return node." << std::endl;
+            code_section << "    CMP A,A" << std::endl;
+            code_section << fmt::format("    JMPE return_from_procedure_{}", current_stackframe->getProcedureName()) << std::endl;
+            code_section << "    // End procedure return node." << std::endl;
+        }
     }
 
     else if (node->getNodeType() == INLINE_ASSEMBLY_NODE) {

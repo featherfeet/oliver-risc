@@ -18,6 +18,7 @@ CMakeFiles/compiler.dir/compiler/asmgenerator.cpp.o: ../compiler/astinlineassemb
 CMakeFiles/compiler.dir/compiler/asmgenerator.cpp.o: ../compiler/astnode.h
 CMakeFiles/compiler.dir/compiler/asmgenerator.cpp.o: ../compiler/astprocedurecallnode.h
 CMakeFiles/compiler.dir/compiler/asmgenerator.cpp.o: ../compiler/astprocedurenode.h
+CMakeFiles/compiler.dir/compiler/asmgenerator.cpp.o: ../compiler/astprocedurereturnnode.h
 CMakeFiles/compiler.dir/compiler/asmgenerator.cpp.o: ../compiler/astrootnode.h
 CMakeFiles/compiler.dir/compiler/asmgenerator.cpp.o: ../compiler/aststatementnode.h
 CMakeFiles/compiler.dir/compiler/asmgenerator.cpp.o: ../compiler/asttermnode.h
@@ -107,6 +108,12 @@ CMakeFiles/compiler.dir/compiler/astprocedurenode.cpp.o: ../compiler/astprocedur
 CMakeFiles/compiler.dir/compiler/astprocedurenode.cpp.o: ../compiler/astprocedurenode.h
 CMakeFiles/compiler.dir/compiler/astprocedurenode.cpp.o: ../compiler/aststatementnode.h
 
+CMakeFiles/compiler.dir/compiler/astprocedurereturnnode.cpp.o: ../compiler/ast.h
+CMakeFiles/compiler.dir/compiler/astprocedurereturnnode.cpp.o: ../compiler/astnode.h
+CMakeFiles/compiler.dir/compiler/astprocedurereturnnode.cpp.o: ../compiler/astprocedurereturnnode.cpp
+CMakeFiles/compiler.dir/compiler/astprocedurereturnnode.cpp.o: ../compiler/astprocedurereturnnode.h
+CMakeFiles/compiler.dir/compiler/astprocedurereturnnode.cpp.o: ../compiler/aststatementnode.h
+
 CMakeFiles/compiler.dir/compiler/astrootnode.cpp.o: .././compiler/include/fmt/core.h
 CMakeFiles/compiler.dir/compiler/astrootnode.cpp.o: .././compiler/include/fmt/format-inl.h
 CMakeFiles/compiler.dir/compiler/astrootnode.cpp.o: .././compiler/include/fmt/format.h
@@ -122,6 +129,7 @@ CMakeFiles/compiler.dir/compiler/astrootnode.cpp.o: ../compiler/astinlineassembl
 CMakeFiles/compiler.dir/compiler/astrootnode.cpp.o: ../compiler/astnode.h
 CMakeFiles/compiler.dir/compiler/astrootnode.cpp.o: ../compiler/astprocedurecallnode.h
 CMakeFiles/compiler.dir/compiler/astrootnode.cpp.o: ../compiler/astprocedurenode.h
+CMakeFiles/compiler.dir/compiler/astrootnode.cpp.o: ../compiler/astprocedurereturnnode.h
 CMakeFiles/compiler.dir/compiler/astrootnode.cpp.o: ../compiler/astrootnode.cpp
 CMakeFiles/compiler.dir/compiler/astrootnode.cpp.o: ../compiler/astrootnode.h
 CMakeFiles/compiler.dir/compiler/astrootnode.cpp.o: ../compiler/aststatementnode.h
@@ -183,6 +191,7 @@ CMakeFiles/compiler.dir/compiler_lexer.cpp.o: .././compiler/astinlineassemblynod
 CMakeFiles/compiler.dir/compiler_lexer.cpp.o: .././compiler/astnode.h
 CMakeFiles/compiler.dir/compiler_lexer.cpp.o: .././compiler/astprocedurecallnode.h
 CMakeFiles/compiler.dir/compiler_lexer.cpp.o: .././compiler/astprocedurenode.h
+CMakeFiles/compiler.dir/compiler_lexer.cpp.o: .././compiler/astprocedurereturnnode.h
 CMakeFiles/compiler.dir/compiler_lexer.cpp.o: .././compiler/astrootnode.h
 CMakeFiles/compiler.dir/compiler_lexer.cpp.o: .././compiler/aststatementnode.h
 CMakeFiles/compiler.dir/compiler_lexer.cpp.o: .././compiler/asttermnode.h
@@ -205,6 +214,7 @@ CMakeFiles/compiler.dir/compiler_parser.cpp.o: .././compiler/astinlineassemblyno
 CMakeFiles/compiler.dir/compiler_parser.cpp.o: .././compiler/astnode.h
 CMakeFiles/compiler.dir/compiler_parser.cpp.o: .././compiler/astprocedurecallnode.h
 CMakeFiles/compiler.dir/compiler_parser.cpp.o: .././compiler/astprocedurenode.h
+CMakeFiles/compiler.dir/compiler_parser.cpp.o: .././compiler/astprocedurereturnnode.h
 CMakeFiles/compiler.dir/compiler_parser.cpp.o: .././compiler/astrootnode.h
 CMakeFiles/compiler.dir/compiler_parser.cpp.o: .././compiler/aststatementnode.h
 CMakeFiles/compiler.dir/compiler_parser.cpp.o: .././compiler/asttermnode.h

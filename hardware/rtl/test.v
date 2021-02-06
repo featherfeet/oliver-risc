@@ -13,32 +13,30 @@ module test();
     reg PS2_CLK = 'b1;
     reg PS2_DAT = 'b1;
 
-    /*
     task send_ps2_scancode;
         input [7:0] scancode_to_write;
         begin
             // Send start bit.
-            #10 PS2_DAT = 'b0;
-            #10 PS2_CLK = 'b0;
-            #10 PS2_CLK = 'b1;
+            #2000 PS2_DAT = 'b0;
+            #2000 PS2_CLK = 'b0;
+            #2000 PS2_CLK = 'b1;
             for (i = 0; i < 8; i = i + 1)
             begin
                 // Send a data bit.
-                #10 PS2_DAT = scancode_to_write[i];
-                #10 PS2_CLK = 'b0;
-                #10 PS2_CLK = 'b1;
+                #2000 PS2_DAT = scancode_to_write[i];
+                #2000 PS2_CLK = 'b0;
+                #2000 PS2_CLK = 'b1;
             end
             // Send parity bit.
-            #10 PS2_DAT = ~^scancode_to_write;
-            #10 PS2_CLK = 'b0;
-            #10 PS2_CLK = 'b1;
+            #2000 PS2_DAT = ~^scancode_to_write;
+            #2000 PS2_CLK = 'b0;
+            #2000 PS2_CLK = 'b1;
             // Send stop bit.
-            #10 PS2_DAT = 'b0;
-            #10 PS2_CLK = 'b0;
-            #10 PS2_CLK = 'b1;
+            #2000 PS2_DAT = 'b0;
+            #2000 PS2_CLK = 'b0;
+            #2000 PS2_CLK = 'b1;
         end
     endtask
-    */
 
     wire SDRAM_CLK;
     wire [11:0] DRAM_ADDR;
@@ -133,28 +131,27 @@ module test();
         //#2_000_123; // Wait 2 ms for program to start and reach the busy-wait loop, plus some small amount of time to make sure the PS/2 and the main clock aren't exactly in sync.
         // FOR SIMPLE KEYBOARD TEST PROGRAM (wait 200 us + 123 ns):
         #200_123
-        /*
         // Send the 1 key.
         send_ps2_scancode('hF0);
-        #300;
+        #5000;
         send_ps2_scancode(22);
-        #300;
+        #5000;
         // Send the 2 key.
         send_ps2_scancode('hF0);
-        #300;
+        #5000;
         send_ps2_scancode(30);
-        #300;
+        #5000;
         // Send the 3 key.
         send_ps2_scancode('hF0);
-        #300;
+        #5000;
         send_ps2_scancode(38);
-        #300;
+        #5000;
         // Send the 1 key.
         send_ps2_scancode('hF0);
-        #300;
+        #5000;
         send_ps2_scancode(22);
-        #300;
-        */
+        #5000;
+        /*
         PS2_CLK = 'b0;
         #45_000;
         PS2_CLK = 'b1;
@@ -784,6 +781,7 @@ module test();
         PS2_CLK = 'b0;
         #45_000;
         PS2_CLK = 'b1;
+        */
         $finish;
     end
 endmodule

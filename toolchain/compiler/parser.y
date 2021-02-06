@@ -19,6 +19,7 @@
     #include "astwhileloopnode.h"
     #include "astprocedurenode.h"
     #include "astbufferreadnode.h"
+    #include "astprocedurereturnnode.h"
     #include "asmgenerator.h"
 
 //    #define YYDEBUG 1
@@ -51,6 +52,7 @@
     #include "astprocedurenode.h"
     #include "astbufferreadnode.h"
     #include "astinlineassemblynode.h"
+    #include "astprocedurereturnnode.h"
 }
 
 %token TOKEN_VAR
@@ -84,6 +86,7 @@
 %token TOKEN_ASM
 %token TOKEN_LEFT_PARENTHESIS
 %token TOKEN_RIGHT_PARENTHESIS
+%token TOKEN_RETURN
 
 %start program
 
@@ -103,6 +106,7 @@
     ASTWhileLoopNode *while_loop_node;
     ASTProcedureNode *procedure_node;
     ASTInlineAssemblyNode *inline_assembly_node;
+    ASTProcedureReturnNode *procedure_return_node;
 }
 
 %type <strval> TOKEN_IDENTIFIER;
@@ -122,6 +126,7 @@
 %type <procedure_node> procedure;
 %type <buffer_write_node> buffer_write;
 %type <inline_assembly_node> inline_assembly;
+%type <procedure_return_node> procedure_return;
 
 %%
 
@@ -155,6 +160,9 @@ statement: variable_declaration TOKEN_SEMICOLON {
             $$ = $1;
          }
          | inline_assembly TOKEN_SEMICOLON {
+            $$ = $1;
+         }
+         | procedure_return TOKEN_SEMICOLON {
             $$ = $1;
          }
 ;
@@ -361,6 +369,11 @@ procedure: TOKEN_PROCEDURE TOKEN_IDENTIFIER TOKEN_SEMICOLON begin_end_block {
 inline_assembly: TOKEN_ASM TOKEN_LEFT_PARENTHESIS TOKEN_STRING_LITERAL TOKEN_RIGHT_PARENTHESIS {
     $$ = new ASTInlineAssemblyNode($3);
     free($3);
+}
+;
+
+procedure_return: TOKEN_RETURN {
+    $$ = new ASTProcedureReturnNode();
 }
 ;
 

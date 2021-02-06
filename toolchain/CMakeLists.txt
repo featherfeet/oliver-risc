@@ -33,6 +33,7 @@ add_executable(compiler
                compiler/astvariabledeclarationnode.cpp
                compiler/astwhileloopnode.cpp
                compiler/astinlineassemblynode.cpp
+               compiler/astprocedurereturnnode.cpp
                ${BISON_CompilerParser_OUTPUTS}
                ${FLEX_CompilerLexer_OUTPUTS})
 target_link_libraries(compiler

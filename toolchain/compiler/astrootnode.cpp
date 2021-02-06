@@ -14,6 +14,7 @@
 #include "astprocedurenode.h"
 #include "astbufferreadnode.h"
 #include "astinlineassemblynode.h"
+#include "astprocedurereturnnode.h"
 
 #define FMT_HEADER_ONLY
 #include <fmt/format.h>
@@ -126,6 +127,9 @@ std::string ASTRootNode::generateGraphvizCode(std::string node_id, ASTNode *stat
         output << fmt::format("    \"{}\" -> \"{}_0\";", node_id, node_id) << std::endl;
     }
     else if (statement->getNodeType() == BUFFER_READ_NODE) {
+        output << fmt::format("    \"{}\" [label=\"{}\", shape=box];", node_id, statement->getHumanReadable()) << std::endl;
+    }
+    else if (statement->getNodeType() == PROCEDURE_RETURN_NODE) {
         output << fmt::format("    \"{}\" [label=\"{}\", shape=box];", node_id, statement->getHumanReadable()) << std::endl;
     }
 

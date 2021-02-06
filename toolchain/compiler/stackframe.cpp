@@ -4,7 +4,8 @@
 #define FMT_HEADER_ONLY
 #include <fmt/format.h>
 
-Stackframe::Stackframe() {
+Stackframe::Stackframe(std::string procedure_name) {
+    this->procedure_name = procedure_name;
     variable_offsets["_"] = address_counter; // Reserve space on the stack for where the return-jump address is stored.
     address_counter += OPERAND_SIZE;
 }
@@ -28,4 +29,8 @@ OPERAND_C_TYPE Stackframe::getTotalSize() {
 
 bool Stackframe::containsVariable(std::string name) {
     return variable_offsets.count(name);
+}
+
+std::string Stackframe::getProcedureName() {
+    return procedure_name;
 }

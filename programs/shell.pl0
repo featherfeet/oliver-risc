@@ -51,6 +51,8 @@ END;
 print_procedure_arg_string_s := prompt_s;
 CALL print;
 
+VAR previous_scancode = 0;
+
 // Interrupt Service Routine that is called whenever a key is pressed.
 PROCEDURE ISR key_pressed;
 BEGIN
@@ -59,6 +61,12 @@ BEGIN
     __ASM__("STORE C,output_value"); // Since output_value is a "special" variable in the compiler that's at a fixed offset, both the PL/0 and asm can access it easily.
     VAR print_buffer = " ";
     VAR valid = 0;
+    IF previous_scancode # 240 THEN
+    BEGIN
+        previous_scancode := output_value;
+        RETURN;
+    END;
+    previous_scancode := output_value;
     IF output_value = 22 THEN // 1
     BEGIN
         print_buffer[0] := 49;

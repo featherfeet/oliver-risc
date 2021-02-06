@@ -92,26 +92,17 @@ fifo #(.ITEM_SIZE_BITS(`OPERAND_SIZE_BITS), .FIFO_SIZE(10)) interrupt_value_fifo
 // PS/2 keyboard.
 wire[7:0] keyboard_scancode;
 wire keyboard_scancode_ready;
-wire keyboard_done; // DEBUG
-wire keyboard_other_done; // DEBUG
-/*
-assign GPIO_0[0] = PS2_CLK; // DEBUG
-assign GPIO_0[1] = PS2_DAT; // DEBUG
-assign GPIO_0[2] = keyboard_scancode_ready; // DEBUG
-assign GPIO_0[3] = CLOCK_50; // DEBUG
-assign GPIO_0[4] = keyboard_done; // DEBUG
-assign GPIO_0[5] = keyboard_other_done; // DEBUG
-*/
-assign GPIO_0[0] = PS2_CLK; // DEBUG
-assign GPIO_0[1] = keyboard_scancode_ready; // DEBUG
+
 assign LEDG = keyboard_scancode; // DEBUG
-keyboard ps2_keyboard(.scancode(keyboard_scancode),
-                      .ready(keyboard_scancode_ready),
-                      .CLOCK_50(CLOCK_50),
-                      .PS2_CLK(PS2_CLK),
-                      .PS2_DAT(PS2_DAT),
-                      .done(keyboard_done), // DEBUG
-                      .other_done(keyboard_other_done)); // DEBUG
+
+keyboard ps2_keyboard(
+    .rst_n(KEY[0]),
+    .CLOCK_50(CLOCK_50),
+    .PS2_CLK(PS2_CLK),
+    .PS2_DAT(PS2_DAT),
+    .scancode(keyboard_scancode),
+    .ready(keyboard_scancode_ready)
+);
 
 // FIFO to store keys.
 wire [7:0] keyboard_scancode_fifo_data_out;
