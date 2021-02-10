@@ -22,6 +22,8 @@ always @(posedge CLOCK_50)
 begin
     if (~rst_n)
     begin
+        scancode <= 'b0;
+        ready <= 'b0;
         ps2_clk_buffer <= 8'b11111111;
         ps2_clk_filtered_state <= 1'b1;
         previous_ps2_clk_filtered_state <= 1'b1;
@@ -51,7 +53,7 @@ begin
                 if (~^shift_register[9:1] == shift_register[10])
                 begin
                     ready <= 'b1;
-                    scancode <= shift_register[9:1];
+                    scancode <= shift_register[8:1];
                 end
                 bits_counter <= 'b0;
             end

@@ -583,6 +583,8 @@ VL_INLINE_OPT void Vverilator_test::_sequent__TOP__3(Vverilator_test__Syms* __re
             vlTOPp->verilator_test__DOT__top_instantiation__DOT__keyboard_scancode_ready = 0U;
         }
     } else {
+        vlTOPp->verilator_test__DOT__top_instantiation__DOT__keyboard_scancode = 0U;
+        vlTOPp->verilator_test__DOT__top_instantiation__DOT__keyboard_scancode_ready = 0U;
         __Vdly__verilator_test__DOT__top_instantiation__DOT__ps2_keyboard__DOT__shift_register = 0U;
         __Vdly__verilator_test__DOT__top_instantiation__DOT__ps2_keyboard__DOT__bits_counter = 0U;
     }
