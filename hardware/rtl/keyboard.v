@@ -47,9 +47,11 @@ begin
             bits_counter <= bits_counter + 'b1;
             if (bits_counter == 'd10)
             begin
-                // TODO: Check parity bit.
-                ready <= 'b1;
-                scancode <= shift_register[9:1];
+                if (~^shift_register[9:1] == shift_register[10])
+                begin
+                    ready <= 'b1;
+                    scancode <= shift_register[9:1];
+                end
                 bits_counter <= 'b0;
             end
         end
