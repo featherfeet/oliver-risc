@@ -1,5 +1,13 @@
+`timescale 1ps/1ps
+
 `include "defines.v"
 `include "gpu/gpu_defines.v"
+
+`ifdef verilator
+    `include "libraries/220model.v"
+    `include "gpu/gpu.v"
+    `include "sdram/sdram_system_new_sdram_controller_0.v"
+`endif
 
 module top(
     input [3:0] KEY,
@@ -29,6 +37,11 @@ module top(
     input PS2_DAT,
     output wire [7:0] LEDG,
     output wire [35:0] GPIO_0
+
+    `ifdef verilator
+        ,input verilator_only_dram_clk,
+        input verilator_only_vga_pixel_clock
+    `endif
 );
 
 integer i; // Counter used for unrolled for-loops.
@@ -38,11 +51,16 @@ integer i; // Counter used for unrolled for-loops.
 // inclk0, this PLL generates a 50 MHz clock with -3000 ps phase shift as c0
 // and a 150 MHz clock with 0 ps phase shift as c1. c0 is used for the SDRAM
 // clock, and c1 is used as the VGA pixel clock.
-clock_generator clock_generator(.areset(~KEY[0]),
-                                .inclk0(CLOCK_50),
-                                .c0(DRAM_CLK),
-                                .c1(VGA_PIXEL_CLOCK)
-);
+`ifdef verilator
+    assign DRAM_CLK = verilator_only_dram_clk;
+    assign VGA_PIXEL_CLOCK = verilator_only_vga_pixel_clock;
+`else
+    clock_generator clock_generator(.areset(~KEY[0]),
+                                    .inclk0(CLOCK_50),
+                                    .c0(DRAM_CLK),
+                                    .c1(VGA_PIXEL_CLOCK)
+    );
+`endif
 
 // CPU registers.
 reg [`OPERATION_SIZE_BITS - 1:0] operation;

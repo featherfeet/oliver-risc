@@ -12,6 +12,7 @@ reg[7:0] ps2_clk_buffer;
 reg ps2_clk_filtered_state;
 reg previous_ps2_clk_filtered_state;
 
+wire ps2_clk_falling;
 assign ps2_clk_falling = (previous_ps2_clk_filtered_state == 'b1 && ps2_clk_filtered_state == 'b0);
 
 reg [10:0] shift_register;

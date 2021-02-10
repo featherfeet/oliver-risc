@@ -1,6 +1,0 @@
-Information about the clocks required by this board, extracted by examining the output from the Qsys clock-generating block for the DE1 board from the Altera University Program:
-SDRAM clock (divide and multiply are relative to a 50 MHz base clock):
-    * Divide-by: 1
-    * Duty cycle: 50
-    * Multiply-by: 1
-    * Phase Shift: -3000
