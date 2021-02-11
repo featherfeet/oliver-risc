@@ -3,6 +3,7 @@
 A program is defined as a series of statements. Each statement must end in a semicolon.
 
 Statements can be any of the following:
+
     - variable declarations
     - variable assignments
     - buffer writes
