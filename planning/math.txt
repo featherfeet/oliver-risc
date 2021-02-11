@@ -1,7 +1,0 @@
-420000 pixels
-25,175,000 pixels/second
-0.016683 sec. per frame
-1 clock cycle = 2E-8 sec.
-2E-8 sec./clock cycle
-834,150 clock cycles/frame
-4.91659E7 unused clock cycles/frame
