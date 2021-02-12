@@ -28,7 +28,7 @@ code_section_declaration = { ".code:" }
 
 constant_operand = @{ ASCII_DIGIT+ }
 
-register_operand = { "IP" | "A" | "B" | "C" | "D" | "E" | "F" | "G" }
+register_operand = { "IP" | "A" | "B" | "C" | "D" | "E" | "F" | "G" | "IE" | "IR" }
 
 address_operand = {
     identifier |

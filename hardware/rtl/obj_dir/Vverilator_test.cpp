@@ -2590,11 +2590,15 @@ VL_INLINE_OPT void Vverilator_test::_sequent__TOP__3(Vverilator_test__Syms* __re
                                             }
                                         }
                                     } else {
-                                        if ((((0U == (IData)(vlTOPp->verilator_test__DOT__top_instantiation__DOT__keyboard_scancodes_fifo__DOT__current_fifo_size))
-                                               ? 1U
-                                               : 0U) 
-                                             & (0U 
-                                                == (IData)(vlTOPp->verilator_test__DOT__top_instantiation__DOT__keyboard_scancode_fifo_access_state)))) {
+                                        if (((0U != 
+                                              vlTOPp->verilator_test__DOT__top_instantiation__DOT__registers
+                                              [8U]) 
+                                             | (((0U 
+                                                  == (IData)(vlTOPp->verilator_test__DOT__top_instantiation__DOT__keyboard_scancodes_fifo__DOT__current_fifo_size))
+                                                  ? 1U
+                                                  : 0U) 
+                                                & (0U 
+                                                   == (IData)(vlTOPp->verilator_test__DOT__top_instantiation__DOT__keyboard_scancode_fifo_access_state))))) {
                                             __Vdly__verilator_test__DOT__top_instantiation__DOT__state = 2U;
                                         } else {
                                             if (((~ 
@@ -3023,7 +3027,7 @@ VL_INLINE_OPT void Vverilator_test::_sequent__TOP__3(Vverilator_test__Syms* __re
         vlTOPp->verilator_test__DOT__top_instantiation__DOT__registers[5U] = 0U;
         vlTOPp->verilator_test__DOT__top_instantiation__DOT__registers[6U] = 0U;
         vlTOPp->verilator_test__DOT__top_instantiation__DOT__registers[7U] = 0U;
-        vlTOPp->verilator_test__DOT__top_instantiation__DOT__registers[8U] = 1U;
+        vlTOPp->verilator_test__DOT__top_instantiation__DOT__registers[8U] = 0U;
         vlTOPp->verilator_test__DOT__top_instantiation__DOT__registers[9U] = 0U;
     }
     if (vlTOPp->reset_n) {

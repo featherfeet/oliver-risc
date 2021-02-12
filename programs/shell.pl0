@@ -7,6 +7,9 @@ __ASM__("CLOAD 0,A");
 __ASM__("CLOAD start_procedure_key_pressed,B");
 __ASM__("ISR A,B");
 
+// Enable interrupts.
+__ASM__("CLOAD 1,IE");
+
 // Console width in characters.
 VAR SCREEN_HEIGHT_ROWS = 67;
 VAR SCREEN_WIDTH_COLUMNS = 240;

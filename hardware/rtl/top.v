@@ -353,7 +353,7 @@ begin
         `REGISTER_E <= 'b0;
         `REGISTER_F <= 'b0;
         `REGISTER_G <= 'b0;
-        `REGISTER_IE <= 'b1;
+        `REGISTER_IE <= 'b0;
         `REGISTER_IR <= 'b0;
         for (i = 0; i < `NUM_INTERRUPTS; i = i + 1)
             interrupt_vector_table[i] <= 'b0;
@@ -536,21 +536,9 @@ begin
                 begin
                     // Set the interrupt-running register.
                     `REGISTER_IR <= 'b1;
-                    // ~~~~~~~~~~~~~
                     // Save all registers' states.
                     for (i = 0; i < `NUM_REGISTERS; i = i + 1)
                         shadow_registers[i] <= registers[i];
-                    // ~~~~~~~~~~~~~
-                    /*
-                    // Save all registers' states (except the IP register).
-                    for (i = 1; i < `NUM_REGISTERS; i = i + 1)
-                        shadow_registers[i] <= registers[i];
-                    // Make the shadow (saved) IP register point at the next instruction so that the program flow will continue after the interrupt routine completes (unless IP will go past the end of the program.
-                    if (`REGISTER_IP + `INSTRUCTION_SIZE_BYTES >= program_end_address)
-                        shadow_registers[0] <= `REGISTER_IP;
-                    else
-                        shadow_registers[0] <= `REGISTER_IP + `INSTRUCTION_SIZE_BYTES;
-                    */
                     // Jump the current IP register to the interrupt routine.
                     $display("interrupt_fifo_data_out: %d", interrupt_fifo_data_out);
                     `REGISTER_IP <= code_section_start_address + interrupt_vector_table[interrupt_fifo_data_out];
@@ -561,7 +549,7 @@ begin
             // Add any new hardware-triggered interrupts (keycodes, GPIO events, etc.) to the interrupt FIFO.
             `STATE_ADD_INTERRUPTS:
             begin
-                if (keyboard_scancode_fifo_empty && keyboard_scancode_fifo_access_state == `KEYBOARD_SCANCODE_FIFO_ACCESS_STATE_READ_START)
+                if (`REGISTER_IE == 'b0 || (keyboard_scancode_fifo_empty && keyboard_scancode_fifo_access_state == `KEYBOARD_SCANCODE_FIFO_ACCESS_STATE_READ_START))
                     state <= `STATE_FETCH_OPERATION;
                 else if (~keyboard_scancode_fifo_empty && keyboard_scancode_fifo_access_state == `KEYBOARD_SCANCODE_FIFO_ACCESS_STATE_READ_START)
                 begin

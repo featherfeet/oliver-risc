@@ -1,7 +1,7 @@
 # Oliver-RISC: The Ultimate RISC Processor
 
 The CPU has 8MB of SDRAM.
-On bootup, the FPGA loads a binary from the ROM to the SDRAM (at address 32'd0). The first 4 bytes of the binary hold an unsigned 32-bit integer storing the length of the .data section. The FPGA then starts executing instructions from the start of the .code section.
+On bootup, the FPGA loads a binary from the ROM to the SDRAM (at address 32'd0). The first 4 bytes of the binary hold an unsigned 32-bit integer (in little-endian byte order) storing the length of the .data section. The FPGA then starts executing instructions from the start of the .code section.
 
 Registers (32 bits each, addressed using a 32-bit code):
 IP - 32'd0 - Instruction pointer. SDRAM address of the instruction to execute.

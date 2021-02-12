@@ -36,7 +36,9 @@ enum Register {
     D = 4,
     E = 5,
     F = 6,
-    G = 7
+    G = 7,
+    IE = 8,
+    IR = 9
 }
 
 #[derive(Debug, Clone, Copy)]
@@ -100,6 +102,8 @@ fn string_to_register(register_string: &str) -> Register {
         "E" => Register::E,
         "F" => Register::F,
         "G" => Register::G,
+        "IE" => Register::IE,
+        "IR" => Register::IR,
         _ => panic!("Unknown register.")
     }
 }
