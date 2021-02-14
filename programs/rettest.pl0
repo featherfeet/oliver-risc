@@ -1,0 +1,66 @@
+// Console width in characters.
+VAR SCREEN_HEIGHT_ROWS = 67;
+VAR SCREEN_WIDTH_COLUMNS = 240;
+VAR GPU_MEMORY_LENGTH;
+GPU_MEMORY_LENGTH := SCREEN_WIDTH_COLUMNS * SCREEN_HEIGHT_ROWS;
+
+// Procedure to count how many digits are in a number.
+VAR integer_to_measure = 0;
+VAR integer_length = 0;
+PROCEDURE get_integer_length;
+BEGIN
+    integer_length := 0;
+    VAR number_shifter;
+    number_shifter := integer_to_measure;
+    WHILE number_shifter > 0 DO
+    BEGIN
+        number_shifter := number_shifter / 10;
+        integer_length := integer_length + 1;
+    END;
+END;
+
+// Procedure to get the number of digits in an integer.
+VAR integer = 0;
+VAR line = 0;
+PROCEDURE print_integer;
+BEGIN
+    integer_to_measure := integer;
+    CALL get_integer_length; // Stores return value in `integer_length`.
+    // Special case for 0.
+    IF integer = 0 THEN
+    BEGIN
+        output_address := line * SCREEN_WIDTH_COLUMNS;
+        output_value := 48;
+        CALL OUT;
+        RETURN;
+    END;
+    // Output the number one digit at a time, placing each digit at the correct position on-screen.
+    VAR number_shifter;
+    number_shifter := integer;
+    WHILE number_shifter > 0 DO
+    BEGIN
+        VAR digit;
+        digit := number_shifter % 10;
+        output_address := line * SCREEN_WIDTH_COLUMNS;
+        output_address := output_address + integer_length - 1;
+        output_value := digit + 48;
+        CALL OUT;
+        integer_length := integer_length - 1;
+        number_shifter := number_shifter / 10;
+    END;
+END;
+
+VAR return_one_ret;
+PROCEDURE return_one;
+BEGIN
+    return_one_ret := 1;
+    RETURN;
+END;
+
+CALL return_one;
+
+integer := return_one_ret;
+line := 0;
+CALL print_integer;
+
+CALL HALT;

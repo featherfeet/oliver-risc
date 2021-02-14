@@ -24,6 +24,9 @@
 `define KEYBOARD_SCANCODE_FIFO_ACCESS_STATE_WRITE_START 2
 `define KEYBOARD_SCANCODE_FIFO_ACCESS_STATE_WRITE_END   3
 
+`define SD_CARD_SPI_ACCESS_STATE_WRITE 0
+`define SD_CARD_SPI_ACCESS_STATE_WAIT  1
+
 `define OPERATION_NOP             0
 `define OPERATION_LOAD            1
 `define OPERATION_STORE           2
@@ -74,3 +77,5 @@
 `define INTERRUPT_TYPE_KEY        'b0
 
 `define INTERRUPT_VALUE_PORT      `GPU_TEXT_BUFFER_LENGTH  // The I/O port for interrupt value is right after the GPU port-mapped I/O.
+`define SD_CARD_SPI_PORT          (`GPU_TEXT_BUFFER_LENGTH + 'd1) // The I/O port for reading and writing to the SPI bus that communicates with the SD card.
+`define SD_CARD_CLOCK_SELECT_PORT (`GPU_TEXT_BUFFER_LENGTH + 'd2) // The I/O port for controlling the CS line of the SPI bus that communicates with the SD card.

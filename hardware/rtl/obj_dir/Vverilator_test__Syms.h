@@ -18,6 +18,11 @@ class Vverilator_test__Syms : public VerilatedSyms {
     
     // LOCAL STATE
     const char* __Vm_namep;
+    bool __Vm_dumping;  // Dumping is active
+    VerilatedMutex __Vm_dumperMutex;  // Protect __Vm_dumperp
+    VerilatedVcdC* __Vm_dumperp VL_GUARDED_BY(__Vm_dumperMutex);  /// Trace class for $dump*
+    bool __Vm_activity;  ///< Used by trace routines to determine change occurred
+    uint32_t __Vm_baseCode;  ///< Used by trace routines when tracing multiple models
     bool __Vm_didInit;
     
     // SUBCELL STATE

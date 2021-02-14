@@ -1,0 +1,240 @@
+// Console width in characters.
+VAR SCREEN_HEIGHT_ROWS = 67;
+VAR SCREEN_WIDTH_COLUMNS = 240;
+VAR GPU_MEMORY_LENGTH;
+GPU_MEMORY_LENGTH := SCREEN_WIDTH_COLUMNS * SCREEN_HEIGHT_ROWS;
+
+// Cursor string.
+VAR cursor_s = "_";
+
+// On-screen location of the cursor.
+VAR cursor_row_i = 0;
+VAR cursor_column_i = 0;
+
+// Print function. Takes one string argument. Prints it at the current cursor location.
+VAR print_procedure_arg_string_s;
+PROCEDURE print;
+BEGIN
+    VAR i = 0;
+    output_address := cursor_row_i * SCREEN_WIDTH_COLUMNS + cursor_column_i;
+    output_value := print_procedure_arg_string_s[0];
+
+    WHILE output_value # 0 DO
+    BEGIN
+        CALL OUT;
+        i := i + 1;
+        cursor_column_i := cursor_column_i + 1;
+        output_address := output_address + 1;
+        output_value := print_procedure_arg_string_s[i];
+    END;
+
+    output_value := cursor_s[0];
+    CALL OUT;
+END;
+
+// Procedure to move to next line.
+PROCEDURE next_line;
+BEGIN
+    output_address := cursor_row_i * SCREEN_WIDTH_COLUMNS + cursor_column_i;
+    output_value := 32;
+    CALL OUT;
+    cursor_column_i := 0;
+    cursor_row_i := cursor_row_i + 1;
+END;
+
+// Print message.
+VAR startup_message = "SD card test program loaded...";
+print_procedure_arg_string_s := startup_message;
+CALL print;
+
+// Set CS high.
+__ASM__("CLOAD 16082,A");
+__ASM__("CLOAD 1,B");
+__ASM__("OUT A,B");
+
+// Wait minimum of 74 dummy clock cycles.
+__ASM__("CLOAD 255,B"); // Dummy value to write out.
+__ASM__("CLOAD 0,C"); // Counter.
+__ASM__("CLOAD 75,D"); // Counter max.
+__ASM__("CLOAD 1,E"); // Counter increment.
+__ASM__("sd_card_clock_loop:");
+__ASM__("    CLOAD 16081,A"); // Port number for SPI.
+__ASM__("    OUT A,B");
+__ASM__("    ADD E,C");
+__ASM__("    MOV A,C");
+__ASM__("    CMP C,D");
+__ASM__("    JMPL sd_card_clock_loop");
+
+// Set CS low.
+__ASM__("CLOAD 16082,A");
+__ASM__("CLOAD 0,B");
+__ASM__("OUT A,B");
+
+// Procedure to send an SD card command.
+VAR send_sd_command_arg_cmd;
+VAR send_sd_command_arg_arg;
+VAR send_sd_command_ret;
+PROCEDURE send_sd_command;
+BEGIN
+    // Set CS low.
+    __ASM__("CLOAD 16082,A");
+    __ASM__("CLOAD 0,B");
+    __ASM__("OUT A,B");
+    // Bitwise-OR the command with 0x40 = 64 and store the result in register A.
+    output_value := send_sd_command_arg_cmd; // The output_value variable is static, so it's easy to access from both PL/0 and assembly.
+    __ASM__("CLOAD 64,A");
+    __ASM__("LOAD output_value,B");
+    __ASM__("OR A,B");
+    // Send the value in register A as the command on SPI.
+    __ASM__("CLOAD 16081,B");
+    __ASM__("OUT B,A");
+    // Send the 4 bytes in the command argument (send_sd_command_arg_arg) out, most-significant byte first.
+    // Send the first byte in the command argument.
+    output_value := send_sd_command_arg_arg;
+    __ASM__("CLOAD [output_value],A"); // Load the address of the output_value variable into register A.
+    __ASM__("CLOAD 3,B"); // Add 3 bytes to the loaded address.
+    __ASM__("ADD A,B");
+    __ASM__("RLOAD A,B"); // Load the 4 bytes at the new address into register B.
+    __ASM__("CLOAD 16081,C"); // Send out the least-significant byte of register B on SPI.
+    __ASM__("OUT C,B");
+    // Send the second byte in the command argument.
+    __ASM__("CLOAD [output_value],A"); // Load the address of the output_value variable into register A.
+    __ASM__("CLOAD 2,B"); // Add 2 bytes to the loaded address.
+    __ASM__("ADD A,B");
+    __ASM__("RLOAD A,B"); // Load the 4 bytes at the new address into register B.
+    __ASM__("OUT C,B"); // Send out the least-significant byte of register B on SPI.
+    // Send the third byte in the command argument.
+    __ASM__("CLOAD [output_value],A"); // Load the address of the output_value variable into register A.
+    __ASM__("CLOAD 1,B"); // Add 2 bytes to the loaded address.
+    __ASM__("ADD A,B");
+    __ASM__("RLOAD A,B"); // Load the 4 bytes at the new address into register B.
+    __ASM__("OUT C,B"); // Send out the least-significant byte of register B on SPI.
+    // Send the fourth byte in the command argument.
+    __ASM__("CLOAD [output_value],A"); // Load the address of the output_value variable into register A.
+    __ASM__("RLOAD A,B"); // Load the 4 bytes at the address into register B.
+    __ASM__("OUT C,B"); // Send out the least-significant byte of register B on SPI.
+    // Send the CRC.
+    VAR crc = 255;
+    IF send_sd_command_arg_cmd = 0 THEN // CMD0
+    BEGIN
+        crc := 149; // Correct CRC for CMD0 with argument 0x0.
+    END;
+    IF send_sd_command_arg_cmd = 8 THEN // CMD8
+    BEGIN
+        crc := 135; // Correct CRC for CMD8 with argument 0x1AA.
+    END;
+    output_value := crc;
+    __ASM__("CLOAD 16081,C");
+    __ASM__("LOAD output_value,A");
+    __ASM__("OUT C,A");
+    // Wait for response.
+    VAR i = 0;
+    WHILE i <= 255 DO
+    BEGIN
+        __ASM__("CLOAD 16081,A");
+        __ASM__("CLOAD 255,B");
+        __ASM__("OUT A,B");
+        __ASM__("IN A,B");
+        __ASM__("CLOAD 128,A");
+        __ASM__("AND A,B");
+        __ASM__("STORE A,output_value");
+        __ASM__("STORE B,output_address");
+        IF output_value = 0 THEN
+        BEGIN
+            send_sd_command_ret := output_address;
+            RETURN;
+        END;
+        i := i + 1;
+    END;
+END;
+
+/*
+// Procedure to count how many digits are in a number.
+VAR integer_to_measure = 0;
+VAR integer_length = 0;
+PROCEDURE get_integer_length;
+BEGIN
+    integer_length := 0;
+    VAR number_shifter;
+    number_shifter := integer_to_measure;
+    WHILE number_shifter > 0 DO
+    BEGIN
+        number_shifter := number_shifter / 10;
+        integer_length := integer_length + 1;
+    END;
+END;
+
+// Procedure to get the number of digits in an integer.
+VAR integer = 0;
+VAR line = 0;
+PROCEDURE print_integer;
+BEGIN
+    integer_to_measure := integer;
+    CALL get_integer_length; // Stores return value in `integer_length`.
+    // Special case for 0.
+    IF integer = 0 THEN
+    BEGIN
+        output_address := line * SCREEN_WIDTH_COLUMNS;
+        output_value := 48;
+        CALL OUT;
+        RETURN;
+    END;
+    // Output the number one digit at a time, placing each digit at the correct position on-screen.
+    VAR number_shifter;
+    number_shifter := integer;
+    WHILE number_shifter > 0 DO
+    BEGIN
+        VAR digit;
+        digit := number_shifter % 10;
+        output_address := line * SCREEN_WIDTH_COLUMNS;
+        output_address := output_address + integer_length - 1;
+        output_value := digit + 48;
+        CALL OUT;
+        integer_length := integer_length - 1;
+        number_shifter := number_shifter / 10;
+    END;
+END;
+*/
+
+// Send CMD0 until we get a response of R1_IDLE_STATE.
+send_sd_command_arg_cmd := 0; // CMD0
+send_sd_command_arg_arg := 0;
+
+WHILE send_sd_command_ret # 1 DO // 1 is R1_IDLE_STATE.
+BEGIN
+    CALL send_sd_command;
+END;
+
+VAR idle_message = "SD card in idle state.";
+print_procedure_arg_string_s := idle_message;
+CALL next_line;
+CALL print;
+
+// Check the SD version.
+send_sd_command_arg_cmd := 8; // CMD8
+send_sd_command_arg_arg := 426; // 0x1AA
+CALL send_sd_command;
+
+output_value := send_sd_command_ret; // Bitwise-AND the returned value with R1_ILLEGAL_COMMAND (0x04) to check if the command was illegal.
+__ASM__("LOAD output_value,A");
+__ASM__("CLOAD 4,B");
+__ASM__("AND A,B");
+__ASM__("STORE A,output_value");
+VAR s;
+s := output_value;
+IF s # 0 THEN
+BEGIN
+    VAR card_type_message_1 = "SD card is type 1.";
+    CALL next_line;
+    print_procedure_arg_string_s := card_type_message_1;
+    CALL print;
+END;
+IF s = 0 THEN
+BEGIN
+    VAR else_msg = "ELSE???";
+    CALL next_line;
+    print_procedure_arg_string_s := else_msg;
+    CALL print;
+END;
+
+CALL HALT;

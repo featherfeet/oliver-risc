@@ -89,6 +89,7 @@ Therefore, each character cell on-screen is `GPU_CHARACTER_CELL_WIDTH pixels wid
 Each character cell is `GPU_CHARACTER_CELL_HEIGHT pixels tall, which is defined as `GPU_DISPLAY_HEIGHT_PIXELS / `GPU_TEXT_DISPLAY_ROWS.
 The GPU text buffer is `GPU_TEXT_BUFFER_LENGTH = `GPU_TEXT_DISPLAY_ROWS * `GPU_TEXT_DISPLAY_COLUMNS bytes long, with one byte per character. Characters are encoded in ASCII.
 The IN and OUT instructions can access a separate memory space called the "ports." Port addresses in the range [0, `GPU_TEXT_BUFFER_LENGTH - 1] can be used to get/set characters on-screen. Port address `GPU_TEXT_BUFFER_LENGTH (i. e. the port just after the end of the GPU memory) is a special read-only location called `INTERRUPT_VALUE_PORT, used to pass values like keyboard scancodes into interrupt routines.
+An SPI bus is used to communicate with the SD card. Port address `SD_CARD_SPI_PORT = `GPU_TEXT_BUFFER_LENGTH + 'd1 (i. e. the port just after the interrupt value port) is used to read and write from the SPI bus (only the first byte of a value written to the port will be sent). The port is ready to be read immediately after it has been written (the OUT instruction will block until the write completes). Port address `SD_CARD_CLOCK_SELECT_PORT = `GPU_TEXT_BUFFER_LENGTH + 'd2 is used to set the CS pin of the SPI bus.
 
 Future planned features:
 Use a stack to push/pop the call stack.

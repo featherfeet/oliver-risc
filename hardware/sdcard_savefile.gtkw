@@ -1,0 +1,44 @@
+[*]
+[*] GTKWave Analyzer v3.3.98 (w)1999-2019 BSI
+[*] Sun Feb 14 08:24:54 2021
+[*]
+[dumpfile] "/home/oliver/Projects/FPGA_Projects/CPU/hardware/dump.lxt"
+[dumpfile_mtime] "Sun Feb 14 08:00:49 2021"
+[dumpfile_size] 822758851
+[savefile] "/home/oliver/Projects/FPGA_Projects/CPU/hardware/sdcard_savefile.gtkw"
+[timestart] 12782010000
+[size] 1920 1016
+[pos] -1 -1
+*-21.956783 12795620000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] test.
+[treeopen] test.top_instantiation.
+[sst_width] 228
+[signals_width] 304
+[sst_expanded] 1
+[sst_vpaned_height] 285
+@28
+test.top_instantiation.spi_controller.CLOCK_50[0]
+test.top_instantiation.spi_controller.SCK[0]
+test.top_instantiation.spi_controller.byte_to_send[7:0]
+@24
+test.top_instantiation.spi_controller.ticks_since_transmit_pulse[13:0]
+@28
+test.top_instantiation.spi_controller.spi_clock_rising[0]
+test.top_instantiation.spi_controller.COPI[0]
+test.top_instantiation.sd_card_spi_clock_select[0]
+@29
+test.top_instantiation.spi_controller.spi_clock[0]
+@22
+test.top_instantiation.spi_controller.bits_to_send[3:0]
+@28
+test.top_instantiation.spi_controller.transmit_done[0]
+test.top_instantiation.spi_controller.transmit_pulse[0]
+@22
+test.top_instantiation.spi_controller.byte_received[7:0]
+@28
+test.top_instantiation.sd_card_spi_access_state[0]
+@24
+test.top_instantiation.\registers[1][31:0]
+test.top_instantiation.operation[7:0]
+[pattern_trace] 1
+[pattern_trace] 0

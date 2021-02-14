@@ -47,6 +47,10 @@ module verilator_test (
         .zs_dq                          (DRAM_DQ)
     );
 
+    wire spi_sclk;
+    wire spi_copi;
+    wire spi_cs;
+
     top top_instantiation (
         .KEY(reset_n),
         .CLOCK_50(clk),
@@ -71,10 +75,14 @@ module verilator_test (
         .PS2_CLK(PS2_CLK),
         .PS2_DAT(PS2_DAT),
         .verilator_only_dram_clk(verilator_only_dram_clk),
-        .verilator_only_vga_pixel_clock(verilator_only_vga_pixel_clock)
+        .verilator_only_vga_pixel_clock(verilator_only_vga_pixel_clock),
+        .SD_CLK(spi_sclk),
+        .SD_CMD(spi_copi),
+        .SD_DAT3(spi_cs)
     );
     initial begin
         $dumpfile("dump.vcd");
+        /*
         $dumpvars(0, test);
         for (i = 0; i < `NUM_REGISTERS; i = i + 1)
         begin
@@ -90,5 +98,6 @@ module verilator_test (
             $dumpvars(0, top_instantiation.interrupt_fifo.items[i]);
             $dumpvars(0, top_instantiation.interrupt_value_fifo.items[i]);
         end
+        */
     end
 endmodule

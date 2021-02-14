@@ -36,7 +36,12 @@ module top(
     input PS2_CLK,
     input PS2_DAT,
     output wire [7:0] LEDG,
-    output wire [35:0] GPIO_0
+    output wire [35:0] GPIO_0,
+
+    output wire SD_CLK, // Also called SCK or SCLK.
+    output wire SD_CMD, // Also called DI or COPI.
+    input SD_DAT, // Also called DO or CIPO.
+    output wire SD_DAT3 // Also called CS or SS.
 
     `ifdef verilator
         ,input verilator_only_dram_clk,
@@ -321,6 +326,33 @@ lpm_divide #(.lpm_widthn(`OPERAND_SIZE_BITS), .lpm_widthd(`OPERAND_SIZE_BITS), .
     .remain(divider_remainder)
 );
 
+// SPI controller for the SD card.
+reg sd_card_spi_clock_select = 'b0;
+assign SD_DAT3 = sd_card_spi_clock_select;
+
+reg sd_card_spi_transmit_pulse = 0;
+wire sd_card_spi_transmit_done;
+reg [7:0] sd_card_spi_byte_to_send;
+wire [7:0] sd_card_spi_byte_received;
+spi_controller spi_controller(.reset_n(KEY[0]),
+                              .CLOCK_50(CLOCK_50),
+                              .transmit_pulse(sd_card_spi_transmit_pulse),
+                              .transmit_done(sd_card_spi_transmit_done),
+                              .byte_to_send(sd_card_spi_byte_to_send),
+                              .byte_received(sd_card_spi_byte_received),
+                              .SCK(SD_CLK),
+                              .COPI(SD_CMD),
+                              .CIPO(SD_DAT)
+                          );
+
+reg sd_card_spi_access_state;
+
+// DEBUG
+assign GPIO_0[0] = SD_CLK;
+assign GPIO_0[1] = SD_CMD;
+assign GPIO_0[2] = SD_DAT;
+assign GPIO_0[3] = SD_DAT3;
+
 always @(posedge CLOCK_50)
 begin
     // RESET LOGIC
@@ -375,6 +407,10 @@ begin
         divider_denominator <= 'b0;
         division_delay_counter <= 'b0;
         temp_address <= 'b0;
+        sd_card_spi_transmit_pulse <= 'b0;
+        sd_card_spi_byte_to_send <= 'b0;
+        sd_card_spi_clock_select <= 'b0;
+        sd_card_spi_access_state <= `SD_CARD_SPI_ACCESS_STATE_WRITE;
     end
     else
     begin

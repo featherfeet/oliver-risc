@@ -1,0 +1,30 @@
+wire OUT_OF_RANGE = 1'b0;
+wire ADDRESS_ERROR = 1'b0;
+wire BLOCK_LEN_ERROR = 1'b0;
+wire ERASE_SEQ_ERROR = 1'b0;
+wire ERASE_PARAM = 1'b0;
+wire WP_VIOLATION = 1'b0;
+wire CARD_IS_LOCKED = 1'b0;
+wire LOCK_UNLOCK_FAILED = 1'b0;
+wire COM_CRC_ERROR = 1'b0;
+wire ILLEGAL_COMMAND = 1'b0;
+wire CARD_ECC_FAILED = 1'b0;
+wire CC_ERROR = 1'b0;
+wire ERROR = 1'b0;
+wire CSD_OVERWRITE = 1'b0;
+wire WP_ERASE_SKIP = 1'b0;
+wire CARD_ECC_DISABLE = 1'b0;
+wire ERASE_RESET = 1'b0;
+wire [3:0] CURRENT_ST = 1;//ready
+wire READY_FOR_DATA = 1'b1;
+wire APP_CMD = 1'b0;
+wire AKE_SEQ_ERROR = 1'b0;
+wire IN_IDLE_ST = (CURRENT_ST == 4'b1);
+
+wire [15:0] CSR = {OUT_OF_RANGE, ADDRESS_ERROR, BLOCK_LEN_ERROR, ERASE_SEQ_ERROR,
+                   ERASE_PARAM, WP_VIOLATION, CARD_IS_LOCKED, LOCK_UNLOCK_FAILED,
+                   COM_CRC_ERROR, ILLEGAL_COMMAND, CARD_ECC_FAILED, CC_ERROR,
+                   ERROR, 2'b0, CSD_OVERWRITE, WP_ERASE_SKIP, CARD_ECC_DISABLE,
+                   ERASE_RESET, CURRENT_ST, READY_FOR_DATA, 2'b0, APP_CMD, 1'b0,
+                   AKE_SEQ_ERROR, 3'b0};
+

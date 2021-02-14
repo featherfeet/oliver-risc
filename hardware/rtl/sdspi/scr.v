@@ -1,0 +1,8 @@
+wire [3:0] SCR_STRUCTURE = 4'd0;//Ver1.0
+wire [3:0] SD_SPEC = 4'd2;//Ver2.0 or 3.0
+wire DATA_STAT_AFTER_ERASE = 1'b1;
+wire [2:0] SD_SECURITY = 3'd4;//Ver3.00
+wire [3:0] SD_BUS_WIDTHS = 4'b0001;///1bit
+wire SD_SPEC3 = 1'b1;//Ver3.0
+wire [13:0] CMD_SUPPORT = 14'b0;//
+wire [63:0] SCR = {SCR_STRUCTURE, SD_SPEC, DATA_STAT_AFTER_ERASE, SD_SECURITY, SD_BUS_WIDTHS, SD_SPEC3, 13'b0, CMD_SUPPORT, 32'b0};

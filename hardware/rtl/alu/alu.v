@@ -154,7 +154,7 @@ case (operation)
             division_delay_counter <= division_delay_counter + 'b1;
         end
     end
-    // Write to the I/O "memory" space (currently just the GPU's text buffer and the interrupt value). operand1 is the register number of the register containing the address to write to. operand2 is the register number of the register containing the value to write.
+    // Write to the I/O "memory" space (currently just the GPU's text buffer, read-only interrupt value port, SPI port, and SPI port CS line). operand1 is the register number of the register containing the address to write to. operand2 is the register number of the register containing the value to write.
     `OPERATION_OUT:
     begin
         if (gpu_access_state == `GPU_ACCESS_STATE_SETUP && registers[operand1] < `GPU_TEXT_BUFFER_LENGTH)
@@ -169,6 +169,33 @@ case (operation)
         begin
             $display("Error: CPU cannot write to interrupt value port.");
             next_instruction(); // You cannot write to the interrupt value port.
+        end
+        else if (registers[operand1] == `SD_CARD_SPI_PORT)
+        begin
+            if (sd_card_spi_access_state == `SD_CARD_SPI_ACCESS_STATE_WRITE)
+            begin
+                $display("\033[1;32mOUT [SPI, address %0d, value %0d]\033[0m", registers[operand1], registers[operand2]);
+                $display("Start SPI write...");
+                sd_card_spi_byte_to_send <= registers[operand2][7:0];
+                sd_card_spi_transmit_pulse <= 'b1;
+                sd_card_spi_access_state <= `SD_CARD_SPI_ACCESS_STATE_WAIT;
+            end
+            else if (sd_card_spi_access_state == `SD_CARD_SPI_ACCESS_STATE_WAIT)
+            begin
+                sd_card_spi_transmit_pulse <= 'b0;
+                if (sd_card_spi_transmit_done)
+                begin
+                    $display("Finish SPI write...");
+                    sd_card_spi_access_state <= `SD_CARD_SPI_ACCESS_STATE_WRITE;
+                    next_instruction();
+                end
+            end
+        end
+        else if (registers[operand1] == `SD_CARD_CLOCK_SELECT_PORT)
+        begin
+            $display("\033[1;32mOUT [SPI CS, address %0d, value %0d]\033[0m", registers[operand1], registers[operand2]);
+            sd_card_spi_clock_select <= ~(registers[operand2] == 'b0); // If registers[operand2] is 0, set the SD card SPI bus CS line low. For any other value, set it high.
+            next_instruction();
         end
         else
         begin
@@ -192,6 +219,11 @@ case (operation)
         else if (registers[operand1] == `INTERRUPT_VALUE_PORT)
         begin
             registers[operand2] <= interrupt_value_fifo_data_out;
+            next_instruction();
+        end
+        else if (registers[operand1] == `SD_CARD_SPI_PORT)
+        begin
+            registers[operand2] <= sd_card_spi_byte_received;
             next_instruction();
         end
         else
@@ -321,8 +353,8 @@ case (operation)
     end
     `OPERATION_HALT:
     begin
-        //$display("HALT");
+        $display("HALT");
         state <= `STATE_EXECUTE_INSTRUCTION;
-        //$finish;
+        $finish;
     end
 endcase

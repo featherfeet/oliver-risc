@@ -2,12 +2,12 @@ extern crate ncurses;
 
 use std::fs;
 use std::env;
+use std::io::Write;
 use num_derive::FromPrimitive;
 use num_traits::FromPrimitive;
 use std::convert::TryInto;
 use std::collections::VecDeque;
 use ncurses::*;
-use ncurses::constants::*;
 
 type RawProcessorOperand = u32;
 const OPERATION_SIZE: usize = 1; // bytes
@@ -20,6 +20,8 @@ const GPU_TEXT_DISPLAY_ROWS: usize = 67; // rows of text
 const GPU_TEXT_DISPLAY_COLUMNS: usize = 240; // columns of text
 const GPU_TEXT_BUFFER_LENGTH: usize = GPU_TEXT_DISPLAY_ROWS * GPU_TEXT_DISPLAY_COLUMNS; // characters of text
 const INTERRUPT_VALUE_PORT: usize = GPU_TEXT_BUFFER_LENGTH;
+const SD_CARD_SPI_PORT: usize = GPU_TEXT_BUFFER_LENGTH + 1;
+const SD_CARD_CLOCK_SELECT_PORT: usize = GPU_TEXT_BUFFER_LENGTH + 2;
 
 const NUM_INTERRUPTS: usize = 8; // interrupts
 const INTERRUPT_TYPE_KEY: RawProcessorOperand = 0;
@@ -237,6 +239,9 @@ fn main() {
     let mut interrupt_value_fifo = VecDeque::<RawProcessorOperand>::new();
     let mut interrupt_value_fifo_data_out: RawProcessorOperand = 0; // Emulates the register in the CPU that stores the data read out of the interrupt-value FIFO. Used by the IN instruction to get the value of an interrupt (like the scancode of a keypress).
 
+    // Open SPI logfile to log bytes sent out over the SD card SPI bus.
+    let mut spi_logfile = fs::File::create("spi_logfile.log").expect("ERROR: Failed to open SPI logfile for writing.");
+
     // Read the first OPERAND_SIZE bytes of the binary, which contain the length of the .data:
     // section of the binary (which is also the offset to the start of the .code: section).
     let start_of_code_section_offset: RawProcessorOperand = RawProcessorOperand::from_le_bytes(raw_binary[0..OPERAND_SIZE].try_into().expect("ERROR: Emulator's OPERAND_SIZE must match the number of bytes in the RawProcessorOperand type.")) + (OPERAND_SIZE as RawProcessorOperand); // We add OPERAND_SIZE to the offset to compensate for the first OPERAND_SIZE bytes of the file being used to store the length of the .data: section.
@@ -293,6 +298,17 @@ fn main() {
                 else if registers[operand1 as usize] == INTERRUPT_VALUE_PORT as RawProcessorOperand {
                     println!("ERROR: CPU cannot write to interrupt value port.");
                 }
+                else if registers[operand1 as usize] == SD_CARD_CLOCK_SELECT_PORT as RawProcessorOperand {
+                    if registers[operand2 as usize] == 0 {
+                        writeln!(spi_logfile, "CS LOW").expect("Failed to write to spi_logfile.log.");
+                    }
+                    else {
+                        writeln!(spi_logfile, "CS HIGH").expect("Failed to write to spi_logfile.log.");
+                    }
+                }
+                else if registers[operand1 as usize] == SD_CARD_SPI_PORT as RawProcessorOperand {
+                    writeln!(spi_logfile, "{:#X}", registers[operand2 as usize].to_le_bytes()[0]).expect("Failed to write to spi_logfile.log.");
+                }
                 else {
                     println!("ERROR: Invalid OUT instruction.");
                 }
@@ -305,6 +321,9 @@ fn main() {
                 }
                 else if registers[operand1 as usize] == INTERRUPT_VALUE_PORT as RawProcessorOperand {
                     registers[operand2 as usize] = interrupt_value_fifo_data_out;
+                }
+                else if registers[operand1 as usize] == SD_CARD_SPI_PORT as RawProcessorOperand {
+                    registers[operand2 as usize] = 1; // DEBUG
                 }
                 registers[Register::IP as usize] += INSTRUCTION_SIZE as RawProcessorOperand;
             }

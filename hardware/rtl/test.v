@@ -71,6 +71,21 @@ module test();
         .zs_dq                          (DRAM_DQ)
     );
 
+    wire SD_DAT3;
+    wire SD_CLK;
+    wire SD_CMD;
+    wire SD_DAT;
+
+    /*
+    spi_sd_model spi_sd_model(
+        .rstn(reset),
+        .ncs(SD_DAT3),
+        .sclk(SD_CLK),
+        .mosi(SD_CMD),
+        .miso(SD_DAT)
+    );
+    */
+
     top top_instantiation (
         .KEY(reset),
         .CLOCK_50(clk),
@@ -93,7 +108,11 @@ module test();
         .VGA_VS(VGA_VS),
         .VGA_PIXEL_CLOCK(VGA_PIXEL_CLOCK),
         .PS2_CLK(PS2_CLK),
-        .PS2_DAT(PS2_DAT)
+        .PS2_DAT(PS2_DAT),
+        .SD_DAT3(SD_DAT3),
+        .SD_CLK(SD_CLK),
+        .SD_CMD(SD_CMD),
+        .SD_DAT(SD_DAT)
     );
     initial begin
         PS2_CLK = 'b1;
@@ -130,6 +149,7 @@ module test();
         // FOR FULL SHELL PROGRAM (wait 2 ms + 123 ns):
         //#2_000_123; // Wait 2 ms for program to start and reach the busy-wait loop, plus some small amount of time to make sure the PS/2 and the main clock aren't exactly in sync.
         // FOR SIMPLE KEYBOARD TEST PROGRAM (wait 200 us + 123 ns):
+        /*
         #200_123
         // Send the 1 key.
         send_ps2_scancode('hF0);
@@ -151,6 +171,7 @@ module test();
         #5000;
         send_ps2_scancode(22);
         #5000;
+        */
         /*
         PS2_CLK = 'b0;
         #45_000;
@@ -782,6 +803,6 @@ module test();
         #45_000;
         PS2_CLK = 'b1;
         */
-        $finish;
+        //$finish;
     end
 endmodule
