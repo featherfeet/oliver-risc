@@ -250,7 +250,7 @@ fn main() {
     registers[Register::IP as usize] = start_of_code_section_offset;
     loop {
         let register_ip = registers[Register::IP as usize] as usize;
-        mvprintw(12, 10, &format!("IP = {}            ", register_ip));
+        //mvprintw(12, 10, &format!("IP = {}            ", register_ip));
         // Fetch operation and operands.
         let operation: u8 = raw_binary[register_ip];
         let operand1_bytes: [u8; OPERAND_SIZE] = raw_binary[register_ip + OPERATION_SIZE .. register_ip + OPERATION_SIZE + OPERAND_SIZE].try_into().expect("ERROR: Emulator's OPERAND_SIZE must match the number of bytes in the RawProcessorOperand type.");
@@ -290,13 +290,12 @@ fn main() {
                     let character: u8 = registers[operand2 as usize].to_le_bytes()[0];
                     gpu_text_buffer[address] = character;
                     mvaddch((address / GPU_TEXT_DISPLAY_COLUMNS) as i32, (address % GPU_TEXT_DISPLAY_COLUMNS) as i32, character.into());
-                    if character as char != '_' {
-                        mvprintw(13, 10, &format!("Outputting {} at address {}.", character, address));
-                    }
                     refresh();
                 }
                 else if registers[operand1 as usize] == INTERRUPT_VALUE_PORT as RawProcessorOperand {
+                    endwin();
                     println!("ERROR: CPU cannot write to interrupt value port.");
+                    break;
                 }
                 else if registers[operand1 as usize] == SD_CARD_CLOCK_SELECT_PORT as RawProcessorOperand {
                     if registers[operand2 as usize] == 0 {
@@ -379,7 +378,12 @@ fn main() {
             }
             Some(Operation::HALT) => {
                 std::thread::sleep(std::time::Duration::from_millis(10 * 1000));
+                let mut ram_dumpfile = fs::File::create("ram_dumpfile.bin").unwrap();
+                ram_dumpfile.write(&raw_binary).unwrap();
                 endwin();
+                for (register_number, register) in registers.iter().enumerate() {
+                    println!("{}: {}", register_number, register);
+                }
                 //println!("HALT");
                 break;
             }

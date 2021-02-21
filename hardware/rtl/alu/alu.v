@@ -162,7 +162,7 @@ case (operation)
             $display("\033[1;32mOUT [address %0d, character '%c' (integer value %0d)]\033[0m", registers[operand1], registers[operand2], registers[operand2]);
             gpu_write_enable <= 'b1;
             gpu_cell_to_access <= registers[operand1];
-            gpu_character_to_write <= registers[operand2];
+            gpu_character_to_write <= registers[operand2][6:0];
             gpu_access_state <= `GPU_ACCESS_STATE_FINISH;
         end
         else if (registers[operand1] == `INTERRUPT_VALUE_PORT)
@@ -228,7 +228,7 @@ case (operation)
         end
         else
         begin
-            registers[operand2] <= {24'b0, gpu_character_read};
+            registers[operand2] <= {25'b0, gpu_character_read};
             gpu_access_state <= `GPU_ACCESS_STATE_SETUP;
             next_instruction();
         end

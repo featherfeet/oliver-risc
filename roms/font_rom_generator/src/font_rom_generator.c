@@ -9,7 +9,7 @@
 #define CHARACTER_CELL_WIDTH_PIXELS (SCREEN_WIDTH_PIXELS / SCREEN_WIDTH_COLUMNS)
 #define CHARACTER_CELL_HEIGHT_PIXELS (SCREEN_HEIGHT_PIXELS / SCREEN_HEIGHT_ROWS)
 
-#define NUMBER_OF_CHARACTERS 256
+#define NUMBER_OF_CHARACTERS 128
 
 int main(int argc, char *argv[]) {
     if (argc != 4) {
@@ -23,7 +23,7 @@ int main(int argc, char *argv[]) {
     FILE *mem_output_file = fopen(argv[3], "w");
 
     // Write the Verilog module header.
-    fprintf(verilog_output_file, "module font_rom(input CLOCK_150, input[7:0] character, input[$clog2(%u) - 1:0] character_cell_x, input[$clog2(%u) - 1:0] character_cell_y, output reg pixel_value);\n", CHARACTER_CELL_WIDTH_PIXELS, CHARACTER_CELL_HEIGHT_PIXELS);
+    fprintf(verilog_output_file, "module font_rom(input CLOCK_150, input[6:0] character, input[$clog2(%u) - 1:0] character_cell_x, input[$clog2(%u) - 1:0] character_cell_y, output reg pixel_value);\n", CHARACTER_CELL_WIDTH_PIXELS, CHARACTER_CELL_HEIGHT_PIXELS);
     fprintf(verilog_output_file, "\treg[0:127] font_storage[0:%u - 1];\n", NUMBER_OF_CHARACTERS);
     fprintf(verilog_output_file, "\tinitial begin\n");
     fprintf(verilog_output_file, "\t\t$readmemh(\"rtl/gpu/font_rom.mem\", font_storage);\n");

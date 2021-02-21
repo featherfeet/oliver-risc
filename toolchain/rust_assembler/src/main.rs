@@ -306,6 +306,8 @@ fn main() {
 
     // Create final binary format of .code: section (instructions):
     let mut instructions_binary: Vec::<u8> = vec![0; instructions_table.len() * INSTRUCTION_SIZE];
+//    println!("{:#?}", instructions_table);
+//    println!("{:#?}", instructions_table.len() * INSTRUCTION_SIZE);
     for (i, instruction) in instructions_table.iter().enumerate() {
         let operation = (instruction.operation as u8).to_le_bytes();
         instructions_binary[i * INSTRUCTION_SIZE .. i * INSTRUCTION_SIZE + OPERATION_SIZE].copy_from_slice(&operation);

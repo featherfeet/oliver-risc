@@ -268,6 +268,7 @@ std::tuple<std::string, std::string> AssemblyGenerator::generateAsm(ASTNode *nod
     }
 
     else if (node->getNodeType() == VARIABLE_DECLARATION_NODE) {
+        code_section << "    // Start variable declaration node." << std::endl;
         ASTVariableDeclarationNode *declaration = (ASTVariableDeclarationNode *) node;
         current_stackframe->addVariable(declaration->getVariableName(), OPERAND_SIZE);
         if (declaration->getVariableDeclarationNodeType() == INTEGER_DECLARATION) {
@@ -279,6 +280,7 @@ std::tuple<std::string, std::string> AssemblyGenerator::generateAsm(ASTNode *nod
             data_section << fmt::format("    {} = \"{}\"", string_name, declaration->getStringValue()) << std::endl;
             code_section << generateStackVariableStringLoad(string_name, declaration->getVariableName());
         }
+        code_section << "    // End variable declaration node." << std::endl;
     }
 
     else if (node->getNodeType() == VARIABLE_ASSIGNMENT_NODE) {
@@ -321,72 +323,84 @@ std::tuple<std::string, std::string> AssemblyGenerator::generateAsm(ASTNode *nod
         ASTExpressionNode *expression = (ASTExpressionNode *) node;
         std::vector<ASTNode*> terms = expression->getTerms();
 
-        // Generate assembly that evaluates the expression. Register C is used as the accumulator.
-        code_section << "    CLOAD 0,C" << std::endl;
-
-        for (int i = 0; i < terms.size(); i++) {
-            ASTNode *ast_node = terms[i];
-            
-            if (ast_node->getNodeType() == TERM_NODE) {
-                ASTTermNode *term = (ASTTermNode*) ast_node;
-                if (term->getType() == CONSTANT) {
-                    code_section << fmt::format("    CLOAD {},D", term->getConstantValue()) << std::endl;
-                }
-                else if (term->getType() == VARIABLE) {
-                    code_section << generateStackVariableRead(term->getVariableName(), "D");
-                }
-                if (term->getOperation() == ADDITION) {
-                    code_section << "    ADD C,D" << std::endl;
-                    code_section << "    MOV A,C" << std::endl;
-                }
-                else if (term->getOperation() == SUBTRACTION) {
-                    code_section << "    SUB C,D" << std::endl;
-                    code_section << "    MOV A,C" << std::endl;
-                }
-                else if (term->getOperation() == MULTIPLICATION) {
-                    code_section << "    MULT C,D" << std::endl;
-                    code_section << "    MOV A,C" << std::endl;
-                }
-                else if (term->getOperation() == DIVISION) {
-                    code_section << "    DIV C,D" << std::endl;
-                    code_section << "    MOV A,C" << std::endl;
-                }
-                else if (term->getOperation() == MODULUS) {
-                    code_section << "    DIV C,D" << std::endl;
-                    code_section << "    MOV B,C" << std::endl;
-                }
+        // Special case for single-term (no accumulation needed) expressions. Helps shorten the produced assembly.
+        if (terms.size() == 1 && terms[0]->getNodeType() == TERM_NODE) {
+            ASTTermNode *term = (ASTTermNode *) terms[0];
+            if (term->getType() == CONSTANT) {
+                code_section << fmt::format("    CLOAD {},C", term->getConstantValue()) << std::endl;
             }
-            else if (ast_node->getNodeType() == BUFFER_READ_NODE) {
-                code_section << "    // Start buffer read node." << std::endl;
-                ASTBufferReadNode *buffer_read = (ASTBufferReadNode*) ast_node;
-                if (buffer_read->getType() == CONSTANT) {
-                    code_section << fmt::format("    CLOAD {},E", buffer_read->getConstantValue()) << std::endl;
+            else if (term->getType() == VARIABLE) {
+                code_section << generateStackVariableRead(term->getVariableName(), "C");
+            }
+        }
+        else {
+            // Generate assembly that evaluates the expression. Register C is used as the accumulator.
+            code_section << "    CLOAD 0,C" << std::endl;
+
+            for (int i = 0; i < terms.size(); i++) {
+                ASTNode *ast_node = terms[i];
+                
+                if (ast_node->getNodeType() == TERM_NODE) {
+                    ASTTermNode *term = (ASTTermNode*) ast_node;
+                    if (term->getType() == CONSTANT) {
+                        code_section << fmt::format("    CLOAD {},D", term->getConstantValue()) << std::endl;
+                    }
+                    else if (term->getType() == VARIABLE) {
+                        code_section << generateStackVariableRead(term->getVariableName(), "D");
+                    }
+                    if (term->getOperation() == ADDITION) {
+                        code_section << "    ADD C,D" << std::endl;
+                        code_section << "    MOV A,C" << std::endl;
+                    }
+                    else if (term->getOperation() == SUBTRACTION) {
+                        code_section << "    SUB C,D" << std::endl;
+                        code_section << "    MOV A,C" << std::endl;
+                    }
+                    else if (term->getOperation() == MULTIPLICATION) {
+                        code_section << "    MULT C,D" << std::endl;
+                        code_section << "    MOV A,C" << std::endl;
+                    }
+                    else if (term->getOperation() == DIVISION) {
+                        code_section << "    DIV C,D" << std::endl;
+                        code_section << "    MOV A,C" << std::endl;
+                    }
+                    else if (term->getOperation() == MODULUS) {
+                        code_section << "    DIV C,D" << std::endl;
+                        code_section << "    MOV B,C" << std::endl;
+                    }
                 }
-                else if (buffer_read->getType() == VARIABLE) {
-                    code_section << generateStackVariableRead(buffer_read->getVariableValue(), "E");
+                else if (ast_node->getNodeType() == BUFFER_READ_NODE) {
+                    code_section << "    // Start buffer read node." << std::endl;
+                    ASTBufferReadNode *buffer_read = (ASTBufferReadNode*) ast_node;
+                    if (buffer_read->getType() == CONSTANT) {
+                        code_section << fmt::format("    CLOAD {},E", buffer_read->getConstantValue()) << std::endl;
+                    }
+                    else if (buffer_read->getType() == VARIABLE) {
+                        code_section << generateStackVariableRead(buffer_read->getVariableValue(), "E");
+                    }
+                    code_section << generateBufferRead(buffer_read->getVariableName(), "E", "D");
+                    if (buffer_read->getOperation() == ADDITION) {
+                        code_section << "    ADD C,D" << std::endl;
+                        code_section << "    MOV A,C" << std::endl;
+                    }
+                    else if (buffer_read->getOperation() == SUBTRACTION) {
+                        code_section << "    SUB C,D" << std::endl;
+                        code_section << "    MOV A,C" << std::endl;
+                    }
+                    else if (buffer_read->getOperation() == MULTIPLICATION) {
+                        code_section << "    MULT C,D" << std::endl;
+                        code_section << "    MOV A,C" << std::endl;
+                    }
+                    else if (buffer_read->getOperation() == DIVISION) {
+                        code_section << "    DIV C,D" << std::endl;
+                        code_section << "    MOV A,C" << std::endl;
+                    }
+                    else if (buffer_read->getOperation() == MODULUS) {
+                        code_section << "    DIV C,D" << std::endl;
+                        code_section << "    MOV B,C" << std::endl;
+                    }
+                    code_section << "    // End buffer read node." << std::endl;
                 }
-                code_section << generateBufferRead(buffer_read->getVariableName(), "E", "D");
-                if (buffer_read->getOperation() == ADDITION) {
-                    code_section << "    ADD C,D" << std::endl;
-                    code_section << "    MOV A,C" << std::endl;
-                }
-                else if (buffer_read->getOperation() == SUBTRACTION) {
-                    code_section << "    SUB C,D" << std::endl;
-                    code_section << "    MOV A,C" << std::endl;
-                }
-                else if (buffer_read->getOperation() == MULTIPLICATION) {
-                    code_section << "    MULT C,D" << std::endl;
-                    code_section << "    MOV A,C" << std::endl;
-                }
-                else if (buffer_read->getOperation() == DIVISION) {
-                    code_section << "    DIV C,D" << std::endl;
-                    code_section << "    MOV A,C" << std::endl;
-                }
-                else if (buffer_read->getOperation() == MODULUS) {
-                    code_section << "    DIV C,D" << std::endl;
-                    code_section << "    MOV B,C" << std::endl;
-                }
-                code_section << "    // End buffer read node." << std::endl;
             }
         }
         code_section << "    // End expression node." << std::endl;

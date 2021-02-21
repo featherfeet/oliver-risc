@@ -1,4 +1,5 @@
 // Console width in characters.
+/*
 VAR SCREEN_HEIGHT_ROWS = 67;
 VAR SCREEN_WIDTH_COLUMNS = 240;
 VAR GPU_MEMORY_LENGTH;
@@ -43,9 +44,10 @@ BEGIN
 END;
 
 // Print message.
-VAR startup_message = "SD card test program loaded...";
+VAR startup_message = "SD boot...";
 print_procedure_arg_string_s := startup_message;
 CALL print;
+*/
 
 // Set CS high.
 __ASM__("CLOAD 16082,A");
@@ -205,10 +207,12 @@ BEGIN
     CALL send_sd_command;
 END;
 
-VAR idle_message = "SD card in idle state.";
+/*
+VAR idle_message = "Card idle.";
 print_procedure_arg_string_s := idle_message;
 CALL next_line;
 CALL print;
+*/
 
 // Check the SD version.
 send_sd_command_arg_cmd := 8; // CMD8
@@ -222,19 +226,228 @@ __ASM__("AND A,B");
 __ASM__("STORE A,output_value");
 VAR s;
 s := output_value;
+VAR sd_card_type;
+// SD card is type 1.
 IF s # 0 THEN
 BEGIN
-    VAR card_type_message_1 = "SD card is type 1.";
+    /*
+    VAR card_type_message_1 = "TYPE 1";
     CALL next_line;
     print_procedure_arg_string_s := card_type_message_1;
     CALL print;
+    */
+    sd_card_type := 1;
 END;
+// SD card is not type 1.
 IF s = 0 THEN
 BEGIN
-    VAR else_msg = "ELSE???";
+    __ASM__("CLOAD 16081,A");
+    __ASM__("CLOAD 255,B");
+    __ASM__("OUT A,B");
+    __ASM__("IN A,C");
+    __ASM__("OUT A,B");
+    __ASM__("IN A,C");
+    __ASM__("OUT A,B");
+    __ASM__("IN A,C");
+    __ASM__("OUT A,B");
+    __ASM__("IN A,C");
+    __ASM__("STORE C,output_value");
+    IF output_value # 170 THEN // 170 = 0xAA
+    BEGIN
+        /*
+        VAR err_msg = "CMD8 err";
+        CALL next_line;
+        print_procedure_arg_string_s := err_msg;
+        CALL print;
+        */
+        CALL HALT;
+    END;
+    sd_card_type := 2;
+    /*
+    VAR card_type_message_1 = "TYPE 2";
     CALL next_line;
-    print_procedure_arg_string_s := else_msg;
+    print_procedure_arg_string_s := card_type_message_1;
     CALL print;
+    */
 END;
 
+send_sd_command_ret := 255; // Just to make sure that it is actually zero when it gets set to zero by the procedure.
+
+WHILE 1 = 1 DO
+BEGIN
+    send_sd_command_arg_cmd := 55; // CMD55 (0x37, escape for an application-specific command).
+    send_sd_command_arg_arg := 0;
+    CALL send_sd_command;
+    // Initialize the card and send "host supports SDHC" if type was SD2.
+    send_sd_command_arg_cmd := 41; // ACMD41 (0x29, initialize the card and send host capacity support info).
+    IF sd_card_type = 2 THEN
+    BEGIN
+        send_sd_command_arg_arg := 64; // 0x40
+    END;
+    IF sd_card_type # 2 THEN
+    BEGIN
+        send_sd_command_arg_arg := 0;
+    END;
+    CALL send_sd_command;
+    // When we get R1_READY_STATE (0) back, jump out of the loop.
+    IF send_sd_command_ret = 0 THEN
+    BEGIN
+        __ASM__("CMP A,A");
+        __ASM__("JMPE got_ready_state");
+    END;
+END;
+
+__ASM__("got_ready_state:");
+
+/*
+VAR init_msg = "Init done";
+CALL next_line;
+print_procedure_arg_string_s := init_msg;
+CALL print;
+*/
+
+// If type of card is SD2, then read the OCR register to check for an SDHC card.
+IF sd_card_type = 2 THEN
+BEGIN
+    // Send CMD58.
+    send_sd_command_arg_cmd := 58; // CMD58
+    send_sd_command_arg_arg := 0;
+    CALL send_sd_command;
+    IF send_sd_command_ret # 0 THEN
+    BEGIN
+        /*
+        CALL next_line;
+        VAR cmd58_err_msg = "CMD58 err";
+        print_procedure_arg_string_s := cmd58_err_msg;
+        CALL print;
+        */
+        CALL HALT;
+    END;
+    // Check for SDHC card.
+    __ASM__("CLOAD 16081,A");
+    __ASM__("CLOAD 255,B");
+    __ASM__("OUT A,B");
+    __ASM__("IN A,C");
+    __ASM__("CLOAD 192,A"); // 192 = 0xC0
+    __ASM__("AND A,C");
+    __ASM__("STORE A,output_value");
+    IF output_value = 192 THEN
+    BEGIN
+        sd_card_type := 3; // Use 3 to represent SDHC.
+        /*
+        CALL next_line;
+        VAR sdhc_msg = "SDHC card";
+        print_procedure_arg_string_s := sdhc_msg;
+        CALL print;
+        */
+    END;
+    /*
+    IF output_value # 192 THEN
+    BEGIN
+        CALL next_line;
+        VAR not_sdhc_msg = "Not SDHC card";
+        print_procedure_arg_string_s := not_sdhc_msg;
+        CALL print;
+    END;
+    */
+    // Discard the rest of the OCR register, since it just holds the allowed voltage range.
+    __ASM__("CLOAD 16081,A");
+    __ASM__("CLOAD 255,B");
+    __ASM__("OUT A,B");
+    __ASM__("IN A,C");
+    __ASM__("OUT A,B");
+    __ASM__("IN A,C");
+    __ASM__("OUT A,B");
+    __ASM__("IN A,C");
+END;
+
+// Set CS high.
+__ASM__("CLOAD 16082,A");
+__ASM__("CLOAD 1,B");
+__ASM__("OUT A,B");
+
+// Procedure to read data from the SD card.
+VAR read_data_procedure_arg_block; // Logical block to be read.
+VAR read_data_procedure_arg_destination_p; // Pointer (memory address) at which the data should be stored.
+PROCEDURE read_data;
+BEGIN
+    VAR block;
+    block := read_data_procedure_arg_block;
+    // Set CS low.
+    __ASM__("CLOAD 16082,A");
+    __ASM__("CLOAD 0,B");
+    __ASM__("OUT A,B");
+    // If the SD card type is not SDHC, then use the direct address (not the block number) to read.
+    IF sd_card_type # 3 THEN
+    BEGIN
+        block := block * 512;
+    END;
+    // Send CMD17.
+    send_sd_command_arg_cmd := 17; // CMD17
+    send_sd_command_arg_arg := block;
+    CALL send_sd_command;
+    IF send_sd_command_ret # 0 THEN
+    BEGIN
+        /*
+        CALL next_line;
+        VAR err_cmd17 = "CMD17 err";
+        print_procedure_arg_string_s := err_cmd17;
+        CALL print;
+        */
+        RETURN;
+    END;
+    // Wait for the start block token.
+    output_value := 255;
+    WHILE output_value = 255 DO
+    BEGIN
+        __ASM__("CLOAD 16081,A");
+        __ASM__("CLOAD 255,B");
+        __ASM__("OUT A,B");
+        __ASM__("IN A,C");
+        __ASM__("STORE C,output_value");
+    END;
+    IF output_value # 254 THEN // DATA_START_BLOCK = 0xFE = 254
+    BEGIN
+        /*
+        CALL next_line;
+        VAR err_read = "Read err";
+        print_procedure_arg_string_s := err_read;
+        CALL print;
+        */
+        RETURN;
+    END;
+    // Read the block of data (512 bytes).
+    output_value := read_data_procedure_arg_destination_p;
+    WHILE output_value < read_data_procedure_arg_destination_p + 512 DO
+    BEGIN
+        __ASM__("CLOAD 16081,A");
+        __ASM__("CLOAD 255,B");
+        __ASM__("OUT A,B");
+        __ASM__("IN A,B");
+        __ASM__("LOAD output_value,C");
+        __ASM__("RSTORE B,C"); // RSTORE will overwrite the next 3 bytes as well, but this doesn't really matter since we are looping forwards (although it will corrupt the 3 bytes after the end of the memory used to hold the block.
+        output_value := output_value + 1;
+    END;
+    // Set CS high.
+    __ASM__("CLOAD 16082,A");
+    __ASM__("CLOAD 1,B");
+    __ASM__("OUT A,B");
+END;
+
+read_data_procedure_arg_block := 0;
+read_data_procedure_arg_destination_p := 4000100; // Address 4 MB + 100 bytes should be past the area of memory used by the stack.
+CALL read_data;
+
+// Copy data read from SD card to screen.
+VAR i = 0;
+
+WHILE i < 512 DO
+BEGIN
+    output_value := read_data_procedure_arg_destination_p[i];
+    output_address := i;
+    CALL OUT;
+    i := i + 1;
+END;
+
+// Finish.
 CALL HALT;

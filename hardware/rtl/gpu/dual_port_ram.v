@@ -5,13 +5,13 @@ module dual_port_ram(
     input port_b_clock,
     input[$clog2(`GPU_TEXT_BUFFER_LENGTH) - 1:0] port_a_address,
     input[$clog2(`GPU_TEXT_BUFFER_LENGTH) - 1:0] port_b_address,
-    input[7:0] port_a_data_in,
+    input[6:0] port_a_data_in,
     input port_a_write_enable,
-    output reg [7:0] port_a_data_out,
-    output reg [7:0] port_b_data_out
+    output reg [6:0] port_a_data_out,
+    output reg [6:0] port_b_data_out
 );
 
-    reg[0:7] ram_buffer[0:`GPU_TEXT_BUFFER_LENGTH - 1];
+    reg[0:6] ram_buffer[0:`GPU_TEXT_BUFFER_LENGTH - 1];
 
     initial begin
         $display("Loading boot screen...");

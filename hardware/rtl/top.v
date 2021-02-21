@@ -31,7 +31,9 @@ module top(
     output wire [3:0] VGA_B,
     output wire VGA_HS,
     output wire VGA_VS,
+    // synthesis translate_off
     output wire VGA_PIXEL_CLOCK,
+    // synthesis translate_on
 
     input PS2_CLK,
     input PS2_DAT,
@@ -145,8 +147,8 @@ fifo #(.ITEM_SIZE_BITS(8), .FIFO_SIZE(5)) keyboard_scancodes_fifo(.CLOCK_50(CLOC
 // Integrated GPU.
 reg [$clog2(`GPU_TEXT_BUFFER_LENGTH) - 1:0] gpu_cell_to_access;
 reg gpu_write_enable;
-reg [7:0] gpu_character_to_write;
-wire [7:0] gpu_character_read;
+reg [6:0] gpu_character_to_write;
+wire [6:0] gpu_character_read;
 gpu integrated_graphics(.CLOCK_150(VGA_PIXEL_CLOCK),
                         .reset(~KEY[0]),
                         .VGA_R(VGA_R),
