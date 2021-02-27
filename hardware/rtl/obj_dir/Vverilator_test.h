@@ -62,8 +62,8 @@ VL_MODULE(Vverilator_test) {
         CData/*0:0*/ verilator_test__DOT__top_instantiation__DOT__keyboard_scancode_fifo_full;
         CData/*2:0*/ verilator_test__DOT__top_instantiation__DOT__keyboard_scancode_fifo_access_state;
         CData/*0:0*/ verilator_test__DOT__top_instantiation__DOT__gpu_write_enable;
-        CData/*7:0*/ verilator_test__DOT__top_instantiation__DOT__gpu_character_to_write;
-        CData/*7:0*/ verilator_test__DOT__top_instantiation__DOT__gpu_character_read;
+        CData/*6:0*/ verilator_test__DOT__top_instantiation__DOT__gpu_character_to_write;
+        CData/*6:0*/ verilator_test__DOT__top_instantiation__DOT__gpu_character_read;
         CData/*0:0*/ verilator_test__DOT__top_instantiation__DOT__gpu_access_state;
         CData/*7:0*/ verilator_test__DOT__top_instantiation__DOT__program_rom_byte;
         CData/*0:0*/ verilator_test__DOT__top_instantiation__DOT__program_rom_done;
@@ -109,7 +109,7 @@ VL_MODULE(Vverilator_test) {
         CData/*2:0*/ verilator_test__DOT__top_instantiation__DOT__integrated_graphics__DOT__character_cell_x;
         CData/*3:0*/ verilator_test__DOT__top_instantiation__DOT__integrated_graphics__DOT__character_cell_y;
         CData/*7:0*/ verilator_test__DOT__top_instantiation__DOT__integrated_graphics__DOT__current_column;
-        CData/*7:0*/ verilator_test__DOT__top_instantiation__DOT__integrated_graphics__DOT__current_character;
+        CData/*6:0*/ verilator_test__DOT__top_instantiation__DOT__integrated_graphics__DOT__current_character;
         CData/*0:0*/ verilator_test__DOT__top_instantiation__DOT__integrated_graphics__DOT__current_pixel_value;
         CData/*0:0*/ verilator_test__DOT__top_instantiation__DOT__sdram_controller__DOT__ack_refresh_request;
         CData/*1:0*/ verilator_test__DOT__top_instantiation__DOT__sdram_controller__DOT__active_bank;
@@ -143,6 +143,8 @@ VL_MODULE(Vverilator_test) {
         CData/*0:0*/ verilator_test__DOT__top_instantiation__DOT__sdram_controller__DOT__the_sdram_system_new_sdram_controller_0_input_efifo_module__DOT__rd_address;
         CData/*0:0*/ verilator_test__DOT__top_instantiation__DOT__sdram_controller__DOT__the_sdram_system_new_sdram_controller_0_input_efifo_module__DOT__wr_address;
         CData/*0:0*/ verilator_test__DOT__top_instantiation__DOT__spi_controller__DOT__spi_clock;
+        CData/*0:0*/ verilator_test__DOT__top_instantiation__DOT__spi_controller__DOT__previous_spi_clock;
+        CData/*0:0*/ verilator_test__DOT__top_instantiation__DOT__spi_controller__DOT__spi_clock_falling;
         CData/*3:0*/ verilator_test__DOT__top_instantiation__DOT__spi_controller__DOT__bits_to_send;
         SData/*15:0*/ verilator_test__DOT__DRAM_DQ;
         SData/*13:0*/ verilator_test__DOT__sdram_module__DOT__addr_crb;
@@ -161,11 +163,13 @@ VL_MODULE(Vverilator_test) {
         SData/*11:0*/ verilator_test__DOT__top_instantiation__DOT__sdram_controller__DOT__i_addr;
         SData/*11:0*/ verilator_test__DOT__top_instantiation__DOT__sdram_controller__DOT__m_addr;
         SData/*15:0*/ verilator_test__DOT__top_instantiation__DOT__sdram_controller__DOT__m_data;
-        SData/*8:0*/ verilator_test__DOT__top_instantiation__DOT__sdram_controller__DOT__m_next;
-        SData/*8:0*/ verilator_test__DOT__top_instantiation__DOT__sdram_controller__DOT__m_state;
     };
     struct {
+        SData/*8:0*/ verilator_test__DOT__top_instantiation__DOT__sdram_controller__DOT__m_next;
+        SData/*8:0*/ verilator_test__DOT__top_instantiation__DOT__sdram_controller__DOT__m_state;
         SData/*12:0*/ verilator_test__DOT__top_instantiation__DOT__sdram_controller__DOT__refresh_counter;
+        SData/*9:0*/ verilator_test__DOT__top_instantiation__DOT__spi_controller__DOT__spi_clock_divider_counter;
+        SData/*13:0*/ verilator_test__DOT__top_instantiation__DOT__spi_controller__DOT__ticks_since_transmit_pulse;
         IData/*31:0*/ verilator_test__DOT__i;
         IData/*23:0*/ verilator_test__DOT__sdram_module__DOT__CODE;
         IData/*21:0*/ verilator_test__DOT__sdram_module__DOT__rd_addr_pipe_0;
@@ -204,9 +208,9 @@ VL_MODULE(Vverilator_test) {
         IData/*31:0*/ verilator_test__DOT__top_instantiation__DOT__interrupt_fifo__DOT__items[10];
         IData/*31:0*/ verilator_test__DOT__top_instantiation__DOT__interrupt_value_fifo__DOT__items[10];
         CData/*7:0*/ verilator_test__DOT__top_instantiation__DOT__keyboard_scancodes_fifo__DOT__items[5];
-        CData/*7:0*/ verilator_test__DOT__top_instantiation__DOT__integrated_graphics__DOT__text_buffer__DOT__ram_buffer[16080];
-        WData/*127:0*/ verilator_test__DOT__top_instantiation__DOT__integrated_graphics__DOT__font_glyphs__DOT__font_storage[256][4];
-        CData/*7:0*/ verilator_test__DOT__top_instantiation__DOT__program_rom__DOT__rom_memory[1867];
+        CData/*6:0*/ verilator_test__DOT__top_instantiation__DOT__integrated_graphics__DOT__text_buffer__DOT__ram_buffer[16080];
+        WData/*127:0*/ verilator_test__DOT__top_instantiation__DOT__integrated_graphics__DOT__font_glyphs__DOT__font_storage[128][4];
+        CData/*7:0*/ verilator_test__DOT__top_instantiation__DOT__program_rom__DOT__rom_memory[121];
         IData/*31:0*/ verilator_test__DOT__top_instantiation__DOT__divider__DOT__quotient_pipe[17];
         IData/*31:0*/ verilator_test__DOT__top_instantiation__DOT__divider__DOT__remain_pipe[17];
     };
@@ -214,9 +218,9 @@ VL_MODULE(Vverilator_test) {
     // LOCAL VARIABLES
     // Internals; generally not touched by application code
     CData/*7:0*/ verilator_test__DOT__top_instantiation__DOT__keyboard_scancodes_fifo__DOT____Vlvbound2;
-    CData/*7:0*/ verilator_test__DOT__top_instantiation__DOT__integrated_graphics__DOT__text_buffer__DOT____Vlvbound1;
+    CData/*6:0*/ verilator_test__DOT__top_instantiation__DOT__integrated_graphics__DOT__text_buffer__DOT____Vlvbound1;
     CData/*0:0*/ verilator_test__DOT__top_instantiation__DOT__sdram_controller__DOT____Vcellinp__the_sdram_system_new_sdram_controller_0_input_efifo_module__wr;
-    CData/*7:0*/ __Vdlyvval__verilator_test__DOT__top_instantiation__DOT__integrated_graphics__DOT__text_buffer__DOT__ram_buffer__v0;
+    CData/*6:0*/ __Vdlyvval__verilator_test__DOT__top_instantiation__DOT__integrated_graphics__DOT__text_buffer__DOT__ram_buffer__v0;
     CData/*0:0*/ __Vdlyvset__verilator_test__DOT__top_instantiation__DOT__integrated_graphics__DOT__text_buffer__DOT__ram_buffer__v0;
     CData/*0:0*/ __Vdly__verilator_test__DOT__top_instantiation__DOT__sdram_controller__DOT__refresh_request;
     CData/*0:0*/ __Vdly__verilator_test__DOT__top_instantiation__DOT__sdram_controller_init_done;
@@ -252,8 +256,8 @@ VL_MODULE(Vverilator_test) {
     IData/*31:0*/ verilator_test__DOT__top_instantiation__DOT____Vlvbound8;
     IData/*31:0*/ verilator_test__DOT__top_instantiation__DOT____Vlvbound9;
     IData/*31:0*/ verilator_test__DOT__top_instantiation__DOT____Vlvbound10;
-    IData/*31:0*/ verilator_test__DOT__top_instantiation__DOT____Vlvbound11;
     IData/*31:0*/ verilator_test__DOT__top_instantiation__DOT____Vlvbound12;
+    IData/*31:0*/ verilator_test__DOT__top_instantiation__DOT____Vlvbound13;
     IData/*31:0*/ verilator_test__DOT__top_instantiation__DOT__interrupt_fifo__DOT____Vlvbound2;
     IData/*31:0*/ verilator_test__DOT__top_instantiation__DOT__interrupt_value_fifo__DOT____Vlvbound2;
     IData/*31:0*/ verilator_test__DOT__top_instantiation__DOT__divider__DOT____Vlvbound5;

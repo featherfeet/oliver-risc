@@ -146,9 +146,7 @@ VL_INLINE_OPT void Vverilator_test::_sequent__TOP__2(Vverilator_test__Syms* __re
     CData/*1:0*/ __Vdly__verilator_test__DOT__top_instantiation__DOT__interrupt_fifo_access_state;
     CData/*0:0*/ __Vdlyvset__verilator_test__DOT__top_instantiation__DOT__registers__v47;
     CData/*0:0*/ __Vdlyvset__verilator_test__DOT__top_instantiation__DOT__registers__v48;
-    CData/*0:0*/ __Vdlyvset__verilator_test__DOT__top_instantiation__DOT__registers__v50;
-    CData/*0:0*/ __Vdlyvset__verilator_test__DOT__top_instantiation__DOT__registers__v56;
-    CData/*0:0*/ __Vdlyvset__verilator_test__DOT__top_instantiation__DOT__registers__v57;
+    CData/*0:0*/ __Vdlyvset__verilator_test__DOT__top_instantiation__DOT__registers__v49;
     CData/*0:0*/ __Vdlyvset__verilator_test__DOT__top_instantiation__DOT__registers__v58;
     CData/*0:0*/ __Vdlyvset__verilator_test__DOT__top_instantiation__DOT__registers__v59;
     CData/*0:0*/ __Vdlyvset__verilator_test__DOT__top_instantiation__DOT__registers__v60;
@@ -157,9 +155,11 @@ VL_INLINE_OPT void Vverilator_test::_sequent__TOP__2(Vverilator_test__Syms* __re
     CData/*0:0*/ __Vdlyvset__verilator_test__DOT__top_instantiation__DOT__registers__v63;
     CData/*0:0*/ __Vdlyvset__verilator_test__DOT__top_instantiation__DOT__registers__v64;
     CData/*0:0*/ __Vdlyvset__verilator_test__DOT__top_instantiation__DOT__registers__v65;
+    CData/*0:0*/ __Vdlyvset__verilator_test__DOT__top_instantiation__DOT__registers__v66;
+    CData/*0:0*/ __Vdlyvset__verilator_test__DOT__top_instantiation__DOT__registers__v67;
     CData/*0:0*/ __Vdly__verilator_test__DOT__top_instantiation__DOT__interrupt_fifo_read;
     CData/*0:0*/ __Vdly__verilator_test__DOT__top_instantiation__DOT__interrupt_value_fifo_read;
-    CData/*0:0*/ __Vdlyvset__verilator_test__DOT__top_instantiation__DOT__registers__v66;
+    CData/*0:0*/ __Vdlyvset__verilator_test__DOT__top_instantiation__DOT__registers__v68;
     CData/*0:0*/ __Vdlyvset__verilator_test__DOT__top_instantiation__DOT__shadow_registers__v0;
     CData/*0:0*/ __Vdlyvset__verilator_test__DOT__top_instantiation__DOT__shadow_registers__v1;
     CData/*0:0*/ __Vdlyvset__verilator_test__DOT__top_instantiation__DOT__shadow_registers__v2;
@@ -172,9 +172,9 @@ VL_INLINE_OPT void Vverilator_test::_sequent__TOP__2(Vverilator_test__Syms* __re
     CData/*0:0*/ __Vdlyvset__verilator_test__DOT__top_instantiation__DOT__shadow_registers__v9;
     CData/*0:0*/ __Vdly__verilator_test__DOT__top_instantiation__DOT__keyboard_scancode_fifo_read;
     CData/*2:0*/ __Vdly__verilator_test__DOT__top_instantiation__DOT__keyboard_scancode_fifo_access_state;
-    CData/*0:0*/ __Vdlyvset__verilator_test__DOT__top_instantiation__DOT__registers__v68;
-    CData/*0:0*/ __Vdlyvset__verilator_test__DOT__top_instantiation__DOT__registers__v69;
     CData/*0:0*/ __Vdlyvset__verilator_test__DOT__top_instantiation__DOT__registers__v70;
+    CData/*0:0*/ __Vdlyvset__verilator_test__DOT__top_instantiation__DOT__registers__v71;
+    CData/*0:0*/ __Vdlyvset__verilator_test__DOT__top_instantiation__DOT__registers__v72;
     CData/*3:0*/ __Vdlyvdim0__verilator_test__DOT__top_instantiation__DOT__interrupt_fifo__DOT__items__v0;
     CData/*0:0*/ __Vdlyvset__verilator_test__DOT__top_instantiation__DOT__interrupt_fifo__DOT__items__v0;
     CData/*0:0*/ __Vdlyvset__verilator_test__DOT__top_instantiation__DOT__interrupt_fifo__DOT__items__v1;
@@ -191,8 +191,7 @@ VL_INLINE_OPT void Vverilator_test::_sequent__TOP__2(Vverilator_test__Syms* __re
     CData/*0:0*/ __Vdlyvset__verilator_test__DOT__top_instantiation__DOT__keyboard_scancodes_fifo__DOT__items__v0;
     CData/*0:0*/ __Vdlyvset__verilator_test__DOT__top_instantiation__DOT__keyboard_scancodes_fifo__DOT__items__v1;
     CData/*2:0*/ __Vdly__verilator_test__DOT__top_instantiation__DOT__keyboard_scancodes_fifo__DOT__current_fifo_size;
-    CData/*7:0*/ __Vdly__verilator_test__DOT__top_instantiation__DOT__gpu_character_read;
-    CData/*0:0*/ __Vdly__verilator_test__DOT__top_instantiation__DOT__spi_controller__DOT__spi_clock;
+    CData/*6:0*/ __Vdly__verilator_test__DOT__top_instantiation__DOT__gpu_character_read;
     CData/*3:0*/ __Vdly__verilator_test__DOT__top_instantiation__DOT__spi_controller__DOT__bits_to_send;
     CData/*4:0*/ __Vdlyvdim0__verilator_test__DOT__top_instantiation__DOT__divider__DOT__quotient_pipe__v0;
     CData/*0:0*/ __Vdlyvset__verilator_test__DOT__top_instantiation__DOT__divider__DOT__quotient_pipe__v0;
@@ -204,6 +203,8 @@ VL_INLINE_OPT void Vverilator_test::_sequent__TOP__2(Vverilator_test__Syms* __re
     SData/*15:0*/ __Vtask_verilator_test__DOT__top_instantiation__DOT__write_to_ram__15__ram_write_data;
     SData/*15:0*/ __Vdly__verilator_test__DOT__top_instantiation__DOT__ram_read_data;
     SData/*10:0*/ __Vdly__verilator_test__DOT__top_instantiation__DOT__ps2_keyboard__DOT__shift_register;
+    SData/*9:0*/ __Vdly__verilator_test__DOT__top_instantiation__DOT__spi_controller__DOT__spi_clock_divider_counter;
+    SData/*13:0*/ __Vdly__verilator_test__DOT__top_instantiation__DOT__spi_controller__DOT__ticks_since_transmit_pulse;
     IData/*21:0*/ __Vtask_verilator_test__DOT__top_instantiation__DOT__write_to_ram__0__ram_write_address;
     IData/*21:0*/ __Vtask_verilator_test__DOT__top_instantiation__DOT__read_from_ram__1__ram_read_address;
     IData/*21:0*/ __Vtask_verilator_test__DOT__top_instantiation__DOT__read_from_ram__2__ram_read_address;
@@ -214,6 +215,7 @@ VL_INLINE_OPT void Vverilator_test::_sequent__TOP__2(Vverilator_test__Syms* __re
     IData/*21:0*/ __Vtask_verilator_test__DOT__top_instantiation__DOT__write_to_ram__12__ram_write_address;
     IData/*21:0*/ __Vtask_verilator_test__DOT__top_instantiation__DOT__write_to_ram__14__ram_write_address;
     IData/*21:0*/ __Vtask_verilator_test__DOT__top_instantiation__DOT__write_to_ram__15__ram_write_address;
+    IData/*21:0*/ __Vtask_verilator_test__DOT__top_instantiation__DOT__read_from_ram__35__ram_read_address;
     IData/*31:0*/ __Vdly__verilator_test__DOT__top_instantiation__DOT__code_section_start_address;
     IData/*31:0*/ __Vdlyvval__verilator_test__DOT__top_instantiation__DOT__registers__v0;
     IData/*31:0*/ __Vdly__verilator_test__DOT__top_instantiation__DOT__program_rom_address;
@@ -269,8 +271,6 @@ VL_INLINE_OPT void Vverilator_test::_sequent__TOP__2(Vverilator_test__Syms* __re
     IData/*31:0*/ __Vdlyvval__verilator_test__DOT__top_instantiation__DOT__registers__v46;
     IData/*31:0*/ __Vdlyvval__verilator_test__DOT__top_instantiation__DOT__registers__v47;
     IData/*31:0*/ __Vdlyvval__verilator_test__DOT__top_instantiation__DOT__registers__v48;
-    IData/*31:0*/ __Vdlyvval__verilator_test__DOT__top_instantiation__DOT__registers__v56;
-    IData/*31:0*/ __Vdlyvval__verilator_test__DOT__top_instantiation__DOT__registers__v57;
     IData/*31:0*/ __Vdlyvval__verilator_test__DOT__top_instantiation__DOT__registers__v58;
     IData/*31:0*/ __Vdlyvval__verilator_test__DOT__top_instantiation__DOT__registers__v59;
     IData/*31:0*/ __Vdlyvval__verilator_test__DOT__top_instantiation__DOT__registers__v60;
@@ -279,8 +279,10 @@ VL_INLINE_OPT void Vverilator_test::_sequent__TOP__2(Vverilator_test__Syms* __re
     IData/*31:0*/ __Vdlyvval__verilator_test__DOT__top_instantiation__DOT__registers__v63;
     IData/*31:0*/ __Vdlyvval__verilator_test__DOT__top_instantiation__DOT__registers__v64;
     IData/*31:0*/ __Vdlyvval__verilator_test__DOT__top_instantiation__DOT__registers__v65;
-    IData/*31:0*/ __Vdlyvval__verilator_test__DOT__top_instantiation__DOT__shadow_registers__v0;
+    IData/*31:0*/ __Vdlyvval__verilator_test__DOT__top_instantiation__DOT__registers__v66;
     IData/*31:0*/ __Vdlyvval__verilator_test__DOT__top_instantiation__DOT__registers__v67;
+    IData/*31:0*/ __Vdlyvval__verilator_test__DOT__top_instantiation__DOT__shadow_registers__v0;
+    IData/*31:0*/ __Vdlyvval__verilator_test__DOT__top_instantiation__DOT__registers__v69;
     IData/*31:0*/ __Vdlyvval__verilator_test__DOT__top_instantiation__DOT__shadow_registers__v1;
     IData/*31:0*/ __Vdlyvval__verilator_test__DOT__top_instantiation__DOT__shadow_registers__v2;
     IData/*31:0*/ __Vdlyvval__verilator_test__DOT__top_instantiation__DOT__shadow_registers__v3;
@@ -296,14 +298,12 @@ VL_INLINE_OPT void Vverilator_test::_sequent__TOP__2(Vverilator_test__Syms* __re
     IData/*31:0*/ __Vdlyvval__verilator_test__DOT__top_instantiation__DOT__divider__DOT__remain_pipe__v0;
     IData/*31:0*/ __Vdly__verilator_test__DOT__top_instantiation__DOT__divider__DOT__pipe_ptr;
     // Body
-    __Vdly__verilator_test__DOT__top_instantiation__DOT__spi_controller__DOT__spi_clock 
-        = vlTOPp->verilator_test__DOT__top_instantiation__DOT__spi_controller__DOT__spi_clock;
     __Vdly__verilator_test__DOT__top_instantiation__DOT__ps2_keyboard__DOT__ps2_clk_filtered_state 
         = vlTOPp->verilator_test__DOT__top_instantiation__DOT__ps2_keyboard__DOT__ps2_clk_filtered_state;
     __Vdly__verilator_test__DOT__top_instantiation__DOT__ps2_keyboard__DOT__ps2_clk_buffer 
         = vlTOPp->verilator_test__DOT__top_instantiation__DOT__ps2_keyboard__DOT__ps2_clk_buffer;
-    __Vdly__verilator_test__DOT__top_instantiation__DOT__spi_controller__DOT__bits_to_send 
-        = vlTOPp->verilator_test__DOT__top_instantiation__DOT__spi_controller__DOT__bits_to_send;
+    __Vdly__verilator_test__DOT__top_instantiation__DOT__spi_controller__DOT__spi_clock_divider_counter 
+        = vlTOPp->verilator_test__DOT__top_instantiation__DOT__spi_controller__DOT__spi_clock_divider_counter;
     __Vdly__verilator_test__DOT__top_instantiation__DOT__ps2_keyboard__DOT__bits_counter 
         = vlTOPp->verilator_test__DOT__top_instantiation__DOT__ps2_keyboard__DOT__bits_counter;
     __Vdly__verilator_test__DOT__top_instantiation__DOT__ps2_keyboard__DOT__shift_register 
@@ -312,6 +312,10 @@ VL_INLINE_OPT void Vverilator_test::_sequent__TOP__2(Vverilator_test__Syms* __re
         = vlTOPp->verilator_test__DOT__top_instantiation__DOT__divider__DOT__pipe_ptr;
     __Vdlyvset__verilator_test__DOT__top_instantiation__DOT__divider__DOT__remain_pipe__v0 = 0U;
     __Vdlyvset__verilator_test__DOT__top_instantiation__DOT__divider__DOT__quotient_pipe__v0 = 0U;
+    __Vdly__verilator_test__DOT__top_instantiation__DOT__spi_controller__DOT__bits_to_send 
+        = vlTOPp->verilator_test__DOT__top_instantiation__DOT__spi_controller__DOT__bits_to_send;
+    __Vdly__verilator_test__DOT__top_instantiation__DOT__spi_controller__DOT__ticks_since_transmit_pulse 
+        = vlTOPp->verilator_test__DOT__top_instantiation__DOT__spi_controller__DOT__ticks_since_transmit_pulse;
     __Vdly__verilator_test__DOT__top_instantiation__DOT__keyboard_scancodes_fifo__DOT__current_fifo_size 
         = vlTOPp->verilator_test__DOT__top_instantiation__DOT__keyboard_scancodes_fifo__DOT__current_fifo_size;
     __Vdlyvset__verilator_test__DOT__top_instantiation__DOT__keyboard_scancodes_fifo__DOT__items__v0 = 0U;
@@ -425,9 +429,7 @@ VL_INLINE_OPT void Vverilator_test::_sequent__TOP__2(Vverilator_test__Syms* __re
     __Vdlyvset__verilator_test__DOT__top_instantiation__DOT__registers__v45 = 0U;
     __Vdlyvset__verilator_test__DOT__top_instantiation__DOT__registers__v47 = 0U;
     __Vdlyvset__verilator_test__DOT__top_instantiation__DOT__registers__v48 = 0U;
-    __Vdlyvset__verilator_test__DOT__top_instantiation__DOT__registers__v50 = 0U;
-    __Vdlyvset__verilator_test__DOT__top_instantiation__DOT__registers__v56 = 0U;
-    __Vdlyvset__verilator_test__DOT__top_instantiation__DOT__registers__v57 = 0U;
+    __Vdlyvset__verilator_test__DOT__top_instantiation__DOT__registers__v49 = 0U;
     __Vdlyvset__verilator_test__DOT__top_instantiation__DOT__registers__v58 = 0U;
     __Vdlyvset__verilator_test__DOT__top_instantiation__DOT__registers__v59 = 0U;
     __Vdlyvset__verilator_test__DOT__top_instantiation__DOT__registers__v60 = 0U;
@@ -437,12 +439,11 @@ VL_INLINE_OPT void Vverilator_test::_sequent__TOP__2(Vverilator_test__Syms* __re
     __Vdlyvset__verilator_test__DOT__top_instantiation__DOT__registers__v64 = 0U;
     __Vdlyvset__verilator_test__DOT__top_instantiation__DOT__registers__v65 = 0U;
     __Vdlyvset__verilator_test__DOT__top_instantiation__DOT__registers__v66 = 0U;
+    __Vdlyvset__verilator_test__DOT__top_instantiation__DOT__registers__v67 = 0U;
     __Vdlyvset__verilator_test__DOT__top_instantiation__DOT__registers__v68 = 0U;
-    __Vdlyvset__verilator_test__DOT__top_instantiation__DOT__registers__v69 = 0U;
     __Vdlyvset__verilator_test__DOT__top_instantiation__DOT__registers__v70 = 0U;
-    __Vdly__verilator_test__DOT__top_instantiation__DOT__spi_controller__DOT__spi_clock 
-        = ((IData)(vlTOPp->reset_n) & ((IData)(1U) 
-                                       + (IData)(vlTOPp->verilator_test__DOT__top_instantiation__DOT__spi_controller__DOT__spi_clock)));
+    __Vdlyvset__verilator_test__DOT__top_instantiation__DOT__registers__v71 = 0U;
+    __Vdlyvset__verilator_test__DOT__top_instantiation__DOT__registers__v72 = 0U;
     vlTOPp->verilator_test__DOT__top_instantiation__DOT__divider__DOT____Vlvbound5 
         = vlTOPp->verilator_test__DOT__top_instantiation__DOT__divider__DOT__tmp_quotient;
     if (VL_LIKELY((0x10U >= (0x1fU & vlTOPp->verilator_test__DOT__top_instantiation__DOT__divider__DOT__pipe_ptr)))) {
@@ -1797,7 +1798,7 @@ VL_INLINE_OPT void Vverilator_test::_sequent__TOP__2(Vverilator_test__Syms* __re
                                                                   (0xfU 
                                                                    & vlTOPp->verilator_test__DOT__top_instantiation__DOT__operand2))
                                                                   ? 
-                                                                 (0xffU 
+                                                                 (0x7fU 
                                                                   & vlTOPp->verilator_test__DOT__top_instantiation__DOT__registers
                                                                   [
                                                                   (0xfU 
@@ -1840,10 +1841,11 @@ VL_INLINE_OPT void Vverilator_test::_sequent__TOP__2(Vverilator_test__Syms* __re
                                                                       (0xfU 
                                                                        & vlTOPp->verilator_test__DOT__top_instantiation__DOT__operand1)]
                                                                        : 0U))) {
-                                                                    if (vlTOPp->verilator_test__DOT__top_instantiation__DOT__sd_card_spi_access_state) {
+                                                                    if (VL_LIKELY(vlTOPp->verilator_test__DOT__top_instantiation__DOT__sd_card_spi_access_state)) {
                                                                         if (vlTOPp->verilator_test__DOT__top_instantiation__DOT__sd_card_spi_access_state) {
                                                                             __Vdly__verilator_test__DOT__top_instantiation__DOT__sd_card_spi_transmit_pulse = 0U;
-                                                                            if (vlTOPp->verilator_test__DOT__top_instantiation__DOT__sd_card_spi_transmit_done) {
+                                                                            if (VL_UNLIKELY(vlTOPp->verilator_test__DOT__top_instantiation__DOT__sd_card_spi_transmit_done)) {
+                                                                                VL_WRITEF("Finish SPI write...\n");
                                                                                 __Vdlyvval__verilator_test__DOT__top_instantiation__DOT__registers__v22 
                                                                                 = 
                                                                                 ((IData)(9U) 
@@ -1856,6 +1858,31 @@ VL_INLINE_OPT void Vverilator_test::_sequent__TOP__2(Vverilator_test__Syms* __re
                                                                             }
                                                                         }
                                                                     } else {
+                                                                        VL_WRITEF("\033[1;32mOUT [SPI, address %0#, value %0#]\033[0m\nStart SPI write...\n",
+                                                                                32,
+                                                                                ((9U 
+                                                                                >= 
+                                                                                (0xfU 
+                                                                                & vlTOPp->verilator_test__DOT__top_instantiation__DOT__operand1))
+                                                                                 ? 
+                                                                                vlTOPp->verilator_test__DOT__top_instantiation__DOT__registers
+                                                                                [
+                                                                                (0xfU 
+                                                                                & vlTOPp->verilator_test__DOT__top_instantiation__DOT__operand1)]
+                                                                                 : 0U),
+                                                                                32,
+                                                                                ((9U 
+                                                                                >= 
+                                                                                (0xfU 
+                                                                                & vlTOPp->verilator_test__DOT__top_instantiation__DOT__operand2))
+                                                                                 ? 
+                                                                                vlTOPp->verilator_test__DOT__top_instantiation__DOT__registers
+                                                                                [
+                                                                                (0xfU 
+                                                                                & vlTOPp->verilator_test__DOT__top_instantiation__DOT__operand2)]
+                                                                                 : 0U));
+                                                                        __Vdly__verilator_test__DOT__top_instantiation__DOT__sd_card_spi_transmit_pulse = 1U;
+                                                                        vlTOPp->verilator_test__DOT__top_instantiation__DOT__sd_card_spi_access_state = 1U;
                                                                         __Vdly__verilator_test__DOT__top_instantiation__DOT__sd_card_spi_byte_to_send 
                                                                             = 
                                                                             ((9U 
@@ -1869,23 +1896,44 @@ VL_INLINE_OPT void Vverilator_test::_sequent__TOP__2(Vverilator_test__Syms* __re
                                                                               (0xfU 
                                                                                & vlTOPp->verilator_test__DOT__top_instantiation__DOT__operand2)])
                                                                               : 0U);
-                                                                        __Vdly__verilator_test__DOT__top_instantiation__DOT__sd_card_spi_transmit_pulse = 1U;
-                                                                        vlTOPp->verilator_test__DOT__top_instantiation__DOT__sd_card_spi_access_state = 1U;
                                                                     }
                                                                 } else {
-                                                                    if (
-                                                                        (0x3ed2U 
-                                                                         == 
-                                                                         ((9U 
-                                                                           >= 
-                                                                           (0xfU 
-                                                                            & vlTOPp->verilator_test__DOT__top_instantiation__DOT__operand1))
-                                                                           ? 
-                                                                          vlTOPp->verilator_test__DOT__top_instantiation__DOT__registers
-                                                                          [
-                                                                          (0xfU 
-                                                                           & vlTOPp->verilator_test__DOT__top_instantiation__DOT__operand1)]
-                                                                           : 0U))) {
+                                                                    if (VL_UNLIKELY(
+                                                                                (0x3ed2U 
+                                                                                == 
+                                                                                ((9U 
+                                                                                >= 
+                                                                                (0xfU 
+                                                                                & vlTOPp->verilator_test__DOT__top_instantiation__DOT__operand1))
+                                                                                 ? 
+                                                                                vlTOPp->verilator_test__DOT__top_instantiation__DOT__registers
+                                                                                [
+                                                                                (0xfU 
+                                                                                & vlTOPp->verilator_test__DOT__top_instantiation__DOT__operand1)]
+                                                                                 : 0U)))) {
+                                                                        VL_WRITEF("\033[1;32mOUT [SPI CS, address %0#, value %0#]\033[0m\n",
+                                                                                32,
+                                                                                ((9U 
+                                                                                >= 
+                                                                                (0xfU 
+                                                                                & vlTOPp->verilator_test__DOT__top_instantiation__DOT__operand1))
+                                                                                 ? 
+                                                                                vlTOPp->verilator_test__DOT__top_instantiation__DOT__registers
+                                                                                [
+                                                                                (0xfU 
+                                                                                & vlTOPp->verilator_test__DOT__top_instantiation__DOT__operand1)]
+                                                                                 : 0U),
+                                                                                32,
+                                                                                ((9U 
+                                                                                >= 
+                                                                                (0xfU 
+                                                                                & vlTOPp->verilator_test__DOT__top_instantiation__DOT__operand2))
+                                                                                 ? 
+                                                                                vlTOPp->verilator_test__DOT__top_instantiation__DOT__registers
+                                                                                [
+                                                                                (0xfU 
+                                                                                & vlTOPp->verilator_test__DOT__top_instantiation__DOT__operand2)]
+                                                                                 : 0U));
                                                                         vlTOPp->verilator_test__DOT__top_instantiation__DOT__sd_card_spi_clock_select 
                                                                             = 
                                                                             (0U 
@@ -2469,9 +2517,9 @@ VL_INLINE_OPT void Vverilator_test::_sequent__TOP__2(Vverilator_test__Syms* __re
                                                                              vlTOPp->verilator_test__DOT__top_instantiation__DOT__registers
                                                                              [0U]);
                                                                     } else {
-                                                                        if (VL_LIKELY(
-                                                                                (0xfU 
-                                                                                == (IData)(vlTOPp->verilator_test__DOT__top_instantiation__DOT__operation)))) {
+                                                                        if (
+                                                                            (0xfU 
+                                                                             == (IData)(vlTOPp->verilator_test__DOT__top_instantiation__DOT__operation))) {
                                                                             if (
                                                                                 (0U 
                                                                                 == (IData)(vlTOPp->verilator_test__DOT__top_instantiation__DOT__interrupt_fifo_access_state))) {
@@ -2518,12 +2566,77 @@ VL_INLINE_OPT void Vverilator_test::_sequent__TOP__2(Vverilator_test__Syms* __re
                                                                                 __Vdly__verilator_test__DOT__top_instantiation__DOT__state = 6U;
                                                                             }
                                                                         } else {
-                                                                            VL_WRITEF("RST\n");
-                                                                            __Vdlyvval__verilator_test__DOT__top_instantiation__DOT__registers__v48 
-                                                                                = vlTOPp->verilator_test__DOT__top_instantiation__DOT__code_section_start_address;
-                                                                            __Vdlyvset__verilator_test__DOT__top_instantiation__DOT__registers__v48 = 1U;
-                                                                            __Vdly__verilator_test__DOT__top_instantiation__DOT__state = 6U;
-                                                                            __Vdlyvset__verilator_test__DOT__top_instantiation__DOT__registers__v50 = 1U;
+                                                                            if (VL_UNLIKELY(
+                                                                                (4U 
+                                                                                == (IData)(vlTOPp->verilator_test__DOT__top_instantiation__DOT__operand_byte_index)))) {
+                                                                                VL_WRITEF("RST\n");
+                                                                                __Vdlyvval__verilator_test__DOT__top_instantiation__DOT__registers__v48 
+                                                                                = 
+                                                                                ((IData)(4U) 
+                                                                                + vlTOPp->verilator_test__DOT__top_instantiation__DOT__code_section_start_address);
+                                                                                __Vdlyvset__verilator_test__DOT__top_instantiation__DOT__registers__v48 = 1U;
+                                                                                __Vdly__verilator_test__DOT__top_instantiation__DOT__operand_byte_index = 0U;
+                                                                                __Vdly__verilator_test__DOT__top_instantiation__DOT__code_section_start_address 
+                                                                                = 
+                                                                                ((IData)(4U) 
+                                                                                + vlTOPp->verilator_test__DOT__top_instantiation__DOT__code_section_start_address);
+                                                                                __Vdly__verilator_test__DOT__top_instantiation__DOT__state = 6U;
+                                                                                __Vdlyvset__verilator_test__DOT__top_instantiation__DOT__registers__v49 = 1U;
+                                                                            } else {
+                                                                                if (vlTOPp->verilator_test__DOT__top_instantiation__DOT__ram_read_complete) {
+                                                                                __Vdly__verilator_test__DOT__top_instantiation__DOT__code_section_start_address 
+                                                                                = 
+                                                                                ((0xff000000U 
+                                                                                & ((IData)(vlTOPp->verilator_test__DOT__top_instantiation__DOT__ram_read_data) 
+                                                                                << 0x18U)) 
+                                                                                | (0xffffffU 
+                                                                                & (vlTOPp->verilator_test__DOT__top_instantiation__DOT__code_section_start_address 
+                                                                                >> 8U)));
+                                                                                __Vdly__verilator_test__DOT__top_instantiation__DOT__operand_byte_index 
+                                                                                = 
+                                                                                (0xffU 
+                                                                                & ((IData)(1U) 
+                                                                                + (IData)(vlTOPp->verilator_test__DOT__top_instantiation__DOT__operand_byte_index)));
+                                                                                __Vdly__verilator_test__DOT__top_instantiation__DOT__ram_read_complete = 0U;
+                                                                                } else {
+                                                                                __Vtask_verilator_test__DOT__top_instantiation__DOT__read_from_ram__35__ram_read_address 
+                                                                                = vlTOPp->verilator_test__DOT__top_instantiation__DOT__operand_byte_index;
+                                                                                if (
+                                                                                (0U 
+                                                                                == (IData)(vlTOPp->verilator_test__DOT__top_instantiation__DOT__ram_read_state))) {
+                                                                                vlTOPp->verilator_test__DOT__top_instantiation__DOT__sdram_controller_address_i 
+                                                                                = __Vtask_verilator_test__DOT__top_instantiation__DOT__read_from_ram__35__ram_read_address;
+                                                                                __Vdly__verilator_test__DOT__top_instantiation__DOT__ram_read_state 
+                                                                                = 
+                                                                                ((2U 
+                                                                                == (IData)(vlTOPp->verilator_test__DOT__top_instantiation__DOT__sdram_controller__DOT__the_sdram_system_new_sdram_controller_0_input_efifo_module__DOT__entries))
+                                                                                 ? 0U
+                                                                                 : 1U);
+                                                                                } else {
+                                                                                if (
+                                                                                (1U 
+                                                                                == (IData)(vlTOPp->verilator_test__DOT__top_instantiation__DOT__ram_read_state))) {
+                                                                                vlTOPp->verilator_test__DOT__top_instantiation__DOT__sdram_controller_address_i 
+                                                                                = __Vtask_verilator_test__DOT__top_instantiation__DOT__read_from_ram__35__ram_read_address;
+                                                                                vlTOPp->verilator_test__DOT__top_instantiation__DOT__sdram_controller_be_n_i = 0U;
+                                                                                vlTOPp->verilator_test__DOT__top_instantiation__DOT__sdram_controller_rd_n_i = 0U;
+                                                                                __Vdly__verilator_test__DOT__top_instantiation__DOT__ram_read_state = 2U;
+                                                                                } else {
+                                                                                if (
+                                                                                (2U 
+                                                                                == (IData)(vlTOPp->verilator_test__DOT__top_instantiation__DOT__ram_read_state))) {
+                                                                                vlTOPp->verilator_test__DOT__top_instantiation__DOT__sdram_controller_rd_n_i = 1U;
+                                                                                if (vlTOPp->verilator_test__DOT__top_instantiation__DOT__sdram_controller_valid_o) {
+                                                                                __Vdly__verilator_test__DOT__top_instantiation__DOT__ram_read_complete = 1U;
+                                                                                __Vdly__verilator_test__DOT__top_instantiation__DOT__ram_read_state = 0U;
+                                                                                __Vdly__verilator_test__DOT__top_instantiation__DOT__ram_read_data 
+                                                                                = vlTOPp->verilator_test__DOT__top_instantiation__DOT__sdram_controller_data_o;
+                                                                                }
+                                                                                }
+                                                                                }
+                                                                                }
+                                                                                }
+                                                                            }
                                                                         }
                                                                     }
                                                                 }
@@ -2536,82 +2649,84 @@ VL_INLINE_OPT void Vverilator_test::_sequent__TOP__2(Vverilator_test__Syms* __re
                                                                 (0x10U 
                                                                  == (IData)(vlTOPp->verilator_test__DOT__top_instantiation__DOT__operation)))) {
                                                     VL_WRITEF("ENDINT\n");
-                                                    vlTOPp->verilator_test__DOT__top_instantiation__DOT____Vlvbound11 
+                                                    vlTOPp->verilator_test__DOT__top_instantiation__DOT____Vlvbound12 
                                                         = 
                                                         vlTOPp->verilator_test__DOT__top_instantiation__DOT__shadow_registers
                                                         [0U];
-                                                    __Vdlyvval__verilator_test__DOT__top_instantiation__DOT__registers__v56 
-                                                        = vlTOPp->verilator_test__DOT__top_instantiation__DOT____Vlvbound11;
-                                                    __Vdlyvset__verilator_test__DOT__top_instantiation__DOT__registers__v56 = 1U;
+                                                    __Vdlyvval__verilator_test__DOT__top_instantiation__DOT__registers__v58 
+                                                        = vlTOPp->verilator_test__DOT__top_instantiation__DOT____Vlvbound12;
+                                                    __Vdlyvset__verilator_test__DOT__top_instantiation__DOT__registers__v58 = 1U;
                                                     __Vdly__verilator_test__DOT__top_instantiation__DOT__state = 6U;
-                                                    vlTOPp->verilator_test__DOT__top_instantiation__DOT____Vlvbound11 
+                                                    vlTOPp->verilator_test__DOT__top_instantiation__DOT____Vlvbound12 
                                                         = 
                                                         vlTOPp->verilator_test__DOT__top_instantiation__DOT__shadow_registers
                                                         [1U];
-                                                    __Vdlyvval__verilator_test__DOT__top_instantiation__DOT__registers__v57 
-                                                        = vlTOPp->verilator_test__DOT__top_instantiation__DOT____Vlvbound11;
-                                                    __Vdlyvset__verilator_test__DOT__top_instantiation__DOT__registers__v57 = 1U;
-                                                    vlTOPp->verilator_test__DOT__top_instantiation__DOT____Vlvbound11 
+                                                    __Vdlyvval__verilator_test__DOT__top_instantiation__DOT__registers__v59 
+                                                        = vlTOPp->verilator_test__DOT__top_instantiation__DOT____Vlvbound12;
+                                                    __Vdlyvset__verilator_test__DOT__top_instantiation__DOT__registers__v59 = 1U;
+                                                    vlTOPp->verilator_test__DOT__top_instantiation__DOT____Vlvbound12 
                                                         = 
                                                         vlTOPp->verilator_test__DOT__top_instantiation__DOT__shadow_registers
                                                         [2U];
-                                                    __Vdlyvval__verilator_test__DOT__top_instantiation__DOT__registers__v58 
-                                                        = vlTOPp->verilator_test__DOT__top_instantiation__DOT____Vlvbound11;
-                                                    __Vdlyvset__verilator_test__DOT__top_instantiation__DOT__registers__v58 = 1U;
-                                                    vlTOPp->verilator_test__DOT__top_instantiation__DOT____Vlvbound11 
+                                                    __Vdlyvval__verilator_test__DOT__top_instantiation__DOT__registers__v60 
+                                                        = vlTOPp->verilator_test__DOT__top_instantiation__DOT____Vlvbound12;
+                                                    __Vdlyvset__verilator_test__DOT__top_instantiation__DOT__registers__v60 = 1U;
+                                                    vlTOPp->verilator_test__DOT__top_instantiation__DOT____Vlvbound12 
                                                         = 
                                                         vlTOPp->verilator_test__DOT__top_instantiation__DOT__shadow_registers
                                                         [3U];
-                                                    __Vdlyvval__verilator_test__DOT__top_instantiation__DOT__registers__v59 
-                                                        = vlTOPp->verilator_test__DOT__top_instantiation__DOT____Vlvbound11;
-                                                    __Vdlyvset__verilator_test__DOT__top_instantiation__DOT__registers__v59 = 1U;
-                                                    vlTOPp->verilator_test__DOT__top_instantiation__DOT____Vlvbound11 
+                                                    __Vdlyvval__verilator_test__DOT__top_instantiation__DOT__registers__v61 
+                                                        = vlTOPp->verilator_test__DOT__top_instantiation__DOT____Vlvbound12;
+                                                    __Vdlyvset__verilator_test__DOT__top_instantiation__DOT__registers__v61 = 1U;
+                                                    vlTOPp->verilator_test__DOT__top_instantiation__DOT____Vlvbound12 
                                                         = 
                                                         vlTOPp->verilator_test__DOT__top_instantiation__DOT__shadow_registers
                                                         [4U];
-                                                    __Vdlyvval__verilator_test__DOT__top_instantiation__DOT__registers__v60 
-                                                        = vlTOPp->verilator_test__DOT__top_instantiation__DOT____Vlvbound11;
-                                                    __Vdlyvset__verilator_test__DOT__top_instantiation__DOT__registers__v60 = 1U;
-                                                    vlTOPp->verilator_test__DOT__top_instantiation__DOT____Vlvbound11 
+                                                    __Vdlyvval__verilator_test__DOT__top_instantiation__DOT__registers__v62 
+                                                        = vlTOPp->verilator_test__DOT__top_instantiation__DOT____Vlvbound12;
+                                                    __Vdlyvset__verilator_test__DOT__top_instantiation__DOT__registers__v62 = 1U;
+                                                    vlTOPp->verilator_test__DOT__top_instantiation__DOT____Vlvbound12 
                                                         = 
                                                         vlTOPp->verilator_test__DOT__top_instantiation__DOT__shadow_registers
                                                         [5U];
-                                                    __Vdlyvval__verilator_test__DOT__top_instantiation__DOT__registers__v61 
-                                                        = vlTOPp->verilator_test__DOT__top_instantiation__DOT____Vlvbound11;
-                                                    __Vdlyvset__verilator_test__DOT__top_instantiation__DOT__registers__v61 = 1U;
-                                                    vlTOPp->verilator_test__DOT__top_instantiation__DOT____Vlvbound11 
+                                                    __Vdlyvval__verilator_test__DOT__top_instantiation__DOT__registers__v63 
+                                                        = vlTOPp->verilator_test__DOT__top_instantiation__DOT____Vlvbound12;
+                                                    __Vdlyvset__verilator_test__DOT__top_instantiation__DOT__registers__v63 = 1U;
+                                                    vlTOPp->verilator_test__DOT__top_instantiation__DOT____Vlvbound12 
                                                         = 
                                                         vlTOPp->verilator_test__DOT__top_instantiation__DOT__shadow_registers
                                                         [6U];
-                                                    __Vdlyvval__verilator_test__DOT__top_instantiation__DOT__registers__v62 
-                                                        = vlTOPp->verilator_test__DOT__top_instantiation__DOT____Vlvbound11;
-                                                    __Vdlyvset__verilator_test__DOT__top_instantiation__DOT__registers__v62 = 1U;
-                                                    vlTOPp->verilator_test__DOT__top_instantiation__DOT____Vlvbound11 
+                                                    __Vdlyvval__verilator_test__DOT__top_instantiation__DOT__registers__v64 
+                                                        = vlTOPp->verilator_test__DOT__top_instantiation__DOT____Vlvbound12;
+                                                    __Vdlyvset__verilator_test__DOT__top_instantiation__DOT__registers__v64 = 1U;
+                                                    vlTOPp->verilator_test__DOT__top_instantiation__DOT____Vlvbound12 
                                                         = 
                                                         vlTOPp->verilator_test__DOT__top_instantiation__DOT__shadow_registers
                                                         [7U];
-                                                    __Vdlyvval__verilator_test__DOT__top_instantiation__DOT__registers__v63 
-                                                        = vlTOPp->verilator_test__DOT__top_instantiation__DOT____Vlvbound11;
-                                                    __Vdlyvset__verilator_test__DOT__top_instantiation__DOT__registers__v63 = 1U;
-                                                    vlTOPp->verilator_test__DOT__top_instantiation__DOT____Vlvbound11 
+                                                    __Vdlyvval__verilator_test__DOT__top_instantiation__DOT__registers__v65 
+                                                        = vlTOPp->verilator_test__DOT__top_instantiation__DOT____Vlvbound12;
+                                                    __Vdlyvset__verilator_test__DOT__top_instantiation__DOT__registers__v65 = 1U;
+                                                    vlTOPp->verilator_test__DOT__top_instantiation__DOT____Vlvbound12 
                                                         = 
                                                         vlTOPp->verilator_test__DOT__top_instantiation__DOT__shadow_registers
                                                         [8U];
-                                                    __Vdlyvval__verilator_test__DOT__top_instantiation__DOT__registers__v64 
-                                                        = vlTOPp->verilator_test__DOT__top_instantiation__DOT____Vlvbound11;
-                                                    __Vdlyvset__verilator_test__DOT__top_instantiation__DOT__registers__v64 = 1U;
-                                                    vlTOPp->verilator_test__DOT__top_instantiation__DOT____Vlvbound11 
+                                                    __Vdlyvval__verilator_test__DOT__top_instantiation__DOT__registers__v66 
+                                                        = vlTOPp->verilator_test__DOT__top_instantiation__DOT____Vlvbound12;
+                                                    __Vdlyvset__verilator_test__DOT__top_instantiation__DOT__registers__v66 = 1U;
+                                                    vlTOPp->verilator_test__DOT__top_instantiation__DOT____Vlvbound12 
                                                         = 
                                                         vlTOPp->verilator_test__DOT__top_instantiation__DOT__shadow_registers
                                                         [9U];
-                                                    __Vdlyvval__verilator_test__DOT__top_instantiation__DOT__registers__v65 
-                                                        = vlTOPp->verilator_test__DOT__top_instantiation__DOT____Vlvbound11;
-                                                    __Vdlyvset__verilator_test__DOT__top_instantiation__DOT__registers__v65 = 1U;
+                                                    __Vdlyvval__verilator_test__DOT__top_instantiation__DOT__registers__v67 
+                                                        = vlTOPp->verilator_test__DOT__top_instantiation__DOT____Vlvbound12;
+                                                    __Vdlyvset__verilator_test__DOT__top_instantiation__DOT__registers__v67 = 1U;
                                                 } else {
-                                                    if (
-                                                        (0xdU 
-                                                         == (IData)(vlTOPp->verilator_test__DOT__top_instantiation__DOT__operation))) {
+                                                    if (VL_UNLIKELY(
+                                                                    (0xdU 
+                                                                     == (IData)(vlTOPp->verilator_test__DOT__top_instantiation__DOT__operation)))) {
+                                                        VL_WRITEF("HALT\n");
                                                         __Vdly__verilator_test__DOT__top_instantiation__DOT__state = 5U;
+                                                        VL_FINISH_MT("alu/alu.v", 366, "");
                                                     }
                                                 }
                                             }
@@ -2659,15 +2774,15 @@ VL_INLINE_OPT void Vverilator_test::_sequent__TOP__2(Vverilator_test__Syms* __re
                                                         VL_WRITEF("interrupt_fifo_data_out: %10#\n",
                                                                   32,
                                                                   vlTOPp->verilator_test__DOT__top_instantiation__DOT__interrupt_fifo_data_out);
-                                                        __Vdlyvset__verilator_test__DOT__top_instantiation__DOT__registers__v66 = 1U;
-                                                        vlTOPp->verilator_test__DOT__top_instantiation__DOT____Vlvbound12 
+                                                        __Vdlyvset__verilator_test__DOT__top_instantiation__DOT__registers__v68 = 1U;
+                                                        vlTOPp->verilator_test__DOT__top_instantiation__DOT____Vlvbound13 
                                                             = 
                                                             vlTOPp->verilator_test__DOT__top_instantiation__DOT__registers
                                                             [0U];
                                                         __Vdlyvval__verilator_test__DOT__top_instantiation__DOT__shadow_registers__v0 
-                                                            = vlTOPp->verilator_test__DOT__top_instantiation__DOT____Vlvbound12;
+                                                            = vlTOPp->verilator_test__DOT__top_instantiation__DOT____Vlvbound13;
                                                         __Vdlyvset__verilator_test__DOT__top_instantiation__DOT__shadow_registers__v0 = 1U;
-                                                        __Vdlyvval__verilator_test__DOT__top_instantiation__DOT__registers__v67 
+                                                        __Vdlyvval__verilator_test__DOT__top_instantiation__DOT__registers__v69 
                                                             = 
                                                             (vlTOPp->verilator_test__DOT__top_instantiation__DOT__code_section_start_address 
                                                              + 
@@ -2677,68 +2792,68 @@ VL_INLINE_OPT void Vverilator_test::_sequent__TOP__2(Vverilator_test__Syms* __re
                                                               & vlTOPp->verilator_test__DOT__top_instantiation__DOT__interrupt_fifo_data_out)]);
                                                         __Vdly__verilator_test__DOT__top_instantiation__DOT__interrupt_fifo_access_state = 0U;
                                                         __Vdly__verilator_test__DOT__top_instantiation__DOT__state = 7U;
-                                                        vlTOPp->verilator_test__DOT__top_instantiation__DOT____Vlvbound12 
+                                                        vlTOPp->verilator_test__DOT__top_instantiation__DOT____Vlvbound13 
                                                             = 
                                                             vlTOPp->verilator_test__DOT__top_instantiation__DOT__registers
                                                             [1U];
                                                         __Vdlyvval__verilator_test__DOT__top_instantiation__DOT__shadow_registers__v1 
-                                                            = vlTOPp->verilator_test__DOT__top_instantiation__DOT____Vlvbound12;
+                                                            = vlTOPp->verilator_test__DOT__top_instantiation__DOT____Vlvbound13;
                                                         __Vdlyvset__verilator_test__DOT__top_instantiation__DOT__shadow_registers__v1 = 1U;
-                                                        vlTOPp->verilator_test__DOT__top_instantiation__DOT____Vlvbound12 
+                                                        vlTOPp->verilator_test__DOT__top_instantiation__DOT____Vlvbound13 
                                                             = 
                                                             vlTOPp->verilator_test__DOT__top_instantiation__DOT__registers
                                                             [2U];
                                                         __Vdlyvval__verilator_test__DOT__top_instantiation__DOT__shadow_registers__v2 
-                                                            = vlTOPp->verilator_test__DOT__top_instantiation__DOT____Vlvbound12;
+                                                            = vlTOPp->verilator_test__DOT__top_instantiation__DOT____Vlvbound13;
                                                         __Vdlyvset__verilator_test__DOT__top_instantiation__DOT__shadow_registers__v2 = 1U;
-                                                        vlTOPp->verilator_test__DOT__top_instantiation__DOT____Vlvbound12 
+                                                        vlTOPp->verilator_test__DOT__top_instantiation__DOT____Vlvbound13 
                                                             = 
                                                             vlTOPp->verilator_test__DOT__top_instantiation__DOT__registers
                                                             [3U];
                                                         __Vdlyvval__verilator_test__DOT__top_instantiation__DOT__shadow_registers__v3 
-                                                            = vlTOPp->verilator_test__DOT__top_instantiation__DOT____Vlvbound12;
+                                                            = vlTOPp->verilator_test__DOT__top_instantiation__DOT____Vlvbound13;
                                                         __Vdlyvset__verilator_test__DOT__top_instantiation__DOT__shadow_registers__v3 = 1U;
-                                                        vlTOPp->verilator_test__DOT__top_instantiation__DOT____Vlvbound12 
+                                                        vlTOPp->verilator_test__DOT__top_instantiation__DOT____Vlvbound13 
                                                             = 
                                                             vlTOPp->verilator_test__DOT__top_instantiation__DOT__registers
                                                             [4U];
                                                         __Vdlyvval__verilator_test__DOT__top_instantiation__DOT__shadow_registers__v4 
-                                                            = vlTOPp->verilator_test__DOT__top_instantiation__DOT____Vlvbound12;
+                                                            = vlTOPp->verilator_test__DOT__top_instantiation__DOT____Vlvbound13;
                                                         __Vdlyvset__verilator_test__DOT__top_instantiation__DOT__shadow_registers__v4 = 1U;
-                                                        vlTOPp->verilator_test__DOT__top_instantiation__DOT____Vlvbound12 
+                                                        vlTOPp->verilator_test__DOT__top_instantiation__DOT____Vlvbound13 
                                                             = 
                                                             vlTOPp->verilator_test__DOT__top_instantiation__DOT__registers
                                                             [5U];
                                                         __Vdlyvval__verilator_test__DOT__top_instantiation__DOT__shadow_registers__v5 
-                                                            = vlTOPp->verilator_test__DOT__top_instantiation__DOT____Vlvbound12;
+                                                            = vlTOPp->verilator_test__DOT__top_instantiation__DOT____Vlvbound13;
                                                         __Vdlyvset__verilator_test__DOT__top_instantiation__DOT__shadow_registers__v5 = 1U;
-                                                        vlTOPp->verilator_test__DOT__top_instantiation__DOT____Vlvbound12 
+                                                        vlTOPp->verilator_test__DOT__top_instantiation__DOT____Vlvbound13 
                                                             = 
                                                             vlTOPp->verilator_test__DOT__top_instantiation__DOT__registers
                                                             [6U];
                                                         __Vdlyvval__verilator_test__DOT__top_instantiation__DOT__shadow_registers__v6 
-                                                            = vlTOPp->verilator_test__DOT__top_instantiation__DOT____Vlvbound12;
+                                                            = vlTOPp->verilator_test__DOT__top_instantiation__DOT____Vlvbound13;
                                                         __Vdlyvset__verilator_test__DOT__top_instantiation__DOT__shadow_registers__v6 = 1U;
-                                                        vlTOPp->verilator_test__DOT__top_instantiation__DOT____Vlvbound12 
+                                                        vlTOPp->verilator_test__DOT__top_instantiation__DOT____Vlvbound13 
                                                             = 
                                                             vlTOPp->verilator_test__DOT__top_instantiation__DOT__registers
                                                             [7U];
                                                         __Vdlyvval__verilator_test__DOT__top_instantiation__DOT__shadow_registers__v7 
-                                                            = vlTOPp->verilator_test__DOT__top_instantiation__DOT____Vlvbound12;
+                                                            = vlTOPp->verilator_test__DOT__top_instantiation__DOT____Vlvbound13;
                                                         __Vdlyvset__verilator_test__DOT__top_instantiation__DOT__shadow_registers__v7 = 1U;
-                                                        vlTOPp->verilator_test__DOT__top_instantiation__DOT____Vlvbound12 
+                                                        vlTOPp->verilator_test__DOT__top_instantiation__DOT____Vlvbound13 
                                                             = 
                                                             vlTOPp->verilator_test__DOT__top_instantiation__DOT__registers
                                                             [8U];
                                                         __Vdlyvval__verilator_test__DOT__top_instantiation__DOT__shadow_registers__v8 
-                                                            = vlTOPp->verilator_test__DOT__top_instantiation__DOT____Vlvbound12;
+                                                            = vlTOPp->verilator_test__DOT__top_instantiation__DOT____Vlvbound13;
                                                         __Vdlyvset__verilator_test__DOT__top_instantiation__DOT__shadow_registers__v8 = 1U;
-                                                        vlTOPp->verilator_test__DOT__top_instantiation__DOT____Vlvbound12 
+                                                        vlTOPp->verilator_test__DOT__top_instantiation__DOT____Vlvbound13 
                                                             = 
                                                             vlTOPp->verilator_test__DOT__top_instantiation__DOT__registers
                                                             [9U];
                                                         __Vdlyvval__verilator_test__DOT__top_instantiation__DOT__shadow_registers__v9 
-                                                            = vlTOPp->verilator_test__DOT__top_instantiation__DOT____Vlvbound12;
+                                                            = vlTOPp->verilator_test__DOT__top_instantiation__DOT____Vlvbound13;
                                                         __Vdlyvset__verilator_test__DOT__top_instantiation__DOT__shadow_registers__v9 = 1U;
                                                     }
                                                 }
@@ -2805,7 +2920,7 @@ VL_INLINE_OPT void Vverilator_test::_sequent__TOP__2(Vverilator_test__Syms* __re
         __Vdly__verilator_test__DOT__top_instantiation__DOT__operand1 = 0U;
         __Vdly__verilator_test__DOT__top_instantiation__DOT__operand2 = 0U;
         __Vdly__verilator_test__DOT__top_instantiation__DOT__ram_read_complete = 0U;
-        __Vdlyvset__verilator_test__DOT__top_instantiation__DOT__registers__v68 = 1U;
+        __Vdlyvset__verilator_test__DOT__top_instantiation__DOT__registers__v70 = 1U;
         __Vdly__verilator_test__DOT__top_instantiation__DOT__division_delay_counter = 0U;
         vlTOPp->verilator_test__DOT__top_instantiation__DOT__sdram_controller_address_i = 0U;
         vlTOPp->verilator_test__DOT__top_instantiation__DOT__sdram_controller_be_n_i = 0U;
@@ -2822,7 +2937,7 @@ VL_INLINE_OPT void Vverilator_test::_sequent__TOP__2(Vverilator_test__Syms* __re
         __Vdly__verilator_test__DOT__top_instantiation__DOT__ram_read_state = 0U;
         __Vdly__verilator_test__DOT__top_instantiation__DOT__ram_read_data = 0U;
         __Vdly__verilator_test__DOT__top_instantiation__DOT__operand_byte_index = 0U;
-        __Vdlyvset__verilator_test__DOT__top_instantiation__DOT__registers__v69 = 1U;
+        __Vdlyvset__verilator_test__DOT__top_instantiation__DOT__registers__v71 = 1U;
         __Vdly__verilator_test__DOT__top_instantiation__DOT__gpu_access_state = 0U;
         vlTOPp->verilator_test__DOT__top_instantiation__DOT__gpu_write_enable = 0U;
         vlTOPp->verilator_test__DOT__top_instantiation__DOT__gpu_character_to_write = 0U;
@@ -2843,7 +2958,7 @@ VL_INLINE_OPT void Vverilator_test::_sequent__TOP__2(Vverilator_test__Syms* __re
         __Vdly__verilator_test__DOT__top_instantiation__DOT__sd_card_spi_byte_to_send = 0U;
         vlTOPp->verilator_test__DOT__top_instantiation__DOT__sd_card_spi_clock_select = 0U;
         vlTOPp->verilator_test__DOT__top_instantiation__DOT__sd_card_spi_access_state = 0U;
-        __Vdlyvset__verilator_test__DOT__top_instantiation__DOT__registers__v70 = 1U;
+        __Vdlyvset__verilator_test__DOT__top_instantiation__DOT__registers__v72 = 1U;
     }
     vlTOPp->verilator_test__DOT__top_instantiation__DOT__ps2_keyboard__DOT__shift_register 
         = __Vdly__verilator_test__DOT__top_instantiation__DOT__ps2_keyboard__DOT__shift_register;
@@ -2899,10 +3014,10 @@ VL_INLINE_OPT void Vverilator_test::_sequent__TOP__2(Vverilator_test__Syms* __re
         vlTOPp->verilator_test__DOT__top_instantiation__DOT__interrupt_vector_table[__Vdlyvdim0__verilator_test__DOT__top_instantiation__DOT__interrupt_vector_table__v0] 
             = __Vdlyvval__verilator_test__DOT__top_instantiation__DOT__interrupt_vector_table__v0;
     }
-    if (__Vdlyvset__verilator_test__DOT__top_instantiation__DOT__registers__v69) {
+    if (__Vdlyvset__verilator_test__DOT__top_instantiation__DOT__registers__v71) {
         vlTOPp->verilator_test__DOT__top_instantiation__DOT__interrupt_vector_table[0U] = 0U;
     }
-    if (__Vdlyvset__verilator_test__DOT__top_instantiation__DOT__registers__v70) {
+    if (__Vdlyvset__verilator_test__DOT__top_instantiation__DOT__registers__v72) {
         vlTOPp->verilator_test__DOT__top_instantiation__DOT__interrupt_vector_table[1U] = 0U;
         vlTOPp->verilator_test__DOT__top_instantiation__DOT__interrupt_vector_table[2U] = 0U;
         vlTOPp->verilator_test__DOT__top_instantiation__DOT__interrupt_vector_table[3U] = 0U;
@@ -3132,70 +3247,72 @@ VL_INLINE_OPT void Vverilator_test::_sequent__TOP__2(Vverilator_test__Syms* __re
     if (__Vdlyvset__verilator_test__DOT__top_instantiation__DOT__registers__v48) {
         vlTOPp->verilator_test__DOT__top_instantiation__DOT__registers[0U] 
             = __Vdlyvval__verilator_test__DOT__top_instantiation__DOT__registers__v48;
-        vlTOPp->verilator_test__DOT__top_instantiation__DOT__registers[1U] = 0U;
     }
-    if (__Vdlyvset__verilator_test__DOT__top_instantiation__DOT__registers__v50) {
+    if (__Vdlyvset__verilator_test__DOT__top_instantiation__DOT__registers__v49) {
+        vlTOPp->verilator_test__DOT__top_instantiation__DOT__registers[1U] = 0U;
         vlTOPp->verilator_test__DOT__top_instantiation__DOT__registers[2U] = 0U;
         vlTOPp->verilator_test__DOT__top_instantiation__DOT__registers[3U] = 0U;
         vlTOPp->verilator_test__DOT__top_instantiation__DOT__registers[4U] = 0U;
         vlTOPp->verilator_test__DOT__top_instantiation__DOT__registers[5U] = 0U;
         vlTOPp->verilator_test__DOT__top_instantiation__DOT__registers[6U] = 0U;
         vlTOPp->verilator_test__DOT__top_instantiation__DOT__registers[7U] = 0U;
-    }
-    if (__Vdlyvset__verilator_test__DOT__top_instantiation__DOT__registers__v56) {
-        vlTOPp->verilator_test__DOT__top_instantiation__DOT__registers[0U] 
-            = __Vdlyvval__verilator_test__DOT__top_instantiation__DOT__registers__v56;
-    }
-    if (__Vdlyvset__verilator_test__DOT__top_instantiation__DOT__registers__v57) {
-        vlTOPp->verilator_test__DOT__top_instantiation__DOT__registers[1U] 
-            = __Vdlyvval__verilator_test__DOT__top_instantiation__DOT__registers__v57;
+        vlTOPp->verilator_test__DOT__top_instantiation__DOT__registers[8U] = 0U;
+        vlTOPp->verilator_test__DOT__top_instantiation__DOT__registers[9U] = 0U;
     }
     if (__Vdlyvset__verilator_test__DOT__top_instantiation__DOT__registers__v58) {
-        vlTOPp->verilator_test__DOT__top_instantiation__DOT__registers[2U] 
+        vlTOPp->verilator_test__DOT__top_instantiation__DOT__registers[0U] 
             = __Vdlyvval__verilator_test__DOT__top_instantiation__DOT__registers__v58;
     }
     if (__Vdlyvset__verilator_test__DOT__top_instantiation__DOT__registers__v59) {
-        vlTOPp->verilator_test__DOT__top_instantiation__DOT__registers[3U] 
+        vlTOPp->verilator_test__DOT__top_instantiation__DOT__registers[1U] 
             = __Vdlyvval__verilator_test__DOT__top_instantiation__DOT__registers__v59;
     }
     if (__Vdlyvset__verilator_test__DOT__top_instantiation__DOT__registers__v60) {
-        vlTOPp->verilator_test__DOT__top_instantiation__DOT__registers[4U] 
+        vlTOPp->verilator_test__DOT__top_instantiation__DOT__registers[2U] 
             = __Vdlyvval__verilator_test__DOT__top_instantiation__DOT__registers__v60;
     }
     if (__Vdlyvset__verilator_test__DOT__top_instantiation__DOT__registers__v61) {
-        vlTOPp->verilator_test__DOT__top_instantiation__DOT__registers[5U] 
+        vlTOPp->verilator_test__DOT__top_instantiation__DOT__registers[3U] 
             = __Vdlyvval__verilator_test__DOT__top_instantiation__DOT__registers__v61;
     }
     if (__Vdlyvset__verilator_test__DOT__top_instantiation__DOT__registers__v62) {
-        vlTOPp->verilator_test__DOT__top_instantiation__DOT__registers[6U] 
+        vlTOPp->verilator_test__DOT__top_instantiation__DOT__registers[4U] 
             = __Vdlyvval__verilator_test__DOT__top_instantiation__DOT__registers__v62;
     }
     if (__Vdlyvset__verilator_test__DOT__top_instantiation__DOT__registers__v63) {
-        vlTOPp->verilator_test__DOT__top_instantiation__DOT__registers[7U] 
+        vlTOPp->verilator_test__DOT__top_instantiation__DOT__registers[5U] 
             = __Vdlyvval__verilator_test__DOT__top_instantiation__DOT__registers__v63;
     }
     if (__Vdlyvset__verilator_test__DOT__top_instantiation__DOT__registers__v64) {
-        vlTOPp->verilator_test__DOT__top_instantiation__DOT__registers[8U] 
+        vlTOPp->verilator_test__DOT__top_instantiation__DOT__registers[6U] 
             = __Vdlyvval__verilator_test__DOT__top_instantiation__DOT__registers__v64;
     }
     if (__Vdlyvset__verilator_test__DOT__top_instantiation__DOT__registers__v65) {
-        vlTOPp->verilator_test__DOT__top_instantiation__DOT__registers[9U] 
+        vlTOPp->verilator_test__DOT__top_instantiation__DOT__registers[7U] 
             = __Vdlyvval__verilator_test__DOT__top_instantiation__DOT__registers__v65;
     }
     if (__Vdlyvset__verilator_test__DOT__top_instantiation__DOT__registers__v66) {
+        vlTOPp->verilator_test__DOT__top_instantiation__DOT__registers[8U] 
+            = __Vdlyvval__verilator_test__DOT__top_instantiation__DOT__registers__v66;
+    }
+    if (__Vdlyvset__verilator_test__DOT__top_instantiation__DOT__registers__v67) {
+        vlTOPp->verilator_test__DOT__top_instantiation__DOT__registers[9U] 
+            = __Vdlyvval__verilator_test__DOT__top_instantiation__DOT__registers__v67;
+    }
+    if (__Vdlyvset__verilator_test__DOT__top_instantiation__DOT__registers__v68) {
         vlTOPp->verilator_test__DOT__top_instantiation__DOT__registers[9U] = 1U;
     }
     if (__Vdlyvset__verilator_test__DOT__top_instantiation__DOT__shadow_registers__v0) {
         vlTOPp->verilator_test__DOT__top_instantiation__DOT__registers[0U] 
-            = __Vdlyvval__verilator_test__DOT__top_instantiation__DOT__registers__v67;
-    }
-    if (__Vdlyvset__verilator_test__DOT__top_instantiation__DOT__registers__v68) {
-        vlTOPp->verilator_test__DOT__top_instantiation__DOT__registers[0U] = 0U;
-    }
-    if (__Vdlyvset__verilator_test__DOT__top_instantiation__DOT__registers__v69) {
-        vlTOPp->verilator_test__DOT__top_instantiation__DOT__registers[1U] = 0U;
+            = __Vdlyvval__verilator_test__DOT__top_instantiation__DOT__registers__v69;
     }
     if (__Vdlyvset__verilator_test__DOT__top_instantiation__DOT__registers__v70) {
+        vlTOPp->verilator_test__DOT__top_instantiation__DOT__registers[0U] = 0U;
+    }
+    if (__Vdlyvset__verilator_test__DOT__top_instantiation__DOT__registers__v71) {
+        vlTOPp->verilator_test__DOT__top_instantiation__DOT__registers[1U] = 0U;
+    }
+    if (__Vdlyvset__verilator_test__DOT__top_instantiation__DOT__registers__v72) {
         vlTOPp->verilator_test__DOT__top_instantiation__DOT__registers[2U] = 0U;
         vlTOPp->verilator_test__DOT__top_instantiation__DOT__registers[3U] = 0U;
         vlTOPp->verilator_test__DOT__top_instantiation__DOT__registers[4U] = 0U;
@@ -3226,9 +3343,9 @@ VL_INLINE_OPT void Vverilator_test::_sequent__TOP__2(Vverilator_test__Syms* __re
         vlTOPp->verilator_test__DOT__top_instantiation__DOT__ps2_keyboard__DOT__previous_ps2_clk_filtered_state = 1U;
     }
     vlTOPp->verilator_test__DOT__top_instantiation__DOT__program_rom_byte 
-        = ((0x74aU >= (0x7ffU & vlTOPp->verilator_test__DOT__top_instantiation__DOT__program_rom_address))
+        = ((0x78U >= (0x7fU & vlTOPp->verilator_test__DOT__top_instantiation__DOT__program_rom_address))
             ? vlTOPp->verilator_test__DOT__top_instantiation__DOT__program_rom__DOT__rom_memory
-           [(0x7ffU & vlTOPp->verilator_test__DOT__top_instantiation__DOT__program_rom_address)]
+           [(0x7fU & vlTOPp->verilator_test__DOT__top_instantiation__DOT__program_rom_address)]
             : 0U);
     vlTOPp->verilator_test__DOT__top_instantiation__DOT__divider__DOT__t_numer 
         = vlTOPp->verilator_test__DOT__top_instantiation__DOT__divider_numerator;
@@ -3294,35 +3411,48 @@ VL_INLINE_OPT void Vverilator_test::_sequent__TOP__2(Vverilator_test__Syms* __re
         vlTOPp->verilator_test__DOT__top_instantiation__DOT__keyboard_scancode_fifo_data_out = 0U;
     }
     if (vlTOPp->reset_n) {
+        __Vdly__verilator_test__DOT__top_instantiation__DOT__spi_controller__DOT__ticks_since_transmit_pulse 
+            = (0x3fffU & ((IData)(1U) + (IData)(vlTOPp->verilator_test__DOT__top_instantiation__DOT__spi_controller__DOT__ticks_since_transmit_pulse)));
         if ((0U < (IData)(vlTOPp->verilator_test__DOT__top_instantiation__DOT__spi_controller__DOT__bits_to_send))) {
-            if (vlTOPp->verilator_test__DOT__top_instantiation__DOT__spi_controller__DOT__spi_clock) {
-                vlTOPp->verilator_test__DOT__spi_sclk = 1U;
-                vlTOPp->verilator_test__DOT__top_instantiation__DOT__sd_card_spi_byte_received 
-                    = (((~ ((IData)(1U) << (7U & ((IData)(vlTOPp->verilator_test__DOT__top_instantiation__DOT__spi_controller__DOT__bits_to_send) 
-                                                  - (IData)(1U))))) 
-                        & (IData)(vlTOPp->verilator_test__DOT__top_instantiation__DOT__sd_card_spi_byte_received)) 
-                       | ((IData)(vlTOPp->verilator_test__DOT__top_instantiation__DOT__SD_DAT) 
-                          << (7U & ((IData)(vlTOPp->verilator_test__DOT__top_instantiation__DOT__spi_controller__DOT__bits_to_send) 
-                                    - (IData)(1U)))));
-                __Vdly__verilator_test__DOT__top_instantiation__DOT__spi_controller__DOT__bits_to_send 
-                    = (0xfU & ((IData)(vlTOPp->verilator_test__DOT__top_instantiation__DOT__spi_controller__DOT__bits_to_send) 
-                               - (IData)(1U)));
-                if ((1U == (IData)(vlTOPp->verilator_test__DOT__top_instantiation__DOT__spi_controller__DOT__bits_to_send))) {
-                    vlTOPp->verilator_test__DOT__top_instantiation__DOT__sd_card_spi_transmit_done = 1U;
-                }
-            } else {
+            if (vlTOPp->verilator_test__DOT__top_instantiation__DOT__spi_controller__DOT__spi_clock_falling) {
                 vlTOPp->verilator_test__DOT__spi_sclk = 0U;
                 vlTOPp->verilator_test__DOT__spi_copi 
                     = (1U & ((IData)(vlTOPp->verilator_test__DOT__top_instantiation__DOT__sd_card_spi_byte_to_send) 
                              >> (7U & ((IData)(vlTOPp->verilator_test__DOT__top_instantiation__DOT__spi_controller__DOT__bits_to_send) 
                                        - (IData)(1U)))));
+            } else {
+                if ((((~ (IData)(vlTOPp->verilator_test__DOT__top_instantiation__DOT__spi_controller__DOT__previous_spi_clock)) 
+                      & (IData)(vlTOPp->verilator_test__DOT__top_instantiation__DOT__spi_controller__DOT__spi_clock)) 
+                     & (0xfaU <= (IData)(vlTOPp->verilator_test__DOT__top_instantiation__DOT__spi_controller__DOT__ticks_since_transmit_pulse)))) {
+                    vlTOPp->verilator_test__DOT__spi_sclk = 1U;
+                    vlTOPp->verilator_test__DOT__top_instantiation__DOT__sd_card_spi_byte_received 
+                        = (((~ ((IData)(1U) << (7U 
+                                                & ((IData)(vlTOPp->verilator_test__DOT__top_instantiation__DOT__spi_controller__DOT__bits_to_send) 
+                                                   - (IData)(1U))))) 
+                            & (IData)(vlTOPp->verilator_test__DOT__top_instantiation__DOT__sd_card_spi_byte_received)) 
+                           | ((IData)(vlTOPp->verilator_test__DOT__top_instantiation__DOT__SD_DAT) 
+                              << (7U & ((IData)(vlTOPp->verilator_test__DOT__top_instantiation__DOT__spi_controller__DOT__bits_to_send) 
+                                        - (IData)(1U)))));
+                    __Vdly__verilator_test__DOT__top_instantiation__DOT__spi_controller__DOT__bits_to_send 
+                        = (0xfU & ((IData)(vlTOPp->verilator_test__DOT__top_instantiation__DOT__spi_controller__DOT__bits_to_send) 
+                                   - (IData)(1U)));
+                    if ((1U == (IData)(vlTOPp->verilator_test__DOT__top_instantiation__DOT__spi_controller__DOT__bits_to_send))) {
+                        vlTOPp->verilator_test__DOT__top_instantiation__DOT__sd_card_spi_transmit_done = 1U;
+                    }
+                }
             }
         } else {
             if (vlTOPp->verilator_test__DOT__top_instantiation__DOT__sd_card_spi_transmit_pulse) {
                 __Vdly__verilator_test__DOT__top_instantiation__DOT__spi_controller__DOT__bits_to_send = 8U;
+                __Vdly__verilator_test__DOT__top_instantiation__DOT__spi_controller__DOT__ticks_since_transmit_pulse = 0U;
+                vlTOPp->verilator_test__DOT__spi_copi 
+                    = (1U & ((IData)(vlTOPp->verilator_test__DOT__top_instantiation__DOT__sd_card_spi_byte_to_send) 
+                             >> 7U));
             } else {
                 if ((0U == (IData)(vlTOPp->verilator_test__DOT__top_instantiation__DOT__spi_controller__DOT__bits_to_send))) {
-                    vlTOPp->verilator_test__DOT__spi_sclk = 0U;
+                    if (vlTOPp->verilator_test__DOT__top_instantiation__DOT__spi_controller__DOT__spi_clock_falling) {
+                        vlTOPp->verilator_test__DOT__spi_sclk = 0U;
+                    }
                     vlTOPp->verilator_test__DOT__top_instantiation__DOT__sd_card_spi_transmit_done = 0U;
                 }
             }
@@ -3331,6 +3461,7 @@ VL_INLINE_OPT void Vverilator_test::_sequent__TOP__2(Vverilator_test__Syms* __re
         __Vdly__verilator_test__DOT__top_instantiation__DOT__spi_controller__DOT__bits_to_send = 0U;
         vlTOPp->verilator_test__DOT__top_instantiation__DOT__sd_card_spi_byte_received = 0U;
         vlTOPp->verilator_test__DOT__top_instantiation__DOT__sd_card_spi_transmit_done = 0U;
+        __Vdly__verilator_test__DOT__top_instantiation__DOT__spi_controller__DOT__ticks_since_transmit_pulse = 0U;
         vlTOPp->verilator_test__DOT__spi_sclk = 0U;
         vlTOPp->verilator_test__DOT__spi_copi = 0U;
     }
@@ -3397,14 +3528,14 @@ VL_INLINE_OPT void Vverilator_test::_sequent__TOP__2(Vverilator_test__Syms* __re
         = __Vdly__verilator_test__DOT__top_instantiation__DOT__keyboard_scancodes_fifo__DOT__current_fifo_size;
     vlTOPp->verilator_test__DOT__top_instantiation__DOT__sd_card_spi_byte_to_send 
         = __Vdly__verilator_test__DOT__top_instantiation__DOT__sd_card_spi_byte_to_send;
+    vlTOPp->verilator_test__DOT__top_instantiation__DOT__spi_controller__DOT__ticks_since_transmit_pulse 
+        = __Vdly__verilator_test__DOT__top_instantiation__DOT__spi_controller__DOT__ticks_since_transmit_pulse;
     vlTOPp->verilator_test__DOT__top_instantiation__DOT__spi_controller__DOT__bits_to_send 
         = __Vdly__verilator_test__DOT__top_instantiation__DOT__spi_controller__DOT__bits_to_send;
     vlTOPp->verilator_test__DOT__top_instantiation__DOT__sd_card_spi_transmit_pulse 
         = __Vdly__verilator_test__DOT__top_instantiation__DOT__sd_card_spi_transmit_pulse;
-    vlTOPp->verilator_test__DOT__top_instantiation__DOT__spi_controller__DOT__spi_clock 
-        = __Vdly__verilator_test__DOT__top_instantiation__DOT__spi_controller__DOT__spi_clock;
     vlTOPp->verilator_test__DOT__top_instantiation__DOT__program_rom_done 
-        = (0x74aU == vlTOPp->verilator_test__DOT__top_instantiation__DOT__program_rom_address);
+        = (0x78U == vlTOPp->verilator_test__DOT__top_instantiation__DOT__program_rom_address);
     vlTOPp->verilator_test__DOT__top_instantiation__DOT__interrupt_value_fifo__DOT__full 
         = ((0xaU == (IData)(vlTOPp->verilator_test__DOT__top_instantiation__DOT__interrupt_value_fifo__DOT__current_fifo_size))
             ? 1U : 0U);
@@ -3423,13 +3554,33 @@ VL_INLINE_OPT void Vverilator_test::_sequent__TOP__2(Vverilator_test__Syms* __re
     vlTOPp->verilator_test__DOT__top_instantiation__DOT__keyboard_scancode_fifo_empty 
         = ((0U == (IData)(vlTOPp->verilator_test__DOT__top_instantiation__DOT__keyboard_scancodes_fifo__DOT__current_fifo_size))
             ? 1U : 0U);
+    if (vlTOPp->reset_n) {
+        __Vdly__verilator_test__DOT__top_instantiation__DOT__spi_controller__DOT__spi_clock_divider_counter 
+            = (0x3ffU & ((IData)(1U) + (IData)(vlTOPp->verilator_test__DOT__top_instantiation__DOT__spi_controller__DOT__spi_clock_divider_counter)));
+        vlTOPp->verilator_test__DOT__top_instantiation__DOT__spi_controller__DOT__previous_spi_clock 
+            = vlTOPp->verilator_test__DOT__top_instantiation__DOT__spi_controller__DOT__spi_clock;
+        if ((0x1f4U == (IData)(vlTOPp->verilator_test__DOT__top_instantiation__DOT__spi_controller__DOT__spi_clock_divider_counter))) {
+            vlTOPp->verilator_test__DOT__top_instantiation__DOT__spi_controller__DOT__spi_clock 
+                = (1U & (~ (IData)(vlTOPp->verilator_test__DOT__top_instantiation__DOT__spi_controller__DOT__spi_clock)));
+            __Vdly__verilator_test__DOT__top_instantiation__DOT__spi_controller__DOT__spi_clock_divider_counter = 0U;
+        }
+    } else {
+        vlTOPp->verilator_test__DOT__top_instantiation__DOT__spi_controller__DOT__spi_clock = 0U;
+        vlTOPp->verilator_test__DOT__top_instantiation__DOT__spi_controller__DOT__previous_spi_clock = 0U;
+        __Vdly__verilator_test__DOT__top_instantiation__DOT__spi_controller__DOT__spi_clock_divider_counter = 0U;
+    }
+    vlTOPp->verilator_test__DOT__top_instantiation__DOT__spi_controller__DOT__spi_clock_divider_counter 
+        = __Vdly__verilator_test__DOT__top_instantiation__DOT__spi_controller__DOT__spi_clock_divider_counter;
+    vlTOPp->verilator_test__DOT__top_instantiation__DOT__spi_controller__DOT__spi_clock_falling 
+        = ((IData)(vlTOPp->verilator_test__DOT__top_instantiation__DOT__spi_controller__DOT__previous_spi_clock) 
+           & (~ (IData)(vlTOPp->verilator_test__DOT__top_instantiation__DOT__spi_controller__DOT__spi_clock)));
 }
 
 VL_INLINE_OPT void Vverilator_test::_sequent__TOP__3(Vverilator_test__Syms* __restrict vlSymsp) {
     VL_DEBUG_IF(VL_DBG_MSGF("+    Vverilator_test::_sequent__TOP__3\n"); );
     Vverilator_test* const __restrict vlTOPp VL_ATTR_UNUSED = vlSymsp->TOPp;
     // Variables
-    WData/*127:0*/ __Vtemp36[4];
+    WData/*127:0*/ __Vtemp37[4];
     // Body
     if (vlTOPp->verilator_test__DOT__top_instantiation__DOT__integrated_graphics__DOT__blanking) {
         vlTOPp->verilator_test__DOT__VGA_B = 0U;
@@ -3446,18 +3597,18 @@ VL_INLINE_OPT void Vverilator_test::_sequent__TOP__3(Vverilator_test__Syms* __re
                                                ? 0xfU
                                                : 0U);
     }
-    __Vtemp36[0U] = vlTOPp->verilator_test__DOT__top_instantiation__DOT__integrated_graphics__DOT__font_glyphs__DOT__font_storage
+    __Vtemp37[0U] = vlTOPp->verilator_test__DOT__top_instantiation__DOT__integrated_graphics__DOT__font_glyphs__DOT__font_storage
         [vlTOPp->verilator_test__DOT__top_instantiation__DOT__integrated_graphics__DOT__current_character][0U];
-    __Vtemp36[1U] = vlTOPp->verilator_test__DOT__top_instantiation__DOT__integrated_graphics__DOT__font_glyphs__DOT__font_storage
+    __Vtemp37[1U] = vlTOPp->verilator_test__DOT__top_instantiation__DOT__integrated_graphics__DOT__font_glyphs__DOT__font_storage
         [vlTOPp->verilator_test__DOT__top_instantiation__DOT__integrated_graphics__DOT__current_character][1U];
-    __Vtemp36[2U] = vlTOPp->verilator_test__DOT__top_instantiation__DOT__integrated_graphics__DOT__font_glyphs__DOT__font_storage
+    __Vtemp37[2U] = vlTOPp->verilator_test__DOT__top_instantiation__DOT__integrated_graphics__DOT__font_glyphs__DOT__font_storage
         [vlTOPp->verilator_test__DOT__top_instantiation__DOT__integrated_graphics__DOT__current_character][2U];
-    __Vtemp36[3U] = vlTOPp->verilator_test__DOT__top_instantiation__DOT__integrated_graphics__DOT__font_glyphs__DOT__font_storage
+    __Vtemp37[3U] = vlTOPp->verilator_test__DOT__top_instantiation__DOT__integrated_graphics__DOT__font_glyphs__DOT__font_storage
         [vlTOPp->verilator_test__DOT__top_instantiation__DOT__integrated_graphics__DOT__current_character][3U];
     vlTOPp->verilator_test__DOT__top_instantiation__DOT__integrated_graphics__DOT__current_pixel_value 
         = ((0x7fU >= (((IData)(vlTOPp->verilator_test__DOT__top_instantiation__DOT__integrated_graphics__DOT__character_cell_y) 
                        << 3U) + (IData)(vlTOPp->verilator_test__DOT__top_instantiation__DOT__integrated_graphics__DOT__character_cell_x))) 
-           & (__Vtemp36[(3U & (((IData)(0x7fU) - (((IData)(vlTOPp->verilator_test__DOT__top_instantiation__DOT__integrated_graphics__DOT__character_cell_y) 
+           & (__Vtemp37[(3U & (((IData)(0x7fU) - (((IData)(vlTOPp->verilator_test__DOT__top_instantiation__DOT__integrated_graphics__DOT__character_cell_y) 
                                                    << 3U) 
                                                   + (IData)(vlTOPp->verilator_test__DOT__top_instantiation__DOT__integrated_graphics__DOT__character_cell_x))) 
                                >> 5U))] >> (0x1fU & 

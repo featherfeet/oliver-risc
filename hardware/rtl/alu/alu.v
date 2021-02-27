@@ -331,17 +331,25 @@ case (operation)
     end
     `OPERATION_RST:
     begin
-        $display("RST");
-        `REGISTER_IP <= code_section_start_address;
-        `REGISTER_A <= 'b0;
-        `REGISTER_B <= 'b0;
-        `REGISTER_C <= 'b0;
-        `REGISTER_D <= 'b0;
-        `REGISTER_E <= 'b0;
-        `REGISTER_F <= 'b0;
-        `REGISTER_G <= 'b0;
-        // TODO: Clear interrupt vector table and interrupt FIFO.
-        state <= `STATE_RUN_INTERRUPT;
+        if (operand_byte_index == `OPERAND_SIZE_BYTES)
+        begin
+            $display("RST");
+            operand_byte_index <= 'b0;
+            registers[0] <= code_section_start_address + 'd4;
+            code_section_start_address <= code_section_start_address + 'd4;
+            for (i = 1; i < `NUM_REGISTERS; i = i + 1)
+                registers[i] <= 'b0;
+            // TODO: Clear interrupt vector table and interrupt FIFO.
+            state <= `STATE_RUN_INTERRUPT;
+        end
+        else if (ram_read_complete)
+        begin
+            code_section_start_address <= {ram_read_data[7:0], code_section_start_address[31:8]};
+            operand_byte_index <= operand_byte_index + 8'd1;
+            ram_read_complete <= 'b0;
+        end
+        else
+            read_from_ram(operand_byte_index);
     end
     `OPERATION_ENDINT:
     begin

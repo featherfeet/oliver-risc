@@ -15,4 +15,4 @@
     CLOAD 0,C
     OUT C,A
     // Exit.
-    HALT
+    RST

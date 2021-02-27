@@ -367,7 +367,7 @@ __ASM__("CLOAD 1,B");
 __ASM__("OUT A,B");
 
 // Procedure to read data from the SD card.
-VAR read_data_procedure_arg_block; // Logical block to be read.
+VAR read_data_procedure_arg_block = 0; // Logical block to be read.
 VAR read_data_procedure_arg_destination_p; // Pointer (memory address) at which the data should be stored.
 PROCEDURE read_data;
 BEGIN
@@ -428,26 +428,63 @@ BEGIN
         __ASM__("RSTORE B,C"); // RSTORE will overwrite the next 3 bytes as well, but this doesn't really matter since we are looping forwards (although it will corrupt the 3 bytes after the end of the memory used to hold the block.
         output_value := output_value + 1;
     END;
+    // Read the checksum.
+    __ASM__("CLOAD 16081,A");
+    __ASM__("CLOAD 255,B");
+    __ASM__("OUT A,B");
+    __ASM__("OUT A,B");
     // Set CS high.
     __ASM__("CLOAD 16082,A");
     __ASM__("CLOAD 1,B");
     __ASM__("OUT A,B");
 END;
 
+// Load 100 512-byte blocks of data from the SD card to address 4000100 in RAM.
 read_data_procedure_arg_block := 0;
 read_data_procedure_arg_destination_p := 4000100; // Address 4 MB + 100 bytes should be past the area of memory used by the stack.
-CALL read_data;
-
-// Copy data read from SD card to screen.
-VAR i = 0;
-
-WHILE i < 512 DO
+WHILE read_data_procedure_arg_block < 100 DO
 BEGIN
-    output_value := read_data_procedure_arg_destination_p[i];
-    output_address := i;
-    CALL OUT;
-    i := i + 1;
+    CALL read_data;
+    read_data_procedure_arg_block := read_data_procedure_arg_block + 1;
+    read_data_procedure_arg_destination_p := read_data_procedure_arg_destination_p + 512;
 END;
 
-// Finish.
-CALL HALT;
+// Copy the memcpy routine instructions to address 7500000 in RAM, then jump to there to execute the routine.
+__ASM__("CLOAD [memcpy_routine],B"); // B, the source address, should be the address of the memcpy routine plus 16 bytes (to compensate for the fact that [memcpy_routine] is relative to the start of the .code section, but the LOAD/STORE instructions address memory relative to the start of the 16-byte-long .data section.
+__ASM__("CLOAD 16,A");
+__ASM__("ADD A,B");
+__ASM__("MOV A,B");
+__ASM__("CLOAD 7500000,C"); // Destination address.
+__ASM__("CLOAD 4,E"); // Address increment.
+__ASM__("CLOAD [end_of_memcpy_routine],F"); // End source address. Also add 16 bytes for the aforementioned reason.
+__ASM__("CLOAD 16,A");
+__ASM__("ADD A,F");
+__ASM__("MOV A,F");
+__ASM__("copy_memcpy_routine:");
+__ASM__("    RLOAD B,D");
+__ASM__("    RSTORE D,C");
+__ASM__("    ADD B,E");
+__ASM__("    MOV A,B");
+__ASM__("    ADD C,E");
+__ASM__("    MOV A,C");
+__ASM__("    CMP B,F");
+__ASM__("    JMPL copy_memcpy_routine");
+__ASM__("CLOAD 7500000,IP"); // Execute the memcpy routine.
+
+// memcpy routine that copies the executable loaded from the SD card to address 0 in RAM, then calls RST to cause the CPU to run the executable.
+__ASM__("memcpy_routine:");
+__ASM__("    CLOAD 4000100,B"); // Source address.
+__ASM__("    CLOAD 0,C"); // Destination address.
+__ASM__("    CLOAD 4,E"); // Address increment (because RLOAD/RSTORE read and write 4 bytes at a time).
+__ASM__("    CLOAD 51200,F"); // End destination address.
+__ASM__("    copy_loop:");
+__ASM__("        RLOAD B,D");
+__ASM__("        RSTORE D,C");
+__ASM__("        ADD B,E");
+__ASM__("        MOV A,B");
+__ASM__("        ADD C,E");
+__ASM__("        MOV A,C");
+__ASM__("        CMP C,F");
+__ASM__("        JMPL copy_loop");
+__ASM__("     RST");
+__ASM__("end_of_memcpy_routine:");
