@@ -1,54 +1,3 @@
-// Console width in characters.
-/*
-VAR SCREEN_HEIGHT_ROWS = 67;
-VAR SCREEN_WIDTH_COLUMNS = 240;
-VAR GPU_MEMORY_LENGTH;
-GPU_MEMORY_LENGTH := SCREEN_WIDTH_COLUMNS * SCREEN_HEIGHT_ROWS;
-
-// Cursor string.
-VAR cursor_s = "_";
-
-// On-screen location of the cursor.
-VAR cursor_row_i = 0;
-VAR cursor_column_i = 0;
-
-// Print function. Takes one string argument. Prints it at the current cursor location.
-VAR print_procedure_arg_string_s;
-PROCEDURE print;
-BEGIN
-    VAR i = 0;
-    output_address := cursor_row_i * SCREEN_WIDTH_COLUMNS + cursor_column_i;
-    output_value := print_procedure_arg_string_s[0];
-
-    WHILE output_value # 0 DO
-    BEGIN
-        CALL OUT;
-        i := i + 1;
-        cursor_column_i := cursor_column_i + 1;
-        output_address := output_address + 1;
-        output_value := print_procedure_arg_string_s[i];
-    END;
-
-    output_value := cursor_s[0];
-    CALL OUT;
-END;
-
-// Procedure to move to next line.
-PROCEDURE next_line;
-BEGIN
-    output_address := cursor_row_i * SCREEN_WIDTH_COLUMNS + cursor_column_i;
-    output_value := 32;
-    CALL OUT;
-    cursor_column_i := 0;
-    cursor_row_i := cursor_row_i + 1;
-END;
-
-// Print message.
-VAR startup_message = "SD boot...";
-print_procedure_arg_string_s := startup_message;
-CALL print;
-*/
-
 // Set CS high.
 __ASM__("CLOAD 16082,A");
 __ASM__("CLOAD 1,B");
@@ -150,54 +99,6 @@ BEGIN
     END;
 END;
 
-/*
-// Procedure to count how many digits are in a number.
-VAR integer_to_measure = 0;
-VAR integer_length = 0;
-PROCEDURE get_integer_length;
-BEGIN
-    integer_length := 0;
-    VAR number_shifter;
-    number_shifter := integer_to_measure;
-    WHILE number_shifter > 0 DO
-    BEGIN
-        number_shifter := number_shifter / 10;
-        integer_length := integer_length + 1;
-    END;
-END;
-
-// Procedure to get the number of digits in an integer.
-VAR integer = 0;
-VAR line = 0;
-PROCEDURE print_integer;
-BEGIN
-    integer_to_measure := integer;
-    CALL get_integer_length; // Stores return value in `integer_length`.
-    // Special case for 0.
-    IF integer = 0 THEN
-    BEGIN
-        output_address := line * SCREEN_WIDTH_COLUMNS;
-        output_value := 48;
-        CALL OUT;
-        RETURN;
-    END;
-    // Output the number one digit at a time, placing each digit at the correct position on-screen.
-    VAR number_shifter;
-    number_shifter := integer;
-    WHILE number_shifter > 0 DO
-    BEGIN
-        VAR digit;
-        digit := number_shifter % 10;
-        output_address := line * SCREEN_WIDTH_COLUMNS;
-        output_address := output_address + integer_length - 1;
-        output_value := digit + 48;
-        CALL OUT;
-        integer_length := integer_length - 1;
-        number_shifter := number_shifter / 10;
-    END;
-END;
-*/
-
 // Send CMD0 until we get a response of R1_IDLE_STATE.
 send_sd_command_arg_cmd := 0; // CMD0
 send_sd_command_arg_arg := 0;
@@ -207,12 +108,7 @@ BEGIN
     CALL send_sd_command;
 END;
 
-/*
-VAR idle_message = "Card idle.";
-print_procedure_arg_string_s := idle_message;
-CALL next_line;
-CALL print;
-*/
+// If we make it this far, the card is in the idle state.
 
 // Check the SD version.
 send_sd_command_arg_cmd := 8; // CMD8
@@ -230,12 +126,6 @@ VAR sd_card_type;
 // SD card is type 1.
 IF s # 0 THEN
 BEGIN
-    /*
-    VAR card_type_message_1 = "TYPE 1";
-    CALL next_line;
-    print_procedure_arg_string_s := card_type_message_1;
-    CALL print;
-    */
     sd_card_type := 1;
 END;
 // SD card is not type 1.
@@ -254,21 +144,10 @@ BEGIN
     __ASM__("STORE C,output_value");
     IF output_value # 170 THEN // 170 = 0xAA
     BEGIN
-        /*
-        VAR err_msg = "CMD8 err";
-        CALL next_line;
-        print_procedure_arg_string_s := err_msg;
-        CALL print;
-        */
+        // CMD8 error.
         CALL HALT;
     END;
     sd_card_type := 2;
-    /*
-    VAR card_type_message_1 = "TYPE 2";
-    CALL next_line;
-    print_procedure_arg_string_s := card_type_message_1;
-    CALL print;
-    */
 END;
 
 send_sd_command_ret := 255; // Just to make sure that it is actually zero when it gets set to zero by the procedure.
@@ -299,12 +178,7 @@ END;
 
 __ASM__("got_ready_state:");
 
-/*
-VAR init_msg = "Init done";
-CALL next_line;
-print_procedure_arg_string_s := init_msg;
-CALL print;
-*/
+// If we get this far, the initialization is complete.
 
 // If type of card is SD2, then read the OCR register to check for an SDHC card.
 IF sd_card_type = 2 THEN
@@ -315,12 +189,7 @@ BEGIN
     CALL send_sd_command;
     IF send_sd_command_ret # 0 THEN
     BEGIN
-        /*
-        CALL next_line;
-        VAR cmd58_err_msg = "CMD58 err";
-        print_procedure_arg_string_s := cmd58_err_msg;
-        CALL print;
-        */
+        // CMD58 error.
         CALL HALT;
     END;
     // Check for SDHC card.
@@ -334,22 +203,7 @@ BEGIN
     IF output_value = 192 THEN
     BEGIN
         sd_card_type := 3; // Use 3 to represent SDHC.
-        /*
-        CALL next_line;
-        VAR sdhc_msg = "SDHC card";
-        print_procedure_arg_string_s := sdhc_msg;
-        CALL print;
-        */
     END;
-    /*
-    IF output_value # 192 THEN
-    BEGIN
-        CALL next_line;
-        VAR not_sdhc_msg = "Not SDHC card";
-        print_procedure_arg_string_s := not_sdhc_msg;
-        CALL print;
-    END;
-    */
     // Discard the rest of the OCR register, since it just holds the allowed voltage range.
     __ASM__("CLOAD 16081,A");
     __ASM__("CLOAD 255,B");
@@ -388,12 +242,7 @@ BEGIN
     CALL send_sd_command;
     IF send_sd_command_ret # 0 THEN
     BEGIN
-        /*
-        CALL next_line;
-        VAR err_cmd17 = "CMD17 err";
-        print_procedure_arg_string_s := err_cmd17;
-        CALL print;
-        */
+        // CMD17 error.
         RETURN;
     END;
     // Wait for the start block token.
@@ -408,12 +257,7 @@ BEGIN
     END;
     IF output_value # 254 THEN // DATA_START_BLOCK = 0xFE = 254
     BEGIN
-        /*
-        CALL next_line;
-        VAR err_read = "Read err";
-        print_procedure_arg_string_s := err_read;
-        CALL print;
-        */
+        // Read error.
         RETURN;
     END;
     // Read the block of data (512 bytes).
