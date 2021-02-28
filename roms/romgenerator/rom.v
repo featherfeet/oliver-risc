@@ -1,6 +1,6 @@
 module rom(input CLOCK_50, input[31:0] address, output reg [7:0] output_byte, output done);
-	assign done = (address == 32'd5487);
-	reg[0:7] rom_memory[0:5488 - 1];
+	assign done = (address == 32'd5712);
+	reg[0:7] rom_memory[0:5713 - 1];
 	initial begin
 		$readmemh("rtl/rom.mem", rom_memory);
 	end

@@ -122,6 +122,7 @@ __ASM__("AND A,B");
 __ASM__("STORE A,output_value");
 VAR s;
 s := output_value;
+
 VAR sd_card_type;
 // SD card is type 1.
 IF s # 0 THEN
@@ -161,7 +162,7 @@ BEGIN
     send_sd_command_arg_cmd := 41; // ACMD41 (0x29, initialize the card and send host capacity support info).
     IF sd_card_type = 2 THEN
     BEGIN
-        send_sd_command_arg_arg := 64; // 0x40
+        send_sd_command_arg_arg := 1073741824; // 0X40000000
     END;
     IF sd_card_type # 2 THEN
     BEGIN
@@ -286,11 +287,17 @@ END;
 // Load 100 512-byte blocks of data from the SD card to address 4000100 in RAM.
 read_data_procedure_arg_block := 0;
 read_data_procedure_arg_destination_p := 4000100; // Address 4 MB + 100 bytes should be past the area of memory used by the stack.
+VAR progress_counter = 0;
 WHILE read_data_procedure_arg_block < 100 DO
 BEGIN
     CALL read_data;
     read_data_procedure_arg_block := read_data_procedure_arg_block + 1;
     read_data_procedure_arg_destination_p := read_data_procedure_arg_destination_p + 512;
+    // Show progress using period characters on-screen.
+    output_address := progress_counter;
+    output_value := 46; // '.'
+    CALL OUT;
+    progress_counter := progress_counter + 1;
 END;
 
 // Copy the memcpy routine instructions to address 7500000 in RAM, then jump to there to execute the routine.

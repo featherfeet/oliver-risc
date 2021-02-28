@@ -63,7 +63,6 @@ BEGIN
     __ASM__("IN B,C");
     __ASM__("STORE C,output_value"); // Since output_value is a "special" variable in the compiler that's at a fixed offset, both the PL/0 and asm can access it easily.
     VAR print_buffer = " ";
-    VAR valid = 0;
     IF previous_scancode # 240 THEN
     BEGIN
         previous_scancode := output_value;
@@ -73,68 +72,97 @@ BEGIN
     IF output_value = 22 THEN // 1
     BEGIN
         print_buffer[0] := 49;
-        valid := 1;
+        __ASM__("CMP A,A");
+        __ASM__("JMPE scancode_found");
     END;
     IF output_value = 30 THEN // 2
     BEGIN
         print_buffer[0] := 50;
-        valid := 1;
+        __ASM__("CMP A,A");
+        __ASM__("JMPE scancode_found");
     END;
     IF output_value = 38 THEN // 3
     BEGIN
         print_buffer[0] := 51;
-        valid := 1;
+        __ASM__("CMP A,A");
+        __ASM__("JMPE scancode_found");
     END;
     IF output_value = 37 THEN // 4
     BEGIN
         print_buffer[0] := 52;
-        valid := 1;
+        __ASM__("CMP A,A");
+        __ASM__("JMPE scancode_found");
     END;
     IF output_value = 46 THEN // 5
     BEGIN
         print_buffer[0] := 53;
-        valid := 1;
+        __ASM__("CMP A,A");
+        __ASM__("JMPE scancode_found");
     END;
     IF output_value = 54 THEN // 6
     BEGIN
         print_buffer[0] := 54;
-        valid := 1;
+        __ASM__("CMP A,A");
+        __ASM__("JMPE scancode_found");
     END;
     IF output_value = 61 THEN // 7
     BEGIN
         print_buffer[0] := 55;
-        valid := 1;
+        __ASM__("CMP A,A");
+        __ASM__("JMPE scancode_found");
     END;
     IF output_value = 62 THEN // 8
     BEGIN
         print_buffer[0] := 56;
-        valid := 1;
+        __ASM__("CMP A,A");
+        __ASM__("JMPE scancode_found");
     END;
     IF output_value = 70 THEN // 9
     BEGIN
         print_buffer[0] := 57;
-        valid := 1;
+        __ASM__("CMP A,A");
+        __ASM__("JMPE scancode_found");
     END;
     IF output_value = 69 THEN // 0
     BEGIN
         print_buffer[0] := 48;
-        valid := 1;
+        __ASM__("CMP A,A");
+        __ASM__("JMPE scancode_found");
     END;
-/*    IF output_value = 28 THEN // A
+    IF output_value = 28 THEN // A
     BEGIN
         print_buffer[0] := 65;
-        valid := 1;
-    END;*/
+        __ASM__("CMP A,A");
+        __ASM__("JMPE scancode_found");
+    END;
+    IF output_value = 50 THEN // B
+    BEGIN
+        print_buffer[0] := 66;
+        __ASM__("CMP A,A");
+        __ASM__("JMPE scancode_found");
+    END;
+    IF output_value = 33 THEN // C
+    BEGIN
+        print_buffer[0] := 67;
+        __ASM__("CMP A,A");
+        __ASM__("JMPE scancode_found");
+    END;
+    IF output_value = 35 THEN // D
+    BEGIN
+        print_buffer[0] := 68;
+        __ASM__("CMP A,A");
+        __ASM__("JMPE scancode_found");
+    END;
     IF output_value = 26 THEN // Z
     BEGIN
         print_buffer[0] := 90;
-        valid := 1;
+        __ASM__("CMP A,A");
+        __ASM__("JMPE scancode_found");
     END;
-    IF valid = 1 THEN
-    BEGIN
-        print_procedure_arg_string_s := print_buffer;
-        CALL print;
-    END;
+    RETURN;
+    __ASM__("scancode_found:");
+    print_procedure_arg_string_s := print_buffer;
+    CALL print;
 END;
 
 // Main busy-wait loop.
