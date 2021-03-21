@@ -1,0 +1,113 @@
+Goals:
+    - Separate instruction-decoding stage.
+        - loads values into Verilog registers operand1 and operand2 so that the execute stage always accesses the same Verilog registers, regardless of which variant is being executed
+    - Offset register to speed up stack operations
+    - Destination specifiable in arithmetic instructions
+    - Left/right shift instructions
+    - Argument type specifiers instead of separate opcodes
+    - Argument size specifiers
+    - Use single-bit flags instead of register A for results of CMP instructions
+    - Unconditional JMP
+    - Use single-bit flags for IE/IR.
+    - FPU???
+    - GPIO interrupts
+    - Move GPU memory to the end of the ports so that changing the size of the GPU text buffer doesn't move the other ports around
+    - More serial protocols - I2C
+    - Single address space (no more offset for code section)
+
+Registers (name - number - width - description):
+IP - 'd0 - 32 bits - Instruction pointer. SDRAM address of the instruction to execute.
+A - 'd1  - 32 bits - Used for the result of ADD, SUB, and CMP instructions.
+B - 'd2  - 32 bits - Generic register.
+C - 'd3  - 32 bits - Generic register.
+D - 'd4  - 32 bits - Generic register.
+E - 'd5  - 32 bits - Generic register.
+F - 'd6  - 32 bits - Generic register.
+G - 'd7  - 32 bits - Generic register.
+IE - 'd8 - 1 bit - Interrupt-enable flag. Allows interrupts only when IE == 'b1.
+IR - 'd9 - 1 bit - Interrupt-running flag. Is set to 1 while an interrupt in is progress. Read-only.
+ZD - 'd10 - 1 bit - Zero-division flag. Is set to 1 when a divide or modulus by zero is done. Must be set back to zero manually.
+OF - 'd11 - 32 bits - Offset register. All memory addresses have this offset added to them. Useful as a stack pointer.
+
+ISA:
+    NOP
+    LOAD
+        - load fixed address,register
+        - load register containing address,register
+    STORE
+        - store constant,register containing address
+        - store constant,fixed address
+        - store register,register containing address
+        - store register,fixed address
+    ADD
+        - add two registers and store result in a third register
+        - add register and constant, store result in another register
+    MULT
+        - multiply two registers and store result in a third register
+        - multiply register by constant and store result in another register
+    DIV
+        - divide two registers and store result in a third
+        - divide register by constant and store result in another register
+        - divide constant by register and store result in another register
+        - modulo two registers and store result in a third
+        - modulo register by constant and store result in another register
+        - modulo constant by register and store result in another register
+    OUT
+        - output value in one register to port in another register
+        - output constant value to port in another register
+        - output value in register to constant port
+    IN
+        - input from port stored in one register, storing the value read in another register
+        - input from constant port, storing the value in another register
+    MOV
+        - copy register to another register
+        - copy constant to register
+    CMP
+        - compare register with register, set another register based on the result (If first < second, result is 0. If first == second, result is 1. If first > second, result is 2.)
+        - compare register with constant, set another register based on the result (see prev.)
+        - compare constant with register, set another register based on the result (see prev.)
+    JMP
+        - jump unconditionally
+        - jump if equal
+        - jump if not equal
+        - jump if less than
+        - jump if greater than
+        - jump if less than or equal
+        - jump if greater than or equal
+    RST
+    HALT
+    ISR
+        - Set up an interrupt service routine. First register contains interrupt number. Second register contains address of first instruction in ISR.
+    INT
+        - Trigger interrupt. register contains interrupt number to trigger.
+        - Trigger interrupt. constant sets interrupt number to trigger.
+    ENDINT
+        - End interrupt and restore register states.
+    OR
+        - bitwise-or two registers and store result in a third register
+        - bitwise-or register and constant, store result in another register
+    AND
+        - bitwise-and two registers and store result in a third register
+        - bitwise-and register and constant, store result in another register
+    XOR
+        - bitwise-xor two registers and store result in a third register
+        - bitwise-xor register and constant, store result in another register
+    NOT
+        - bitwise-NOT a register and store the result in another register
+    SHIFT
+        - shift register left by number of bits specified in register, storing result in another register
+        - shift register left by constant number of bits, storing result in another register
+        - shift register right by number of bits specified in register, storing result in another register
+        - shift register right by constant number of bits, storing result in another register
+        - shift constant left by number of bits specified in register, storing result in another register
+        - shift constant right by number of bits specified in register, storing result in another register
+
+Format:
+First 5 bits specify operation.
+Next 3 bits specify variant.
+Next 2 bits specify size (byte, word, doubleword)
+Next 12 bits can be 3 registers.
+OR next 8 bits can be two registers and next 32 bits can be an address/constant.
+
+Assembler:
+    - 2's complement arithmetic support

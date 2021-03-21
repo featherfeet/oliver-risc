@@ -1,0 +1,1 @@
+/usr/bin/cc -g  -rdynamic CMakeFiles/c_compiler.dir/c_compiler_lexer.c.o CMakeFiles/c_compiler.dir/c_compiler_parser.c.o CMakeFiles/c_compiler.dir/c_compiler/main.c.o  -o c_compiler -lglib-2.0 -lfl 

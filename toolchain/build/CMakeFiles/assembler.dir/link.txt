@@ -1,1 +1,0 @@
-/usr/bin/cc -O3 -DNDEBUG  -rdynamic CMakeFiles/assembler.dir/assembler_parser.c.o CMakeFiles/assembler.dir/assembler_lexer.c.o  -o assembler -lglib-2.0 -lfl 

@@ -92,7 +92,6 @@ The IN and OUT instructions can access a separate memory space called the "ports
 An SPI bus is used to communicate with the SD card. Port address `SD_CARD_SPI_PORT = `GPU_TEXT_BUFFER_LENGTH + 'd1 (i. e. the port just after the interrupt value port) is used to read and write from the SPI bus (only the first byte of a value written to the port will be sent). The port is ready to be read immediately after it has been written (the OUT instruction will block until the write completes). Port address `SD_CARD_CLOCK_SELECT_PORT = `GPU_TEXT_BUFFER_LENGTH + 'd2 is used to set the CS pin of the SPI bus.
 
 Future planned features:
-Use a stack to push/pop the call stack.
 GPIO control instructions.
 A proper ALU.
 Pipelining of RAM operations.
