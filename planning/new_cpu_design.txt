@@ -30,77 +30,79 @@ ZD - 'd10 - 1 bit - Zero-division flag. Is set to 1 when a divide or modulus by 
 OF - 'd11 - 32 bits - Offset register. All memory addresses have this offset added to them. Useful as a stack pointer.
 
 ISA:
-    NOP
-    LOAD
-        - load fixed address,register
-        - load register containing address,register
-    STORE
-        - store constant,register containing address
-        - store constant,fixed address
-        - store register,register containing address
-        - store register,fixed address
-    ADD
-        - add two registers and store result in a third register
-        - add register and constant, store result in another register
-    MULT
-        - multiply two registers and store result in a third register
-        - multiply register by constant and store result in another register
-    DIV
-        - divide two registers and store result in a third
-        - divide register by constant and store result in another register
-        - divide constant by register and store result in another register
-        - modulo two registers and store result in a third
-        - modulo register by constant and store result in another register
-        - modulo constant by register and store result in another register
-    OUT
-        - output value in one register to port in another register
-        - output constant value to port in another register
-        - output value in register to constant port
-    IN
-        - input from port stored in one register, storing the value read in another register
-        - input from constant port, storing the value in another register
-    MOV
-        - copy register to another register
-        - copy constant to register
-    CMP
-        - compare register with register, set another register based on the result (If first < second, result is 0. If first == second, result is 1. If first > second, result is 2.)
-        - compare register with constant, set another register based on the result (see prev.)
-        - compare constant with register, set another register based on the result (see prev.)
-    JMP
-        - jump unconditionally
-        - jump if equal
-        - jump if not equal
-        - jump if less than
-        - jump if greater than
-        - jump if less than or equal
-        - jump if greater than or equal
-    RST
-    HALT
-    ISR
-        - Set up an interrupt service routine. First register contains interrupt number. Second register contains address of first instruction in ISR.
-    INT
-        - Trigger interrupt. register contains interrupt number to trigger.
-        - Trigger interrupt. constant sets interrupt number to trigger.
-    ENDINT
-        - End interrupt and restore register states.
-    OR
-        - bitwise-or two registers and store result in a third register
-        - bitwise-or register and constant, store result in another register
-    AND
-        - bitwise-and two registers and store result in a third register
-        - bitwise-and register and constant, store result in another register
-    XOR
-        - bitwise-xor two registers and store result in a third register
-        - bitwise-xor register and constant, store result in another register
-    NOT
-        - bitwise-NOT a register and store the result in another register
-    SHIFT
-        - shift register left by number of bits specified in register, storing result in another register
-        - shift register left by constant number of bits, storing result in another register
-        - shift register right by number of bits specified in register, storing result in another register
-        - shift register right by constant number of bits, storing result in another register
-        - shift constant left by number of bits specified in register, storing result in another register
-        - shift constant right by number of bits specified in register, storing result in another register
+    NOP = 0
+        - No-op = 0
+    LOAD = 1
+        - load register containing address,register = 0
+        - load fixed address,register = 1
+    STORE = 2
+        - store register,register containing address = 0
+        - store constant,register containing address = 1
+        - store register,fixed address = 2
+    ADD = 3
+        - add two registers and store result in a third register = 0
+        - add register and constant, store result in another register = 1
+    MULT = 4
+        - multiply two registers and store result in a third register = 0
+        - multiply register by constant and store result in another register = 1
+    DIV = 5
+        - divide two registers and store result in a third = 0
+        - divide register by constant and store result in another register = 1
+        - divide constant by register and store result in another register = 2
+        - modulo two registers and store result in a third = 3
+        - modulo register by constant and store result in another register = 4
+        - modulo constant by register and store result in another register = 5
+    OUT = 6
+        - output value in one register to port in another register = 0
+        - output constant value to port in another register = 1
+        - output value in register to constant port = 2
+    IN = 7
+        - input from port stored in one register, storing the value read in another register = 0
+        - input from constant port, storing the value in another register = 1
+    MOV = 8
+        - copy register to another register = 0
+        - copy constant to register = 1
+    CMP = 9
+        - compare register with register, set another register based on the result (If first < second, result is 0. If first == second, result is 1. If first > second, result is 2.) = 0
+        - compare register with constant, set another register based on the result (see prev.) = 1
+        - compare constant with register, set another register based on the result (see prev.) = 2
+    JMP = 10
+        - jump unconditionally = 0
+        - jump if equal (looks at result of CMP operation in specified register) = 1
+        - jump if not equal (...) = 2
+        - jump if less than (...) = 3
+        - jump if greater than (...) = 4
+        - jump if less than or equal (...) = 5
+        - jump if greater than or equal (...) = 6
+    RST = 11
+        - Reset all registers and flags, thus soft-restarting the CPU. Contents of RAM are kept. The length of the .data section of the binary will be re-read from the 4 bytes at address 0. = 0
+    HALT = 12
+        - Stop the CPU. = 0
+    ISR = 13
+        - Set up an interrupt service routine. First register contains interrupt number. Second register contains address of first instruction in ISR. = 0
+    INT = 14
+        - Trigger interrupt. register contains interrupt number to trigger. = 0
+        - Trigger interrupt. constant sets interrupt number to trigger. = 1
+    ENDINT = 15
+        - End interrupt and restore register states. = 0
+    OR = 16
+        - bitwise-or two registers and store result in a third register = 0
+        - bitwise-or register and constant, store result in another register = 1
+    AND = 17
+        - bitwise-and two registers and store result in a third register = 0
+        - bitwise-and register and constant, store result in another register = 1
+    XOR = 18
+        - bitwise-xor two registers and store result in a third register = 0
+        - bitwise-xor register and constant, store result in another register = 1
+    NOT = 19
+        - bitwise-NOT a register and store the result in another register = 0
+    SHIFT = 20
+        - shift register left by number of bits specified in register, storing result in another register = 0
+        - shift register left by constant number of bits, storing result in another register = 1
+        - shift register right by number of bits specified in register, storing result in another register = 2
+        - shift register right by constant number of bits, storing result in another register = 3
+        - shift constant left by number of bits specified in register, storing result in another register = 4
+        - shift constant right by number of bits specified in register, storing result in another register = 5
 
 Format:
 First 5 bits specify operation.
@@ -108,6 +110,8 @@ Next 3 bits specify variant.
 Next 2 bits specify size (byte, word, doubleword)
 Next 12 bits can be 3 registers.
 OR next 8 bits can be two registers and next 32 bits can be an address/constant.
+
+This makes each instruction a total of 7 bytes long, with either 34 or 6 bits left for future functionality.
 
 Assembler:
     - 2's complement arithmetic support

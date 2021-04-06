@@ -26,13 +26,13 @@ code_section_declaration = { ".code:" }
 
 quoted_character = @{ "'" ~ char ~ "'" }
 
-hex_constant = @{ "0x" ~ ('0' .. '9' | 'a' .. 'f' | 'A' .. 'F' | "_")+}
+hex_constant = @{ "0x" ~ ('0' .. '9' | 'a' .. 'f' | 'A' .. 'F' | "_")+ }
 
-decimal_constant = @{('0' .. '9' | "_")+}
+decimal_constant = @{('0' .. '9' | "_")+ }
 
-binary_constant = @{ "0b" ~ ('0' .. '1' | "_")+}
+binary_constant = @{ "0b" ~ ('0' .. '1' | "_")+ }
 
-constant_operand = @{ "-"? ~ (hex_constant | decimal_constant | binary_constant | quoted_character) }
+constant_operand = @{ "-"? ~ (binary_constant | hex_constant | decimal_constant | quoted_character) }
 
 register_operand = @{ "IP" | "A" | "B" | "C" | "D" | "E" | "F" | "G" | "IE" | "IR" | "ZD" | "OF" }
 
@@ -56,12 +56,10 @@ string_declaration = { identifier ~ "=" ~ string_literal }
 label = { identifier ~ ":"}
 
 args_register = { register_operand }
-args_address = { address_operand }
 args_constant = { constant_operand }
 args_address_register = { address_operand ~ "," ~ register_operand }
 args_register_register = { register_operand ~ "," ~ register_operand }
 args_constant_register = { constant_operand ~ "," ~ register_operand }
-args_constant_address = { constant_operand ~ "," ~ address_operand }
 args_register_address = { register_operand ~ "," ~ address_operand }
 args_register_constant = { register_operand ~ "," ~ constant_operand }
 args_register_register_register = { register_operand ~ "," ~ register_operand ~ "," ~ register_operand }
@@ -105,7 +103,7 @@ nop = { "NOP" }
 
 load = { "LOAD" ~ (args_address_register | args_register_register) }
 
-store = { "STORE" ~ (args_constant_register | args_constant_address | args_register_register | args_register_address ) }
+store = { "STORE" ~ (args_constant_register | args_register_register | args_register_address ) }
 
 add = { "ADD" ~ (args_register_register_register | args_register_constant_register | args_constant_register_register) }
 
@@ -123,19 +121,19 @@ mov = { "MOV" ~ (args_register_register | args_constant_register) }
 
 cmp = { "CMP" ~ (args_register_register_register | args_constant_register_register | args_register_constant_register) }
 
-jmp = { "JMP" ~ (args_address) }
+jmp = { "JMP" ~ (args_register_address) }
 
-jmpe = { "JMPE" ~ (args_address) }
+jmpe = { "JMPE" ~ (args_register_address) }
 
-jmpne = { "JMPNE" ~ (args_address) }
+jmpne = { "JMPNE" ~ (args_register_address) }
 
-jmpl = { "JMPL" ~ (args_address) }
+jmpl = { "JMPL" ~ (args_register_address) }
 
-jmpg = { "JMPG" ~ (args_address) }
+jmpg = { "JMPG" ~ (args_register_address) }
 
-jmple = { "JMPLE" ~ (args_address) }
+jmple = { "JMPLE" ~ (args_register_address) }
 
-jmpge = { "JMPGE" ~ (args_address) }
+jmpge = { "JMPGE" ~ (args_register_address) }
 
 rst = { "RST" }
 
