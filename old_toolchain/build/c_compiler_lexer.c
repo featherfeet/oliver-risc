@@ -1,6 +1,6 @@
-#line 2 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/c_compiler_lexer.c"
+#line 2 "/home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/build/c_compiler_lexer.c"
 
-#line 4 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/c_compiler_lexer.c"
+#line 4 "/home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/build/c_compiler_lexer.c"
 
 #define  YY_INT_ALIGNED short int
 
@@ -457,8 +457,8 @@ char *yytext;
     #include <stdlib.h>
     #include <glib.h>
     #include "c_compiler_parser.h"
-#line 461 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/c_compiler_lexer.c"
-#line 462 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/c_compiler_lexer.c"
+#line 461 "/home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/build/c_compiler_lexer.c"
+#line 462 "/home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/build/c_compiler_lexer.c"
 
 #define INITIAL 0
 
@@ -678,7 +678,7 @@ YY_DECL
 #line 10 "c_compiler/lexer.l"
 
 
-#line 682 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/c_compiler_lexer.c"
+#line 682 "/home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/build/c_compiler_lexer.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -831,7 +831,7 @@ YY_RULE_SETUP
 #line 63 "c_compiler/lexer.l"
 ECHO;
 	YY_BREAK
-#line 835 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/c_compiler_lexer.c"
+#line 835 "/home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/build/c_compiler_lexer.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 

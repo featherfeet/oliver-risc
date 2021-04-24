@@ -14,11 +14,9 @@ indentation = _{ WHITESPACE* }
 
 program = {
     SOI ~
-    (indentation ~ (section_declaration | variable_declaration | label | instruction)? ~ line_comment? ~ NEWLINE)* ~
+    (indentation ~ (data_section_declaration | code_section_declaration | variable_declaration | label | instruction)? ~ line_comment? ~ NEWLINE)* ~
     EOI
 }
-
-section_declaration = { data_section_declaration | code_section_declaration }
 
 data_section_declaration = { ".data:" }
 
@@ -32,16 +30,13 @@ decimal_constant = @{('0' .. '9' | "_")+ }
 
 binary_constant = @{ "0b" ~ ('0' .. '1' | "_")+ }
 
-constant_operand = @{ "-"? ~ (binary_constant | hex_constant | decimal_constant | quoted_character) }
+identifier = @{('a' .. 'z' | 'A' .. 'Z') ~ (ASCII_ALPHANUMERIC | "_")+ }
+
+constant_operand = { identifier | constant_literal }
+
+constant_literal = @{"-"? ~ (binary_constant | hex_constant | decimal_constant | quoted_character)}
 
 register_operand = @{ "IP" | "A" | "B" | "C" | "D" | "E" | "F" | "G" | "IE" | "IR" | "ZD" | "OF" }
-
-address_operand = {
-    identifier |
-    constant_operand
-}
-
-identifier = @{('a' .. 'z' | 'A' .. 'Z') ~ (ASCII_ALPHANUMERIC | "_")+ }
 
 string_contents = @{ char* }
 
@@ -57,13 +52,10 @@ label = { identifier ~ ":"}
 
 args_register = { register_operand }
 args_constant = { constant_operand }
-args_address_register = { address_operand ~ "," ~ register_operand }
 args_register_register = { register_operand ~ "," ~ register_operand }
 args_constant_register = { constant_operand ~ "," ~ register_operand }
-args_register_address = { register_operand ~ "," ~ address_operand }
 args_register_constant = { register_operand ~ "," ~ constant_operand }
 args_register_register_register = { register_operand ~ "," ~ register_operand ~ "," ~ register_operand }
-args_address_register_register = { address_operand ~ "," ~ register_operand ~ "," ~ register_operand }
 args_constant_register_register = { constant_operand ~ "," ~ register_operand ~ "," ~ register_operand }
 args_register_constant_register = { register_operand ~ "," ~ constant_operand ~ "," ~ register_operand }
 
@@ -101,9 +93,9 @@ instruction = {
 
 nop = { "NOP" }
 
-load = { "LOAD" ~ (args_address_register | args_register_register) }
+load = { "LOAD" ~ (args_constant_register | args_register_register) }
 
-store = { "STORE" ~ (args_constant_register | args_register_register | args_register_address ) }
+store = { "STORE" ~ (args_constant_register | args_register_register | args_register_constant ) }
 
 add = { "ADD" ~ (args_register_register_register | args_register_constant_register | args_constant_register_register) }
 
@@ -121,19 +113,19 @@ mov = { "MOV" ~ (args_register_register | args_constant_register) }
 
 cmp = { "CMP" ~ (args_register_register_register | args_constant_register_register | args_register_constant_register) }
 
-jmp = { "JMP" ~ (args_register_address) }
+jmp = { "JMP" ~ (args_register_constant) }
 
-jmpe = { "JMPE" ~ (args_register_address) }
+jmpe = { "JMPE" ~ (args_register_constant) }
 
-jmpne = { "JMPNE" ~ (args_register_address) }
+jmpne = { "JMPNE" ~ (args_register_constant) }
 
-jmpl = { "JMPL" ~ (args_register_address) }
+jmpl = { "JMPL" ~ (args_register_constant) }
 
-jmpg = { "JMPG" ~ (args_register_address) }
+jmpg = { "JMPG" ~ (args_register_constant) }
 
-jmple = { "JMPLE" ~ (args_register_address) }
+jmple = { "JMPLE" ~ (args_register_constant) }
 
-jmpge = { "JMPGE" ~ (args_register_address) }
+jmpge = { "JMPGE" ~ (args_register_constant) }
 
 rst = { "RST" }
 

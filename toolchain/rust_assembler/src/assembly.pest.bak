@@ -1,0 +1,156 @@
+WHITESPACE = _{ " " | "\t" }
+
+COMMENT = _{ "/*" ~ (!"*/" ~ ANY) ~ "*/" }
+
+char = @{
+    !("\"" | "\\") ~ ANY
+    | "\\" ~ ("\"" | "\\" | "/" | "b" | "f" | "n" | "r" | "t")
+    | "\\" ~ ("u" ~ ASCII_HEX_DIGIT{4})
+}
+
+line_comment = _{ "//" ~ (!NEWLINE ~ ANY)* }
+
+indentation = _{ WHITESPACE* }
+
+program = {
+    SOI ~
+    (indentation ~ (data_section_declaration | code_section_declaration | variable_declaration | label | instruction)? ~ line_comment? ~ NEWLINE)* ~
+    EOI
+}
+
+data_section_declaration = { ".data:" }
+
+code_section_declaration = { ".code:" }
+
+quoted_character = @{ "'" ~ char ~ "'" }
+
+hex_constant = @{ "0x" ~ ('0' .. '9' | 'a' .. 'f' | 'A' .. 'F' | "_")+ }
+
+decimal_constant = @{('0' .. '9' | "_")+ }
+
+binary_constant = @{ "0b" ~ ('0' .. '1' | "_")+ }
+
+constant_operand = @{ "-"? ~ (binary_constant | hex_constant | decimal_constant | quoted_character) }
+
+register_operand = @{ "IP" | "A" | "B" | "C" | "D" | "E" | "F" | "G" | "IE" | "IR" | "ZD" | "OF" }
+
+address_operand = {
+    identifier |
+    constant_operand
+}
+
+identifier = @{('a' .. 'z' | 'A' .. 'Z') ~ (ASCII_ALPHANUMERIC | "_")+ }
+
+string_contents = @{ char* }
+
+string_literal = ${ "\"" ~ string_contents ~ "\"" }
+
+variable_declaration = { integer_declaration | string_declaration }
+
+integer_declaration = { identifier ~ "=" ~ constant_operand }
+
+string_declaration = { identifier ~ "=" ~ string_literal }
+
+label = { identifier ~ ":"}
+
+args_register = { register_operand }
+args_constant = { constant_operand }
+args_address_register = { address_operand ~ "," ~ register_operand }
+args_register_register = { register_operand ~ "," ~ register_operand }
+args_constant_register = { constant_operand ~ "," ~ register_operand }
+args_register_address = { register_operand ~ "," ~ address_operand }
+args_register_constant = { register_operand ~ "," ~ constant_operand }
+args_register_register_register = { register_operand ~ "," ~ register_operand ~ "," ~ register_operand }
+args_address_register_register = { address_operand ~ "," ~ register_operand ~ "," ~ register_operand }
+args_constant_register_register = { constant_operand ~ "," ~ register_operand ~ "," ~ register_operand }
+args_register_constant_register = { register_operand ~ "," ~ constant_operand ~ "," ~ register_operand }
+
+instruction = {
+    nop |
+    load |
+    store |
+    add |
+    mult |
+    div |
+    mod_ |
+    out |
+    in_ |
+    mov |
+    cmp |
+    jmp |
+    jmpe |
+    jmpne |
+    jmpl |
+    jmpg |
+    jmple |
+    jmpge |
+    rst |
+    halt |
+    isr |
+    int |
+    endint |
+    or |
+    and |
+    xor |
+    not |
+    shiftl |
+    shiftr
+}
+
+nop = { "NOP" }
+
+load = { "LOAD" ~ (args_address_register | args_register_register) }
+
+store = { "STORE" ~ (args_constant_register | args_register_register | args_register_address ) }
+
+add = { "ADD" ~ (args_register_register_register | args_register_constant_register | args_constant_register_register) }
+
+mult = { "MULT" ~ (args_register_register_register | args_register_constant_register | args_constant_register_register) }
+
+div = { "DIV" ~ (args_register_register_register | args_register_constant_register | args_constant_register_register) }
+
+mod_ = { "MOD" ~ (args_register_register_register | args_register_constant_register | args_constant_register_register) }
+
+out = { "OUT" ~ (args_register_register | args_constant_register | args_register_constant) }
+
+in_ = { "IN" ~ (args_register_register | args_constant_register) }
+
+mov = { "MOV" ~ (args_register_register | args_constant_register) }
+
+cmp = { "CMP" ~ (args_register_register_register | args_constant_register_register | args_register_constant_register) }
+
+jmp = { "JMP" ~ (args_register_address) }
+
+jmpe = { "JMPE" ~ (args_register_address) }
+
+jmpne = { "JMPNE" ~ (args_register_address) }
+
+jmpl = { "JMPL" ~ (args_register_address) }
+
+jmpg = { "JMPG" ~ (args_register_address) }
+
+jmple = { "JMPLE" ~ (args_register_address) }
+
+jmpge = { "JMPGE" ~ (args_register_address) }
+
+rst = { "RST" }
+
+halt = { "HALT" }
+
+isr = { "ISR" ~ (args_register_register) }
+
+int = { "INT" ~ (args_register | args_constant) }
+
+endint = { "ENDINT" }
+
+or = { "OR" ~ (args_register_register_register | args_register_constant_register | args_constant_register_register) }
+
+and = { "AND" ~ (args_register_register_register | args_register_constant_register | args_constant_register_register) }
+
+xor = { "XOR" ~ (args_register_register_register | args_register_constant_register | args_constant_register_register) }
+
+not = { "NOT" ~ (args_register_register) }
+
+shiftl = { "SHIFTL" ~ (args_register_register_register | args_register_constant_register | args_constant_register_register) }
+
+shiftr = { "SHIFTR" ~ (args_register_register_register | args_register_constant_register | args_constant_register_register) }

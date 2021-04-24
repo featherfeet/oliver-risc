@@ -1,6 +1,8 @@
 extern crate pest;
 #[macro_use]
 extern crate pest_derive;
+#[macro_use]
+extern crate bitfield;
 
 use std::fs;
 use std::io::Write;
@@ -14,9 +16,9 @@ use parse_int::parse;
 use pest::iterators::Pair;
 use pest::Parser;
 
-type RawAddressOperand = u32;
-type RawConstantOperand = i32;
-const ADDRESS_SIZE: usize = 4;
+type RawConstantOperand = u32;
+type SignedRawConstantOperand = i32;
+const CONSTANT_SIZE: usize = std::mem::size_of::<RawConstantOperand>();
 const INSTRUCTION_SIZE: usize = 7;
 
 #[derive(Parser)]
@@ -71,10 +73,10 @@ enum Variant {
 impl Variant {
     pub const NONE: u8 = 0;
     pub const LOAD_RR: u8 = 0;
-    pub const LOAD_AR: u8 = 1;
+    pub const LOAD_CR: u8 = 1;
     pub const STORE_RR: u8 = 0;
     pub const STORE_CR: u8 = 1;
-    pub const STORE_RA: u8 = 2;
+    pub const STORE_RC: u8 = 2;
     pub const ADD_RRR: u8 = 0;
     pub const ADD_RCR: u8 = 1;
     pub const MULT_RRR: u8 = 0;
@@ -90,7 +92,6 @@ impl Variant {
     pub const OUT_RC: u8 = 2;
     pub const IN_RR: u8 = 0;
     pub const IN_CR: u8 = 1;
-    pub const IN_RC: u8 = 2;
     pub const MOV_RR: u8 = 0;
     pub const MOV_CR: u8 = 1;
     pub const CMP_RRR: u8 = 0;
@@ -121,39 +122,75 @@ impl Variant {
 
 #[derive(Debug)]
 enum Variable {
-    IntegerVariable { address: RawAddressOperand, value: RawConstantOperand },
-    StringVariable { address: RawAddressOperand, value: String }
+    IntegerVariable { address: RawConstantOperand, value: RawConstantOperand },
+    StringVariable { address: RawConstantOperand, value: String }
 }
 
 #[derive(Debug)]
-enum AddressOperand {
+enum ConstantOperand {
     Symbol { symbol: String },
     Literal { value: RawConstantOperand }
+}
+
+impl ConstantOperand {
+    fn evaluate(&self, labels_table: &HashMap::<String, RawConstantOperand>, variables_table: &HashMap::<String, Variable>) -> RawConstantOperand {
+        match self {
+            ConstantOperand::Symbol { symbol } => {
+                match labels_table.get(symbol) {
+                    Some(symbol_address) => *symbol_address,
+                    None => {
+                        match variables_table.get(symbol) {
+                            Some(variable) => {
+                                match variable {
+                                    Variable::IntegerVariable { address, .. } => *address,
+                                    Variable::StringVariable { address, .. } => *address
+                                }
+                            }
+                            None => {
+                                println!("Error: No such label `{}`, defaulting to address 0.", symbol);
+                                0
+                            }
+                        }
+                    }
+                }
+            }
+            ConstantOperand::Literal { value } => *value
+        }
+    }
 }
 
 #[derive(Debug)]
 enum Operands {
     N,
     R { operand1: Register },
-    A { operand1: String },
-    C { operand1: RawConstantOperand },
-    AR { operand1: AddressOperand, operand2: Register },
+    C { operand1: ConstantOperand },
     RR { operand1: Register, operand2: Register },
-    CR { operand1: RawConstantOperand, operand2: Register },
-    RA { operand1: Register, operand2: AddressOperand },
-    RC { operand1: Register, operand2: RawConstantOperand },
+    CR { operand1: ConstantOperand, operand2: Register },
+    RC { operand1: Register, operand2: ConstantOperand },
     RRR { operand1: Register, operand2: Register, operand3: Register },
-    ARR { operand1: AddressOperand, operand2: Register, operand3: Register },
-    CRR { operand1: RawConstantOperand, operand2: Register, operand3: Register },
-    RCR { operand1: Register, operand2: RawConstantOperand, operand3: Register }
+    CRR { operand1: ConstantOperand, operand2: Register, operand3: Register },
+    RCR { operand1: Register, operand2: ConstantOperand, operand3: Register }
 }
 
 #[derive(Debug)]
 struct Instruction {
-    address: RawAddressOperand,
+    address: RawConstantOperand,
     operation: Operation,
     variant: u8,
     operands: Operands
+}
+
+bitfield! {
+    struct InstructionBitfield([u8]); // Bit order is least-significant-bit-first.
+    impl Debug;
+    u8;
+    get_operation, set_operation: 4, 0;
+    get_variant, set_variant: 7, 5;
+    get_size, set_size: 9, 8;
+    get_register_operand_1, set_register_operand_1: 13, 10;
+    get_register_operand_2, set_register_operand_2: 17, 14;
+    get_register_operand_3, set_register_operand_3: 21, 18;
+    RawConstantOperand, get_constant_operand, set_constant_operand: 49, 18;
 }
 
 fn evaluate_constant_literal(constant_literal: &str) -> RawConstantOperand {
@@ -161,10 +198,10 @@ fn evaluate_constant_literal(constant_literal: &str) -> RawConstantOperand {
         return constant_literal.bytes().nth(1).unwrap() as RawConstantOperand;
     }
     else if constant_literal.starts_with("-") {
-        return -parse::<RawConstantOperand>(&constant_literal[1..]).unwrap().abs();
+        return (-parse::<SignedRawConstantOperand>(&constant_literal[1..]).unwrap().abs()) as RawConstantOperand;
     }
     else {
-        return parse::<RawConstantOperand>(constant_literal).unwrap().abs();
+        return parse::<SignedRawConstantOperand>(constant_literal).unwrap().abs() as RawConstantOperand;
     }
 }
 
@@ -175,7 +212,7 @@ fn parse_instruction(instruction_pair: Pair<'_, Rule>) -> (Operation, u8) {
         Rule::nop => (Operation::NOP, Variant::NONE),
         Rule::load => {
             match arguments.unwrap().as_rule() {
-                Rule::args_address_register => (Operation::LOAD, Variant::LOAD_AR),
+                Rule::args_constant_register => (Operation::LOAD, Variant::LOAD_CR),
                 Rule::args_register_register => (Operation::LOAD, Variant::LOAD_RR),
                 _ => (Operation::NOP, Variant::NONE)
             }
@@ -184,7 +221,7 @@ fn parse_instruction(instruction_pair: Pair<'_, Rule>) -> (Operation, u8) {
             match arguments.unwrap().as_rule() {
                 Rule::args_constant_register => (Operation::STORE, Variant::STORE_CR),
                 Rule::args_register_register => (Operation::STORE, Variant::STORE_RR),
-                Rule::args_register_address => (Operation::STORE, Variant::STORE_RA),
+                Rule::args_register_constant => (Operation::STORE, Variant::STORE_RC),
                 _ => (Operation::NOP, Variant::NONE)
             }
         }
@@ -337,14 +374,14 @@ fn parse_register_operand(register_operand: Pair<'_, Rule>) -> Register {
     }
 }
 
-fn parse_address_operand(address_operand: Pair<'_, Rule>) -> AddressOperand {
-    let address_operand_contents = address_operand.into_inner().next().unwrap();
-    match address_operand_contents.as_rule() {
-        Rule::identifier => AddressOperand::Symbol { symbol: address_operand_contents.as_str().to_string() },
-        Rule::constant_operand => AddressOperand::Literal { value: evaluate_constant_literal(address_operand_contents.as_str()) },
+fn parse_constant_operand(constant_operand: Pair<'_, Rule>) -> ConstantOperand {
+    let constant_operand_contents = constant_operand.into_inner().next().unwrap();
+    match constant_operand_contents.as_rule() {
+        Rule::identifier => ConstantOperand::Symbol { symbol: constant_operand_contents.as_str().to_string() },
+        Rule::constant_literal => ConstantOperand::Literal { value: evaluate_constant_literal(constant_operand_contents.as_str()) },
         _ => {
-            println!("Invalid address operand `{}`. Defaulting to address 0.", address_operand_contents.as_str());
-            AddressOperand::Literal { value: 0 }
+            println!("Invalid constant operand `{}`. Defaulting to constant 0.", constant_operand_contents.as_str());
+            ConstantOperand::Literal { value: 0 }
         }
     }
 }
@@ -355,13 +392,7 @@ fn parse_operands(instruction_pair: Pair<'_, Rule>) -> Operands {
         Some(arguments) => {
             match arguments.as_rule() {
                 Rule::args_register => Operands::R { operand1: parse_register_operand(arguments.into_inner().next().unwrap()) },
-                Rule::args_address_register => {
-                    let mut arguments_list = arguments.into_inner();
-                    let operand1 = parse_address_operand(arguments_list.next().unwrap());
-                    let operand2 = parse_register_operand(arguments_list.next().unwrap());
-                    Operands::AR { operand1: operand1, operand2: operand2 }
-                }
-                Rule::args_constant => Operands::C { operand1: evaluate_constant_literal(arguments.into_inner().next().unwrap().as_str()) },
+                Rule::args_constant => Operands::C { operand1: parse_constant_operand(arguments.into_inner().next().unwrap()) },
                 Rule::args_register_register => {
                     let mut arguments_list = arguments.into_inner();
                     let operand1 = parse_register_operand(arguments_list.next().unwrap());
@@ -370,20 +401,14 @@ fn parse_operands(instruction_pair: Pair<'_, Rule>) -> Operands {
                 }
                 Rule::args_constant_register => {
                     let mut arguments_list = arguments.into_inner();
-                    let operand1 = evaluate_constant_literal(arguments_list.next().unwrap().as_str());
+                    let operand1 = parse_constant_operand(arguments_list.next().unwrap());
                     let operand2 = parse_register_operand(arguments_list.next().unwrap());
                     Operands::CR { operand1: operand1, operand2: operand2 }
-                }
-                Rule::args_register_address => {
-                    let mut arguments_list = arguments.into_inner();
-                    let operand1 = parse_register_operand(arguments_list.next().unwrap());
-                    let operand2 = parse_address_operand(arguments_list.next().unwrap());
-                    Operands::RA { operand1: operand1, operand2: operand2 }
                 }
                 Rule::args_register_constant => {
                     let mut arguments_list = arguments.into_inner();
                     let operand1 = parse_register_operand(arguments_list.next().unwrap());
-                    let operand2 = evaluate_constant_literal(arguments_list.next().unwrap().as_str());
+                    let operand2 = parse_constant_operand(arguments_list.next().unwrap());
                     Operands::RC { operand1: operand1, operand2: operand2 }
                 }
                 Rule::args_register_register_register => {
@@ -393,16 +418,9 @@ fn parse_operands(instruction_pair: Pair<'_, Rule>) -> Operands {
                     let operand3 = parse_register_operand(arguments_list.next().unwrap());
                     Operands::RRR { operand1: operand1, operand2: operand2, operand3: operand3 }
                 }
-                Rule::args_address_register_register => {
-                    let mut arguments_list = arguments.into_inner();
-                    let operand1 = parse_address_operand(arguments_list.next().unwrap());
-                    let operand2 = parse_register_operand(arguments_list.next().unwrap());
-                    let operand3 = parse_register_operand(arguments_list.next().unwrap());
-                    Operands::ARR { operand1: operand1, operand2: operand2, operand3: operand3 }
-                }
                 Rule::args_constant_register_register => {
                     let mut arguments_list = arguments.into_inner();
-                    let operand1 = evaluate_constant_literal(arguments_list.next().unwrap().as_str());
+                    let operand1 = parse_constant_operand(arguments_list.next().unwrap());
                     let operand2 = parse_register_operand(arguments_list.next().unwrap());
                     let operand3 = parse_register_operand(arguments_list.next().unwrap());
                     Operands::CRR { operand1: operand1, operand2: operand2, operand3: operand3 }
@@ -410,7 +428,7 @@ fn parse_operands(instruction_pair: Pair<'_, Rule>) -> Operands {
                 Rule::args_register_constant_register => {
                     let mut arguments_list = arguments.into_inner();
                     let operand1 = parse_register_operand(arguments_list.next().unwrap());
-                    let operand2 = evaluate_constant_literal(arguments_list.next().unwrap().as_str());
+                    let operand2 = parse_constant_operand(arguments_list.next().unwrap());
                     let operand3 = parse_register_operand(arguments_list.next().unwrap());
                     Operands::RCR { operand1: operand1, operand2: operand2, operand3: operand3 }
                 }
@@ -433,6 +451,9 @@ fn main() {
         None => "out.bin".to_string()
     };
 
+    // Open the output file.
+    let mut output_file = fs::File::create(output_file_name).expect("Could not open output file.");
+
     // Parse the assembly file.
     let parsed_assembly = AssemblyParser::parse(Rule::program, &raw_assembly);
     pest_ascii_tree::print_ascii_tree(parsed_assembly.clone());
@@ -444,13 +465,25 @@ fn main() {
     // Resizable array of Instruction structures.
     let mut instructions_table = Vec::<Instruction>::new();
     // Hash table where keys are the names of labels (String) and values are their addresses (RawAddressOperand).
-    let mut labels_table = HashMap::<String, RawAddressOperand>::new();
+    let mut labels_table = HashMap::<String, RawConstantOperand>::new();
 
     // Turn AST into data structures.
-    let mut address_counter: RawAddressOperand = ADDRESS_SIZE as RawAddressOperand; // The first ADDRESS_SIZE bytes of the binary are used to store the length of the .data section, so addresses are offset by that amount.
+    let mut address_counter: RawConstantOperand = CONSTANT_SIZE as RawConstantOperand; // The first CONSTANT_SIZE bytes of the binary are used to store the offset to the start of the .code section, so addresses are offset by that amount.
+    let mut current_section = Rule::data_section_declaration;
+    let mut code_section_offset: RawConstantOperand = 0; // Memory address in the final binary at which the .code section starts.
     for line in program {
         match line.clone().as_rule() {
+            Rule::code_section_declaration => {
+                current_section = Rule::code_section_declaration;
+                code_section_offset = address_counter;
+            }
             Rule::variable_declaration => {
+                // Check section.
+                if current_section == Rule::code_section_declaration {
+                    panic!("Error: Variable declaration in .code section. Exiting.");
+                }
+
+                // Turn AST into Variable objects in the variables_table.
                 let mut variable = line.into_inner().next().unwrap().into_inner();
                 let variable_name = variable.next().unwrap().as_str().to_string();
                 if variables_table.contains_key(&variable_name) {
@@ -462,11 +495,11 @@ fn main() {
                         let constant_literal = variable_value.as_str();
                         let constant_value = evaluate_constant_literal(constant_literal);
                         variables_table.insert(variable_name, Variable::IntegerVariable { address: address_counter, value: constant_value });
-                        address_counter += mem::size_of::<RawConstantOperand>() as RawAddressOperand;
+                        address_counter += mem::size_of::<RawConstantOperand>() as RawConstantOperand;
                     }
                     Rule::string_literal => {
                         let string_contents = variable_value.into_inner().next().unwrap().as_str().to_string();
-                        let string_length = string_contents.len() as RawAddressOperand;
+                        let string_length = string_contents.len() as RawConstantOperand;
                         variables_table.insert(variable_name, Variable::StringVariable { address: address_counter, value: string_contents });
                         address_counter += string_length + 1;
                     }
@@ -475,17 +508,92 @@ fn main() {
                 }
             }
             Rule::instruction => {
+                // Check section.
+                if current_section == Rule::data_section_declaration {
+                    panic!("Error: Instruction in .data section. Exiting.");
+                }
+
+                // Turn AST into Instruction objects in the instructions_table.
                 let instruction_pair = line.into_inner().next().unwrap();
                 let instruction = parse_instruction(instruction_pair.clone());
                 let operands = parse_operands(instruction_pair);
                 instructions_table.push(Instruction { address: address_counter, operation: instruction.0, variant: instruction.1, operands: operands });
-                address_counter += INSTRUCTION_SIZE as RawAddressOperand;
+                address_counter += INSTRUCTION_SIZE as RawConstantOperand;
+            }
+            Rule::label => {
+                // Check section.
+                if current_section == Rule::data_section_declaration {
+                    panic!("Error: Label in .data section. Exiting.");
+                }
+
+                // Add to labels_table.
+                labels_table.insert(line.into_inner().next().unwrap().as_str().to_string(), address_counter);
             }
             _ => {
             }
         }
     }
 
-    println!("{:#?}", variables_table);
-    println!("{:#?}", instructions_table);
+    // Create final binary output using variables_table, instructions_table, and labels_table.
+    let mut binary_output: Vec::<u8> = vec![0; address_counter as usize];
+    
+    // The first ADDRESS_SIZE bytes of the binary store offset to the start of the .code section.
+    binary_output[0 .. CONSTANT_SIZE].copy_from_slice(&code_section_offset.to_le_bytes());
+
+    // Write the binary's .data section.
+    for variable in variables_table.values() {
+        match variable {
+            Variable::IntegerVariable { address, value } => {
+                binary_output[*address as usize .. *address as usize + CONSTANT_SIZE].copy_from_slice(&value.to_le_bytes());
+            }
+            Variable::StringVariable { address, value } => {
+                binary_output[*address as usize .. *address as usize + value.len()].copy_from_slice(&value.as_bytes());
+            }
+        }
+    }
+
+    // Write the binary's .code section.
+    for instruction in instructions_table {
+        let mut instruction_bitfield = InstructionBitfield(&mut binary_output[instruction.address as usize .. instruction.address as usize + INSTRUCTION_SIZE]);
+        instruction_bitfield.set_operation(instruction.operation as u8);
+        instruction_bitfield.set_variant(instruction.variant);
+        match instruction.operands {
+            Operands::R { operand1 } => {
+                instruction_bitfield.set_register_operand_1(operand1 as u8);
+            }
+            Operands::C { operand1 } => {
+                instruction_bitfield.set_constant_operand(operand1.evaluate(&labels_table, &variables_table));
+            }
+            Operands::RR { operand1, operand2 } => {
+                instruction_bitfield.set_register_operand_1(operand1 as u8);
+                instruction_bitfield.set_register_operand_2(operand2 as u8);
+            }
+            Operands::CR { operand1, operand2 } => {
+                instruction_bitfield.set_constant_operand(operand1.evaluate(&labels_table, &variables_table));
+                instruction_bitfield.set_register_operand_2(operand2 as u8);
+            }
+            Operands::RC { operand1, operand2 } => {
+                instruction_bitfield.set_register_operand_1(operand1 as u8);
+                instruction_bitfield.set_constant_operand(operand2.evaluate(&labels_table, &variables_table));
+            }
+            Operands::RRR { operand1, operand2, operand3 } => {
+                instruction_bitfield.set_register_operand_1(operand1 as u8);
+                instruction_bitfield.set_register_operand_2(operand2 as u8);
+                instruction_bitfield.set_register_operand_3(operand3 as u8);
+            }
+            Operands::CRR { operand1, operand2, operand3 } => {
+                instruction_bitfield.set_constant_operand(operand1.evaluate(&labels_table, &variables_table));
+                instruction_bitfield.set_register_operand_2(operand2 as u8);
+                instruction_bitfield.set_register_operand_3(operand3 as u8);
+            }
+            Operands::RCR { operand1, operand2, operand3 } => {
+                instruction_bitfield.set_register_operand_1(operand1 as u8);
+                instruction_bitfield.set_constant_operand(operand2.evaluate(&labels_table, &variables_table));
+                instruction_bitfield.set_register_operand_3(operand3 as u8);
+            }
+            _ => {}
+        }
+    }
+
+    output_file.write_all(&binary_output).expect("Failed to write final binary output to file.");
 }

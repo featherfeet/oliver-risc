@@ -3,4 +3,4 @@
 
 CMakeFiles/emulator.dir/emulator/emulator.c.o
  .././processor.h
- /home/oliver/Projects/FPGA_Projects/CPU/toolchain/emulator/emulator.c
+ /home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/emulator/emulator.c

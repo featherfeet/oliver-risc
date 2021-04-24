@@ -4,7 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
-  "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/emulator/emulator.c" "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/CMakeFiles/emulator.dir/emulator/emulator.c.o"
+  "/home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/emulator/emulator.c" "/home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/build/CMakeFiles/emulator.dir/emulator/emulator.c.o"
   )
 set(CMAKE_C_COMPILER_ID "GNU")
 

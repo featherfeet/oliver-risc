@@ -6,5 +6,5 @@ C_FLAGS = -g
 
 C_DEFINES = 
 
-C_INCLUDES = -I/home/oliver/Projects/FPGA_Projects/CPU/toolchain/. -I/home/oliver/Projects/FPGA_Projects/CPU/toolchain/./compiler/include -I/home/oliver/Projects/FPGA_Projects/CPU/toolchain/./compiler -I/usr/include/glib-2.0 -I/usr/lib/x86_64-linux-gnu/glib-2.0/include 
+C_INCLUDES = -I/home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/. -I/home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/./compiler/include -I/home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/./compiler -I/usr/include/glib-2.0 -I/usr/lib/x86_64-linux-gnu/glib-2.0/include 
 

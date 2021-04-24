@@ -10,7 +10,7 @@
 stdint.h
 -
 
-/home/oliver/Projects/FPGA_Projects/CPU/toolchain/emulator/emulator.c
+/home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/emulator/emulator.c
 stdlib.h
 -
 string.h
@@ -18,5 +18,5 @@ string.h
 stdio.h
 -
 processor.h
-/home/oliver/Projects/FPGA_Projects/CPU/toolchain/emulator/processor.h
+/home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/emulator/processor.h
 

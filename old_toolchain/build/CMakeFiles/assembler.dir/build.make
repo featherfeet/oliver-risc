@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/oliver/Projects/FPGA_Projects/CPU/toolchain
+CMAKE_SOURCE_DIR = /home/oliver/Projects/FPGA_Projects/CPU/old_toolchain
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/oliver/Projects/FPGA_Projects/CPU/toolchain/build
+CMAKE_BINARY_DIR = /home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/build
 
 # Include any dependencies generated for this target.
 include CMakeFiles/assembler.dir/depend.make
@@ -58,42 +58,42 @@ include CMakeFiles/assembler.dir/progress.make
 include CMakeFiles/assembler.dir/flags.make
 
 assembler_parser.c: ../assembler/parser.y
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "[BISON][AssemblerParser] Building parser with bison 3.3.2"
-	cd /home/oliver/Projects/FPGA_Projects/CPU/toolchain && /usr/bin/bison -d -o /home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/assembler_parser.c assembler/parser.y
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "[BISON][AssemblerParser] Building parser with bison 3.3.2"
+	cd /home/oliver/Projects/FPGA_Projects/CPU/old_toolchain && /usr/bin/bison -d -o /home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/build/assembler_parser.c assembler/parser.y
 
 assembler_parser.h: assembler_parser.c
 	@$(CMAKE_COMMAND) -E touch_nocreate assembler_parser.h
 
 assembler_lexer.c: ../assembler/lexer.l
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "[FLEX][AssemblerLexer] Building scanner with flex 2.6.4"
-	cd /home/oliver/Projects/FPGA_Projects/CPU/toolchain && /usr/bin/flex -o/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/assembler_lexer.c assembler/lexer.l
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "[FLEX][AssemblerLexer] Building scanner with flex 2.6.4"
+	cd /home/oliver/Projects/FPGA_Projects/CPU/old_toolchain && /usr/bin/flex -o/home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/build/assembler_lexer.c assembler/lexer.l
 
 CMakeFiles/assembler.dir/assembler_parser.c.o: CMakeFiles/assembler.dir/flags.make
 CMakeFiles/assembler.dir/assembler_parser.c.o: assembler_parser.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/assembler.dir/assembler_parser.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/assembler.dir/assembler_parser.c.o   -c /home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/assembler_parser.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/assembler.dir/assembler_parser.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/assembler.dir/assembler_parser.c.o   -c /home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/build/assembler_parser.c
 
 CMakeFiles/assembler.dir/assembler_parser.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/assembler.dir/assembler_parser.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/assembler_parser.c > CMakeFiles/assembler.dir/assembler_parser.c.i
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/build/assembler_parser.c > CMakeFiles/assembler.dir/assembler_parser.c.i
 
 CMakeFiles/assembler.dir/assembler_parser.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/assembler.dir/assembler_parser.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/assembler_parser.c -o CMakeFiles/assembler.dir/assembler_parser.c.s
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/build/assembler_parser.c -o CMakeFiles/assembler.dir/assembler_parser.c.s
 
 CMakeFiles/assembler.dir/assembler_lexer.c.o: CMakeFiles/assembler.dir/flags.make
 CMakeFiles/assembler.dir/assembler_lexer.c.o: assembler_lexer.c
 CMakeFiles/assembler.dir/assembler_lexer.c.o: assembler_parser.h
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/assembler.dir/assembler_lexer.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/assembler.dir/assembler_lexer.c.o   -c /home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/assembler_lexer.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/assembler.dir/assembler_lexer.c.o"
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/assembler.dir/assembler_lexer.c.o   -c /home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/build/assembler_lexer.c
 
 CMakeFiles/assembler.dir/assembler_lexer.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/assembler.dir/assembler_lexer.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/assembler_lexer.c > CMakeFiles/assembler.dir/assembler_lexer.c.i
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/build/assembler_lexer.c > CMakeFiles/assembler.dir/assembler_lexer.c.i
 
 CMakeFiles/assembler.dir/assembler_lexer.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/assembler.dir/assembler_lexer.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/assembler_lexer.c -o CMakeFiles/assembler.dir/assembler_lexer.c.s
+	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/build/assembler_lexer.c -o CMakeFiles/assembler.dir/assembler_lexer.c.s
 
 # Object files for target assembler
 assembler_OBJECTS = \
@@ -108,7 +108,7 @@ assembler: CMakeFiles/assembler.dir/assembler_lexer.c.o
 assembler: CMakeFiles/assembler.dir/build.make
 assembler: /usr/lib/x86_64-linux-gnu/libfl.so
 assembler: CMakeFiles/assembler.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking C executable assembler"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking C executable assembler"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/assembler.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -123,6 +123,6 @@ CMakeFiles/assembler.dir/clean:
 CMakeFiles/assembler.dir/depend: assembler_parser.c
 CMakeFiles/assembler.dir/depend: assembler_parser.h
 CMakeFiles/assembler.dir/depend: assembler_lexer.c
-	cd /home/oliver/Projects/FPGA_Projects/CPU/toolchain/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/oliver/Projects/FPGA_Projects/CPU/toolchain /home/oliver/Projects/FPGA_Projects/CPU/toolchain /home/oliver/Projects/FPGA_Projects/CPU/toolchain/build /home/oliver/Projects/FPGA_Projects/CPU/toolchain/build /home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/CMakeFiles/assembler.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/oliver/Projects/FPGA_Projects/CPU/old_toolchain /home/oliver/Projects/FPGA_Projects/CPU/old_toolchain /home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/build /home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/build /home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/build/CMakeFiles/assembler.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/assembler.dir/depend
 

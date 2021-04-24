@@ -97,7 +97,7 @@ int main(int argc, char *argv[]) {
 	int raw_binary_length = ftell(file);
 	uint8_t *raw_binary = malloc(raw_binary_length);
 	rewind(file);
-	fread(raw_binary, raw_binary_length, 1, file);
+	fread(raw_binary, 1, raw_binary_length, file);
     OPERAND_C_TYPE start_of_code_section_offset = 0; // The address in the raw binary where the .code section starts.
     memcpy(&start_of_code_section_offset, raw_binary, OPERAND_SIZE); // The first OPERAND_SIZE bytes of the binary file specify the length of the .data section (which is also the offset at which the .code section begins).
     start_of_code_section_offset += OPERAND_SIZE; // Compensate for the first OPERAND_SIZE bytes of the binary file being used for the length of the .data section.

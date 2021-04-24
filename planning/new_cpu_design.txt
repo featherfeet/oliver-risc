@@ -17,7 +17,7 @@ Goals:
 
 Registers (name - number - width - description):
 IP - 'd0 - 32 bits - Instruction pointer. SDRAM address of the instruction to execute.
-A - 'd1  - 32 bits - Used for the result of ADD, SUB, and CMP instructions.
+A - 'd1  - 32 bits - Generic register.
 B - 'd2  - 32 bits - Generic register.
 C - 'd3  - 32 bits - Generic register.
 D - 'd4  - 32 bits - Generic register.

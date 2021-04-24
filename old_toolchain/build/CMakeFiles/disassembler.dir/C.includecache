@@ -10,7 +10,7 @@
 stdint.h
 -
 
-/home/oliver/Projects/FPGA_Projects/CPU/toolchain/disassembler/disassembler.c
+/home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/disassembler/disassembler.c
 stdio.h
 -
 stdlib.h
@@ -18,5 +18,5 @@ stdlib.h
 string.h
 -
 processor.h
-/home/oliver/Projects/FPGA_Projects/CPU/toolchain/disassembler/processor.h
+/home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/disassembler/processor.h
 

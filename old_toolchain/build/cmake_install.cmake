@@ -1,4 +1,4 @@
-# Install script for directory: /home/oliver/Projects/FPGA_Projects/CPU/toolchain
+# Install script for directory: /home/oliver/Projects/FPGA_Projects/CPU/old_toolchain
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -45,5 +45,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

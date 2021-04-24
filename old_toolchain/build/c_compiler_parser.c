@@ -78,7 +78,7 @@
     int yylex(void);
     void yyerror(char *);
 
-#line 82 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/c_compiler_parser.c" /* yacc.c:337  */
+#line 82 "/home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/build/c_compiler_parser.c" /* yacc.c:337  */
 # ifndef YY_NULLPTR
 #  if defined __cplusplus
 #   if 201103L <= __cplusplus
@@ -101,8 +101,8 @@
 
 /* In a future release of Bison, this section will be replaced
    by #include "c_compiler_parser.h".  */
-#ifndef YY_YY_HOME_OLIVER_PROJECTS_FPGA_PROJECTS_CPU_TOOLCHAIN_BUILD_C_COMPILER_PARSER_H_INCLUDED
-# define YY_YY_HOME_OLIVER_PROJECTS_FPGA_PROJECTS_CPU_TOOLCHAIN_BUILD_C_COMPILER_PARSER_H_INCLUDED
+#ifndef YY_YY_HOME_OLIVER_PROJECTS_FPGA_PROJECTS_CPU_OLD_TOOLCHAIN_BUILD_C_COMPILER_PARSER_H_INCLUDED
+# define YY_YY_HOME_OLIVER_PROJECTS_FPGA_PROJECTS_CPU_OLD_TOOLCHAIN_BUILD_C_COMPILER_PARSER_H_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0
@@ -135,7 +135,7 @@ extern YYSTYPE yylval;
 
 int yyparse (void);
 
-#endif /* !YY_YY_HOME_OLIVER_PROJECTS_FPGA_PROJECTS_CPU_TOOLCHAIN_BUILD_C_COMPILER_PARSER_H_INCLUDED  */
+#endif /* !YY_YY_HOME_OLIVER_PROJECTS_FPGA_PROJECTS_CPU_OLD_TOOLCHAIN_BUILD_C_COMPILER_PARSER_H_INCLUDED  */
 
 
 
@@ -1217,7 +1217,7 @@ yyreduce:
   switch (yyn)
     {
       
-#line 1221 "/home/oliver/Projects/FPGA_Projects/CPU/toolchain/build/c_compiler_parser.c" /* yacc.c:1652  */
+#line 1221 "/home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/build/c_compiler_parser.c" /* yacc.c:1652  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
