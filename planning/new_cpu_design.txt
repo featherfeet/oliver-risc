@@ -107,7 +107,7 @@ ISA:
 Format:
 First 5 bits specify operation.
 Next 3 bits specify variant.
-Next 2 bits specify size (byte, word, doubleword)
+Next 2 bits specify size (byte, word, doubleword) (currently only used for memory operations)
 Next 12 bits can be 3 registers.
 OR next 8 bits can be two registers and next 32 bits can be an address/constant.
 

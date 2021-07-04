@@ -11,4 +11,4 @@ pest = "2.0"
 pest_derive = "2.0"
 pest_ascii_tree = "0.1.0"
 parse_int = "0.5.0"
-bitfield = "0.13.2"
+cpu = { path = "../cpu" }

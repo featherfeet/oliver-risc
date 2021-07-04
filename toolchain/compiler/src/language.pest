@@ -1,0 +1,47 @@
+WHITESPACE = _{ " " | "\t" }
+
+COMMENT = _{ "/*" ~ (!"*/" ~ ANY) ~ "*/" }
+
+char = @{
+    !("\"" | "\\") ~ ANY
+    | "\\" ~ ("\"" | "\\" | "/" | "b" | "f" | "n" | "r" | "t")
+    | "\\" ~ ("u" ~ ASCII_HEX_DIGIT{4})
+}
+
+line_comment = _{ "//" ~ (!NEWLINE ~ ANY)* }
+
+indentation = _{ WHITESPACE* }
+
+identifier = @{('a' .. 'z' | 'A' .. 'Z') ~ (ASCII_ALPHANUMERIC | "_")+ }
+
+program = {
+    SOI ~
+    (indentation ~ statement? ~ line_comment? ~ NEWLINE)* ~
+    EOI
+}
+
+statement = {
+    variable_declaration
+}
+
+base_datatype = { "int" | "char" }
+
+datatype = { "*"* ~ base_datatype }
+
+quoted_character = @{ "'" ~ char ~ "'" }
+
+hex_constant = @{ "0x" ~ ('0' .. '9' | 'a' .. 'f' | 'A' .. 'F' | "_")+ }
+
+decimal_constant = @{('0' .. '9' | "_")+ }
+
+binary_constant = @{ "0b" ~ ('0' .. '1' | "_")+ }
+
+constant_literal = @{"-"? ~ (binary_constant | hex_constant | decimal_constant | quoted_character)}
+
+term = { identifier | constant_literal }
+
+operator = { "+" | "-" | "*" | "/" | "%" }
+
+expression = { term ~ (operator ~ term)* }
+
+variable_declaration = { datatype ~ identifier ~ ("=" ~ expression)? ~ ";" }

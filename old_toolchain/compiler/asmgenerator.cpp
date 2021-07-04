@@ -497,7 +497,7 @@ std::tuple<std::string, std::string> AssemblyGenerator::generateAsm(ASTNode *nod
             code_section << fmt::format("    CLOAD {},A", stack_allocations[procedure_call->getProcedureName()]) << std::endl;
             code_section << "    SUB G,A" << std::endl;
             code_section << "    MOV A,G" << std::endl;
-            // Store IP (plus 2 instructions to avoid repeating the CMP/JMPE instructions on return) in the stack pointer register.
+            // Store IP (plus 2 instructions to avoid repeating the CMP/JMPE instructions on return) in RAM at the address stored in the stack pointer G.
             code_section << fmt::format("    CLOAD {},A", 2 * INSTRUCTION_SIZE) << std::endl;
             code_section << "    ADD IP,A" << std::endl;
             code_section << "    RSTORE A,G" << std::endl; // Store A (which now has the value IP + 2 * INSTRUCTION_SIZE) into memory at the location specified by the stack pointer (G).

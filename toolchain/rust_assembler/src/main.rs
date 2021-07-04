@@ -1,8 +1,7 @@
 extern crate pest;
 #[macro_use]
 extern crate pest_derive;
-#[macro_use]
-extern crate bitfield;
+extern crate cpu;
 
 use std::fs;
 use std::io::Write;
@@ -16,109 +15,11 @@ use parse_int::parse;
 use pest::iterators::Pair;
 use pest::Parser;
 
-type RawConstantOperand = u32;
-type SignedRawConstantOperand = i32;
-const CONSTANT_SIZE: usize = std::mem::size_of::<RawConstantOperand>();
-const INSTRUCTION_SIZE: usize = 7;
+use cpu::cpu::*;
 
 #[derive(Parser)]
 #[grammar = "assembly.pest"]
 struct AssemblyParser;
-
-#[derive(Debug, Clone, Copy)]
-enum Operation {
-    NOP = 0,
-    LOAD = 1,
-    STORE = 2,
-    ADD = 3,
-    MULT = 4,
-    DIV = 5,
-    OUT = 6,
-    IN = 7,
-    MOV = 8,
-    CMP = 9,
-    JMP = 10,
-    RST = 11,
-    HALT = 12,
-    ISR = 13,
-    INT = 14,
-    ENDINT = 15,
-    OR = 16,
-    AND = 17,
-    XOR = 18,
-    NOT = 19,
-    SHIFT = 20
-}
-
-#[derive(Debug)]
-enum Register {
-    IP = 0,
-    A = 1,
-    B = 2,
-    C = 3,
-    D = 4,
-    E = 5,
-    F = 6,
-    G = 7,
-    IE = 8,
-    IR = 9,
-    ZD = 10,
-    OF = 11
-}
-
-#[derive(Debug, Clone, Copy)]
-enum Variant {
-}
-
-impl Variant {
-    pub const NONE: u8 = 0;
-    pub const LOAD_RR: u8 = 0;
-    pub const LOAD_CR: u8 = 1;
-    pub const STORE_RR: u8 = 0;
-    pub const STORE_CR: u8 = 1;
-    pub const STORE_RC: u8 = 2;
-    pub const ADD_RRR: u8 = 0;
-    pub const ADD_RCR: u8 = 1;
-    pub const MULT_RRR: u8 = 0;
-    pub const MULT_RCR: u8 = 1;
-    pub const DIV_RRR: u8 = 0;
-    pub const DIV_RCR: u8 = 1;
-    pub const DIV_CRR: u8 = 2;
-    pub const MOD_RRR: u8 = 3;
-    pub const MOD_RCR: u8 = 4;
-    pub const MOD_CRR: u8 = 5;
-    pub const OUT_RR: u8 = 0;
-    pub const OUT_CR: u8 = 1;
-    pub const OUT_RC: u8 = 2;
-    pub const IN_RR: u8 = 0;
-    pub const IN_CR: u8 = 1;
-    pub const MOV_RR: u8 = 0;
-    pub const MOV_CR: u8 = 1;
-    pub const CMP_RRR: u8 = 0;
-    pub const CMP_RCR: u8 = 1;
-    pub const CMP_CRR: u8 = 2;
-    pub const JMP_U: u8 = 0;
-    pub const JMP_E: u8 = 1;
-    pub const JMP_NE: u8 = 2;
-    pub const JMP_L: u8 = 3;
-    pub const JMP_G: u8 = 4;
-    pub const JMP_LE: u8 = 5;
-    pub const JMP_GE: u8 = 6;
-    pub const INT_R: u8 = 0;
-    pub const INT_C: u8 = 1;
-    pub const OR_RRR: u8 = 0;
-    pub const OR_RCR: u8 = 1;
-    pub const AND_RRR: u8 = 0;
-    pub const AND_RCR: u8 = 1;
-    pub const XOR_RRR: u8 = 0;
-    pub const XOR_RCR: u8 = 1;
-    pub const SHIFT_L_RRR: u8 = 0;
-    pub const SHIFT_L_RCR: u8 = 1;
-    pub const SHIFT_R_RRR: u8 = 2;
-    pub const SHIFT_R_RCR: u8 = 3;
-    pub const SHIFT_L_CRR: u8 = 4;
-    pub const SHIFT_R_CRR: u8 = 5;
-}
 
 #[derive(Debug)]
 enum Variable {
@@ -178,19 +79,6 @@ struct Instruction {
     operation: Operation,
     variant: u8,
     operands: Operands
-}
-
-bitfield! {
-    struct InstructionBitfield([u8]); // Bit order is least-significant-bit-first.
-    impl Debug;
-    u8;
-    get_operation, set_operation: 4, 0;
-    get_variant, set_variant: 7, 5;
-    get_size, set_size: 9, 8;
-    get_register_operand_1, set_register_operand_1: 13, 10;
-    get_register_operand_2, set_register_operand_2: 17, 14;
-    get_register_operand_3, set_register_operand_3: 21, 18;
-    RawConstantOperand, get_constant_operand, set_constant_operand: 49, 18;
 }
 
 fn evaluate_constant_literal(constant_literal: &str) -> RawConstantOperand {
@@ -570,7 +458,7 @@ fn main() {
             }
             Operands::CR { operand1, operand2 } => {
                 instruction_bitfield.set_constant_operand(operand1.evaluate(&labels_table, &variables_table));
-                instruction_bitfield.set_register_operand_2(operand2 as u8);
+                instruction_bitfield.set_register_operand_1(operand2 as u8);
             }
             Operands::RC { operand1, operand2 } => {
                 instruction_bitfield.set_register_operand_1(operand1 as u8);
@@ -583,13 +471,13 @@ fn main() {
             }
             Operands::CRR { operand1, operand2, operand3 } => {
                 instruction_bitfield.set_constant_operand(operand1.evaluate(&labels_table, &variables_table));
-                instruction_bitfield.set_register_operand_2(operand2 as u8);
-                instruction_bitfield.set_register_operand_3(operand3 as u8);
+                instruction_bitfield.set_register_operand_1(operand2 as u8);
+                instruction_bitfield.set_register_operand_2(operand3 as u8);
             }
             Operands::RCR { operand1, operand2, operand3 } => {
                 instruction_bitfield.set_register_operand_1(operand1 as u8);
                 instruction_bitfield.set_constant_operand(operand2.evaluate(&labels_table, &variables_table));
-                instruction_bitfield.set_register_operand_3(operand3 as u8);
+                instruction_bitfield.set_register_operand_2(operand3 as u8);
             }
             _ => {}
         }

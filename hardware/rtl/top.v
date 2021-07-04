@@ -53,7 +53,6 @@ module top(
 
 integer i; // Counter used for unrolled for-loops.
 
-
 // Clock generator for the SDRAM and VGA clocks. When given a 50 MHz clock as
 // inclk0, this PLL generates a 50 MHz clock with -3000 ps phase shift as c0
 // and a 150 MHz clock with 0 ps phase shift as c1. c0 is used for the SDRAM
@@ -328,6 +327,12 @@ lpm_divide #(.lpm_widthn(`OPERAND_SIZE_BITS), .lpm_widthd(`OPERAND_SIZE_BITS), .
     .remain(divider_remainder)
 );
 
+// DEBUG
+assign GPIO_0[0] = SD_CLK;
+assign GPIO_0[1] = SD_CMD;
+assign GPIO_0[2] = SD_DAT;
+assign GPIO_0[3] = SD_DAT3;
+
 // SPI controller for the SD card.
 reg sd_card_spi_clock_select = 'b0;
 assign SD_DAT3 = sd_card_spi_clock_select;
@@ -348,12 +353,6 @@ spi_controller spi_controller(.reset_n(KEY[0]),
                           );
 
 reg sd_card_spi_access_state;
-
-// DEBUG
-assign GPIO_0[0] = SD_CLK;
-assign GPIO_0[1] = SD_CMD;
-assign GPIO_0[2] = SD_DAT;
-assign GPIO_0[3] = SD_DAT3;
 
 always @(posedge CLOCK_50)
 begin
