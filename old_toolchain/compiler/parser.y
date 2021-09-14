@@ -408,7 +408,7 @@ int main(int argc, char *argv[]) {
     endParseString();
 
     // Uncomment to display Graphviz-based AST visualization.
-//    ast->showGraph();
+    ast->showGraph();
 
     AssemblyGenerator asmGenerator;
 

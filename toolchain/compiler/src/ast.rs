@@ -1,17 +1,25 @@
 use crate::intermediaterepresentation::IRAction;
+use core::fmt::Debug;
 
 pub trait ASTNode {
     fn describe(&self) -> String;
     fn compile(&self) -> Vec<IRAction>;
 }
 
-pub trait ASTStatement : ASTNode {
+pub trait ASTStatement : ASTNode + std::fmt::Debug {
 }
 
+#[derive(Debug)]
 pub struct ASTVariableDeclaration {
     datatype: ASTType,
     name: String,
     value: ASTExpression
+}
+
+impl ASTVariableDeclaration {
+    pub fn new(datatype: ASTType, name: String, value: ASTExpression) -> ASTVariableDeclaration {
+        ASTVariableDeclaration { datatype, name, value }
+    }
 }
 
 impl ASTNode for ASTVariableDeclaration {
@@ -24,10 +32,32 @@ impl ASTNode for ASTVariableDeclaration {
     }
 }
 
-pub struct ASTRoot {
-    statements: Vec<Box<dyn ASTStatement>>
+impl ASTStatement for ASTVariableDeclaration {
 }
 
+#[derive(Debug)]
+pub struct ASTRoot {
+    pub statements: Vec<Box<dyn ASTStatement>>
+}
+
+impl ASTNode for ASTRoot {
+    fn describe(&self) -> String {
+        format!("Root node")
+    }
+    fn compile(&self) -> Vec<IRAction> {
+        vec![]
+    }
+}
+
+impl ASTRoot {
+    pub fn new(statements: Vec<Box<dyn ASTStatement>>) -> ASTRoot {
+        ASTRoot {
+            statements
+        }
+    }
+}
+
+#[derive(Debug)]
 pub enum ASTBaseType {
     Integer,
     Character
@@ -43,9 +73,16 @@ impl ASTNode for ASTBaseType {
     }
 }
 
+#[derive(Debug)]
 pub struct ASTType {
     basetype: ASTBaseType,
     pointers: usize
+}
+
+impl ASTType {
+    pub fn new(basetype: ASTBaseType, pointers: usize) -> ASTType {
+        ASTType { basetype, pointers }
+    }
 }
 
 impl ASTNode for ASTType {
@@ -58,6 +95,7 @@ impl ASTNode for ASTType {
     }
 }
 
+#[derive(Debug)]
 pub enum ASTExpression {
     Addition { lhs: Box<ASTExpression>, rhs: Box<ASTExpression> },
     Subtraction { lhs: Box<ASTExpression>, rhs: Box<ASTExpression> },
@@ -77,6 +115,7 @@ impl ASTNode for ASTExpression {
     }
 }
 
+#[derive(Debug)]
 pub enum ASTValue {
     Constant { constant: ASTConstant },
     Variable { name: String }
@@ -96,6 +135,7 @@ impl ASTNode for ASTValue {
     }
 }
 
+#[derive(Debug)]
 pub enum ASTConstant {
     Integer { value: i32 },
     Character { value: u8 }

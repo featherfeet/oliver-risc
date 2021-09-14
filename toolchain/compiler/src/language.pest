@@ -24,9 +24,15 @@ statement = {
     variable_declaration
 }
 
-base_datatype = { "int" | "char" }
+integer_type = { "int" }
 
-datatype = { "*"* ~ base_datatype }
+character_type = { "char" }
+
+base_datatype = { integer_type | character_type }
+
+pointers = { "*"* }
+
+datatype = { base_datatype ~ pointers }
 
 quoted_character = @{ "'" ~ char ~ "'" }
 

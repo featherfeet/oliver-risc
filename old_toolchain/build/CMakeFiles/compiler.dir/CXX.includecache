@@ -494,10 +494,6 @@ string
 
 /home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/compiler/ast.h
 
-/home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/compiler/astbeginendblocknode.cpp
-astbeginendblocknode.h
-/home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/compiler/astbeginendblocknode.h
-
 /home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/compiler/astbeginendblocknode.h
 ast.h
 /home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/compiler/ast.h
@@ -508,16 +504,6 @@ string
 vector
 -
 
-/home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/compiler/astbufferreadnode.cpp
-processor.h
-/home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/compiler/processor.h
-astbufferreadnode.h
-/home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/compiler/astbufferreadnode.h
-sstream
--
-fmt/format.h
--
-
 /home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/compiler/astbufferreadnode.h
 ast.h
 /home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/compiler/ast.h
@@ -528,12 +514,6 @@ asttermnode.h
 astexpressionnode.h
 /home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/compiler/astexpressionnode.h
 string
--
-
-/home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/compiler/astbufferwritenode.cpp
-astbufferwritenode.h
-/home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/compiler/astbufferwritenode.h
-fmt/format.h
 -
 
 /home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/compiler/astbufferwritenode.h
@@ -547,10 +527,6 @@ astexpressionnode.h
 /home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/compiler/astexpressionnode.h
 string
 -
-
-/home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/compiler/astconditionalnode.cpp
-astconditionalnode.h
-/home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/compiler/astconditionalnode.h
 
 /home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/compiler/astconditionalnode.h
 ast.h
@@ -564,10 +540,6 @@ astbeginendblocknode.h
 string
 -
 
-/home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/compiler/astconditionnode.cpp
-astconditionnode.h
-/home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/compiler/astconditionnode.h
-
 /home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/compiler/astconditionnode.h
 ast.h
 /home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/compiler/ast.h
@@ -577,10 +549,6 @@ astexpressionnode.h
 /home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/compiler/astexpressionnode.h
 string
 -
-
-/home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/compiler/astexpressionnode.cpp
-astexpressionnode.h
-/home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/compiler/astexpressionnode.h
 
 /home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/compiler/astexpressionnode.h
 ast.h
@@ -592,12 +560,6 @@ string
 vector
 -
 
-/home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/compiler/astinlineassemblynode.cpp
-astinlineassemblynode.h
-/home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/compiler/astinlineassemblynode.h
-fmt/format.h
--
-
 /home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/compiler/astinlineassemblynode.h
 ast.h
 /home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/compiler/ast.h
@@ -606,20 +568,10 @@ aststatementnode.h
 string
 -
 
-/home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/compiler/astnode.cpp
-astnode.h
-/home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/compiler/astnode.h
-
 /home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/compiler/astnode.h
 ast.h
 /home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/compiler/ast.h
 string
--
-
-/home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/compiler/astprocedurecallnode.cpp
-astprocedurecallnode.h
-/home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/compiler/astprocedurecallnode.h
-fmt/format.h
 -
 
 /home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/compiler/astprocedurecallnode.h
@@ -628,12 +580,6 @@ ast.h
 aststatementnode.h
 /home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/compiler/aststatementnode.h
 string
--
-
-/home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/compiler/astprocedurenode.cpp
-astprocedurenode.h
-/home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/compiler/astprocedurenode.h
-fmt/format.h
 -
 
 /home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/compiler/astprocedurenode.h
@@ -646,58 +592,12 @@ astbeginendblocknode.h
 string
 -
 
-/home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/compiler/astprocedurereturnnode.cpp
-astprocedurereturnnode.h
-/home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/compiler/astprocedurereturnnode.h
-
 /home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/compiler/astprocedurereturnnode.h
 ast.h
 /home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/compiler/ast.h
 aststatementnode.h
 /home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/compiler/aststatementnode.h
 string
--
-
-/home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/compiler/astrootnode.cpp
-astnode.h
-/home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/compiler/astnode.h
-aststatementnode.h
-/home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/compiler/aststatementnode.h
-astrootnode.h
-/home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/compiler/astrootnode.h
-astvariabledeclarationnode.h
-/home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/compiler/astvariabledeclarationnode.h
-astexpressionnode.h
-/home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/compiler/astexpressionnode.h
-astvariableassignmentnode.h
-/home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/compiler/astvariableassignmentnode.h
-astbufferwritenode.h
-/home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/compiler/astbufferwritenode.h
-asttermnode.h
-/home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/compiler/asttermnode.h
-astbeginendblocknode.h
-/home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/compiler/astbeginendblocknode.h
-astconditionnode.h
-/home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/compiler/astconditionnode.h
-astconditionalnode.h
-/home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/compiler/astconditionalnode.h
-astprocedurecallnode.h
-/home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/compiler/astprocedurecallnode.h
-astwhileloopnode.h
-/home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/compiler/astwhileloopnode.h
-astprocedurenode.h
-/home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/compiler/astprocedurenode.h
-astbufferreadnode.h
-/home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/compiler/astbufferreadnode.h
-astinlineassemblynode.h
-/home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/compiler/astinlineassemblynode.h
-astprocedurereturnnode.h
-/home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/compiler/astprocedurereturnnode.h
-fmt/format.h
--
-fstream
--
-sstream
 -
 
 /home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/compiler/astrootnode.h
@@ -718,12 +618,6 @@ ast.h
 astnode.h
 /home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/compiler/astnode.h
 
-/home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/compiler/asttermnode.cpp
-asttermnode.h
-/home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/compiler/asttermnode.h
-sstream
--
-
 /home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/compiler/asttermnode.h
 processor.h
 /home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/compiler/processor.h
@@ -736,12 +630,6 @@ asttermnode.h
 string
 -
 
-/home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/compiler/astvariableassignmentnode.cpp
-astvariableassignmentnode.h
-/home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/compiler/astvariableassignmentnode.h
-fmt/format.h
--
-
 /home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/compiler/astvariableassignmentnode.h
 ast.h
 /home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/compiler/ast.h
@@ -750,12 +638,6 @@ aststatementnode.h
 astexpressionnode.h
 /home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/compiler/astexpressionnode.h
 string
--
-
-/home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/compiler/astvariabledeclarationnode.cpp
-astvariabledeclarationnode.h
-/home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/compiler/astvariabledeclarationnode.h
-fmt/format.h
 -
 
 /home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/compiler/astvariabledeclarationnode.h
@@ -768,10 +650,6 @@ aststatementnode.h
 string
 -
 
-/home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/compiler/astwhileloopnode.cpp
-astwhileloopnode.h
-/home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/compiler/astwhileloopnode.h
-
 /home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/compiler/astwhileloopnode.h
 ast.h
 /home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/compiler/ast.h
@@ -782,14 +660,6 @@ astconditionnode.h
 astbeginendblocknode.h
 /home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/compiler/astbeginendblocknode.h
 string
--
-
-/home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/compiler/stackframe.cpp
-iostream
--
-stackframe.h
-/home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/compiler/stackframe.h
-fmt/format.h
 -
 
 /home/oliver/Projects/FPGA_Projects/CPU/old_toolchain/compiler/stackframe.h
