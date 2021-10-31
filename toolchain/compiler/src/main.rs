@@ -42,7 +42,7 @@ fn parse_ast_root(program: Pairs<'_, Rule>) -> Result<ASTRoot, &'static str> {
 fn parse_ast_datatype(pair: Pair<'_, Rule>) -> Result<ASTType, &'static str> {
     let mut inner = pair.into_inner();
     let basetype_pair = inner.next().ok_or("Failed to parse AST datatype base type.")?.into_inner().next().ok_or("Failed to parse AST datatype base type.")?;
-    let pointers = inner.next().ok_or("Failed to parse AST datatype pointers.")?.into_span().as_str().matches("*").count();
+    let pointers = inner.next().ok_or("Failed to parse AST datatype pointers.")?.as_span().as_str().matches("*").count();
     let basetype = match basetype_pair.as_rule() {
         Rule::integer_type => ASTBaseType::Integer,
         Rule::character_type => ASTBaseType::Character,
@@ -54,11 +54,16 @@ fn parse_ast_datatype(pair: Pair<'_, Rule>) -> Result<ASTType, &'static str> {
     Ok(ASTType::new(basetype, pointers))
 }
 
+fn parse_ast_expression(pair: Pair<'_, Rule>) -> Result<ASTExpression, &'static str> {
+    println!("{:#?}", pair);
+    Ok(ASTExpression::Value { value: ASTValue::Variable { name: "UNIMPLEMENTED".to_string() } })
+}
+
 fn parse_ast_variable_declaration(statement: Pair<'_, Rule>) -> Result<ASTVariableDeclaration, &'static str> {
     let mut inner = statement.into_inner();
     let datatype = parse_ast_datatype(inner.next().ok_or("Failed to parse AST datatype.")?)?;
     let name = inner.next().ok_or("Failed to get AST variable name.")?.as_span().as_str().to_string();
-    let value = ASTExpression::Value { value: ASTValue::Variable { name: "UNIMPLEMENTED".to_string() }};
+    let value = parse_ast_expression(inner.next().ok_or("Failed to parse AST expression.")?)?;
     Ok(ASTVariableDeclaration::new(datatype, name, value))
 }
 

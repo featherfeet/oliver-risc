@@ -26,19 +26,23 @@ VM_TRACE_FST_WRITER_THREAD = 0
 # Generated module classes, fast-path, compile with highest optimization
 VM_CLASSES_FAST += \
 	Vverilator_test \
+	Vverilator_test___024root__DepSet_hb3c96fa5__0 \
 
 # Generated module classes, non-fast-path, compile with low/medium optimization
 VM_CLASSES_SLOW += \
-	Vverilator_test__Slow \
+	Vverilator_test__ConstPool_0 \
+	Vverilator_test___024root__Slow \
+	Vverilator_test___024root__DepSet_h8ad277ea__0__Slow \
+	Vverilator_test___024root__DepSet_hb3c96fa5__0__Slow \
 
 # Generated support classes, fast-path, compile with highest optimization
 VM_SUPPORT_FAST += \
-	Vverilator_test__Trace \
+	Vverilator_test__Trace__0 \
 
 # Generated support classes, non-fast-path, compile with low/medium optimization
 VM_SUPPORT_SLOW += \
 	Vverilator_test__Syms \
-	Vverilator_test__Trace__Slow \
+	Vverilator_test__Trace__0__Slow \
 
 # Global classes, need linked once per executable, fast-path, compile with highest optimization
 VM_GLOBAL_FAST += \
